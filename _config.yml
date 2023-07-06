@@ -75,7 +75,7 @@ social:
 
 # Analytics
 analytics:
-  provider               :  "google-universal" # false (default), "google", "google-universal", "custom"
+  provider               :  "google" # false (default), "google", "google-universal", "custom"
   google:
     tracking_id          :  "G-JJ2HKRJL6Z"
 
@@ -86,7 +86,7 @@ author:
   avatar           : "profile.png"
   bio              : "I've been working in software for over 10 years 😉"
   location         : "Berkeley Heights, New Jersey"
-  employer         : "Student"
+  employer         : # "Student"
   pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : # "http://yourfullgooglescholarurl.com"
   email            : "akashdub06@gmail.com"
@@ -101,7 +101,7 @@ author:
   github           : "AkeBoss-tech"
   google_plus      :
   keybase          :
-  instagram        :
+  instagram        : "akashdub06"
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         : "akash-dubey-your-boss"
@@ -118,6 +118,8 @@ author:
   youtube          :
   wikipedia        :
   discord          : "akeboss"
+  kaggle           : "akeboss"
+  khanacademy      : "Akashdube"
 
 
 # Reading Files
