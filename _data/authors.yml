@@ -1,10 +1,41 @@
 # Authors
 
 Akash Dubey:
-  name        : "Akash Dubey"
-  uri         : # "http://name.com"
-  email       : "akashdub06@gmail.com"
-  bio         : "This is the first name."
-  avatar      : "profile.png"
-  twitter     : 
-  google_plus : 
+  name             : "Akash Dubey"
+  avatar           : "profile.png"
+  bio              : "I've been working in software for over 10 years 😉"
+  location         : "Berkeley Heights, New Jersey"
+  employer         : # "Student"
+  pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  googlescholar    : # "http://yourfullgooglescholarurl.com"
+  email            : "akashdub06@gmail.com"
+  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  uri              :
+  bitbucket        :
+  codepen          :
+  dribbble         :
+  flickr           :
+  facebook         :
+  foursquare       :
+  github           : "AkeBoss-tech"
+  google_plus      :
+  keybase          :
+  instagram        : "akashdub06"
+  impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
+  lastfm           :
+  linkedin         : "akash-dubey-your-boss"
+  orcid            : # "http://orcid.org/yourorcidurl"
+  pinterest        :
+  soundcloud       :
+  stackoverflow    : # http://stackoverflow.com/users/123456/username
+  steam            :
+  tumblr           :
+  twitter          : # "replacethistwitterhandle"
+  vine             :
+  weibo            :
+  xing             :
+  youtube          :
+  wikipedia        :
+  discord          : "akeboss"
+  kaggle           : "akeboss"
+  khanacademy      : "Akashdube"
