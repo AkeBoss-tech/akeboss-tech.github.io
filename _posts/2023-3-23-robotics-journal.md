@@ -44,7 +44,8 @@ Also, this was kinda on the side, but I also helped make this [website](https://
 3/24/23 - Reality Check
 =======
 Robbinsville
---------
+-------
+
 When we got to Robbinsville, we did not have a working robot. We tried everything to get our robot working in the two hours we had before our first real match. We also had some practice matches scheduled before our first match. When we first examined the robot, we noticed that there were a lot of electronics problems. In our code, we could see that there were CAN errors which meant that the motors weren’t connected properly. As soon as we got to the competition, we asked the CSAs (idk what it stands for but they are adults who help teams) to help us out.
 
 <img src='/images/posts/robotics/image9.png'>
@@ -70,7 +71,7 @@ At the end of the day, we finished in last place and there was seemingly nothing
 3/25/23 - The Comeback (the aftermath of Robbinsville)
 =======
 The New Plan
-------
+-------
 Since our robot flopped so badly, we realized that the team needed to make the robot simpler and more reliable. We decided to remove the Pivot Wrist subsystem and re-wire the entire robot. We also had the idea of adding an intake that can shoot cubes. This will allow us to score more points on the low and mid level. Here’s an image of what cube shooting looks like.
 
 <img src='/images/posts/robotics/image3.png'>
@@ -89,5 +90,3 @@ Honestly, we already had all the code that we needed done but we are just making
 <img src='/images/posts/robotics/image2.png'>
 
 I could have written a lot more about this, but I think this journal is fine. I don’t need to make it too long. I kinda see that it might be hard to follow this because I forgot to define certain things, but I think it is a pretty good journal which has all the things I did for robotics.
-	
-<img src='/images/posts/robotics/image7.png'>
