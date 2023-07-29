@@ -1,6 +1,6 @@
 ---
 title: "AP Calculus Problem Generator"
-excerpt: "Short description of portfolio item number 2 <br/><img src='/images/portfolio/home.png'>"
+excerpt: "a calculus problem generator made for final project <br/><img src='/images/portfolio/home.png' width='145' height='139'>"
 collection: portfolio
 ---
 
@@ -15,13 +15,13 @@ After this, I began generating the actual questions which was also difficult.
 I had to constrain the things that were generated to only have things that could be solved by an AP Calc student (even though I only taught my program AP Calculus it generated problems that were way to long like with multiple chain or quotient rule uses which isn't realistic) 
 In the end, I was able to create 19 different question types (you can look through the code to see them) and a quiz program using python to ask these questions as well. 
 
-Here is an example of a derivative problem
-<img src='/images/portfolio/derivative.png'>"
+Here is an example of a derivative problem<br/>
+<img src='/images/portfolio/derivative.png'>
 
-Here is an example of an integral problem
-<img src='/images/portfolio/integral.png'>"
+Here is an example of an integral problem<br/>
+<img src='/images/portfolio/integral.png'>
 
-Here is an example of an set up but do not solve problem
-<img src='/images/portfolio/revolve.png'>"
+Here is an example of an set up but do not solve problem<br/>
+<img src='/images/portfolio/revolve.png'>
 
 [Check it out here](https://replit.com/@AkashDubey/CalcFinalProject)
