@@ -7,6 +7,8 @@ tags:
   - life
   - programming
   - Arduino
+categories:
+  - Programming
 ---
 
 So far this summer, I've been looking at a bunch of things on my to-do list. Among them are looking for colleges to apply to, thinking about things to write about, and learning new things. More importantly, I've thought a bit about the future and realized that I might not have enough time to make all the projects I want to.
