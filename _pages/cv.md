@@ -7,9 +7,6 @@ redirect_from:
   - /resume
 ---
 
-{% include base_path %}
-
-
 Certifications
 ======
 * Microsoft Word 2019: Microsoft, Dec. 2020
@@ -33,12 +30,9 @@ Education
   ### Vocational Skills
 * Computer Applications in Business
 * Principles of Business and Finance
-* AP Computer Science Principles 
-  * Score 5
-* AP Computer Science A
-  * Score 5
-* AP Macro/Microeconomics 
-  * Score 5 and 5
+* AP Computer Science Principles  - 5
+* AP Computer Science A - 5
+* AP Macro/Microeconomics - 5 / 5
 
 
 Clubs
@@ -73,23 +67,15 @@ Test Scores
 ======
 * SAT 1580 Dec 2022
   * 800 Math and 780 R&W 
-* AP Calculus AB 2021
-  * Score 5
-* AP Calculus BC 2022
-  * Score 5
+* AP Calculus AB 2021 - 5
+* AP Calculus BC 2022 - 5
   * AB Subscore 5
-* AP Statistics 2022
-  * Score 5
-* AP Physics C: Mechanics 2023
-  * Score 5
-* AP Physics C: Electricity and Magnetism 2024
-  * Score 
-* AP Chemistry 2024
-  * Score 
-* AP English Language 2024
-  * Score 
-* AP United States History 2024
-  * Score 
+* AP Statistics 2022 - 5
+* AP Physics C: Mechanics 2023 - 5
+* AP Physics C: Electricity and Magnetism 2024 - n/a
+* AP Chemistry 2024 - n/a
+* AP English Language 2024 - n/a
+* AP United States History 2024 - n/a
 
 Other Skills
 ======
