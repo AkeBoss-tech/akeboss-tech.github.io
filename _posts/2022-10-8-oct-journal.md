@@ -39,4 +39,7 @@ Honestly, I think I should get more efficient at doing homework. I think I spend
 
 Oh wait I had a Spanish listening activity. So today we had a listening exam in Spanish class about the lottery and a story of a man who lost his paycheck. The part of Spanish that I find hardest is comprehension because sometimes, either the reading or the listening, is delivered in a style that is hard to understand. Usually, whenever we practice comprehension in class, we practice much simpler readings and are expected to prepare for more complicated comprehension on test day. It’s not like we can’t comprehend Spanish, we can, but we don’t have practice with more complicated scenarios – like situations that use words outside of our vocabulary. Comprehension isn’t a skill that can be improved by spending an hour before an exam which is why I think Spanish teachers should spend more time on comprehension than they do on grammar. I know grammar is confusing for some kids in Spanish, but I think comprehension is more important to teach in class than grammar which can be self-studied. I think school often messes up on what they should do in class and what they can expect students to do by themselves.
 
-![](/images/posts/other/November%20Journal.mp3)
+<audio controls="controls">
+  <source type="audio/mp3" src="images/posts/other/November_Journal.mp3"></source>
+  <p>Your browser does not support the audio element.</p>
+</audio>
