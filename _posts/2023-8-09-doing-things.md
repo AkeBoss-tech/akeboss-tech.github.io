@@ -18,16 +18,16 @@ So far this summer, I've been looking at a bunch of things on my to-do list. Amo
 Here are a bunch of the ideas that I began coding but haven't finished yet. I'm not sure if I'll ever finish them, but I hope I do. I think they're pretty cool.
 
 - Parody Lyric Generator
-  This has already been done, but I think I can do it better
+  - This has already been done, but I think I can do it better
 - FRC Charged Up Game Simulation
-  I want to build a simulation to get some practice with the algorithms that I will use on our real robot.
-  I also want to train a neural network to play the game. I think it would be cool to see how well it does.
+  - I want to build a simulation to get some practice with the algorithms that I will use on our real robot.
+  - I also want to train a neural network to play the game. I think it would be cool to see how well it does.
 - [Digits](https://engaging-data.com/digitsgame/) Solver
-  I'm not sure what the name of this game is, but it has 9 cards with different numbers. You need to make an expression with some of the cards to equal one of the numbers on the grid. I feel like making a solver for this game would be interesting, especially optimizing it.
+  - I'm not sure what the name of this game is, but it has 9 cards with different numbers. You need to make an expression with some of the cards to equal one of the numbers on the grid. I feel like making a solver for this game would be interesting, especially optimizing it.
 - AR Library
-  This is a project I am working on with a friend to make an AR viewer for any PDF online. I've never made an AR app before, so I think it would be a good learning experience.
+  - This is a project I am working on with a friend to make an AR viewer for any PDF online. I've never made an AR app before, so I think it would be a good learning experience.
 - Smart Robot Car
-  In the back of my mind, I also want to make a car with a camera which basically serves as a mobile Alexa. I know this will be hard, but it's a cool idea.
+  - In the back of my mind, I also want to make a car with a camera which basically serves as a mobile Alexa. I know this will be hard, but it's a cool idea.
 
 ## Life
 
