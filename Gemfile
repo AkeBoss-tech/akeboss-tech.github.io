@@ -12,7 +12,6 @@ source "https://rubygems.org"
 gem "github-pages", group: :jekyll_plugins
 gem 'tzinfo-data'
 gem "webrick"
-gem "minimal-mistakes-jekyll"
 
 # If you want to use Jekyll native, uncomment the line below.
 # To upgrade, run `bundle update`.
