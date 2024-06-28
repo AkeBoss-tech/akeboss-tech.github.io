@@ -6,6 +6,7 @@ tags:
   - journal
   - robotics
 ---
+Journal of the things we did in the Charged Up Robotics Season.
 
 3/21/23 - Build Season
 ======

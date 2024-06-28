@@ -43,7 +43,7 @@ For this assignment, we could choose between 8 different tasks including creatin
 
 One thing I would like to improve upon (with this or other work) is my writing. If I had to do this piece again I would probably change my hook. I was honestly unsure about how to hook people into reading such a dark essay. Other than that, I also wish I talked more about the thinking I did while exploring evil and how evil exists in our lives. Next time, I am going to make sure that the format of my essay makes sense and is correct and also add more information about the definition of evil I had. 
 
-<iframe src="https://docs.google.com/document/d/e/2PACX-1vTxCpNCASjU7gytfLG5nuTau7koeG2EUUq2V4GIqxQOi6p7BqA88M0rqtGRJNA1dkwyaSgBGVEDa3Wy/pub?embedded=true"></iframe>
+<iframe src="https://docs.google.com/document/d/e/2PACX-1vTxCpNCASjU7gytfLG5nuTau7koeG2EUUq2V4GIqxQOi6p7BqA88M0rqtGRJNA1dkwyaSgBGVEDa3Wy/pub?embedded=true" width="100%" height="500px"></iframe>
 
 ## AP Calculus AB
 ### Reflection
@@ -60,8 +60,8 @@ This was one of my favorite classes towards the end of the school year. At first
 ### Projects
 For this assignment, we had to create an experiment using a parachute to learn about air resistance. Since I was remote, I had to do this experiment by myself. I chose this assignment to display because I believe that it is a great example of how I problem-solve. You can read the document to learn more about the experiment, but in summary, I decided to run an experiment to see if the parachute area impacted the amount of time it took the person to fall. I ran into a couple of problems at first, but I was able to figure out a way to continue. I also liked how this assignment tied together my science, math, and technology knowledge into one cohesive work. I think this is one of the best labs I have ever done and I hope that all of my labs will turn out like this.
 
-<iframe src="https://docs.google.com/document/d/e/2PACX-1vSEmC0gJB7OjL3YjTQLU4mslb9CNiohs2sqVkjq3a8_DnAEDlQynKgiHdZ7PgCLLlNHrZJ5X9FgiaCd/pub?embedded=true"></iframe>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRh8vadDQnI9M-6YnJOkZkOutZTYqczE3vnB5bxjA9WDMaLtGAO-0CmMdTqDmfOhUNRLPia4fyhy6lD/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/document/d/e/2PACX-1vSEmC0gJB7OjL3YjTQLU4mslb9CNiohs2sqVkjq3a8_DnAEDlQynKgiHdZ7PgCLLlNHrZJ5X9FgiaCd/pub?embedded=true" width="100%" height="569"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRh8vadDQnI9M-6YnJOkZkOutZTYqczE3vnB5bxjA9WDMaLtGAO-0CmMdTqDmfOhUNRLPia4fyhy6lD/embed?start=true&loop=true&delayms=3000" frameborder="0" width="100%" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ## World History
 ### Reflection
@@ -70,7 +70,7 @@ This was a fun class during which we traveled the world through our textbook, le
 ### Projects
 I think I included a lot of information in this project. It took a long time just to do the research for my project. I think including the most relevant information was a challenge for me because there was just so much information I could talk about with Guyana. I tried to zero in on some specific oil-related problems that they had (because oil was causing many problems in Guyana). I don’t know if I was successful in that but the project gave me a much deeper understanding of how countries recovered after gaining independence. It was an incredibly difficult time for Guyana after independence due to political and economic instability. Britain influenced indirectly influenced the government, economy, and social structure they have today. They weren’t the same nation after they gained independence that they were before colonization (this is a repeating theme for nations post-independence). Imperialism was a drastic change for nations around the world who had their economies destroyed while they were a part of the machine of imperialism. Before the oil craze, Guyana basically had the same economy they had when Britain was their monarch. It seems that reforms only started happening after the Guyanese government forcefully captured land in Guyana. The British still influenced them even after independence and meddled in their affairs as well. Today, the country seems disconnected from them and focused on its own future diversification and wealth.
 
-<iframe src="https://docs.google.com/document/d/e/2PACX-1vRAxIPnjepTuZaowkSAr26dynWbhWm3EPVZlFUUyt3Ouj5qTkzFqjzKlAhYkSXvxhl3FlywwQ1SlcdK/pub?embedded=true"></iframe>
+<iframe src="https://docs.google.com/document/d/e/2PACX-1vRAxIPnjepTuZaowkSAr26dynWbhWm3EPVZlFUUyt3Ouj5qTkzFqjzKlAhYkSXvxhl3FlywwQ1SlcdK/pub?embedded=true" width="100%" height="569"></iframe>
 
 ## Biology
 ### Reflection
@@ -79,8 +79,8 @@ This year Biology was our science class. Before the start of this class, I disli
 ### Projects
 This work was a group project about Mitochondria. Before researching and making this slideshow about Mitochondria, none of us actually knew how exactly it worked. During the making of this presentation, we created a research document to document everything we learned about Mitochondria. Since this was a group project we divided up what we were going to research and present. My task was to research and present about "Life without Mitochondria" and Muscular Dystrophy. I decided to include this project because I learned a lot about mitochondria and its uses, and it is an example of my group work. Although I only had two slides (6 content slides was the limit), it is an example of how I work together in a group of people. We all equally split the work amongst each other and did everything equally. Although it looks like we did not write much on our slides we elaborated on what was written on our slides. This work helped me learn more about mitochondria and genetic diseases. After this project, our class learned about genetics and genetic diseases. This project was really helpful to me for learning more about how genetics connects to cell organelles like mitochondria. 
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRyunIqeQCBg5MK1e2LYfhC3VSOkHFxiE0TA9hD2MKWp-r1aVrNEKfur1I812GU03cGG7lR2Un2DmpV/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-<iframe src="https://docs.google.com/document/d/e/2PACX-1vSQx68J3VWSECghneyRDS-4WQa_s3SN-1ahB0iDUv7wqvA_PEYdtyBDdW7w0xjkYXsoIir2TFin5ny-/pub?embedded=true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRyunIqeQCBg5MK1e2LYfhC3VSOkHFxiE0TA9hD2MKWp-r1aVrNEKfur1I812GU03cGG7lR2Un2DmpV/embed?start=true&loop=true&delayms=3000" frameborder="0" width="100%" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/document/d/e/2PACX-1vSQx68J3VWSECghneyRDS-4WQa_s3SN-1ahB0iDUv7wqvA_PEYdtyBDdW7w0xjkYXsoIir2TFin5ny-/pub?embedded=true" width="100%" height="569"></iframe>
 
 ## Computer Applications in Business
 ### Reflection
