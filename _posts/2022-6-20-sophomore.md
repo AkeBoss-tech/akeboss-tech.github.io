@@ -57,13 +57,13 @@ I hope you have as much fun using them as I had making them!
 I enjoyed this class much more than Biology. This was partly because it was in-person which allowed us to do labs. These labs were really cool; we saw different colored flames, gas in bubbles exploding, sodium and potassium metal reacting in water, and elephant toothpaste. This class was also a lot more interesting than Biology. I really enjoyed the labs in class. However, there was a lot of self-studying in this class. Although I was able to keep up, a lot of people needed help on things during class. I tried helping them to the best of my ability to help us all through the class.
 
 That's my head at the front row!
-<iframe src="https://drive.google.com/file/d/1I1hNoZ0ku3W7mdl0XZ4NbvLJyf7wuy6p/preview" width="640" height="480" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1I1hNoZ0ku3W7mdl0XZ4NbvLJyf7wuy6p/preview" width="100%" allow="autoplay"></iframe>
 
 ## Early American Literature
 ### Reflection
 This project was my favorite English project ever. This research project introduced me to study planning and execution. I was also able to use my Sheets and Statistics skills to learn more about Economic Inequality in cities in New Jersey. This application of the skills I had been learning the entire year gave me more practical knowledge of the use of Sheets and Statistics in the real world. Along with this slideshow, I made a huge Google Sheet of all the New Jersey data I collected. This document included a lot more charts that I didn't have time to use. Like my previous presentations, I nearly ran overtime because I had so much information to include.
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT69p46ZapwARKmRTOX2KLkS2yfhhLKh9RijzFwl6U-kP1LMqB_ksWNMZ-wXwkmVCm6IC7MGyI1yiqG/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT69p46ZapwARKmRTOX2KLkS2yfhhLKh9RijzFwl6U-kP1LMqB_ksWNMZ-wXwkmVCm6IC7MGyI1yiqG/embed?start=true&loop=true&delayms=3000" frameborder="0" width="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTY5HC2GGUzw_y_vqImc-ePYcV7cGqfiHWN6ACvAWvFhS2llQzUDbv27rQu-2OFGBfVKf4j2j7D5vTY/pubhtml?widget=true&amp;headers=false"></iframe>
 
 ## AP Calculus BC
@@ -85,8 +85,8 @@ I hope you have fun!
 ### Reflection
 Here are some of the presentations my group-mate and I made about the Galapagos Islands and La Bomba. I really enjoyed these presentations because it allowed us to practice both presenting and Spanish speaking skills. We were also able to use our PowerPoint skills to create an effective presentation to show to our class. These presentations were my favorite Spanish projects because they were like any other project we would do, but in Spanish. I really enjoyed this style of learning Spanish speaking skills.  I really enjoyed this class as a whole and I feel like I recovered some of the learning I lost in Spanish due to online school.
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRbUNbydeHgfxmQoUerOHdhEjl5-zLQv1GeLL4ug65nKF5xTgIy2HELsWZhBCbIqRzaeSWLd2l-kEgh/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ7-t5foK0IDLwHgtHVbNozCrHMQQIVxCet8fckPO3FhJ56Gwr9JPhiGPsKEFlb1QFScQ2pEiwURaXO/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRbUNbydeHgfxmQoUerOHdhEjl5-zLQv1GeLL4ug65nKF5xTgIy2HELsWZhBCbIqRzaeSWLd2l-kEgh/embed?start=true&loop=true&delayms=3000" frameborder="0" width="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ7-t5foK0IDLwHgtHVbNozCrHMQQIVxCet8fckPO3FhJ56Gwr9JPhiGPsKEFlb1QFScQ2pEiwURaXO/embed?start=true&loop=true&delayms=3000" frameborder="0" width="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ## Gym/Health
 ### Reflection
