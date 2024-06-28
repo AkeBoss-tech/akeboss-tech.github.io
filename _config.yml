@@ -19,7 +19,7 @@ breadcrumbs              : true # true, false (default)
 breadcrumb_separator     : ">"
 words_per_minute         : 160
 future                   : true
-read_more                : "enabled" # if enabled, adds "Read more" links to excerpts
+read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
 minimal_mistakes_skin    : "sunrise" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 talkmap_link             : false #change to true to add link to talkmap on talks page
 comments:
