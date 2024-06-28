@@ -1,6 +1,6 @@
 ---
 title: 'Freshmen Year Reflection'
-date: 2022-12-17
+date: 2021-06-20
 permalink: /posts/freshmen-reflection/
 tags:
   - life
