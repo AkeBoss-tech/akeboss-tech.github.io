@@ -4,11 +4,11 @@ excerpt: "CTE Partnerships a website bringing information about local businesses
 collection: portfolio
 ---
 
-<img src='/images/portfolio/fbla/main.png' width='100%' align='center'>
-
 <h1 align="center"><a href="https://github.com/AkeBoss-tech/fbla-website-app">CTE Partnerships</a></h1>
 
 <p align="center">By: Akash Dubey, Ani Tiwary, and Krish Shetty</p> 
+
+<img src='/images/portfolio/fbla/main.png' width='100%' align='center'>
 
 Our submission for FBLA's Coding and Programming Event 2024. We placed in the top 10 at the State Leadership Conference.
 
