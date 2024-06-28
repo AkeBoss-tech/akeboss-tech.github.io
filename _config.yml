@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Akash Dubey / Akash Dubey's Blog"
+title                    : "Akash Dubey"
 title_separator          : "-"
 name                     : &name "Akash Dubey"
 description              : &description "I've been working with code for over 10 years."
@@ -19,8 +19,8 @@ breadcrumbs              : true # true, false (default)
 breadcrumb_separator     : ">"
 words_per_minute         : 160
 future                   : true
-read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
-minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+read_more                : "enabled" # if enabled, adds "Read more" links to excerpts
+minimal_mistakes_skin    : "sunrise" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 talkmap_link             : false #change to true to add link to talkmap on talks page
 comments:
   provider               : # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
@@ -85,7 +85,7 @@ author:
   name             : "Akash Dubey"
   avatar           : "profile.png"
   bio              : "I've been working in software for over 10 years 😉"
-  location         : "Berkeley Heights, New Jersey"
+  location         : "Berkeley Heights, NJ"
   employer         : # "Student"
   pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : # "http://yourfullgooglescholarurl.com"
@@ -120,6 +120,7 @@ author:
   discord          : "akeboss"
   kaggle           : "akeboss"
   khanacademy      : "Akashdube"
+  spotify          : "https://open.spotify.com/user/oaaetff33es7bz4gkw64xk500?si=df0d2feb27e74341"
 
 
 # Reading Files

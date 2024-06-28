@@ -126,7 +126,10 @@
       {% endif %}
       {% if author.wikipedia %}
         <li><a href="https://en.wikipedia.org/wiki/User:{{ author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w" aria-hidden="true"></i> Wikipedia</a></li>
-{% endif %}
+      {% endif %}
+      {% if author.spotify %}
+        <a href="{{ author.spotify }}"><i class="fab fa-fw fa-spotify" aria-hidden="true"></i> AkeBoss</a>
+      {% endif %}
     </ul>
   </div>
 </div>

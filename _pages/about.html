@@ -1,0 +1,192 @@
+---
+permalink: /
+title: ""
+excerpt: "About me"
+author_profile: true
+redirect_from: 
+  - /about/
+  - /about.html
+author: Akash Dubey
+---
+
+{% include base_path %}
+
+<!-- Use bootstrap to format the content -->
+
+<!-- center name -->
+<div class="text-center mb-2">
+  <h1>Akash Dubey</h1>
+  <!-- add a bunch of logos to social sites -->
+  <div class="row">
+    {% if site.author.uri %}
+      <a href="{{ site.author.uri }}"><i class="fas fa-fw fa-link" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.email %}
+      <a href="mailto:{{ site.author.email }}"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.keybase %}
+      <a href="https://keybase.io/{{ site.author.keybase }}"><i class="fas fa-fw fa-key" aria-hidden="true"></i></a>
+    {% endif %}
+      {% if site.author.researchgate %}
+      <a href="{{ site.author.researchgate }}"><i class="fab fa-fw fa-researchgate" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.twitter %}
+      <a href="https://twitter.com/{{ site.author.twitter }}"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.facebook %}
+      <a href="https://www.facebook.com/{{ site.author.facebook }}"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.google_plus %}
+      <a href="https://plus.google.com/+{{ site.author.google_plus }}"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.linkedin %}
+      <a href="https://www.linkedin.com/in/{{ site.author.linkedin }}"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.xing %}
+      <a href="https://www.xing.com/profile/{{ site.author.xing }}"><i class="fab fa-fw fa-xing-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.instagram %}
+      <a href="https://instagram.com/{{ site.author.instagram }}"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.tumblr %}
+      <a href="https://{{ site.author.tumblr }}.tumblr.com"><i class="fab fa-fw fa-tumblr-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.bitbucket %}
+      <a href="https://bitbucket.org/{{ site.author.bitbucket }}"><i class="fab fa-fw fa-bitbucket" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.github %}
+      <a href="https://github.com/{{ site.author.github }}"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.stackoverflow %}
+      <a href="https://www.stackoverflow.com/users/{{ site.author.stackoverflow }}"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.lastfm %}
+      <a href="https://lastfm.com/user/{{ site.author.lastfm }}"><i class="fab fa-fw fa-lastfm-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.dribbble %}
+      <a href="https://dribbble.com/{{ site.author.dribbble }}"><i class="fab fa-fw fa-dribbble-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.pinterest %}
+      <a href="https://www.pinterest.com/{{ site.author.pinterest }}"><i class="fab fa-fw fa-pinterest" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.foursquare %}
+      <a href="https://foursquare.com/{{ site.author.foursquare }}"><i class="fab fa-fw fa-foursquare" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.steam %}
+      <a href="https://steamcommunity.com/id/{{ site.author.steam }}"><i class="fab fa-fw fa-steam-square" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.youtube %}
+      <a href="{{ site.author.youtube }}"><i class="fab fa-fw fa-youtube" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.soundcloud %}
+      <a href="https://soundcloud.com/{{ site.author.soundcloud }}"><i class="fab fa-fw fa-soundcloud" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.weibo %}
+      <a href="https://www.weibo.com/{{ site.author.weibo }}"><i class="fab fa-fw fa-weibo" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.flickr %}
+      <a href="https://www.flickr.com/{{ site.author.flickr }}"><i class="fab fa-fw fa-flickr" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.codepen %}
+      <a href="https://codepen.io/{{ site.author.codepen }}"><i class="fab fa-fw fa-codepen" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.vine %}
+      <a href="https://vine.co/u/{{ site.author.vine }}"><i class="fab fa-fw fa-vine" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.discord %}
+      <a href="https://discord.com/{{ site.author.discord }}"><i class="fab fa-fw fa-discord" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.kaggle %}
+      <a href="https://kaggle.com/{{ site.author.kaggle }}"><i class="fab fa-fw fa-kaggle" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.khanacademy %}
+      <a href="https://khanacademy.org/profile/{{ site.author.khanacademy }}"><i class="fab fa-fw fa-safari" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.googlescholar %}
+      <a href="{{ site.author.googlescholar }}"><i class="fas fa-fw fa-graduation-cap"></i></a>
+    {% endif %}
+    {% if site.author.pubmed %}
+      <a href="{{ site.author.pubmed }}"><i class="ai ai-pubmed-square ai-fw"></i></a>
+    {% endif %}
+    {% if site.author.orcid %}
+      <a href="{{ site.author.orcid }}"><i class="ai ai-orcid-square ai-fw"></i></a>
+    {% endif %}
+    {% if site.author.impactstory %}
+      <a href="{{ site.author.impactstory }}"><i class="ai ai-impactstory ai-fw"></i></a>
+    {% endif %}
+    {% if site.author.wikipedia %}
+      <a href="https://en.wikipedia.org/wiki/User:{{ site.author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if site.author.spotify %}
+      <a href="{{ site.author.spotify }}"><i class="fab fa-fw fa-spotify" aria-hidden="true"></i></a>
+    {% endif %}
+</div>
+
+<!-- Add a short bio -->
+<div class="text-center mt-3">
+  <br>
+  <p>Hi 👋, I'm Akash Dubey. I'm a student with a passion for computer science, math, robotics, soccer, cricket, and everything in between! I'm currently studying computer science and math at the Rutgers University Honors College. I'm excited to continue learning and exploring my interests!</p>
+  <!-- Add a bunch of as in a row -->
+  <p>Here are some fun pages on this site!</p>
+  <div class="row">
+   <a class="btn btn--primary btn--lg" style="text-decoration: none; background-color: darkcyan;" href="{{ base_path }}/year-archive/">Blog Posts</a>
+   <a class="btn btn--primary btn--lg" style="text-decoration: none; background-color: darkcyan;" href="{{ base_path }}/portfolio/">Portfolio</a>
+   <a class="btn btn--primary btn--lg" style="text-decoration: none; background-color: darkcyan;" href="{{ base_path }}/resume">CV</a>
+ </div>
+</div>
+
+<!-- Add a bunch of links to pages on this site -->
+<div class="text-center">
+  <!-- Add a bunch of as in a row -->
+   <h3>High School Blog</h3>
+   <div class="row">
+    <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/freshmen-reflection/">Freshmen Year</a>
+    <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/sophomore-reflection/">Sophomore Year</a>
+    <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/junior-reflection/">Junior Year</a>
+    <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/senior-reflection/">Senior Year</a>
+  </div>
+
+  <!-- Add a bunch of as in a row -->
+  <!--  <h3>Undergraduate Blog</h3>
+  <div class="row">
+    <a class="btn btn--primary btn--lg"><a href="/projects">Projects</a></a>
+    <a class="btn btn--primary btn--lg"><a href="/posts">Posts</a></a>
+  </div> -->
+
+</div>
+
+<div class="text-center mt-3">
+  <h3>Projects</h3>
+  <div class="row">
+    <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}/portfolio/robot-code/">FRC Programming</a>
+    <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}/portfolio/newspaper-website/">Newspaper Website</a>
+    <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}/portfolio/calculus-generator/">AP Calculus Question Generator</a>
+  </div>
+</div>
+
+<div class="text-center mt-3">
+  <h3>Fun Videos!</h3>
+  <div class="row">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/4etao10RN-s?si=evS7K2YAJCgaleEb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/ugQ5J05kNYg?si=orpaShZxZVnW-NGe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/zUtOl0kochI?si=c06uozwSMtSefm-g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/nBBPKs8JCAI?si=BL-6Uo08C_xr4RMG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- Github Stats -->
+<div class="text-center mt-3">
+  <br>
+  <a href="https://github.com/anuraghazra/github-readme-stats">
+    <img height=200 align="center" src="https://github-readme-stats.vercel.app/api?username=akeboss-tech&show_icons=true&theme=radical&rank_icon=github" />
+  </a>
+  <a href="https://github.com/anuraghazra/convoychat">
+    <img height=200 align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=akeboss-tech&layout=compact&langs_count=8&card_width=320&show_icons=true&theme=radical" />
+  </a>  
+</div>
+
+
+<div class="text-center mt-5">
+  <br>
+  <p>Thanks for visiting my blog! Feel free to continue browsing this site!</p>
+</div>
