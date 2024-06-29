@@ -166,7 +166,7 @@ author: Akash Dubey
       {% else %}
         {% assign title = post.title %}
       {% endif %}
-      <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ post.link }}">{{ title }}</a>
+      <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}{{ post.url }}">{{ title }}</a>
     {% endfor %}
   </div>
 </div>
@@ -178,7 +178,7 @@ author: Akash Dubey
     <iframe width="560" height="315" src="https://www.youtube.com/embed/ugQ5J05kNYg?si=orpaShZxZVnW-NGe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/zUtOl0kochI?si=c06uozwSMtSefm-g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/nBBPKs8JCAI?si=BL-6Uo08C_xr4RMG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
+  </div> 
 </div>
 
 <!-- Github Stats -->
