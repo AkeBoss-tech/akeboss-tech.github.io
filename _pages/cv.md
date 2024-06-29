@@ -9,7 +9,7 @@ redirect_from:
 <!-- Center the text on screen with title -->
 <div align="center">
   <h1>Akash Dubey</h1>
-  <p>Berkeley Heights, NJ | 212-814-3681  | akashdub06@gmail.com</p>
+  <p>Berkeley Heights, NJ | 212-814-3681 | akash.dubey@rutgers.edu</p>
 </div>
 
 Certifications
