@@ -144,6 +144,8 @@ author: Akash Dubey
     <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/sophomore-reflection/">Sophomore Year</a>
     <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/junior-reflection/">Junior Year</a>
     <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/senior-reflection/">Senior Year</a>
+    <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/robotics-journal/">FRC Charged Up</a>
+    <a class="btn btn--primary btn--lg" style="text-decoration: none;" href="{{ base_path }}/posts/robotics-development/">FRC Crescendo</a>
   </div>
 
   <!-- Add a bunch of as in a row -->
@@ -158,9 +160,14 @@ author: Akash Dubey
 <div class="text-center mt-3">
   <h3>Projects</h3>
   <div class="row">
-    <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}/portfolio/robot-code/">FRC Programming</a>
-    <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}/portfolio/newspaper-website/">Newspaper Website</a>
-    <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ base_path }}/portfolio/calculus-generator/">AP Calculus Question Generator</a>
+    {% for post in site.portfolio %}
+      {% if post.id %}
+        {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+      {% else %}
+        {% assign title = post.title %}
+      {% endif %}
+      <a class="btn btn--secondary btn--lg" style="text-decoration: none;" href="{{ post.link }}">{{ title }}</a>
+    {% endfor %}
   </div>
 </div>
 
