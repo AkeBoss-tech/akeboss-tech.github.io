@@ -21,8 +21,10 @@ Certifications
 * Microsoft Access 2019: Microsoft, June 2021
 * IC3 Digital Literacy Certification GS6 Master: Certiport, Aug. 2021
 * CompTIA ITF+: CompTIA, June 2022
-* Oracle Exam 1Z0-811: Java Foundations: Oracle, Sept. 2023
-* Oracle Exam 1Z0-006: Database Foundations: Oracle, Dec. 2023
+* Oracle Exam 1Z0-811: Java Foundations: Oracle, Sept. 2023 [Badge](https://catalog-education.oracle.com/pls/certview/sharebadge?id=52C223E5C4717F4E8188FC50A7B62D735B1A08C82B22D05DAF4EF33CB35CE8EC)  
+* Oracle Exam 1Z0-006: Database Foundations: Oracle, Dec. 2023 [Badge](https://catalog-education.oracle.com/pls/certview/sharebadge?id=A42D6C73F66D4BA6923BB9EE7A1FC92BA72FE96F4016EC9203A77FDF9BC3FD34)  
+
+[Credly Profile](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
 
 Volunteer Experience
 ======
@@ -34,8 +36,8 @@ Volunteer Experience
 Education
 ======
 * Academy for Information Technology, Union County Vocational-Technical Schools, Scotch Plains, NJ
-  * Graduate Anticipated (Sept. 2020 - June 2024)
-  * Current QPA: 98.29
+  * Graduate (Sept. 2020 - June 2024)
+  * Current QPA: 97.92
   * SAT R&W 780 - Math 800
   ### Vocational Skills
   * Computer Applications in Business
@@ -171,12 +173,3 @@ LinkedIn: [Akash Dubey LinkedIn](https://www.linkedin.com/in/akash-dubey-your-bo
 GitHub: [AkeBoss-tech GitHub](https://github.com/AkeBoss-tech/)  
 Portfolio: [Digital Portfolio](https://sites.google.com/ucvts.org/akash-dubey-digital-portfolio/home)  
 Blog: [Blog](https://akeboss-tech.github.io/)  
-Microsoft Word Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-Microsoft Excel Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-Microsoft Excel Expert Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-Microsoft PowerPoint Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-Microsoft Access Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-IC3 Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-CompTIA ITF+ Certification: [Badge](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
-Oracle Exam 1Z0-811: Java Foundations: [Badge](https://catalog-education.oracle.com/pls/certview/sharebadge?id=52C223E5C4717F4E8188FC50A7B62D735B1A08C82B22D05DAF4EF33CB35CE8EC)  
-Oracle Exam 1Z0-006: Database Foundations: [Badge](https://catalog-education.oracle.com/pls/certview/sharebadge?id=A42D6C73F66D4BA6923BB9EE7A1FC92BA72FE96F4016EC9203A77FDF9BC3FD34)  
