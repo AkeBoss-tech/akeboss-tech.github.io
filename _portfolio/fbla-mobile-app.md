@@ -9,7 +9,7 @@ collection: portfolio
 <p align="center">By: Akash Dubey and Ani Tiwary</p> 
 
 ## Presentation
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS5X1v5jACgj6SBYcDZllYY1977XmTOv4XG8JzkTbGAf-Z5zEOf_KXFEuyif7VfcD4uGJmS-IKhkflW/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS5X1v5jACgj6SBYcDZllYY1977XmTOv4XG8JzkTbGAf-Z5zEOf_KXFEuyif7VfcD4uGJmS-IKhkflW/embed?start=true&loop=true&delayms=3000" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 Our project for FBLA Mobile App Development Competition (we didn't end up competing since we went with our Coding and Programming project). We created a portfolio maker app to showcase and share high school and professional experiences.
 
