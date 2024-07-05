@@ -14,38 +14,36 @@
 
 <div class="{{ include.type | default: "list" }}__item">
   <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="archive__item-content">
-      <div class="archive__item-text">
-        <h2 class="archive__item-title" itemprop="headline">
-          {% if post.link %}
-            <a href="{{ post.link }}">{{ title }}</a> <a href="{{ base_path }}{{ post.url }}" rel="permalink"><i class="fa fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
-          {% else %}
-            <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
+    <div class="archive__item-content card">
+      <a href="{{ post.link ? post.link : base_path + post.url }}" class="card-link" target="_blank" style="text-decoration: none;">
+        <div class="archive__item-text">
+          <h2 class="archive__item-title" itemprop="headline">
+            {{ title }}
+          </h2>
+
+          {% if post.read_time %}
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
           {% endif %}
-        </h2>
 
-        {% if post.read_time %}
-          <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
-        {% endif %}
+          {% if post.collection == 'teaching' %}
+            <p> {{ post.type }}, <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
+          {% elsif post.collection == 'publications' %}
+            <p>Published in <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
+          {% elsif post.date %}
+            <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ post.date | default: "1900-01-01" | date_to_xmlschema }}">{{ post.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
+          {% endif %}
 
-        {% if post.collection == 'teaching' %}
-          <p> {{ post.type }}, <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
-        {% elsif post.collection == 'publications' %}
-          <p>Published in <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
-        {% elsif post.date %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ post.date | default: "1900-01-01" | date_to_xmlschema }}">{{ post.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
-        {% endif %}
+          {% if post.excerpt and site.read_more != 'enabled' %}
+            <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
+          {% elsif post.excerpt and site.read_more == 'enabled' %}
+            <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p>
+          {% endif %}
+        </div>
 
-        {% if post.excerpt and site.read_more != 'enabled' %}
-        <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
-        {% elsif post.excerpt and site.read_more == 'enabled' %}
-        <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p></p>
-        {% endif %}
-      </div>
-      
-      <div class="archive__item-image">
-        <img src="{{ post.image }}" width="100%" alt="">
-      </div>
+        <div class="archive__item-image">
+          <img src="{{ post.image }}" width="100%" alt="">
+        </div>
+      </a>
     </div>
   </article>
 </div>
@@ -54,11 +52,29 @@
 .archive__item-content {
   display: flex;
   flex-wrap: wrap;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.archive__item-content:hover {
+  transform: scale(1.05);
+}
+
+.card-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
 }
 
 .archive__item-text {
   flex: 1;
   order: 1;
+  margin-bottom: 16px;
 }
 
 .archive__item-image {
@@ -70,5 +86,17 @@
   .archive__item-image {
     order: 3;
   }
+}
+
+.archive__item-title {
+  margin: 0;
+}
+
+.page__meta {
+  margin-top: 8px;
+}
+
+.archive__item-excerpt {
+  margin-top: 16px;
 }
 </style>

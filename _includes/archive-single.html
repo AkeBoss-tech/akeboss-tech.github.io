@@ -15,7 +15,7 @@
 <div class="{{ include.type | default: "list" }}__item">
   <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
     <div class="archive__item-content card">
-      <a href="{{ post.link ? post.link : base_path + post.url }}" class="card-link">
+      <a href="{{ post.link ? post.link : base_path + post.url }}" class="card-link" target="_blank" style="text-decoration: none;">
         <div class="archive__item-text">
           <h2 class="archive__item-title" itemprop="headline">
             {{ title }}
