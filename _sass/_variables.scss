@@ -47,6 +47,16 @@ $type-size-8                : 0.625em;  // ~10px
    Colors
    ========================================================================== */
 
+/* Dark Blue #251E62 */
+/* Orange #FE5801 */
+/* Green #57CD80 */
+/* Purple #C50070 */
+
+$dark-blue : #251E62;
+$orange : #FE5801;
+$green : #57CD80;
+$purple : #C50070;
+
 $gray                       : #7a8288;
 $dark-gray                  : mix(#000, $gray, 40%);
 $darker-gray                : mix(#000, $gray, 60%);
@@ -57,7 +67,7 @@ $body-color                 : #fff;
 $background-color           : #fff;
 $code-background-color      : #fafafa;
 $code-background-color-dark : $light-gray;
-$text-color                 : $dark-gray;
+$text-color                 : #251E62;
 $border-color               : $lighter-gray;
 
 $primary-color              : #7a8288;
@@ -90,9 +100,9 @@ $xing-color                 : #006567;
 
 
 /* links */
-$link-color                 : $info-color;
-$link-color-hover           : mix(#000, $link-color, 25%);
-$link-color-visited         : mix(#fff, $link-color, 25%);
+$link-color                 : $green;
+$link-color-hover           : mix(#000, $green, 25%);
+$link-color-visited         : $orange;
 $masthead-link-color        : $primary-color;
 $masthead-link-color-hover  : mix(#000, $primary-color, 25%);
 
