@@ -12,21 +12,14 @@
   {% assign title = post.title %}
 {% endif %}
 
-{% if post.id %}
-  {% assign image = post.excerpt | markdownify %}
-  {% assign image = image | split: "src='" %}
-  {% assign image = image[1] | split: "'" %}
-  {% assign image = image[0] %}
-{% else %}
-  {% assign image = post.excerpt %}
-{% endif %}
-
 <div class="{{ include.type | default: "list" }}__item">
-  <article class="archive__item card" itemscope itemtype="http://schema.org/CreativeWork">
-    <a href="{{ base_path }}{{ post.url }}" class="card__link">
-      <div class="archive__item-content">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    <div class="archive__item-content card">
+      <a href="{{ post.link ? post.link : base_path + post.url }}" class="card-link">
         <div class="archive__item-text">
-          <h2 class="archive__item-title" itemprop="headline">{{ title }}</h2>
+          <h2 class="archive__item-title" itemprop="headline">
+            {{ title }}
+          </h2>
 
           {% if post.read_time %}
             <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
@@ -43,23 +36,15 @@
           {% if post.excerpt and site.read_more != 'enabled' %}
             <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
           {% elsif post.excerpt and site.read_more == 'enabled' %}
-            <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p></p>
+            <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p>
           {% endif %}
         </div>
 
         <div class="archive__item-image">
-          <img src="{{ image }}" alt="">
+          <img src="{{ post.image }}" width="100%" alt="">
         </div>
-      </div>
-    </a>
-
-    {% if post.citation and post.paperurl %}
-      <p>Recommended citation: {{ post.citation }} <a href="{{ post.paperurl }}"><u>{{ post.paperurl }}</u></a></p>
-    {% elsif post.citation %}
-      <p>Recommended citation: {{ post.citation }} </p>
-    {% elsif post.paperurl %}
-      <p>Download <a href=" {{ post.paperurl }} "><u>here</u></a></p>
-    {% endif %}
+      </a>
+    </div>
   </article>
 </div>
 
@@ -67,12 +52,29 @@
 .archive__item-content {
   display: flex;
   flex-wrap: wrap;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.archive__item-content:hover {
+  transform: scale(1.05);
+}
+
+.card-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
 }
 
 .archive__item-text {
   flex: 1;
   order: 1;
-  text-align: center;
+  margin-bottom: 16px;
 }
 
 .archive__item-image {
@@ -86,24 +88,15 @@
   }
 }
 
-.card {
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s;
+.archive__item-title {
+  margin: 0;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.page__meta {
+  margin-top: 8px;
 }
 
-.card__link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-}
-
-.card__link:hover .archive__item-title,
-.card__link:hover .archive__item-excerpt {
-  color: inherit;
+.archive__item-excerpt {
+  margin-top: 16px;
 }
 </style>
