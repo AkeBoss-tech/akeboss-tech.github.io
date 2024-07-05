@@ -13,13 +13,11 @@
 {% endif %}
 
 <div class="{{ include.type | default: "list" }}__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="archive__item-content card">
-      <a href="{{ post.link ? post.link : base_path + post.url }}" class="card-link" target="_blank" style="text-decoration: none;">
+  <article class="archive__item card" itemscope itemtype="http://schema.org/CreativeWork">
+    <a href="{{ base_path }}{{ post.url }}" class="card__link">
+      <div class="archive__item-content">
         <div class="archive__item-text">
-          <h2 class="archive__item-title" itemprop="headline">
-            {{ title }}
-          </h2>
+          <h2 class="archive__item-title" itemprop="headline">{{ title }}</h2>
 
           {% if post.read_time %}
             <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
@@ -36,15 +34,15 @@
           {% if post.excerpt and site.read_more != 'enabled' %}
             <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>
           {% elsif post.excerpt and site.read_more == 'enabled' %}
-            <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p>
+            <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p></p>
           {% endif %}
         </div>
 
         <div class="archive__item-image">
-          <img src="{{ post.image }}" width="100%" alt="">
+          <img src="{{ post.image }}" alt="" width="100%">
         </div>
-      </a>
-    </div>
+      </div>
+    </a>
   </article>
 </div>
 
@@ -52,29 +50,12 @@
 .archive__item-content {
   display: flex;
   flex-wrap: wrap;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid #ddd;
-  padding: 16px;
-  border-radius: 8px;
-}
-
-.archive__item-content:hover {
-  transform: scale(1.05);
-}
-
-.card-link {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
 }
 
 .archive__item-text {
   flex: 1;
   order: 1;
-  margin-bottom: 16px;
+  text-align: center;
 }
 
 .archive__item-image {
@@ -88,15 +69,24 @@
   }
 }
 
-.archive__item-title {
-  margin: 0;
+.card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
 }
 
-.page__meta {
-  margin-top: 8px;
+.card:hover {
+  transform: scale(1.05);
 }
 
-.archive__item-excerpt {
-  margin-top: 16px;
+.card__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card__link:hover .archive__item-title,
+.card__link:hover .archive__item-excerpt {
+  color: inherit;
 }
 </style>
