@@ -1,6 +1,7 @@
 ---
 title: "ESL Worksheet Generator"
-excerpt: "A Python App that generates basic English worksheets! <br/><img src='/images/portfolio/esl/home.png' width='375' height='263'>"
+excerpt: "A Python App that generates basic English worksheets!"
+image: "/images/portfolio/esl/home.png"
 collection: portfolio
 ---
 

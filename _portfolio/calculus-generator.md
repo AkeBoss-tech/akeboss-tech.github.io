@@ -1,6 +1,7 @@
 ---
 title: "AP Calculus Problem Generator"
-excerpt: "a calculus problem generator made for final project <br/><img src='/images/portfolio/home.png' width='290' height='280'>"
+excerpt: "a calculus problem generator made for final project"
+image: "/images/portfolio/home.png"
 collection: portfolio
 ---
 

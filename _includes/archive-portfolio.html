@@ -12,15 +12,6 @@
   {% assign title = post.title %}
 {% endif %}
 
-{% if post.id %}
-  {% assign image = post.excerpt | markdownify %}
-  {% assign image = image | split: "src='" %}
-  {% assign image = image[1] | split: "'" %}
-  {% assign image = image[0] %}
-{% else %}
-  {% assign image = post.excerpt %}
-{% endif %}
-
 <div class="{{ include.type | default: "list" }}__item">
   <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
     <div class="archive__item-content">
@@ -53,17 +44,9 @@
       </div>
       
       <div class="archive__item-image">
-        <img src="{{ image }}" alt="">
+        <img src="{{ post.image }}" width="100%" alt="">
       </div>
     </div>
-
-    {% if post.citation and post.paperurl %}
-      <p>Recommended citation: {{ post.citation }} <a href="{{ post.paperurl }}"><u>{{ post.paperurl }}</u></a></p>
-    {% elsif post.citation %}
-      <p>Recommended citation: {{ post.citation }} </p>
-    {% elsif post.paperurl %}
-      <p>Download <a href=" {{ post.paperurl }} "><u>here</u></a></p>
-    {% endif %}
   </article>
 </div>
 

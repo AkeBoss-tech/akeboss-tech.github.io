@@ -1,6 +1,7 @@
 ---
 title: "FBLA Coding and Programming Project"
-excerpt: "CTE Partnerships a website bringing information about local businesses together! <br/><img src='/images/portfolio/fbla/main.png' width='375' height='263'>"
+excerpt: "CTE Partnerships a website bringing information about local businesses together!"
+image: "/images/portfolio/fbla/main.png"
 collection: portfolio
 ---
 

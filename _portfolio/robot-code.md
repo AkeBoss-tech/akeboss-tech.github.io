@@ -1,6 +1,7 @@
 ---
 title: "FRC Robot Code"
-excerpt: "Team 1257's 2024 Robot Code <br/><img src='/images/portfolio/2024.png' width='375' height='263'>"
+excerpt: "Team 1257's 2024 Robot Code"
+image: "/images/portfolio/2024.png"
 collection: portfolio
 ---
 # Team 1257's 2024 Robot Code.

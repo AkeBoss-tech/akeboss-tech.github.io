@@ -1,6 +1,7 @@
 ---
 title: "A* Path Finder Visualizer"
-excerpt: "A pygame program to visualize the A* algorithm in action.<br/><img src='/images/portfolio/random_environment.png' width='375' height='263'>"
+excerpt: "A pygame program to visualize the A* algorithm in action."
+image: "/images/portfolio/random_environment.png"
 collection: portfolio
 ---
 

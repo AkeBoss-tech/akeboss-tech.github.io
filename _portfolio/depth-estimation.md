@@ -1,6 +1,7 @@
 ---
 title: "MSDS Final: Depth Estimation"
-excerpt: "CTE Partnerships a website bringing information about local businesses together! <br/><img src='/images/portfolio/stereo/poster.png' width='375' height='263'>"
+excerpt: "CTE Partnerships a website bringing information about local businesses together!"
+image: "/images/portfolio/stereo/poster.png"
 collection: portfolio
 ---
 

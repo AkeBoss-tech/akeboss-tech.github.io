@@ -1,6 +1,7 @@
 ---
 title: "FBLA Portfolio Making Android App"
-excerpt: "An Android app for people to make and share portfolios! <br/><img src='/images/portfolio/android/title.png' width='375' height='263'>"
+excerpt: "An Android app for people to make and share portfolios!"
+image: "/images/portfolio/android/title.png"
 collection: portfolio
 ---
 

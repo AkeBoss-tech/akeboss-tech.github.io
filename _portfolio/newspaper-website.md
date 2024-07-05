@@ -1,6 +1,7 @@
 ---
 title: "The Campus Chronicle Website"
-excerpt: "The UCVTS Newspaper Club's new website! <br/><img src='/images/portfolio/newspaper/front_page.png' width='375' height='263'>"
+excerpt: "The UCVTS Newspaper Club's new website!"
+image: "/images/portfolio/newspaper/front_page.png"
 collection: portfolio
 ---
 

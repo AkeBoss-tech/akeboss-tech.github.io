@@ -1,6 +1,7 @@
 ---
 title: "ASD Racing Game"
-excerpt: "A 3D racing game made with the Godot game engine! <br/><img src='/images/portfolio/racing/title.png' width='375' height='263'>"
+excerpt: "A 3D racing game made with the Godot game engine!"
+image: "/images/portfolio/racing/title.png"
 collection: portfolio
 ---
 
