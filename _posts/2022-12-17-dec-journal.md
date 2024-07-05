@@ -2,7 +2,7 @@
 title: 'December Journal'
 date: 2022-12-17
 permalink: /posts/december-journal/
-image: "https://picsum.photos/id/235/200/300"
+image: "https://picsum.photos/id/235/200/200"
 tags:
   - journal
   - life
