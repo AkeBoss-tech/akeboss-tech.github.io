@@ -29,16 +29,13 @@ author: Akash Dubey
 }
 
 .color-transition {
-  font-size: 45px;
-  font-weight: bold;
-  margin: 0 0 0;
-  animation: color-change 5s infinite;
+  animation: color-change 5s infinite alternate;
 }
 </style>
 
 <!-- center name -->
 <div class="text-center mb-2">
-  <p class="color-transition">Akash Dubey</p>
+  <p class="color-transition" style="  font-size: 45px; font-weight: bold; margin: 0 0 0;">Akash Dubey</p>
   <!-- add a bunch of logos to social sites -->
   <div class="row">
     {% if site.author.uri %}
