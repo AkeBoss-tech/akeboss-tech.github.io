@@ -104,10 +104,10 @@ $xing-color                 : #006567;
 
 /* links */
 $link-color                 : $green;
-$link-color-hover           : mix(#000, $green, 25%);
+$link-color-hover           : mix($white, $green, 25%);
 $link-color-visited         : $orange;
 $masthead-link-color        : $primary-color;
-$masthead-link-color-hover  : mix(#000, $primary-color, 25%);
+$masthead-link-color-hover  : mix($white, $primary-color, 25%);
 
 
 /*
