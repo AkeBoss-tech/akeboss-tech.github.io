@@ -5,6 +5,7 @@ html {
   /* sticky footer fix */
   position: relative;
   min-height: 100%;
+  color: $text-color;
 }
 
 body {
@@ -67,6 +68,10 @@ p {
   color: $text-color;
 }
 
+li {
+  color: $text-color;
+}
+
 u,
 ins {
   text-decoration: none;
@@ -125,6 +130,7 @@ a {
   &:hover,
   &:active {
     outline: 0;
+    color: $white;
   }
 }
 

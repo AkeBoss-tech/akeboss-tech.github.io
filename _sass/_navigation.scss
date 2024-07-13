@@ -189,6 +189,10 @@
     }
   }
 
+  .main_title a:hover {
+    color: $green;
+  }
+
   button {
     position: absolute;
     height: 100%;
