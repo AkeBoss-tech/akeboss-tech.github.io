@@ -189,19 +189,39 @@
     }
   }
 
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0%;
+      color: $white;
+    }
+    33% {
+      background-position: 33%;
+      color: $orange;
+    }
+    66% {
+      background-position: 66%;
+      color: $green;
+    }
+    100% {
+      background-position: 100%;
+      color: $purple;
+    }
+  }
+  
   .main_title a {
-    color: $white; // Initial color if needed
+    color: $white; // Initial color
     // Use webkit for older browser support
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
-    background-image: linear-gradient(to right, $white, $green, $purple);
-    background-size: 200%;
-    transition: background-position 1s ease-in-out;
+    background-image: linear-gradient(to right, $white, $orange, $green, $purple);
+    background-size: 200% 100%;
+    background-position: 0%;
+    transition: color 1s ease-in-out;
   
     &:hover {
-      background-position: -100%;
+      animation: gradient-animation 2s forwards;
     }
   }
 
