@@ -189,8 +189,20 @@
     }
   }
 
-  .main_title a:hover {
-    color: $green;
+  .main_title a {
+    color: $white; // Initial color if needed
+    // Use webkit for older browser support
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    background-image: linear-gradient(to right, $white, $green, $purple);
+    background-size: 200%;
+    transition: background-position 1s ease-in-out;
+  
+    &:hover {
+      background-position: -100%;
+    }
   }
 
   button {
@@ -200,7 +212,7 @@
     padding: 0 0.5rem;
     border: 0;
     outline: none;
-    background-color: $primary-color;
+    background-color: transparent;
     color: #fff;
     cursor: pointer;
   }
@@ -261,7 +273,7 @@
     padding: 5px;
     border: 1px solid $border-color;
     border-radius: $border-radius;
-    background: #fff;
+    background: $black;
     box-shadow: 0 0 10px rgba(#000, 0.25);
 
     a {
@@ -271,7 +283,7 @@
 
       &:hover {
         color: $masthead-link-color-hover;
-        background: mix(#fff, $primary-color, 75%);
+        background: $dark-gray;
       }
     }
 
