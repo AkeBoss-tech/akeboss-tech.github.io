@@ -21,6 +21,35 @@ body {
   }
 }
 
+/*** Works on common browsers ***/
+::selection {
+  background-color: $purple;
+  color: $text-color;
+}
+
+/*** Mozilla based browsers ***/
+::-moz-selection {
+  background-color: $purple;
+  color: $text-color;
+}
+
+/***For Other Browsers ***/
+::-o-selection {
+  background-color: $purple;
+  color: $text-color;
+}
+
+::-ms-selection {
+  background-color: $purple;
+  color: $text-color;
+}
+
+/*** For Webkit ***/
+::-webkit-selection {
+  background-color: $purple;
+  color: $text-color;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 2em 0 0.5em;
   line-height: 1.2;
