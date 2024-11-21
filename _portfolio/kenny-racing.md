@@ -5,7 +5,7 @@ image: "/images/portfolio/racing/title.png"
 collection: portfolio
 ---
 
-<h1 align="center"><a href="https://github.com/AkeBoss-tech/fbla-website-app">Kenny's Racing Game</a></h1>
+<h1 align="center"><a href="https://github.com/AkeBoss-tech/ASD-final-project">Kenny's Racing Game</a></h1>
 
 <p align="center">By: Akash Dubey, Bryan Ly, and Ani Tiwary</p> 
 
