@@ -12,6 +12,18 @@ redirect_from:
   <p>Berkeley Heights, NJ | 212-814-3681 | akash.dubey@rutgers.edu</p>
 </div>
 
+Instead of being a real CV. This is a list of everything I've ever done.
+Education
+======
+* School of Arts and Science, Rutgers University Honors College, New Brunswick, NJ
+  * Major in Computer Science and Mathematics
+  * Minor in Quantitative Economics
+  * Graduate Anticipated (Sept. 2024 -May 2027)
+  * GPA: 4.0
+* Academy for Information Technology, Union County Vocational-Technical Schools, Scotch Plains, NJ
+  * Graduate (Sept. 2020 - June 2024)
+  * QPA: 97.92
+
 Certifications
 ======
 * Microsoft Word 2019: Microsoft, Dec. 2020
@@ -26,6 +38,12 @@ Certifications
 
 [Credly Profile](https://www.credly.com/users/akash-dubey.0b4eb82d/badges)  
 
+Work Experience
+======
+* Front-end Software Engineer for Samaritan Scout
+  * A search engine for volunteer opportunities in NJ
+  * May 2023 - Aug. 2024
+
 Volunteer Experience
 ======
 * English Instructor for English as a Second Language at The Connection, 79 Maple Street, Summit, NJ
@@ -33,26 +51,44 @@ Volunteer Experience
   * Dec. 2022 - Present
 * Book Shelving Volunteer at Berkeley Heights Public Library, 29 Park Avenue, Berkeley Heights, NJ
 
-Education
-======
-* Academy for Information Technology, Union County Vocational-Technical Schools, Scotch Plains, NJ
-  * Graduate (Sept. 2020 - June 2024)
-  * Current QPA: 97.92
-  * SAT R&W 780 - Math 800
-  ### Vocational Skills
-  * Computer Applications in Business
-  * Principles of Business and Finance
-  * AP Computer Science Principles - 5
-  * AP Computer Science A - 5
-  * AP Macro/Microeconomics - 5 / 5
 
-Work Experience
+Extracurricular Activities
 ======
-* Front-end Software Engineer for Samaritan Scout
-  * A search engine for volunteer opportunities in NJ
-  * May 2023 - Present
+* Competitive Organizations
+  * Rutgers Economics Lab
+    * Oct. 2024 - Present
+* Clubs
+  * Quantitative Finance Club
+    * Sept. 2024 - Present
+  * Road to Silicon V/Alley & Rutgers Entrepreneurial Society
+    * 2nd Place at TechStart Challenge 
+  * Rutgers Undergraduate Math Association
+    * Sept. 2024 - Present
 
-Clubs
+Competitions and Hackathons
+======
+* TechStart Challenge
+  * 2nd Place
+  * Road to Silicon V/Alley & Rutgers Entrepreneurial Society
+  * Nov. 2024
+* RUHealthHacks
+  * Rutgers University
+  * Some prize
+  * Oct. 2024
+
+Projects
+======
+* Apps
+  * [Economic Series and Feature Plotter](https://github.com/akeboss-tech/fedchallenge/)
+* Data Analysis
+  * [Analysis of the Rutgers Bus System](https://github.com/AkeBoss-tech/RutgersBusAnalysis)
+* Simple
+  * [RAG Chat App](https://github.com/AkeBoss-tech/RAG-Chat-App)
+  * [Song Lyric Romanizer](https://github.com/AkeBoss-tech/SongLyricsRomanized)
+  * [Black Scholes Model Calculator](https://github.com/AkeBoss-tech/BlackScholesCalculator)
+  * [Spotify API Data Reader](https://github.com/AkeBoss-tech/spotify-data-reader)
+
+High School Clubs
 ======
 * AIT Math League Officer & President
   * Sept. 2021 - June 2024
@@ -76,7 +112,7 @@ Clubs
   * Sept. 2023 - June 2024
   * Instructed members through introductory and advanced coding workshops; Advertised club in district; Participated in (now helping organize) coding competitions.
 
-Awards
+High School Awards
 ======
 * Dean’s List Semifinalist
   * 2023 FIRST Robotics Season
@@ -102,12 +138,15 @@ Test Scores
 * AP Calculus AB 2021 - 5
 * AP Calculus BC 2022 - 5
   * AB Subscore 5
+* AP Computer Science Principles 2022 - 5
 * AP Statistics 2022 - 5
+* AP Computer Science A - 5
 * AP Physics C: Mechanics 2023 - 5
-* AP Physics C: Electricity and Magnetism 2024 - n/a
-* AP Chemistry 2024 - n/a
-* AP English Language 2024 - n/a
-* AP United States History 2024 - n/a
+* AP Micro/Macro Economics 2023 - 5, 5
+* AP Physics C: Electricity and Magnetism 2024 - 5
+* AP Chemistry 2024 - 5
+* AP English Language 2024 - 5
+* AP United States History 2024 - 5
 
 Other Skills
 ======
@@ -130,22 +169,20 @@ Other Skills
 
 Projects
 =======
-* Programming Projects on GitHub
-  * 2022 - Present
 * Math League Participation Leaderboard Website
-  * Math League, 2021 - Present
+  * Math League, 2021 - 2024
   * Google App Script connected to a Google Sheet with math league participation data at competitions. Used to reward top three math league participants every marking period.
 * FRC Robot Code
-  * Team 1257, 2021 - Present
+  * Team 1257, 2021 - 2024
   * High-level robot code with computer vision, on-the-fly trajectory generation, simulation, and smart end-effector control. Won us the Autonomous Award.
 * Resources Website for Non-native English Speakers
-  * English as a Second Language, 2023 - Present
+  * English as a Second Language, 2023 - 2024
   * Created to compile resources for English learners and new NJ residents based on information requested in-class.
 * ESL Worksheet Maker with NLTK and LLMs
-  * English as a Second Language, 2023 - Present
+  * English as a Second Language, 2023 - 2024
   * Python code to generate simple types of English worksheets using natural language processing, large language models, and text scraped from an English website.
 * AI Tutor for English Speakers
-  * English as a Second Language, 2023 - Present
+  * English as a Second Language, 2023 - 2024
   * Website with text-to-speech, voice recognition, and ChatGPT to teach people how to interact with it and practice English conversations.
 * FRC Strategy Web App and QR Code Scanner
   * Team 1257, January 2023
@@ -154,7 +191,7 @@ Projects
   * AP Calculus BC Final Project, June 2022
   * Python App that can solve calculus problems and generate 20 different multiple choice question types for AP Calculus BC students. Calculus programmed in from scratch.
 * New Newspaper Club Website
-  * Newspaper Club, May 2023 - Present
+  * Newspaper Club, May 2023 - 2024
   * Based on a Jekyll template, custom website for the Newspaper club to share articles and other important club information. Uses Liquid templates and Markdown to make adding new articles easier.
 * Path Finder and Driver
   * June 2023 - Aug. 2023
@@ -166,7 +203,7 @@ Projects
   * June 2023 - Present
   * Created a machine learning parody for my linear algebra final. I used this same process to create parodies in other classes and made a program to help make them.
 * Programming for Classes
-  * Sept. 2021 - Present
+  * Sept. 2021 - 2024
   * ASA Fall Data Challenge Graphs in Mathematical Statistics & Data Sciences, Android App for portfolio generation, and AP CSA and CSP projects
 
 LinkedIn: [Akash Dubey LinkedIn](https://www.linkedin.com/in/akash-dubey-your-boss/)  
