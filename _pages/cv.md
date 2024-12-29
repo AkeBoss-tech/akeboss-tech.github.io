@@ -13,6 +13,7 @@ redirect_from:
 </div>
 
 Instead of being a real CV. This is a list of everything I've ever done.
+
 Education
 ======
 * School of Arts and Science, Rutgers University Honors College, New Brunswick, NJ
