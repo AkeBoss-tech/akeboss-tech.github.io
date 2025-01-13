@@ -9,12 +9,63 @@ layout: compress
   <head>
     {% include head.html %}
     {% include head/custom.html %}
+    <style>
+      .stars-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        background: linear-gradient(to bottom, #0d1117 0%, #161b22 100%);
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle var(--twinkle-duration) infinite ease-in-out;
+      }
+
+      .shooting-star {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        animation: shoot 8s infinite ease-out;
+        opacity: 0;
+      }
+
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes shoot {
+        0% {
+          transform: translate(0, 0) rotate(-45deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(300px, 300px) rotate(-45deg);
+          opacity: 0;
+        }
+      }
+
+      #main {
+        background: transparent !important;
+      }
+    </style>
   </head>
 
   <body>
-
     {% include browser-upgrade.html %}
     {% include masthead.html %}
+
+    <!-- Stars container -->
+    <div class="stars-container" id="starsContainer"></div>
 
     {{ content }}
 
@@ -24,8 +75,41 @@ layout: compress
         {% include footer.html %}
       </footer>
     </div>
-
+    
     {% include scripts.html %}
 
+    <!-- Stars script -->
+    <script>
+      function createStars() {
+        const container = document.getElementById('starsContainer');
+        const starCount = 200;
+        const shootingStarCount = 3;
+
+        // Create twinkling stars
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.width = Math.random() * 3 + 'px';
+          star.style.height = star.style.width;
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.setProperty('--twinkle-duration', (Math.random() * 3 + 2) + 's');
+          container.appendChild(star);
+        }
+
+        // Create shooting stars
+        for (let i = 0; i < shootingStarCount; i++) {
+          const shootingStar = document.createElement('div');
+          shootingStar.className = 'shooting-star';
+          shootingStar.style.left = Math.random() * 100 + '%';
+          shootingStar.style.top = Math.random() * 100 + '%';
+          shootingStar.style.animationDelay = (Math.random() * 8) + 's';
+          container.appendChild(shootingStar);
+        }
+      }
+
+      // Call the function when the page loads
+      document.addEventListener('DOMContentLoaded', createStars);
+    </script>
   </body>
 </html>
