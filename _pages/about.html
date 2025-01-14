@@ -31,11 +31,58 @@ author: Akash Dubey
 .color-transition {
   animation: color-change 5s infinite alternate;
 }
+
+.rotating-light-border {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  z-index: -1;
+}
+
+.rotating-light-border img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.rotating-light-border::before {
+  content: '';
+  position: absolute;
+  top: -5px; /* Adjust to create space for the border */
+  left: -5px;
+  width: 210px; /* Same as width + 2 * space above */
+  height: 210px; /* Same as height + 2 * space above */
+  border-radius: 50%;
+  /* border: 5px solid transparent; */ /* Adjust thickness here */
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.1),
+    white,
+    rgba(255, 255, 255, 0.1)
+  );
+  animation: rotate-light 20s ease-in infinite;
+  z-index: -1;
+}
+
+@keyframes rotate-light {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 </style>
 
 <!-- center name -->
 <div class="text-center mb-2">
-  <img src="{{ base_path }}/images/face.jpg" alt="Akash Dubey" style="border-radius: 50%; width: 200px; height: 200px;">
+  <div class="rotating-light-border">
+    <img src="{{ base_path }}/images/face.jpg" alt="Akash Dubey">
+  </div>
+  
   <p class="color-transition" style="  font-size: 45px; font-weight: bold; margin: 0 0 0;">Akash Dubey</p>
   <!-- add a bunch of logos to social sites -->
   <div class="row">
