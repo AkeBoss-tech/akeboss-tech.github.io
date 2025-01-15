@@ -7,5 +7,10 @@ author_profile: false
 
 {% include base_path %}
 {% for post in site.pages %}
-  {% include archive-single.html %}
+  {% if post.id %}
+    {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+  {% else %}
+    {% assign title = post.title %}
+  {% endif %}
+  <a href="{{ base_path }}{{ post.url }}">{{ title }}</a>
 {% endfor %}
