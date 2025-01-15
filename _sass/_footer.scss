@@ -83,6 +83,38 @@
   .fa {
     color: $light-gray;
   }
+
+  .crater {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .crater-1 {
+    width: 80px;
+    height: 80px;
+    top: 36%;
+    left: 15%;
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .crater-2 {
+    width: 60px;
+    height: 61px;
+    top: 61%;
+    left: 75%;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .crater-3 {
+    width: 40px;
+    height: 40px;
+    top: 32%;
+    left: 84%;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
 }
 
 .page__footer-copyright {
