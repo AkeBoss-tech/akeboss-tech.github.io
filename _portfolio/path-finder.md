@@ -3,6 +3,7 @@ title: "A* Path Finder Visualizer"
 excerpt: "A pygame program to visualize the A* algorithm in action."
 image: "/images/portfolio/random_environment.png"
 collection: portfolio
+rank: 9
 ---
 
 # Path Finder using the A* Algorithm

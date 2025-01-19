@@ -3,6 +3,7 @@ title: "The Campus Chronicle Website"
 excerpt: "The UCVTS Newspaper Club's new website!"
 image: "/images/portfolio/newspaper/front_page.png"
 collection: portfolio
+rank: 4
 ---
 
 <img src='/images/portfolio/newspaper/front_page.png'>

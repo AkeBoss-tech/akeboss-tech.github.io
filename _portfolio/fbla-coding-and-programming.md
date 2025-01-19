@@ -3,6 +3,7 @@ title: "FBLA Coding and Programming Project"
 excerpt: "CTE Partnerships a website bringing information about local businesses together!"
 image: "/images/portfolio/fbla/main.png"
 collection: portfolio
+rank: 10
 ---
 
 <h1 align="center"><a href="https://github.com/AkeBoss-tech/fbla-website-app">CTE Partnerships</a></h1>

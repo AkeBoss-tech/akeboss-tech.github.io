@@ -3,6 +3,7 @@ title: "MSDS Final: Depth Estimation"
 excerpt: "CTE Partnerships a website bringing information about local businesses together!"
 image: "/images/portfolio/stereo/poster.png"
 collection: portfolio
+rank: 5
 ---
 
 <h1 align="center"><a href="https://github.com/AkeBoss-tech/3d-stereo-camera/">Using Machine Learning and Stereo Vision to Predict the Position of an Object in an Image</a></h1>

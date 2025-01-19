@@ -3,6 +3,7 @@ title: "High School Programming Projects"
 excerpt: "MSDS and Advanced Software Development Projects"
 image: "/images/portfolio/home.png"
 collection: portfolio
+rank: 10
 ---
 todo: add descriptions
 

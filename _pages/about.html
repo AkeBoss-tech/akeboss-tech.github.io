@@ -214,7 +214,8 @@ author: Akash Dubey
 <div class="text-center mt-3">
   <h3>Projects</h3>
   <div class="row">
-    {% for post in site.portfolio %}
+    {% assign sorted_portfolio = site.portfolio | sort: 'rank' %}
+    {% for post in sorted_portfolio %}
       {% if post.id %}
         {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
       {% else %}

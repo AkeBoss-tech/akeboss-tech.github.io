@@ -3,6 +3,7 @@ title: "ASD Racing Game"
 excerpt: "A 3D racing game made with the Godot game engine!"
 image: "/images/portfolio/racing/title.png"
 collection: portfolio
+rank: 3
 ---
 
 <h1 align="center"><a href="https://github.com/AkeBoss-tech/ASD-final-project">Kenny's Racing Game</a></h1>

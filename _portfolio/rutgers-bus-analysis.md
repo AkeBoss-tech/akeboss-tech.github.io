@@ -3,6 +3,7 @@ title: "Rutgers Bus Analysis"
 excerpt: "A comprehensive data analysis of the Rutgers University bus transit system"
 image: "/images/portfolio/bus/bus-data.png"
 collection: portfolio
+rank: 2
 ---
 
 <p align="center">Analysis by Akash Dubey</p> 

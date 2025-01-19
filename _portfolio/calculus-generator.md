@@ -3,6 +3,7 @@ title: "AP Calculus Problem Generator"
 excerpt: "a calculus problem generator made for final project"
 image: "/images/portfolio/home.png"
 collection: portfolio
+rank: 10
 ---
 
 I basically created a program that could find the derivatives and integrals of most functions used in AP Calculus AB and BC. 
