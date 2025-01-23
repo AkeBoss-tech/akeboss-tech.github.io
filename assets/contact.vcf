@@ -3,23 +3,19 @@ VERSION:3.0
 N:Dubey;Akash;;;
 FN:Akash Dubey
 BDAY;VALUE=date:2006-07-11
-item1.X-APPLE-SUBLOCALITY:Stony Hill
-item1.ADR;TYPE=HOME;TYPE=pref:;;674 Plainfield Ave;Berkeley Heights;NJ;0792
- 2;United States
-item1.X-ABADR:US
-item2.ADR:;;5 Seminary Place;New Brunswick;NJ;;United States
-item2.X-ABLABEL:_$!<School>!$_
-item2.X-ABADR:us
+item1.ADR;TYPE=pref:;;5 Seminary Place;New Brunswick;NJ;;United States
+item1.X-ABLABEL:_$!<School>!$_
+item1.X-ABADR:us
 TEL;TYPE=CELL;TYPE=pref;TYPE=VOICE:(212) 814-3681
-item3.URL;TYPE=pref:http://akeboss-tech.github.io
-item3.X-ABLABEL:_$!<HomePage>!$_
+item2.URL;TYPE=pref:http://akeboss-tech.github.io
+item2.X-ABLABEL:_$!<HomePage>!$_
 EMAIL;TYPE=HOME;TYPE=pref;TYPE=INTERNET:akashdub06@gmail.com
-item4.EMAIL;TYPE=INTERNET:akash.dubey@rutgers.edu
-item4.X-ABLABEL:_$!<School>!$_
+item3.EMAIL;TYPE=INTERNET:akash.dubey@rutgers.edu
+item3.X-ABLABEL:_$!<School>!$_
 X-SOCIALPROFILE;X-USER=akash-dubey-your-boss;TYPE=linkedin:https://www.link
  edin.com/in/akash-dubey-your-boss
 PRODID:-//Apple Inc.//iCloud Web Address Book 2428B27//EN
-REV:2025-01-15T03:50:41Z
+REV:2025-01-23T16:16:53Z
 X-SHARED-PHOTO-DISPLAY-PREF:ALWAYS_ASK
 X-IMAGETYPE:PHOTO
 X-IMAGEHASH:vB1JNUDrt22iGk4G4x7blw==
