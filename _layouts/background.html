@@ -1,0 +1,264 @@
+---
+---
+
+{% include base_path %}
+
+<!doctype html>
+<html lang="{{ site.locale | slice: 0,2 }}" class="no-js">
+  <head>
+    {% include head.html %}
+    
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .stars-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        background: linear-gradient(to bottom, #0d1117 0%, #161b22 100%);
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle var(--twinkle-duration) infinite ease-in-out;
+      }
+
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+
+      .content-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        transform: scale(1.5);
+      }
+
+      /* Copied styles from about page */
+      @keyframes color-change {
+        0% { color: white; }
+        33% { color: #FE5801; }
+        66% { color: #57CD80; }
+        100% { color: #C50070; }
+      }
+
+      .color-transition {
+        animation: color-change 5s infinite alternate;
+      }
+
+      .rotating-light-border {
+        position: relative;
+        display: inline-block;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        z-index: 1;
+      }
+
+      .rotating-light-border img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+      }
+
+      .rotating-light-border::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: 210px;
+        height: 210px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 0deg,
+          rgba(255, 255, 255, 0.1),
+          white,
+          rgba(255, 255, 255, 0.1)
+        );
+        animation: rotate-light 20s ease-in infinite;
+        z-index: -1;
+      }
+
+      @keyframes rotate-light {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .social-icons {
+        margin-top: 20px;
+      }
+
+      .social-icons a {
+        color: white;
+        margin: 0 10px;
+        font-size: 1.5em;
+        text-decoration: none;
+      }
+
+      .social-icons a:hover {
+        color: #FE5801;
+      }
+
+      .enter-site-btn {
+        margin-top: 30px;
+        padding: 10px 20px;
+        background-color: #FE5801;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+      }
+
+      .enter-site-btn:hover {
+        background-color: #C50070;
+      }
+      
+      a {
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="stars-container" id="starsContainer"></div>
+    
+    <div class="content-wrapper">
+      <div class="text-center">
+        <div class="rotating-light-border">
+          <img src="{{ base_path }}/images/face.jpg" alt="Akash Dubey">
+        </div>
+        
+        <p class="color-transition" style="font-size: 45px; font-weight: bold; margin-top: 20px; margin-bottom: 5px;">Akash Dubey</p>
+        
+        <!-- add a bunch of logos to social sites -->
+        <div class="row">
+            {% if site.author.uri %}
+            <a href="{{ site.author.uri }}"><i class="fas fa-fw fa-link" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.email %}
+            <a href="mailto:{{ site.author.email }}"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.keybase %}
+            <a href="https://keybase.io/{{ site.author.keybase }}"><i class="fas fa-fw fa-key" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.researchgate %}
+            <a href="{{ site.author.researchgate }}"><i class="fab fa-fw fa-researchgate" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.twitter %}
+            <a href="https://twitter.com/{{ site.author.twitter }}"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.facebook %}
+            <a href="https://www.facebook.com/{{ site.author.facebook }}"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.google_plus %}
+            <a href="https://plus.google.com/+{{ site.author.google_plus }}"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.linkedin %}
+            <a href="https://www.linkedin.com/in/{{ site.author.linkedin }}"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.xing %}
+            <a href="https://www.xing.com/profile/{{ site.author.xing }}"><i class="fab fa-fw fa-xing-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.instagram %}
+            <a href="https://instagram.com/{{ site.author.instagram }}"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.tumblr %}
+            <a href="https://{{ site.author.tumblr }}.tumblr.com"><i class="fab fa-fw fa-tumblr-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.bitbucket %}
+            <a href="https://bitbucket.org/{{ site.author.bitbucket }}"><i class="fab fa-fw fa-bitbucket" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.github %}
+            <a href="https://github.com/{{ site.author.github }}"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.stackoverflow %}
+            <a href="https://www.stackoverflow.com/users/{{ site.author.stackoverflow }}"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.lastfm %}
+            <a href="https://lastfm.com/user/{{ site.author.lastfm }}"><i class="fab fa-fw fa-lastfm-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.dribbble %}
+            <a href="https://dribbble.com/{{ site.author.dribbble }}"><i class="fab fa-fw fa-dribbble-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.pinterest %}
+            <a href="https://www.pinterest.com/{{ site.author.pinterest }}"><i class="fab fa-fw fa-pinterest" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.foursquare %}
+            <a href="https://foursquare.com/{{ site.author.foursquare }}"><i class="fab fa-fw fa-foursquare" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.steam %}
+            <a href="https://steamcommunity.com/id/{{ site.author.steam }}"><i class="fab fa-fw fa-steam-square" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.youtube %}
+            <a href="{{ site.author.youtube }}"><i class="fab fa-fw fa-youtube" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.soundcloud %}
+            <a href="https://soundcloud.com/{{ site.author.soundcloud }}"><i class="fab fa-fw fa-soundcloud" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.weibo %}
+            <a href="https://www.weibo.com/{{ site.author.weibo }}"><i class="fab fa-fw fa-weibo" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.flickr %}
+            <a href="https://www.flickr.com/{{ site.author.flickr }}"><i class="fab fa-fw fa-flickr" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.codepen %}
+            <a href="https://codepen.io/{{ site.author.codepen }}"><i class="fab fa-fw fa-codepen" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.vine %}
+            <a href="https://vine.co/u/{{ site.author.vine }}"><i class="fab fa-fw fa-vine" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.discord %}
+            <a href="https://discord.com/{{ site.author.discord }}"><i class="fab fa-fw fa-discord" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.kaggle %}
+            <a href="https://kaggle.com/{{ site.author.kaggle }}"><i class="fab fa-fw fa-kaggle" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.khanacademy %}
+            <a href="https://khanacademy.org/profile/{{ site.author.khanacademy }}"><i class="fab fa-fw fa-safari" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.googlescholar %}
+            <a href="{{ site.author.googlescholar }}"><i class="fas fa-fw fa-graduation-cap"></i></a>
+            {% endif %}
+            {% if site.author.pubmed %}
+            <a href="{{ site.author.pubmed }}"><i class="ai ai-pubmed-square ai-fw"></i></a>
+            {% endif %}
+            {% if site.author.orcid %}
+            <a href="{{ site.author.orcid }}"><i class="ai ai-orcid-square ai-fw"></i></a>
+            {% endif %}
+            {% if site.author.impactstory %}
+            <a href="{{ site.author.impactstory }}"><i class="ai ai-impactstory ai-fw"></i></a>
+            {% endif %}
+            {% if site.author.wikipedia %}
+            <a href="https://en.wikipedia.org/wiki/User:{{ site.author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if site.author.spotify %}
+            <a href="{{ site.author.spotify }}"><i class="fab fa-fw fa-spotify" aria-hidden="true"></i></a>
+            {% endif %}
+        </div>
+
+      </div>
+    </div>
+
+    {% include scripts.html %}
+    </body>
+</html>
