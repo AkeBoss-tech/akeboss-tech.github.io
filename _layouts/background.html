@@ -50,7 +50,13 @@
         align-items: center;
         padding: 20px;
         box-sizing: border-box;
-        transform: scale(1.5);
+      }
+
+      /* Only apply scaling on larger screens */
+      @media screen and (min-width: 1024px) {
+        .content-wrapper {
+          transform: scale(1.5);
+        }
       }
 
       /* Copied styles from about page */
