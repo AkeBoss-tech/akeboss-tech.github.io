@@ -14,67 +14,125 @@ author: Akash Dubey
 <!-- Use bootstrap to format the content -->
 <style>
   @keyframes color-change {
-  0% {
-    color: white;
+    0% { color: #FF1E1E; }
+    20% { color: #FFB800; }
+    40% { color: #00FF66; }
+    60% { color: #00FFFF; }
+    80% { color: #FF00FF; }
+    100% { color: #FF1E1E; }
   }
-  33% {
-    color: #FE5801;
+
+  .color-transition {
+    animation: color-change 8s infinite;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
   }
-  66% {
-    color: #57CD80;
+
+  @keyframes rainbow-button {
+    0% { background: linear-gradient(45deg, #FF1E1E, #FFB800); }
+    25% { background: linear-gradient(45deg, #FFB800, #00FF66); }
+    50% { background: linear-gradient(45deg, #00FF66, #00FFFF); }
+    75% { background: linear-gradient(45deg, #00FFFF, #FF00FF); }
+    100% { background: linear-gradient(45deg, #FF00FF, #FF1E1E); }
   }
-  100% {
-    color: #C50070;
+
+  .btn--primary {
+    animation: rainbow-button 8s infinite;
+    transition: transform 0.3s ease;
+    background-image: linear-gradient(45deg, #FF1E1E, #FFB800) !important;
+    background-size: 200% 200% !important;
+    color: white !important;
+    border: none !important;
   }
-}
 
-.color-transition {
-  animation: color-change 5s infinite alternate;
-}
-
-.rotating-light-border {
-  position: relative;
-  display: inline-block;
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-  z-index: -1;
-}
-
-.rotating-light-border img {
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-}
-
-.rotating-light-border::before {
-  content: '';
-  position: absolute;
-  top: -5px; /* Adjust to create space for the border */
-  left: -5px;
-  width: 210px; /* Same as width + 2 * space above */
-  height: 210px; /* Same as height + 2 * space above */
-  border-radius: 50%;
-  /* border: 5px solid transparent; */ /* Adjust thickness here */
-  background: conic-gradient(
-    from 0deg,
-    rgba(255, 255, 255, 0.1),
-    white,
-    rgba(255, 255, 255, 0.1)
-  );
-  animation: rotate-light 20s ease-in infinite;
-  z-index: -1;
-}
-
-@keyframes rotate-light {
-  0% {
-    transform: rotate(0deg);
+  .btn--primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
   }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
+  .rotating-light-border {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+  }
+
+  .rotating-light-border img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .rotating-light-border img:hover {
+    transform: scale(1.05);
+  }
+
+  .rotating-light-border::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      #FF1E1E,
+      #FFB800,
+      #00FF66,
+      #00FFFF,
+      #FF00FF,
+      #FF1E1E
+    );
+    animation: rotate-light 8s linear infinite;
+    z-index: -1;
+  }
+
+  @keyframes rotate-light {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Social icons animation */
+  .fa-fw, .fab, .fas {
+    transition: all 0.3s ease;
+  }
+
+  .fa-fw:hover, .fab:hover, .fas:hover {
+    transform: scale(1.2);
+    color: #00FFFF;
+    text-shadow: 0 0 10px rgba(0,255,255,0.5);
+  }
+
+  /* Add smooth transitions to all elements */
+  * {
+    transition: all 0.3s ease;
+  }
+
+  /* Enhance iframe hover effects */
+  iframe {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    margin: 10px;
+  }
+
+  iframe:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  }
+
+  /* GitHub stats cards animation */
+  img[src*="github-readme-stats"] {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+  }
+
+  img[src*="github-readme-stats"]:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  }
 </style>
 
 <!-- center name -->
