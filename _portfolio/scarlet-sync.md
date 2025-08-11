@@ -6,7 +6,7 @@ collection: portfolio
 rank: 1
 ---
 
-<img src='/images/scarlet-sync/home.png' width='100%' align='center'>
+<img src='/images/portfolio/scarlet-sync/home.png' width='100%' align='center'>
 
 
 Navigating the complexities of university course registration can be a frustrating and time-consuming ordeal. Juggling degree requirements, professor preferences, campus locations, and personal availability often feels like a high-stakes puzzle with too many pieces. **Scarlet Sync** was born from this exact challenge, transforming the tedious process of scheduling into a seamless, intelligent, and user-friendly experience for Rutgers University students. It's more than just a CS project; it's a practical solution to a common problem.
