@@ -141,26 +141,9 @@ author: Akash Dubey
     text-align: center;
   }
 
-  .site-navigation {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1em;
-    margin: 2em 0;
-  }
-
-  .nav-button {
-    padding: 1em;
-    text-align: center;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-  }
-
-  .nav-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  /* Button styling to match home page */
+  .btn--primary {
+    margin: 0.5em;
   }
 
   @media (max-width: 768px) {
@@ -179,9 +162,6 @@ author: Akash Dubey
       margin: 0.3em;
     }
     
-    .site-navigation {
-      grid-template-columns: 1fr;
-    }
   }
 </style>
 
@@ -196,37 +176,9 @@ author: Akash Dubey
     <h1 class="color-transition" style="font-size: 50px; font-weight: bold; margin: 0.5em 0;">Akash Dubey</h1>
     <h2 style="color: #00FFFF; font-size: 1.5em; margin: 0;">Computer Science & Math Student</h2>
     <h3 style="color: #FFB800; font-size: 1.2em; margin: 0.5em 0;">Rutgers University Honors College</h3>
-  </div>
-
-  <!-- Personal Statement -->
-  <div class="personal-statement">
-    <p><strong>Passionate innovator</strong> at the intersection of technology and creativity</p>
-    <p><strong>10+ years</strong> of coding experience • <strong>Robotics enthusiast</strong> • <strong>Data science explorer</strong></p>
-    <p>Soccer player • Cricket fan • Always learning something new</p>
-    <p><em>"Building the future, one line of code at a time"</em></p>
-  </div>
-
-  <!-- Contact Information -->
-  <div class="contact-info">
-    <h2 style="color: #00FF66; margin-bottom: 1em; font-size: 2em;">Contact Information</h2>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
-      <span style="margin: 0.5em; color: #fff;">akash.dubey@rutgers.edu</span>
-      <span style="margin: 0.5em; color: #fff;">Berkeley Heights, NJ</span>
-    </div>
     
-    <!-- Download Contact Card -->
-    <a href="{{ base_path }}/assets/contact.vcf" 
-       class="btn btn--primary btn--lg" 
-       style="margin: 1em 0.5em;"
-       download="Akash_Dubey.vcf">
-      <i class="fas fa-address-card"></i> Add to Contacts
-    </a>
-  </div>
-
-  <!-- Social Media Links -->
-  <div class="text-center" style="margin: 2em 0;">
-    <h2 style="color: #FF00FF; margin-bottom: 1em; font-size: 2em;">Find Me Online</h2>
-    <div class="row" style="justify-content: center;">
+    <!-- Social Media Icons -->
+    <div class="row" style="justify-content: center; margin: 1em 0;">
       {% if site.author.email %}
         <a href="mailto:{{ site.author.email }}" title="Email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
       {% endif %}
@@ -254,28 +206,40 @@ author: Akash Dubey
     </div>
   </div>
 
+  <!-- Personal Statement -->
+  <div class="personal-statement">
+    <p><strong>Passionate innovator</strong> at the intersection of technology and creativity</p>
+    <p><strong>10+ years</strong> of coding experience • <strong>Robotics enthusiast</strong> • <strong>Data science explorer</strong></p>
+    <p>Soccer player • Cricket fan • Always learning something new</p>
+    <p><em>"Building the future, one line of code at a time"</em></p>
+  </div>
+
+  <!-- Contact Information -->
+  <div class="contact-info">
+    <h2 style="color: #00FF66; margin-bottom: 1em; font-size: 2em;">Contact Information</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+      <span style="margin: 0.5em; color: #fff;">akash.dubey@rutgers.edu</span>
+      <span style="margin: 0.5em; color: #fff;">Berkeley Heights, NJ</span>
+    </div>
+    
+    <!-- Download Contact Card -->
+    <a href="{{ base_path }}/assets/contact.vcf" 
+       class="btn btn--primary btn--lg" 
+       style="margin: 1em 0.5em;"
+       download="Akash_Dubey.vcf">
+      <i class="fas fa-address-card"></i> Add to Contacts
+    </a>
+  </div>
+
+
   <!-- Site Navigation -->
   <div style="margin: 2em 0;">
-    <h2 style="color: #FFB800; text-align: center; margin-bottom: 1.5em; font-size: 2em;">Explore My Digital World</h2>
-    <div class="site-navigation">
-      <a href="{{ base_path }}/" class="nav-button" style="background: linear-gradient(135deg, #FF1E1E, #FF6B6B); text-decoration: none;">
-        <i class="fas fa-home"></i><br>Home
-      </a>
-      <a href="{{ base_path }}/portfolio/" class="nav-button" style="background: linear-gradient(135deg, #FE5801, #FF8A50); text-decoration: none;">
-        <i class="fas fa-briefcase"></i><br>Portfolio
-      </a>
-      <a href="{{ base_path }}/year-archive/" class="nav-button" style="background: linear-gradient(135deg, #57CD80, #7ED321); text-decoration: none;">
-        <i class="fas fa-blog"></i><br>Blog Posts
-      </a>
-      <a href="{{ base_path }}/cv/" class="nav-button" style="background: linear-gradient(135deg, #C50070, #E91E63); text-decoration: none;">
-        <i class="fas fa-user-graduate"></i><br>CV
-      </a>
-      <a href="{{ base_path }}/files/resume.pdf" class="nav-button" style="background: linear-gradient(135deg, #00FFFF, #40E0D0); text-decoration: none;">
-        <i class="fas fa-file-pdf"></i><br>Resume
-      </a>
-      <a href="{{ base_path }}/background/" class="nav-button" style="background: linear-gradient(135deg, #FF00FF, #DA70D6); text-decoration: none;">
-        <i class="fas fa-info-circle"></i><br>Background
-      </a>
+    <h2 style="color: #FFB800; text-align: center; margin-bottom: 1.5em; font-size: 2em;">Explore My Site</h2>
+    <div class="row" style="justify-content: center; gap: 1em;">
+      <a class="btn btn--primary btn--lg" style="background-color: #FE5801; padding: 1.2em 2em; font-size: 1.2em;" href="{{ base_path }}/portfolio/">Portfolio</a>
+      <a class="btn btn--primary btn--lg" style="background-color: #FE5801; padding: 1.2em 2em; font-size: 1.2em;" href="{{ base_path }}/year-archive/">Blog Posts</a>
+      <a class="btn btn--primary btn--lg" style="background-color: #FE5801; padding: 1.2em 2em; font-size: 1.2em;" href="{{ base_path }}/files/resume.pdf">Resume</a>
+      <a class="btn btn--primary btn--lg" style="background-color: red; padding: 1.2em 2em; font-size: 1.2em;" href="{{ site.author.youtube }}">YouTube Channel</a>
     </div>
   </div>
 
@@ -284,22 +248,22 @@ author: Akash Dubey
     <h2 style="color: #00FF66; font-size: 2em;">Let's Build Something Amazing Together</h2>
     <p style="color: #fff; margin: 1em 0;">Whether it's a coding project, robotics challenge, or just a chat about tech and sports!</p>
     
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1em; margin: 1.5em 0;">
+    <div class="row" style="justify-content: center; gap: 1em; margin: 1.5em 0;">
       <a href="mailto:{{ site.author.email }}?subject=Let's Connect!" 
          class="btn btn--primary btn--lg" 
-         style="background: linear-gradient(135deg, #00FF66, #32CD32);">
+         style="background-color: #57CD80; padding: 1.2em 2em; font-size: 1.2em;">
         <i class="fas fa-envelope"></i> Send Email
       </a>
       
       <a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" 
          class="btn btn--primary btn--lg" 
-         style="background: linear-gradient(135deg, #0077B5, #0099CC);">
+         style="background-color: #57CD80; padding: 1.2em 2em; font-size: 1.2em;">
         <i class="fab fa-linkedin"></i> Connect on LinkedIn
       </a>
       
       <a href="https://github.com/{{ site.author.github }}" 
          class="btn btn--primary btn--lg" 
-         style="background: linear-gradient(135deg, #333, #666);">
+         style="background-color: #57CD80; padding: 1.2em 2em; font-size: 1.2em;">
         <i class="fab fa-github"></i> Follow on GitHub
       </a>
     </div>
