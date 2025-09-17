@@ -1,6 +1,6 @@
 ---
 permalink: /networking/
-title: "Connect With Me"
+title: "Networking"
 excerpt: "Digital networking card for Akash Dubey"
 author_profile: false
 redirect_from: 
@@ -104,6 +104,15 @@ author: Akash Dubey
     transition: all 0.3s ease;
   }
 
+  /* Remove underlines from all links */
+  a {
+    text-decoration: none !important;
+  }
+
+  a:hover {
+    text-decoration: none !important;
+  }
+
   .networking-card {
     background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
     backdrop-filter: blur(10px);
@@ -191,24 +200,24 @@ author: Akash Dubey
 
   <!-- Personal Statement -->
   <div class="personal-statement">
-    <p>🚀 <strong>Passionate innovator</strong> at the intersection of technology and creativity</p>
-    <p>💻 <strong>10+ years</strong> of coding experience • 🤖 <strong>Robotics enthusiast</strong> • 📊 <strong>Data science explorer</strong></p>
-    <p>⚽ Soccer player • 🏏 Cricket fan • 🎯 Always learning something new</p>
+    <p><strong>Passionate innovator</strong> at the intersection of technology and creativity</p>
+    <p><strong>10+ years</strong> of coding experience • <strong>Robotics enthusiast</strong> • <strong>Data science explorer</strong></p>
+    <p>Soccer player • Cricket fan • Always learning something new</p>
     <p><em>"Building the future, one line of code at a time"</em></p>
   </div>
 
   <!-- Contact Information -->
   <div class="contact-info">
-    <h3 style="color: #00FF66; margin-bottom: 1em;">📞 Let's Connect!</h3>
+    <h2 style="color: #00FF66; margin-bottom: 1em; font-size: 2em;">Contact Information</h2>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
-      <span style="margin: 0.5em; color: #fff;">📧 akash.dubey@rutgers.edu</span>
-      <span style="margin: 0.5em; color: #fff;">📍 Berkeley Heights, NJ</span>
+      <span style="margin: 0.5em; color: #fff;">akash.dubey@rutgers.edu</span>
+      <span style="margin: 0.5em; color: #fff;">Berkeley Heights, NJ</span>
     </div>
     
     <!-- Download Contact Card -->
     <a href="{{ base_path }}/assets/contact.vcf" 
        class="btn btn--primary btn--lg" 
-       style="text-decoration: none; margin: 1em 0.5em;"
+       style="margin: 1em 0.5em;"
        download="Akash_Dubey.vcf">
       <i class="fas fa-address-card"></i> Add to Contacts
     </a>
@@ -216,7 +225,7 @@ author: Akash Dubey
 
   <!-- Social Media Links -->
   <div class="text-center" style="margin: 2em 0;">
-    <h3 style="color: #FF00FF; margin-bottom: 1em;">🌐 Find Me Online</h3>
+    <h2 style="color: #FF00FF; margin-bottom: 1em; font-size: 2em;">Find Me Online</h2>
     <div class="row" style="justify-content: center;">
       {% if site.author.email %}
         <a href="mailto:{{ site.author.email }}" title="Email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
@@ -247,24 +256,24 @@ author: Akash Dubey
 
   <!-- Site Navigation -->
   <div style="margin: 2em 0;">
-    <h3 style="color: #FFB800; text-align: center; margin-bottom: 1.5em;">🗺️ Explore My Digital World</h3>
+    <h2 style="color: #FFB800; text-align: center; margin-bottom: 1.5em; font-size: 2em;">Explore My Digital World</h2>
     <div class="site-navigation">
-      <a href="{{ base_path }}/" class="nav-button" style="background: linear-gradient(135deg, #FF1E1E, #FF6B6B);">
+      <a href="{{ base_path }}/" class="nav-button" style="background: linear-gradient(135deg, #FF1E1E, #FF6B6B); text-decoration: none;">
         <i class="fas fa-home"></i><br>Home
       </a>
-      <a href="{{ base_path }}/portfolio/" class="nav-button" style="background: linear-gradient(135deg, #FE5801, #FF8A50);">
+      <a href="{{ base_path }}/portfolio/" class="nav-button" style="background: linear-gradient(135deg, #FE5801, #FF8A50); text-decoration: none;">
         <i class="fas fa-briefcase"></i><br>Portfolio
       </a>
-      <a href="{{ base_path }}/year-archive/" class="nav-button" style="background: linear-gradient(135deg, #57CD80, #7ED321);">
+      <a href="{{ base_path }}/year-archive/" class="nav-button" style="background: linear-gradient(135deg, #57CD80, #7ED321); text-decoration: none;">
         <i class="fas fa-blog"></i><br>Blog Posts
       </a>
-      <a href="{{ base_path }}/cv/" class="nav-button" style="background: linear-gradient(135deg, #C50070, #E91E63);">
+      <a href="{{ base_path }}/cv/" class="nav-button" style="background: linear-gradient(135deg, #C50070, #E91E63); text-decoration: none;">
         <i class="fas fa-user-graduate"></i><br>CV
       </a>
-      <a href="{{ base_path }}/files/resume.pdf" class="nav-button" style="background: linear-gradient(135deg, #00FFFF, #40E0D0);">
+      <a href="{{ base_path }}/files/resume.pdf" class="nav-button" style="background: linear-gradient(135deg, #00FFFF, #40E0D0); text-decoration: none;">
         <i class="fas fa-file-pdf"></i><br>Resume
       </a>
-      <a href="{{ base_path }}/background/" class="nav-button" style="background: linear-gradient(135deg, #FF00FF, #DA70D6);">
+      <a href="{{ base_path }}/background/" class="nav-button" style="background: linear-gradient(135deg, #FF00FF, #DA70D6); text-decoration: none;">
         <i class="fas fa-info-circle"></i><br>Background
       </a>
     </div>
@@ -272,42 +281,28 @@ author: Akash Dubey
 
   <!-- Call to Action -->
   <div class="text-center" style="margin: 2em 0;">
-    <h3 style="color: #00FF66;">💬 Let's Build Something Amazing Together!</h3>
+    <h2 style="color: #00FF66; font-size: 2em;">Let's Build Something Amazing Together</h2>
     <p style="color: #fff; margin: 1em 0;">Whether it's a coding project, robotics challenge, or just a chat about tech and sports!</p>
     
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1em; margin: 1.5em 0;">
       <a href="mailto:{{ site.author.email }}?subject=Let's Connect!" 
          class="btn btn--primary btn--lg" 
-         style="text-decoration: none; background: linear-gradient(135deg, #00FF66, #32CD32);">
+         style="background: linear-gradient(135deg, #00FF66, #32CD32);">
         <i class="fas fa-envelope"></i> Send Email
       </a>
       
       <a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" 
          class="btn btn--primary btn--lg" 
-         style="text-decoration: none; background: linear-gradient(135deg, #0077B5, #0099CC);">
+         style="background: linear-gradient(135deg, #0077B5, #0099CC);">
         <i class="fab fa-linkedin"></i> Connect on LinkedIn
       </a>
       
       <a href="https://github.com/{{ site.author.github }}" 
          class="btn btn--primary btn--lg" 
-         style="text-decoration: none; background: linear-gradient(135deg, #333, #666);">
+         style="background: linear-gradient(135deg, #333, #666);">
         <i class="fab fa-github"></i> Follow on GitHub
       </a>
     </div>
   </div>
 
-  <!-- Fun Fact -->
-  <div class="text-center" style="margin: 2em 0; padding: 1em; background: rgba(255,255,255,0.05); border-radius: 10px;">
-    <p style="color: #FFB800; font-size: 1.1em;">
-      <i class="fas fa-lightbulb"></i> 
-      <strong>Fun Fact:</strong> I've been coding for over 10 years and I'm still as excited about it as day one! 🎉
-    </p>
-  </div>
-</div>
-
-<!-- QR Code Section (Optional - you can generate a QR code for this page) -->
-<div class="text-center" style="margin: 2em 0;">
-  <p style="color: #888; font-size: 0.9em;">
-    <i class="fas fa-qrcode"></i> Bookmark this page or share it as your digital business card!
-  </p>
 </div>
