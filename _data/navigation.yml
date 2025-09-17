@@ -20,9 +20,6 @@ main:
 
   - title: "Resume"
     url: /files/resume.pdf
-
-  - title: "Connect"
-    url: /networking/
     
   # - title: "Guide"
   #   url: /markdown/
