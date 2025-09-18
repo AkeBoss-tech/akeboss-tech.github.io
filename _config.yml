@@ -78,6 +78,9 @@ analytics:
   provider               :  "custom" # false (default), "google", "google-universal", "custom"
   google:
     tracking_id          :  "G-JJ2HKRJL6Z"
+  posthog:
+    api_key              :  "phc_QbuandPEuH8hHoDd24tQIrYXD88rexZBoyERqy435te"
+    api_host             :  "https://us.i.posthog.com"
 
 
 # Site Author
