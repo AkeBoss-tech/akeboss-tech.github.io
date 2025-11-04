@@ -1,12 +1,12 @@
 ---
 title: "Crazy All-in One AI Assistant"
 excerpt: "A comprehensive AI assistant with specialized agents, advanced memory systems, and seamless Google services integration"
-image: "/images/portfolio/personal-assistant/main.png"
+image: "/images/portfolio/personal-assistant/hero.png"
 collection: portfolio
 rank: 5
 ---
 
-<img src='/images/portfolio/personal-assistant/main.png' width='100%' align='center'>
+<img src='/images/portfolio/personal-assistant/hero.png' width='100%' align='center'>
 
 The landscape of AI assistants is crowded with generic chatbots that forget context, can't handle complex tasks, and require you to switch between multiple tools for different needs. This project explores what a truly intelligent personal assistant could look like—one that combines specialized agents, persistent memory, and deep integrations to create a comprehensive AI companion. It's more than just a chatbot; it's a multi-agent system designed to understand you, remember you, and help you across every aspect of your digital life.
 
