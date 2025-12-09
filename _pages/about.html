@@ -23,7 +23,7 @@ author: Akash Dubey
   }
 
   .color-transition {
-    animation: color-change 8s infinite;
+    color: white;
     text-shadow: 0 0 10px rgba(255,255,255,0.3);
   }
 
@@ -103,6 +103,11 @@ author: Akash Dubey
     transition: all 0.3s ease;
   }
 
+  /* Make row divs white */
+  .row {
+    color: white;
+  }
+
   /* Enhance iframe hover effects */
   iframe {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -164,9 +169,6 @@ author: Akash Dubey
     {% if site.author.xing %}
       <a href="https://www.xing.com/profile/{{ site.author.xing }}"><i class="fab fa-fw fa-xing-square" aria-hidden="true"></i></a>
     {% endif %}
-    {% if site.author.instagram %}
-      <a href="https://instagram.com/{{ site.author.instagram }}"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i></a>
-    {% endif %}
     {% if site.author.tumblr %}
       <a href="https://{{ site.author.tumblr }}.tumblr.com"><i class="fab fa-fw fa-tumblr-square" aria-hidden="true"></i></a>
     {% endif %}
@@ -212,9 +214,6 @@ author: Akash Dubey
     {% if site.author.vine %}
       <a href="https://vine.co/u/{{ site.author.vine }}"><i class="fab fa-fw fa-vine" aria-hidden="true"></i></a>
     {% endif %}
-    {% if site.author.discord %}
-      <a href="https://discord.com/{{ site.author.discord }}"><i class="fab fa-fw fa-discord" aria-hidden="true"></i></a>
-    {% endif %}
     {% if site.author.kaggle %}
       <a href="https://kaggle.com/{{ site.author.kaggle }}"><i class="fab fa-fw fa-kaggle" aria-hidden="true"></i></a>
     {% endif %}
@@ -236,9 +235,6 @@ author: Akash Dubey
     {% if site.author.wikipedia %}
       <a href="https://en.wikipedia.org/wiki/User:{{ site.author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w" aria-hidden="true"></i></a>
     {% endif %}
-    {% if site.author.spotify %}
-      <a href="{{ site.author.spotify }}"><i class="fab fa-fw fa-spotify" aria-hidden="true"></i></a>
-    {% endif %}
 </div>
 
 <!-- Add a short bio -->
@@ -249,7 +245,7 @@ author: Akash Dubey
   <!-- Add this where you want the contact button to appear -->
   <a href="{{ base_path }}/assets/contact.vcf" 
      class="btn btn--primary btn--lg" 
-     style="text-decoration: none; background-color: darkgray; margin: 0 0 1.3em;"
+     style="text-decoration: none; background-color: #888888; margin: 0 0 1.3em;"
      download="Akash_Dubey.vcf">
     <i class="fas fa-address-card"></i> Add to Contacts
   </a>
