@@ -2,7 +2,7 @@
 title: 'Freshmen Year Reflection'
 date: 2021-06-20
 permalink: /posts/freshmen-reflection/
-image: "https://picsum.photos/id/237/200/200"
+image: "/images/posts/freshmen-reflection-hero.png"
 tags:
   - life
   - school

@@ -2,7 +2,7 @@
 title: "Doing Things!"
 date: 2023-08-09
 permalink: /posts/second-post/
-image: "https://picsum.photos/id/243/200/200"
+image: "/images/posts/doing-things-hero.png"
 tags:
   - cool posts
   - life

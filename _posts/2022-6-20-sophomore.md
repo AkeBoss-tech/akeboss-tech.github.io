@@ -2,7 +2,7 @@
 title: 'Sophomore Year Reflection'
 date: 2022-06-20
 permalink: /posts/sophomore-reflection/
-image: "https://picsum.photos/id/236/200/200"
+image: "/images/posts/sophomore-reflection-hero.png"
 tags:
   - life
   - school

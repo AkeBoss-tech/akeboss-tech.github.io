@@ -2,7 +2,7 @@
 title: 'October Journal'
 date: 2022-10-18
 permalink: /posts/october-journal/
-image: "https://picsum.photos/id/27/200/200"
+image: "/images/posts/october-journal-hero.png"
 tags:
   - journal
   - life
