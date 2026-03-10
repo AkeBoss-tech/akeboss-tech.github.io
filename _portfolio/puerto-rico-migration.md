@@ -1,13 +1,13 @@
 ---
 title: "Economic Drivers of Puerto Rican Migration"
 excerpt: "A data-driven interactive web experience analyzing Puerto Rican migration patterns from 1950 to 2024, combining quantitative census data with literary narratives."
-image: "/images/portfolio/puerto-rico-migration/hero.png"
+image: "/images/portfolio/puerto-rico/image.png"
 collection: portfolio
 tags: [Data, Research, Web]
 rank: 5
 ---
 
-<img src='/images/portfolio/puerto-rico-migration/hero.png' width='100%' align='center'>
+<img src='/images/portfolio/puerto-rico/image.png' width='100%' align='center'>
 
 Most historical analyses rely purely on text, but numbers often tell the most compelling stories of demographic shifts. This project is a comprehensive, interactive data visualization website that tracks and analyzes the profound economic drivers behind Puerto Rican migration to the mainland United States from 1950 to 2024.
 
