@@ -20,7 +20,7 @@ Most mapping tools show you where things are. NOSTRADAMUS shows you what's happe
 
 ## Demo
 
-<iframe width="100%" height="420" src="https://www.youtube.com/embed/TdjE2G8JcFI" title="NOSTRADAMUS Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TdjE2G8JcFI" title="NOSTRADAMUS Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 

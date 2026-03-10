@@ -23,7 +23,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: mix(white, #000, 20%);
+    filter: brightness(0.85); /* Slightly gray it on hover by reducing brightness */
   }
 
   .icon {
