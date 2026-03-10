@@ -53,16 +53,3 @@ Connecting an LLM to a student's actual course materials—not generic internet 
 
 **Dual-backend architecture.** The platform runs a production Java Spring Boot backend for auth and legacy notes alongside a Python FastAPI backend for all AI operations (agents, RAG, vector search, document processing). The frontend intelligently routes requests between both, giving users a seamless experience while the AI infrastructure scales independently.
 
----
-
-## Tech Stack
-
-* **Frontend** — Next.js 16, React 19, TypeScript, Tailwind CSS v4, Redux Toolkit, Framer Motion
-* **Rich UI** — BlockNote (rich text editor), Excalidraw (whiteboard), react-pdf-highlighter (PDF annotation)
-* **Backend** — Python FastAPI, LangGraph agents, Java Spring Boot (legacy)
-* **AI / LLM** — Gemini, OpenAI, Perplexity, OpenRouter
-* **Vector DB** — Zilliz (cloud Milvus) with OpenAI `text-embedding-3-large`
-* **Database** — MongoDB (async via Motor)
-* **Storage** — AWS S3, Cloudinary
-* **Auth** — Firebase + Google OAuth + Canvas OAuth
-* **Infrastructure** — Netlify (frontend), Docker
