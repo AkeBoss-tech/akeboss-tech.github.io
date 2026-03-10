@@ -3,6 +3,8 @@ title: "Scarlet Sync"
 excerpt: "A complete scheduling and degree planning solution for Rutgers"
 image: "/images/portfolio/scarlet-sync/home.png"
 collection: portfolio
+tags: [Web, AI]
+featured: true
 rank: 1
 ---
 

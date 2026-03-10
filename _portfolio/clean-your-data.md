@@ -3,6 +3,7 @@ title: "Data Cleaning Assistant"
 excerpt: "An AI agent that takes a CSV and plain-English instructions and returns cleaned data plus the Python code that did it"
 image: "/images/portfolio/clean-your-data/hero.png"
 collection: portfolio
+tags: [AI, Data]
 rank: 4
 ---
 

@@ -3,6 +3,8 @@ title: "Lykke — AI Study Platform"
 excerpt: "An AI-powered study platform connecting Canvas LMS, notes, and course materials to generate flashcards, quizzes, infographics, and personalized study plans"
 image: "/images/portfolio/lykke/hero.png"
 collection: portfolio
+tags: [AI, Web]
+featured: true
 rank: 2
 ---
 

@@ -3,6 +3,7 @@ title: "MSDS Final: Depth Estimation"
 excerpt: "CTE Partnerships a website bringing information about local businesses together!"
 image: "/images/portfolio/stereo/poster.png"
 collection: portfolio
+tags: [AI, Research]
 rank: 5
 ---
 

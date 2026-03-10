@@ -3,6 +3,7 @@ title: "HiC-TAD-Library — 3D Genome Analysis & AI-Powered Enhancer Design"
 excerpt: "A Python toolkit for analyzing 3D chromatin architecture from Hi-C data, with AlphaGenome AI integration for in-silico structural variant prediction and synthetic enhancer design"
 image: "/images/portfolio/hic-tad/hero.png"
 collection: portfolio
+tags: [Research, AI]
 rank: 3
 ---
 

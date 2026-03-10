@@ -3,6 +3,7 @@ title: "FBLA Coding and Programming Project"
 excerpt: "CTE Partnerships a website bringing information about local businesses together!"
 image: "/images/portfolio/fbla/main.png"
 collection: portfolio
+tags: [Web]
 rank: 10
 ---
 

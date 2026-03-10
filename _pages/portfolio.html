@@ -7,8 +7,198 @@ author_profile: true
 
 {% include base_path %}
 
-{% assign sorted_portfolio = site.portfolio | sort: 'rank' %}
-{% for post in sorted_portfolio %}
-  {% include archive-portfolio.html %}
-{% endfor %}
+<style>
+/* ── Tag pills ─────────────────────────────────────────────────── */
+.pf-tags { display: flex; flex-wrap: wrap; gap: 0.4em; margin-bottom: 0.75em; }
+.pf-tag {
+  font-size: 0.7em; font-weight: 600; letter-spacing: 0.04em;
+  padding: 0.25em 0.7em; border-radius: 999px;
+  text-transform: uppercase;
+}
+.pf-tag--ai        { background: #ede9fe; color: #6d28d9; }
+.pf-tag--web       { background: #d1fae5; color: #065f46; }
+.pf-tag--research  { background: #fef3c7; color: #92400e; }
+.pf-tag--data      { background: #cffafe; color: #0e7490; }
+.pf-tag--robotics  { background: #fee2e2; color: #991b1b; }
+.pf-tag--mobile    { background: #e0e7ff; color: #3730a3; }
+.pf-tag--game      { background: #fce7f3; color: #9d174d; }
+.pf-tag--api       { background: #f0fdf4; color: #166534; }
+.pf-tag--algorithms{ background: #f1f5f9; color: #334155; }
+.pf-tag--math      { background: #fff7ed; color: #9a3412; }
 
+/* ── Section headings ───────────────────────────────────────────── */
+.pf-section-label {
+  font-size: 0.75em; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #888;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5em; margin: 1.5em 0 1.25em;
+}
+
+/* ── FEATURED cards (full-width, alternating) ───────────────────── */
+.pf-featured-card {
+  margin-bottom: 1.5em;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.pf-featured-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+.pf-featured-inner {
+  display: flex;
+  align-items: stretch;
+  min-height: 220px;
+}
+/* Every even featured card flips image to left */
+.pf-featured-card:nth-child(even) .pf-featured-inner {
+  flex-direction: row-reverse;
+}
+.pf-featured-text {
+  flex: 1;
+  padding: 2em 2.25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pf-featured-title {
+  margin: 0 0 0.5em;
+  font-size: 1.25em;
+  line-height: 1.3;
+}
+.pf-featured-image {
+  flex: 0 0 45%;
+  overflow: hidden;
+}
+.pf-featured-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pf-cta {
+  margin-top: 1em;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #6d28d9;
+}
+.pf-excerpt {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── GRID cards (2-column) ──────────────────────────────────────── */
+.pf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25em;
+}
+.pf-grid-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+.pf-grid-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+}
+.pf-grid-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.pf-grid-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.pf-grid-card:hover .pf-grid-image img {
+  transform: scale(1.04);
+}
+.pf-grid-text {
+  padding: 1.1em 1.25em 1.25em;
+  flex: 1;
+}
+.pf-grid-title {
+  margin: 0 0 0.4em;
+  font-size: 1em;
+  line-height: 1.35;
+}
+
+/* ── Shared link reset ──────────────────────────────────────────── */
+.pf-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+.pf-link:hover { text-decoration: none; color: inherit; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .pf-grid { grid-template-columns: 1fr; }
+  .pf-featured-inner,
+  .pf-featured-card:nth-child(even) .pf-featured-inner {
+    flex-direction: column;
+  }
+  .pf-featured-image { flex: 0 0 200px; }
+}
+</style>
+
+{% assign sorted = site.portfolio | sort: 'rank' %}
+
+<!-- ── FEATURED ───────────────────────────────────────────────── -->
+{% assign has_featured = false %}
+{% for post in sorted %}{% if post.featured %}{% assign has_featured = true %}{% endif %}{% endfor %}
+
+{% if has_featured %}
+<p class="pf-section-label">Featured</p>
+{% for post in sorted %}
+{% if post.featured %}
+{% if post.id %}{% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}{% else %}{% assign title = post.title %}{% endif %}
+<div class="pf-featured-card">
+  <a href="{{ base_path }}{{ post.url }}" class="pf-link">
+    <div class="pf-featured-inner">
+      <div class="pf-featured-text">
+        {% if post.tags %}<div class="pf-tags">{% for tag in post.tags %}<span class="pf-tag pf-tag--{{ tag | downcase }}">{{ tag }}</span>{% endfor %}</div>{% endif %}
+        <h2 class="pf-featured-title">{{ title }}</h2>
+        {% if post.excerpt %}<p class="pf-excerpt">{{ post.excerpt | markdownify | remove: "<p>" | remove: "</p>" }}</p>{% endif %}
+        <span class="pf-cta">View Project →</span>
+      </div>
+      <div class="pf-featured-image">
+        <img src="{{ post.image }}" alt="{{ title }}">
+      </div>
+    </div>
+  </a>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<!-- ── ALL PROJECTS GRID ─────────────────────────────────────── -->
+<p class="pf-section-label">All Projects</p>
+<div class="pf-grid">
+{% for post in sorted %}
+{% unless post.featured %}
+{% if post.id %}{% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}{% else %}{% assign title = post.title %}{% endif %}
+<div class="pf-grid-card">
+  <a href="{{ base_path }}{{ post.url }}" class="pf-link">
+    <div class="pf-grid-image">
+      <img src="{{ post.image }}" alt="{{ title }}">
+    </div>
+    <div class="pf-grid-text">
+      {% if post.tags %}<div class="pf-tags">{% for tag in post.tags %}<span class="pf-tag pf-tag--{{ tag | downcase }}">{{ tag }}</span>{% endfor %}</div>{% endif %}
+      <h3 class="pf-grid-title">{{ title }}</h3>
+      {% if post.excerpt %}<p class="pf-excerpt">{{ post.excerpt | markdownify | remove: "<p>" | remove: "</p>" }}</p>{% endif %}
+    </div>
+  </a>
+</div>
+{% endunless %}
+{% endfor %}
+</div>

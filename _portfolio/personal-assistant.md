@@ -3,6 +3,7 @@ title: "Crazy All-in One AI Assistant"
 excerpt: "A comprehensive AI assistant with specialized agents, advanced memory systems, and seamless Google services integration"
 image: "/images/portfolio/personal-assistant/hero.png"
 collection: portfolio
+tags: [AI]
 rank: 5
 ---
 

@@ -3,6 +3,7 @@ title: "Grokipedia API"
 excerpt: "A comprehensive Python and JavaScript/TypeScript client library for accessing Grokipedia's vast knowledge base"
 image: "/images/portfolio/grokipedia-api/hero.png"
 collection: portfolio
+tags: [API, Web]
 rank: 2
 ---
 

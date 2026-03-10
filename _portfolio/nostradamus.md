@@ -3,6 +3,8 @@ title: "NOSTRADAMUS — NJ Geospatial Intelligence Platform"
 excerpt: "A 3D geospatial simulation platform for New Jersey with live flight tracking, drone flythrough, and layered economic & infrastructure data"
 image: "/images/portfolio/nostradamus/hero.png"
 collection: portfolio
+tags: [AI, Research]
+featured: true
 rank: 2
 ---
 

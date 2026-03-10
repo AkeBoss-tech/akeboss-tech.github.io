@@ -3,6 +3,7 @@ title: "ASD Racing Game"
 excerpt: "A 3D racing game made with the Godot game engine!"
 image: "/images/portfolio/racing/title.png"
 collection: portfolio
+tags: [Game]
 rank: 3
 ---
 
