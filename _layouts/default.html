@@ -9,63 +9,187 @@ layout: compress
   <head>
     {% include head.html %}
     {% include head/custom.html %}
-    
+
+    <!-- Google Fonts: Syne (headings) + Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
     <style>
+      /* ════════════════════════════════════════════════
+         TYPOGRAPHY
+         ════════════════════════════════════════════════ */
+      body, p, li, span, td, input, textarea, select, .author__bio {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      }
+      h1, h2, h3, h4, h5, h6,
+      .site-title, .page__title, .archive__item-title,
+      .author__name, .nav__title {
+        font-family: 'Syne', sans-serif !important;
+        letter-spacing: -0.02em;
+      }
+
+      /* ════════════════════════════════════════════════
+         STARS CONTAINER (shared)
+         ════════════════════════════════════════════════ */
       .stars-container {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
         z-index: -1;
         overflow: hidden;
-        background: linear-gradient(to bottom, #0d1117 0%, #161b22 100%);
+        transition: background 0.6s ease;
       }
 
-      .star {
-        position: absolute;
-        background: white;
-        border-radius: 50%;
-        animation: twinkle var(--twinkle-duration) infinite ease-in-out;
-      }
-
-      .shooting-star {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: white;
-        border-radius: 50%;
-        animation: shoot 8s infinite ease-out;
-        opacity: 0;
+      /* ════════════════════════════════════════════════
+         DARK MODE (default)
+         ════════════════════════════════════════════════ */
+      @media (prefers-color-scheme: dark), (prefers-color-scheme: no-preference) {
+        .stars-container {
+          background: linear-gradient(to bottom, #0d1117 0%, #161b22 100%);
+        }
+        .star {
+          position: absolute;
+          background: white;
+          border-radius: 50%;
+          animation: twinkle var(--twinkle-duration) infinite ease-in-out;
+        }
+        .shooting-star {
+          position: absolute;
+          width: 4px; height: 4px;
+          background: white;
+          border-radius: 50%;
+          animation: shoot 8s infinite ease-out;
+          opacity: 0;
+        }
+        .earth-container { display: none; }
       }
 
       @keyframes twinkle {
         0%, 100% { opacity: 0.3; }
         50% { opacity: 1; }
       }
-
       @keyframes shoot {
-        0% {
-          transform: translate(0, 0) rotate(-45deg);
-          opacity: 1;
+        0%   { transform: translate(0,0) rotate(-45deg); opacity: 1; }
+        100% { transform: translate(300px,300px) rotate(-45deg); opacity: 0; }
+      }
+      @keyframes cloudDrift {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(120vw); }
+      }
+      @keyframes sparkleCloud {
+        0%, 100% { opacity: 0.2; transform: scale(0.8); }
+        50%       { opacity: 1;   transform: scale(1.3); }
+      }
+
+      /* ════════════════════════════════════════════════
+         LIGHT MODE — sky + clouds
+         ════════════════════════════════════════════════ */
+      @media (prefers-color-scheme: light) {
+        .stars-container {
+          background: linear-gradient(
+            180deg,
+            #4fa3d1 0%,
+            #74bce0 22%,
+            #a8d8ee 50%,
+            #c9e8f5 72%,
+            #e2f3fb 100%
+          );
         }
-        100% {
-          transform: translate(300px, 300px) rotate(-45deg);
-          opacity: 0;
+
+        /* Earth at bottom */
+        .earth-container {
+          display: block;
+          position: fixed;
+          bottom: -180px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: min(800px, 100vw);
+          pointer-events: none;
+          z-index: -1;
         }
+
+        /* ── Global color overrides for light sky ─────── */
+        html, body {
+          color: #12223a !important;
+        }
+        a {
+          color: #1565c0 !important;
+          text-decoration: none;
+        }
+        a:visited { color: #6a1aaa !important; }
+        a:hover   { color: #0d47a1 !important; }
+
+        /* Masthead */
+        .masthead {
+          background: rgba(255,255,255,0.55) !important;
+          backdrop-filter: blur(14px) !important;
+          -webkit-backdrop-filter: blur(14px) !important;
+          border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+        }
+        .masthead a, .greedy-nav a, .site-title {
+          color: #12223a !important;
+        }
+        .greedy-nav { background: transparent !important; }
+        .greedy-nav__toggle-close,
+        .greedy-nav__toggle svg { color: #12223a !important; }
+
+        /* Sidebar */
+        .sidebar,
+        .author__name,
+        .author__bio,
+        .author__urls a,
+        .author__urls-wrapper { color: #12223a !important; }
+        .author__urls a:hover { color: #1565c0 !important; }
+
+        /* Main content */
+        #main, .page__content { background: transparent !important; }
+        .page__content h1, .page__content h2,
+        .page__content h3, .page__content h4 { color: #0d1b2a !important; }
+        .page__content p, .page__content li { color: #1e2d3d !important; }
+
+        /* Footer */
+        .page__footer {
+          background: rgba(255,255,255,0.35) !important;
+          color: #333 !important;
+          border-top: 1px solid rgba(0,0,0,0.08) !important;
+        }
+        .page__footer a { color: #1565c0 !important; }
+
+        /* Portfolio cards */
+        .pf-featured-card, .pf-grid-card {
+          background: rgba(255,255,255,0.72) !important;
+          backdrop-filter: blur(8px) !important;
+          -webkit-backdrop-filter: blur(8px) !important;
+          border-color: rgba(0,0,0,0.09) !important;
+        }
+        .pf-featured-title, .pf-grid-title { color: #0d1b2a !important; }
+        .pf-excerpt { color: #2e4057 !important; }
+        .pf-link, .pf-link:hover { color: #0d1b2a !important; }
+        .pf-cta { color: #1565c0 !important; }
+        .pf-section-label { color: #4a6072 !important; border-color: #b0c8d8 !important; }
+
+        /* Tag pills — lighten for sky backdrop */
+        .pf-tag--ai        { background: #ddd6fe; color: #5b21b6; }
+        .pf-tag--web       { background: #bbf7d0; color: #065f46; }
+        .pf-tag--research  { background: #fde68a; color: #78350f; }
+        .pf-tag--data      { background: #a5f3fc; color: #0e7490; }
+        .pf-tag--robotics  { background: #fecaca; color: #991b1b; }
+        .pf-tag--algorithms{ background: #e2e8f0; color: #334155; }
+
+        /* About page overrides */
+        .color-transition { color: #0d1b2a !important; text-shadow: none !important; }
+        .row { color: #12223a !important; }
+        .rotating-light-border::before { display: none; }
       }
 
-      #main {
-        background: transparent !important;
-      }
-
-      body {
-        padding-bottom: 0 !important;
-      }
-
-      .page__footer {
-        margin-top: 2em;
-      }
+      /* ════════════════════════════════════════════════
+         SHARED LAYOUT
+         ════════════════════════════════════════════════ */
+      #main { background: transparent !important; }
+      body  { padding-bottom: 0 !important; }
+      .page__footer { margin-top: 2em; }
     </style>
   </head>
 
@@ -73,23 +197,82 @@ layout: compress
     {% include browser-upgrade.html %}
     {% include masthead.html %}
 
-    <!-- Stars container -->
     <div class="stars-container" id="starsContainer"></div>
+
+    <!-- Earth — only rendered/visible in light mode via CSS -->
+    <div class="earth-container" id="earthContainer">
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+          <radialGradient id="oceanGrad" cx="42%" cy="38%" r="55%">
+            <stop offset="0%"   stop-color="#64b5f6"/>
+            <stop offset="45%"  stop-color="#1e88e5"/>
+            <stop offset="100%" stop-color="#0d47a1"/>
+          </radialGradient>
+          <radialGradient id="atmoGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="80%" stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(100,200,255,0.25)"/>
+          </radialGradient>
+          <clipPath id="earthClip">
+            <rect x="0" y="0" width="800" height="320"/>
+          </clipPath>
+          <filter id="softEdge">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+          </filter>
+        </defs>
+
+        <!-- Ocean -->
+        <circle cx="400" cy="340" r="310" fill="url(#oceanGrad)" clip-path="url(#earthClip)"/>
+
+        <!-- Landmasses -->
+        <g clip-path="url(#earthClip)">
+          <!-- North America rough shape -->
+          <ellipse cx="230" cy="220" rx="72" ry="52" fill="#4caf50" transform="rotate(-18,230,220)" opacity="0.9"/>
+          <ellipse cx="265" cy="255" rx="48" ry="30" fill="#43a047" transform="rotate(-8,265,255)" opacity="0.9"/>
+          <!-- Europe / Africa -->
+          <ellipse cx="420" cy="195" rx="38" ry="28" fill="#66bb6a" transform="rotate(8,420,195)" opacity="0.9"/>
+          <ellipse cx="440" cy="248" rx="30" ry="48" fill="#4caf50" transform="rotate(5,440,248)" opacity="0.9"/>
+          <!-- Asia -->
+          <ellipse cx="560" cy="200" rx="80" ry="45" fill="#57c068" transform="rotate(-10,560,200)" opacity="0.9"/>
+          <ellipse cx="610" cy="238" rx="40" ry="25" fill="#4caf50" transform="rotate(-5,610,238)" opacity="0.9"/>
+          <!-- Australia -->
+          <ellipse cx="620" cy="285" rx="32" ry="20" fill="#66bb6a" transform="rotate(10,620,285)" opacity="0.9"/>
+          <!-- South America -->
+          <ellipse cx="300" cy="275" rx="30" ry="40" fill="#4caf50" transform="rotate(8,300,275)" opacity="0.9"/>
+        </g>
+
+        <!-- Cloud wisps on Earth -->
+        <g clip-path="url(#earthClip)" filter="url(#softEdge)" opacity="0.65">
+          <ellipse cx="200" cy="230" rx="55" ry="14" fill="white" transform="rotate(-12,200,230)"/>
+          <ellipse cx="370" cy="210" rx="65" ry="16" fill="white" transform="rotate(5,370,210)"/>
+          <ellipse cx="510" cy="245" rx="50" ry="13" fill="white" transform="rotate(-8,510,245)"/>
+          <ellipse cx="640" cy="220" rx="45" ry="12" fill="white" transform="rotate(3,640,220)"/>
+          <ellipse cx="140" cy="260" rx="40" ry="11" fill="white"/>
+        </g>
+
+        <!-- Atmosphere rim glow -->
+        <circle cx="400" cy="340" r="318" fill="none"
+          stroke="rgba(144,213,255,0.4)" stroke-width="14"
+          clip-path="url(#earthClip)"/>
+        <circle cx="400" cy="340" r="312" fill="none"
+          stroke="rgba(200,235,255,0.2)" stroke-width="6"
+          clip-path="url(#earthClip)"/>
+
+        <!-- Specular highlight -->
+        <ellipse cx="310" cy="175" rx="55" ry="30"
+          fill="rgba(255,255,255,0.12)" transform="rotate(-20,310,175)"
+          clip-path="url(#earthClip)"/>
+      </svg>
+    </div>
 
     {{ content }}
 
     <div class="page__footer">
-      <!-- Add craters -->
-      <div class="crater crater-1"></div>
-      <div class="crater crater-2"></div>
-      <div class="crater crater-3"></div>
-      
       <footer>
         {% include footer/custom.html %}
         {% include footer.html %}
       </footer>
     </div>
-    
+
     {% include scripts.html %}
   </body>
 </html>
