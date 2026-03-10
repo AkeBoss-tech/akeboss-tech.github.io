@@ -134,11 +134,15 @@ author_profile: true
 /* ── Shared link reset ──────────────────────────────────────────── */
 .pf-link {
   display: block;
-  color: inherit;
-  text-decoration: none;
+  color: #fff !important;
+  text-decoration: none !important;
   height: 100%;
 }
-.pf-link:hover { text-decoration: none; color: inherit; }
+.pf-link:hover { text-decoration: none !important; color: #fff !important; }
+.pf-link * { text-decoration: none !important; }
+.pf-featured-title, .pf-grid-title { color: #fff !important; }
+.pf-excerpt { color: rgba(255,255,255,0.7) !important; }
+.pf-cta { color: #a78bfa !important; }
 
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 700px) {
