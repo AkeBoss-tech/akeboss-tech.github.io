@@ -130,11 +130,12 @@ layout: compress
         .author__urls-wrapper { color: #12223a !important; }
         .author__urls a:hover { color: #1565c0 !important; }
 
-        /* Main content */
+        /* Main content — broad override for all page text */
         #main, .page__content { background: transparent !important; }
-        .page__content h1, .page__content h2,
-        .page__content h3, .page__content h4 { color: #0d1b2a !important; }
-        .page__content p, .page__content li { color: #1e2d3d !important; }
+        p, li, td, th, span, label, dt, dd,
+        .page__content *, .archive__item *,
+        section *, article * { color: #1e2d3d !important; }
+        h1, h2, h3, h4, h5, h6 { color: #0d1b2a !important; }
 
         /* Footer */
         .page__footer {

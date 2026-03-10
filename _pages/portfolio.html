@@ -144,6 +144,20 @@ author_profile: true
 .pf-excerpt { color: rgba(255,255,255,0.7) !important; }
 .pf-cta { color: #a78bfa !important; }
 
+/* ── Light mode overrides ───────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  .pf-link, .pf-link:hover        { color: #0d1b2a !important; }
+  .pf-link *                       { color: inherit !important; }
+  .pf-featured-title, .pf-grid-title { color: #0d1b2a !important; }
+  .pf-excerpt                      { color: #2e4057 !important; }
+  .pf-cta                          { color: #1565c0 !important; }
+  .pf-section-label                { color: #4a6072 !important; border-color: #b0c8d8 !important; }
+  .pf-featured-card, .pf-grid-card {
+    background: rgba(255,255,255,0.75) !important;
+    border-color: rgba(0,0,0,0.09) !important;
+  }
+}
+
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 700px) {
   .pf-grid { grid-template-columns: 1fr; }
