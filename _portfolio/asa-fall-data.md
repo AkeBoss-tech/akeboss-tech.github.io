@@ -4,7 +4,7 @@ excerpt: "analysis of the Stack Overflow Developer Survey data for the Fall Data
 image: "/images/portfolio/asa-data/Capture.PNG"
 collection: portfolio
 tags: [Data, Research]
-rank: 1
+rank: 9
 ---
 I competed in my school's submission for the [ASA Fall Data Challenge](https://community.amstat.org/asafalldatachallenge/home) in 2023. Each year, the ASA challenges undergraduate and high school students to analyze real-world data and make recommendations to address interesting and timely topics.
 
