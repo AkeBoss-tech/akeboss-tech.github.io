@@ -62,7 +62,6 @@ layout: compress
           animation: shoot 8s infinite ease-out;
           opacity: 0;
         }
-        .earth-container { display: none; }
       }
 
       @keyframes twinkle {
@@ -97,18 +96,6 @@ layout: compress
           );
         }
 
-        /* Earth at bottom */
-        .earth-container {
-          display: block;
-          position: fixed;
-          bottom: -180px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: min(800px, 100vw);
-          pointer-events: none;
-          z-index: -1;
-        }
-
         /* ── Global color overrides for light sky ─────── */
         html, body {
           color: #12223a !important;
@@ -122,14 +109,14 @@ layout: compress
 
         /* Masthead */
         .masthead {
-          background: rgba(255,255,255,0.55) !important;
+          background: rgba(12, 40, 80, 0.82) !important;
           backdrop-filter: blur(14px) !important;
           -webkit-backdrop-filter: blur(14px) !important;
-          border-bottom: 1px solid rgba(0,0,0,0.08) !important;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+          border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+          box-shadow: 0 2px 16px rgba(0,0,0,0.18) !important;
         }
         .masthead a, .greedy-nav a, .site-title {
-          color: #12223a !important;
+          color: #ffffff !important;
         }
         .greedy-nav { background: transparent !important; }
         .greedy-nav__toggle-close,
@@ -198,71 +185,6 @@ layout: compress
     {% include masthead.html %}
 
     <div class="stars-container" id="starsContainer"></div>
-
-    <!-- Earth — only rendered/visible in light mode via CSS -->
-    <div class="earth-container" id="earthContainer">
-      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <defs>
-          <radialGradient id="oceanGrad" cx="42%" cy="38%" r="55%">
-            <stop offset="0%"   stop-color="#64b5f6"/>
-            <stop offset="45%"  stop-color="#1e88e5"/>
-            <stop offset="100%" stop-color="#0d47a1"/>
-          </radialGradient>
-          <radialGradient id="atmoGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="80%" stop-color="transparent"/>
-            <stop offset="100%" stop-color="rgba(100,200,255,0.25)"/>
-          </radialGradient>
-          <clipPath id="earthClip">
-            <rect x="0" y="0" width="800" height="320"/>
-          </clipPath>
-          <filter id="softEdge">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
-          </filter>
-        </defs>
-
-        <!-- Ocean -->
-        <circle cx="400" cy="340" r="310" fill="url(#oceanGrad)" clip-path="url(#earthClip)"/>
-
-        <!-- Landmasses -->
-        <g clip-path="url(#earthClip)">
-          <!-- North America rough shape -->
-          <ellipse cx="230" cy="220" rx="72" ry="52" fill="#4caf50" transform="rotate(-18,230,220)" opacity="0.9"/>
-          <ellipse cx="265" cy="255" rx="48" ry="30" fill="#43a047" transform="rotate(-8,265,255)" opacity="0.9"/>
-          <!-- Europe / Africa -->
-          <ellipse cx="420" cy="195" rx="38" ry="28" fill="#66bb6a" transform="rotate(8,420,195)" opacity="0.9"/>
-          <ellipse cx="440" cy="248" rx="30" ry="48" fill="#4caf50" transform="rotate(5,440,248)" opacity="0.9"/>
-          <!-- Asia -->
-          <ellipse cx="560" cy="200" rx="80" ry="45" fill="#57c068" transform="rotate(-10,560,200)" opacity="0.9"/>
-          <ellipse cx="610" cy="238" rx="40" ry="25" fill="#4caf50" transform="rotate(-5,610,238)" opacity="0.9"/>
-          <!-- Australia -->
-          <ellipse cx="620" cy="285" rx="32" ry="20" fill="#66bb6a" transform="rotate(10,620,285)" opacity="0.9"/>
-          <!-- South America -->
-          <ellipse cx="300" cy="275" rx="30" ry="40" fill="#4caf50" transform="rotate(8,300,275)" opacity="0.9"/>
-        </g>
-
-        <!-- Cloud wisps on Earth -->
-        <g clip-path="url(#earthClip)" filter="url(#softEdge)" opacity="0.65">
-          <ellipse cx="200" cy="230" rx="55" ry="14" fill="white" transform="rotate(-12,200,230)"/>
-          <ellipse cx="370" cy="210" rx="65" ry="16" fill="white" transform="rotate(5,370,210)"/>
-          <ellipse cx="510" cy="245" rx="50" ry="13" fill="white" transform="rotate(-8,510,245)"/>
-          <ellipse cx="640" cy="220" rx="45" ry="12" fill="white" transform="rotate(3,640,220)"/>
-          <ellipse cx="140" cy="260" rx="40" ry="11" fill="white"/>
-        </g>
-
-        <!-- Atmosphere rim glow -->
-        <circle cx="400" cy="340" r="318" fill="none"
-          stroke="rgba(144,213,255,0.4)" stroke-width="14"
-          clip-path="url(#earthClip)"/>
-        <circle cx="400" cy="340" r="312" fill="none"
-          stroke="rgba(200,235,255,0.2)" stroke-width="6"
-          clip-path="url(#earthClip)"/>
-
-        <!-- Specular highlight -->
-        <ellipse cx="310" cy="175" rx="55" ry="30"
-          fill="rgba(255,255,255,0.12)" transform="rotate(-20,310,175)"
-          clip-path="url(#earthClip)"/>
-      </svg>
-    </div>
 
     {{ content }}
 
