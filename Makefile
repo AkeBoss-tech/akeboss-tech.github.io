@@ -1,4 +1,4 @@
-.PHONY: help install build serve dev clean
+.PHONY: help install build serve dev clean resume
 
 # Default target
 help:
@@ -8,6 +8,7 @@ help:
 	@echo "  make serve    - Serve the site locally at http://localhost:4000"
 	@echo "  make dev      - Run in development mode (with watch)"
 	@echo "  make clean    - Clean build artifacts and caches"
+	@echo "  make resume   - Build the resume PDF from LaTeX"
 
 # Install dependencies
 install:
@@ -50,3 +51,8 @@ clean:
 	rm -rf .jekyll-assets-cache
 	rm -rf .asset-cache
 	@echo "Clean complete!"
+
+# Build resume PDF
+resume:
+	@echo "Building resume PDF from LaTeX..."
+	cd files && pdflatex resume.tex

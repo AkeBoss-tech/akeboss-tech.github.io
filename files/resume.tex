@@ -1,0 +1,191 @@
+%-------------------------
+% Resume in Latex
+% Author : Akash Dubey
+% Tailored for xAI: Emphasizing AI/ML, Agentic Systems, Optimization, and High-Performance Computing
+%------------------------
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Akash Dubey} \\ \vspace{1pt}
+    \small (212)-814-3681 $|$ \href{mailto:akashdub06@gmail.com}{\underline{akashdub06@gmail.com}} $|$
+    \href{https://akashdubey.me/}{\underline{akashdubey.me}} $|$
+    \href{https://github.com/AkeBoss-tech}{\underline{github.com/AkeBoss-tech}} $|$
+    \small U.S. Citizen
+\end{center}
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Rutgers University Honors College, School of Arts and Sciences}{New Brunswick, NJ}
+      {Bachelor of Science in Computer Science and Math}{Anticipated May 2027}
+      \resumeItemListStart
+        \resumeItem{\textbf{GPA}: 3.97/4.0 $|$ SAT: 1580}
+        \resumeItem{\textbf{Relevant Coursework}: Tensor Networks, Systems Programming, Algorithms, Data Structures, Statistics I, Honors Calculus III \& IV, Intro to Math Reasoning, Math Theory of Probability, Computer Architecture.}
+        \resumeItem{\textbf{Academic Programs \& Research}: Directed Research Reading Program on Symmetric Functions (representation theory for combinatorial optimization); Physics Learning Theory Seminar (statistical mechanics in high-dimensional learning), Dean's List.}
+        \resumeItem{\textbf{Activities}: Quantitative Finance Club, Road to Silicon Valley Program (Cohort 6), ESL Instructor, Basketball.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------AI ENGINEERING EXPERIENCE-----------
+\section{Engineering Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://scarletsync.app/}{Scarlet Sync}}{New Brunswick, NJ}
+      {Founder}{Jan 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Created a modern Rutgers class scheduling app with thousands of users for degree planning and notifications, utilizing AI-assisted parsing of unstructured data from legacy university services.}
+        \resumeItem{Architected a robust data ingestion pipeline using Python and LLMs to reverse-engineer legacy data, indexing over 2,500 classes and 500+ degree programs for real-time querying.}
+        \resumeItem{Negotiating enterprise deal with Rutgers IT to replace outdated systems with AI-enhanced tools.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://getlykke.com/}{Lykke}}{Los Angeles, CA}
+      {Software Engineer}{Sep 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Helping design and expand a multi-model AI pipeline to ingest, parse, and structure high-velocity, multi-modal data (texts, voice memos, docs) for a conversational RAG-based and agentic chat application.}
+        \resumeItem{Engineered a fully local, browser-based RAG system by implementing a local embedding model optimized with WebGPU for client-side hardware acceleration, ensuring high performance and privacy.}
+        \resumeItem{Architecting the integration of Canvas LMS to build a rich, domain-specific knowledge graph, enhancing AI reasoning and significantly reducing hallucinations in structured outputs for students.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://www.samaritanscout.org/}{Samaritan Scout}}{Cranford, NJ}
+      {Full Stack Engineer}{May 2023 -- Aug 2025}
+      \resumeItemListStart
+        \resumeItem{Developed an agentic scraping system leveraging OpenAI and Gemini structured outputs to autonomously extract data from over 100,000 non-profit websites, reducing manual data entry time by over 90\%.}
+        \resumeItem{Developed a full-stack search engine using React, TypeScript, and PostgreSQL to index 35,000+ volunteer opportunities, implementing semantic search algorithms with hallucination filters to ensure accurate matching.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------AI/ML RESEARCH-----------
+\section{Research}
+  \resumeSubHeadingListStart
+  \resumeSubheading
+      {\href{https://rutgerseconomics.org}{Rutgers Economics Labs}}{New Brunswick, NJ}
+      {President (formerly Research Director, Team Lead)}{Oct 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{Leading quantitative research projects for partners including NJDOL, NJDEP, NJBPU, Federal HUD, U.S. Census Bureau; applied econometric models in Python/R to analyze large datasets and project economic trends.}
+        \resumeItem{Previously led a team of five researchers to evaluate the efficacy of the Urban Enterprise Zone program for the NJDCA, utilizing econometric methods in R and Python to analyze complex census datasets.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Rutgers Department of Computer Science}{New Brunswick, NJ}
+      {Research Assistant (Advisor: Prof. Zhao Zhang)}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Exploring second-order optimizers (e.g., Shampoo) to accelerate convergence in large-scale ML training, with applications to efficient AI model optimization.}
+        \resumeItem{Designing agentic systems for non-sequential code generation, focusing on decoupling reasoning from syntax to improve error correction and inference efficiency in LLMs for generating code from research papers.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Algorithmic Robotics and Control Lab in Rutgers's Dept. of CS}{New Brunswick, NJ}
+      {Research Assistant (Advisor: Prof. Jingjin Yu)}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Optimizing robot motion planning algorithms using CUDA for parallel computation in high-dimensional spaces, enabling scalable algorithmic pathfinding (pRRTC and FCIT*).}
+        \resumeItem{Working with foundational vision language action models and their applications in robotics (NVIDIA GR00T).}
+      \resumeItemListEnd
+                                                                                                                                                                                           
+    \resumeSubheading
+        {Kwan Lab, Rutgers Cancer Institute of New Jersey}{New Brunswick, NJ}
+        {Computational Biology Research Assistant (Advisor: Prof. Kelvin Kwan)}{Jan 2026 -- Present}
+        \resumeItemListStart
+            \resumeItem{Engineered an AlphaGenome AI-powered deletion sensitivity scanner that systematically tests 12
+      genomic positions across three deletion sizes (10/40/80 kb) to quantify TAD boundary functional importance;
+      identified a critical chr12 insulator ranked \#1/12 in insulation weakening across mouse ESC and olfactory neuron
+      cell types.}
+            \resumeItem{Built a custom 3D polymer simulation engine using overdamped Langevin dynamics to reconstruct
+      chromatin architecture from Hi-C contact matrices, with multi-scale TAD boundary detection via insulation score and
+      directionality index methods across 70+ automated tests.}
+        \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------EXCEPTIONAL TECHNICAL PROJECTS-----------
+\section{Selected Technical Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{Local Coworker: Native macOS Computer-Use Agent} $|$ \emph{Swift, MCP, Gemini Vision} (private code)}{}
+          \resumeItemListStart
+            \resumeItem{Built a native desktop agent capable of autonomous computer use by integrating Gemini Vision with macOS Accessibility APIs, AppleScript, and JXA.}
+            \resumeItem{Implemented the Model Context Protocol (MCP) to orchestrate specialized sub-agents (UI Interaction, Shell, App Research) for planning and executing complex multi-app workflows.}
+            \resumeItem{Engineered a "Research Agent" that expands the system's capabilities by autonomously searching documentation to learn new automation patterns and add them to its skill library.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\href{https://github.com/AkeBoss-tech/llm-research}{\textbf{SLM Optimization \& Post-Training (GSM8k)}} $|$ \emph{PyTorch, HPC}}{}
+          \resumeItemListStart
+            \resumeItem{Fine-tuned small language models (SLMs) on the GSM8k math reasoning dataset to see the effects of different model sizes and architectures on math reasoning capabilities.}
+            \resumeItem{Deployed models on the Rutgers High Performance Computing (Amarel) cluster, utilizing quantization and structural pruning to maximize inference throughput on constrained compute.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+%-----------AWARDS \& SKILLS-----------
+\section{Awards \& Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Awards}{: \href{https://github.com/AkeBoss-tech/top-coder-challenge}{8090 AI Top Coder (5th)}, Rutgers Shark Tank (2nd and 3rd), \href{https://acashmoney.biz/portfolio/asa-fall-data/}{ASA Fall Data Challenge (Top 3)}.} \\
+     \textbf{Languages}{: Python, C++, CUDA, Java, SQL, TypeScript, R, Bash, Git} \\
+     \textbf{Technologies}{: PyTorch, WebGPU, Transformers, Generative AI, Pandas, AWS, Scikit-learn, HPC Clusters}
+    }}
+ \end{itemize}
+\end{document}
