@@ -26,62 +26,47 @@
 
 ## North Star -- Target Roles
 
-The skill applies with EQUAL rigor to ALL target roles. None is primary or secondary -- any is a success if comp and growth are right:
+The skill applies with EQUAL rigor to ALL target roles. Fit level is in profile.yml (primary = dream, secondary = great):
 
 | Archetype | Thematic axes | What they buy |
 |-----------|---------------|---------------|
-| **AI Platform / LLMOps Engineer** | Evaluation, observability, reliability, pipelines | Someone who puts AI in production with metrics |
-| **Agentic Workflows / Automation** | HITL, tooling, orchestration, multi-agent | Someone who builds reliable agent systems |
-| **Technical AI Product Manager** | GenAI/Agents, PRDs, discovery, delivery | Someone who translates business to AI product |
-| **AI Solutions Architect** | Hyperautomation, enterprise, integrations | Someone who designs end-to-end AI architectures |
-| **AI Forward Deployed Engineer** | Client-facing, fast delivery, prototyping | Someone who delivers AI solutions to clients fast |
-| **AI Transformation Lead** | Change management, adoption, org enablement | Someone who leads AI transformation in an org |
-
-<!-- [CUSTOMIZE] Edit the archetypes above to match YOUR target roles.
-     For example, if you're a backend engineer, replace with:
-     - Senior Backend Engineer
-     - Staff Platform Engineer
-     - Engineering Manager
-     etc. -->
+| **Applied AI / Research Engineer** | LLM training, fine-tuning, post-training, evals, HPC | Someone who can push state-of-the-art and ship it |
+| **Quant Developer** | Low-latency C++, distributed systems, algorithms, HFT infra | Someone who makes math run at microsecond scale |
+| **Robotics / Autonomous Systems Engineer** | CUDA, motion planning, VLA models, real-time constraints | Someone who makes robots reason and move reliably |
+| **Founding Engineer (AI Startup)** | Zero-to-one, full-stack ML, autonomous product ownership | Someone who can build the whole thing alone |
+| **ML Infrastructure / GPU Systems** | CUDA kernels, distributed training, memory optimization | Someone who makes models train faster and cheaper |
 
 ### Adaptive Framing by Archetype
 
 > **Concrete metrics: read from `cv.md` + `article-digest.md` at evaluation time. NEVER hardcode numbers here.**
 
-| If the role is... | Emphasize about the candidate... | Proof point sources |
-|-------------------|----------------------------------|---------------------|
-| Platform / LLMOps | Production systems builder, observability, evals, closed-loop | article-digest.md + cv.md |
-| Agentic / Automation | Multi-agent orchestration, HITL, reliability, cost | article-digest.md + cv.md |
-| Technical AI PM | Product discovery, PRDs, metrics, stakeholder mgmt | cv.md + article-digest.md |
-| Solutions Architect | System design, integrations, enterprise-ready | article-digest.md + cv.md |
-| Forward Deployed Engineer | Fast delivery, client-facing, prototype to prod | cv.md + article-digest.md |
-| AI Transformation Lead | Change management, team enablement, adoption | cv.md + article-digest.md |
-
-<!-- [CUSTOMIZE] Map YOUR specific projects/articles to each archetype above -->
+| If the role is... | Emphasize about the candidate... | Key proof points |
+|-------------------|----------------------------------|-----------------|
+| Applied AI / Research | Second-order optimizers, SLM fine-tuning on HPC, publication-track research | SLM/GSM8k, Shampoo research, HiC-TAD |
+| Quant Developer | C++/CUDA, algorithmic competition (5th globally), systems depth, math rigor | TopCoder 5th, CUDA ARC Lab, Shampoo optimizer |
+| Robotics | CUDA parallelization of pRRTc/FCIT*, NVIDIA GR00T VLA models, ARC Lab | ARC Lab CUDA, GR00T, servo tinkering |
+| Founding Engineer | Scarlet Sync (750+ users, NSF I-Corps, solo architect), REL leadership | Scarlet Sync, Lykke, REL Agentic Intel Lab |
+| ML Infra / GPU | CUDA kernels, SLURM/HPC (Amarel), WebGPU, distributed training | SLM/Amarel, CUDA ARC Lab, WebGPU RAG |
 
 ### Exit Narrative (use in ALL framings)
 
-<!-- [CUSTOMIZE] Replace with YOUR narrative. Examples:
-     - "Built and sold my SaaS after 5 years. Now focused on applied AI at scale."
-     - "Led engineering at a Series B startup through 10x growth. Now seeking my next challenge."
-     - "Transitioned from consulting to building product. Looking for high-ownership roles."
-     Read from config/profile.yml → narrative.exit_story -->
-
 Use the candidate's exit story from `config/profile.yml` to frame ALL content:
-- **In PDF Summaries:** Bridge from past to future -- "Now applying the same [skill] to [JD domain]."
-- **In STAR stories:** Reference proof points from article-digest.md
-- **In Draft Answers (Section G):** The transition narrative should appear in the first response.
-- **When the JD asks for "entrepreneurial", "ownership", "builder", "end-to-end":** This is the #1 differentiator. Increase match weight.
+- **In PDF Summaries:** "Built production AI systems while running deep GPU/ML research — now applying both to [JD domain]."
+- **In STAR stories:** Lead with the technical depth (CUDA, optimizers, HPC) then the impact (users, rankings, research outcomes)
+- **In Draft Answers:** Acknowledge student status as a feature: more research output per year than most engineers
+- **When the JD asks for "low-latency", "systems", "high-performance", "research":** Weight heavily — this is the core differentiator
+- **When the JD asks for "PhD required":** Flag but don't disqualify — Phi Beta Kappa + active research lab roles are strong counters
 
 ### Cross-cutting Advantage
 
-Frame profile as **"Technical builder with real-world proof"** that adapts framing to the role:
-- For PM: "builder who reduces uncertainty with prototypes then productionizes with discipline"
-- For FDE: "builder who delivers fast with observability and metrics from day 1"
-- For SA: "builder who designs end-to-end systems with real integration experience"
-- For LLMOps: "builder who puts AI in production with closed-loop quality systems"
+Frame profile as **"Rare math+systems+ML builder who ships"** that adapts to the role:
+- For Research roles: "runs real research on HPC clusters, not toy notebooks — paper-track output already"
+- For Quant: "5th globally in algorithmic challenge + heavy math (3.97 GPA, Tensor Networks, Probability Theory)"
+- For Robotics: "CUDA motion planning in an active robotics lab + VLA model experience (NVIDIA GR00T)"
+- For Founding Engineer: "architected and shipped a 750-user production app solo as a sophomore"
+- For ML Infra: "CUDA kernel optimization + SLURM/HPC experience + second-order optimizer research"
 
-Convert "builder" into a professional signal, not a "hobby maker". Real proof points make this credible.
+**On student status:** Never apologize for it. Frame as: fewer political constraints, more research output, lower salary ask for equal technical depth. The archetypes above are all plausible at intern/new-grad level — many top quant and AI lab interns are sophomores/juniors.
 
 ### Portfolio as Proof Point (use in high-value applications)
 
