@@ -7,8 +7,9 @@ export default function AboutPage() {
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">About</p>
           <h1 className="mt-3 font-display text-5xl tracking-[-0.05em]">A builder who likes hard, useful problems.</h1>
           <div className="prose mt-6">
-            <p>I'm Akash Dubey, a computer science and mathematics student at the Rutgers University Honors College. I like working at the intersection of AI systems, robotics, scientific computing, and products people actually use.</p>
+            <p>I'm Akash Dubey, a computer science and mathematics student at the Rutgers University Honors College. I like working at the intersection of AI systems, robotics, scientific computing, economics-adjacent research, and products people actually use.</p>
             <p>A lot of my work starts the same way: I find a system that feels clunky, underpowered, or unexplored, and I try to rebuild it into something sharper. Sometimes that becomes a student product. Sometimes it becomes a research tool. Sometimes it turns into a strange but fun technical deep-dive.</p>
+            <p>I&apos;ve also been involved with Rutgers Economics Labs, which fits pretty naturally with how I like to work: quantitative thinking, real-world systems, messy data, and trying to turn ideas into something useful.</p>
             <p>Outside the code, I'm also drawn to competition and performance systems — robotics, soccer, cricket, F1, and the ecosystems around building ambitious things with other people.</p>
           </div>
         </div>

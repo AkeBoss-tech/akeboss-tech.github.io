@@ -6,7 +6,7 @@ import { Reveal } from '@/components/reveal'
 
 const statItems = [
   ['Rutgers Honors', 'computer science + mathematics'],
-  ['AI × robotics', 'research systems and experiments'],
+  ['Economics Labs', 'research, leadership, and systems thinking'],
   ['Builder energy', 'products, tools, and weird ideas'],
 ]
 
@@ -21,7 +21,7 @@ const nowCards = [
   },
   {
     title: 'Exploring research',
-    body: 'Scientific computing, computational biology, and projects that turn messy technical questions into usable systems.',
+    body: 'Scientific computing, computational biology, Rutgers Economics Labs, and projects that turn messy technical questions into usable systems.',
   },
 ]
 
@@ -47,7 +47,7 @@ export default function HomePage() {
             I like building ambitious things — AI systems, robotics, scientific tools, and products that are actually useful.
           </p>
           <p className="mt-6 max-w-2xl text-base leading-8 text-text-muted sm:text-lg">
-            I&apos;m a computer science and mathematics student at Rutgers Honors College. A lot of my work lives at the edge of research and product: agentic AI, motion planning, comp bio, data systems, and student-facing tools that solve real problems.
+            I&apos;m a computer science and mathematics student at Rutgers Honors College. My work lives at the edge of research and product: agentic AI, motion planning, comp bio, data systems, and student-facing tools that solve real problems — including work through Rutgers Economics Labs and other research groups across campus.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link href="/projects" className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5">See what I&apos;ve built</Link>
