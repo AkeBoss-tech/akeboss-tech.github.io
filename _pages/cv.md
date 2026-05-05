@@ -207,7 +207,7 @@ Projects
   * Sept. 2021 - 2024
   * ASA Fall Data Challenge Graphs in Mathematical Statistics & Data Sciences, Android App for portfolio generation, and AP CSA and CSP projects
 
-LinkedIn: [Akash Dubey LinkedIn](https://www.linkedin.com/in/akash-dubey-your-boss/)  
+LinkedIn: [Akash Dubey LinkedIn](https://www.linkedin.com/in/akash---dubey/)  
 GitHub: [AkeBoss-tech GitHub](https://github.com/AkeBoss-tech/)  
 Portfolio: [Digital Portfolio](https://sites.google.com/ucvts.org/akash-dubey-digital-portfolio/home)  
 Blog: [Blog](https://akeboss-tech.github.io/)  

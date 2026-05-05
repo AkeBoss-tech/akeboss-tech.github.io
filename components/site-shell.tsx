@@ -45,7 +45,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <p>Built around Akash&apos;s work across AI systems, robotics, research, and product experiments.</p>
           <div className="flex gap-4">
             <a href="https://github.com/AkeBoss-tech" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/akash-dubey-your-boss" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer">LinkedIn</a>
             <a href="mailto:akash.dubey@rutgers.edu">Email</a>
           </div>
         </div>
