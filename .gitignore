@@ -1,3 +1,6 @@
-_site/
-Gemfile.lock
 node_modules
+.next
+out
+design-shots
+*.log
+.DS_Store

@@ -1,33 +1,39 @@
 {
-  "name": "minimal-mistakes",
-  "version": "3.4.2",
-  "description": "Minimal Mistakes Jekyll theme npm build scripts",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mmistakes/minimal-mistakes.git"
-  },
-  "keywords": [
-    "jekyll",
-    "theme",
-    "minimal"
-  ],
-  "author": "Michael Rose",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mmistakes/minimal-mistakes/issues"
-  },
-  "homepage": "https://mmistakes.github.io/minimal-mistakes/",
-  "engines": {
-    "node": ">= 0.10.0"
-  },
+  "name": "akash-portfolio",
   "devDependencies": {
-    "npm-run-all": "^1.7.0",
-    "onchange": "^2.2.0",
-    "uglify-js": "^2.6.1"
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.4",
+    "playwright": "^1.59.1",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3"
   },
   "scripts": {
-    "uglify": "uglifyjs assets/js/vendor/jquery/jquery-1.12.4.min.js assets/js/plugins/jquery.fitvids.js assets/js/plugins/jquery.greedy-navigation.js assets/js/plugins/jquery.magnific-popup.js assets/js/plugins/jquery.smooth-scroll.min.js assets/js/plugins/stickyfill.min.js assets/js/_main.js -c -m -o assets/js/main.min.js",
-    "watch:js": "onchange \"assets/js/**/*.js\" -e \"assets/js/main.min.js\" -- npm run build:js",
-    "build:js": "npm run uglify"
-  }
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "gray-matter": "^4.0.3",
+    "next": "^16.2.4",
+    "next-themes": "^0.4.6",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-markdown": "^10.1.0",
+    "reading-time": "^1.5.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-raw": "^7.0.0",
+    "rehype-slug": "^6.0.0",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^3.5.0"
+  },
+  "private": true
 }

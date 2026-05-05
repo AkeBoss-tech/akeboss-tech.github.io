@@ -1,0 +1,89 @@
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import readingTime from 'reading-time'
+
+const root = process.cwd()
+const portfolioDir = path.join(root, '_portfolio')
+const postsDir = path.join(root, '_posts')
+
+export type Project = {
+  slug: string
+  title: string
+  excerpt: string
+  image?: string
+  tags: string[]
+  rank: number
+  featured: boolean
+  content: string
+}
+
+export type Post = {
+  slug: string
+  title: string
+  excerpt: string
+  date: string
+  image?: string
+  tags: string[]
+  content: string
+  reading: string
+}
+
+function parseTags(value: unknown): string[] {
+  if (Array.isArray(value)) return value.map(String)
+  if (typeof value === 'string') {
+    const cleaned = value.trim()
+    if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
+      return cleaned.slice(1, -1).split(',').map((x) => x.trim().replace(/^['\"]|['\"]$/g, '')).filter(Boolean)
+    }
+    return cleaned ? [cleaned] : []
+  }
+  return []
+}
+
+function stripQuotes(value: unknown, fallback = '') {
+  if (!value) return fallback
+  return String(value).replace(/^['\"]|['\"]$/g, '')
+}
+
+export function getProjects(): Project[] {
+  return fs.readdirSync(portfolioDir).filter((file) => file.endsWith('.md')).map((file) => {
+    const raw = fs.readFileSync(path.join(portfolioDir, file), 'utf8')
+    const { data, content } = matter(raw)
+    return {
+      slug: file.replace(/\.md$/, ''),
+      title: stripQuotes(data.title),
+      excerpt: stripQuotes(data.excerpt),
+      image: stripQuotes(data.image),
+      tags: parseTags(data.tags),
+      rank: Number(data.rank || 999),
+      featured: data.featured === true || data.featured === 'true',
+      content,
+    }
+  }).sort((a, b) => a.rank - b.rank)
+}
+
+export function getProject(slug: string) {
+  return getProjects().find((project) => project.slug === slug)
+}
+
+export function getPosts(): Post[] {
+  return fs.readdirSync(postsDir).filter((file) => file.endsWith('.md')).map((file) => {
+    const raw = fs.readFileSync(path.join(postsDir, file), 'utf8')
+    const { data, content } = matter(raw)
+    return {
+      slug: stripQuotes(data.permalink || file.replace(/\.md$/, '')).replace(/^\/posts\//, '').replace(/\/$/, ''),
+      title: stripQuotes(data.title),
+      excerpt: stripQuotes(data.excerpt || ''),
+      date: stripQuotes(data.date),
+      image: stripQuotes(data.image),
+      tags: parseTags(data.tags),
+      content,
+      reading: readingTime(content).text,
+    }
+  }).sort((a, b) => (a.date < b.date ? 1 : -1))
+}
+
+export function getPost(slug: string) {
+  return getPosts().find((post) => post.slug === slug)
+}
