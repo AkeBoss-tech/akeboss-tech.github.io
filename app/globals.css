@@ -65,6 +65,13 @@ body {
 .hero-video-overlay { background: linear-gradient(to top, rgba(2,6,23,.72), rgba(2,6,23,.18) 42%, rgba(2,6,23,.04)); }
 .project-card-media { position: relative; overflow: hidden; }
 .project-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(2,6,23,.48), rgba(2,6,23,.1) 45%, transparent 78%); }
+.hero-lines { pointer-events: none; position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(to right, color-mix(in srgb, var(--border) 85%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px); background-size: 72px 72px; mask-image: radial-gradient(circle at 50% 35%, black, transparent 78%); }
+.hero-stack { perspective: 1400px; }
+.mood-tile { box-shadow: 0 22px 80px rgba(15, 23, 42, 0.18); animation: float-in .8s cubic-bezier(.22,1,.36,1) both; }
+.mood-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 38%, transparent 62%, rgba(255,255,255,.08)); opacity: 0; transition: opacity .35s ease; }
+.mood-tile:hover::after { opacity: 1; }
+.moodboard-collage { align-items: stretch; }
+@keyframes float-in { from { opacity: 0; transform: translateY(22px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 768px) {
   .hero-orb-a { right: -8%; top: 4%; height: 9rem; width: 9rem; }
   .hero-orb-b { left: -10%; top: 38%; height: 7rem; width: 7rem; }
