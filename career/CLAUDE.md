@@ -139,12 +139,13 @@ This system is designed to be customized by YOU (Claude). When the user asks you
 
 ---
 
-## Offer Verification -- MANDATORY
+## Offer Verification
 
-**NEVER trust WebSearch/WebFetch to verify if an offer is still active.** ALWAYS use Playwright:
-1. `browser_navigate` to the URL
-2. `browser_snapshot` to read content
-3. Only footer/navbar without JD = closed. Title + description + Apply = active.
+**Preferred:** Ask the user to navigate to the URL and confirm it's still open. If they say "it's open" or "I checked" or "confirmed" — proceed immediately without requiring Playwright.
+
+**If Playwright is available:** Use it to verify (`browser_navigate` → `browser_snapshot`). Only footer/navbar without JD = closed.
+
+**Do not block the apply workflow on Playwright** if the user has confirmed the posting is live. User confirmation is sufficient.
 
 ---
 

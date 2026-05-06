@@ -29,9 +29,9 @@ Engineer and Researcher at Rutgers University (CS + Math) with 10+ years of soft
 
 ### Lykke | Software Engineer
 *Sep 2025 – Present*
-- Designing a multi-model AI pipeline for high-velocity data ingestion (text, voice, docs) for agentic RAG applications.
-- Engineered a fully local, browser-based RAG system using **WebGPU-optimized embedding models** for private hardware acceleration.
-- Integrated Canvas LMS data into a domain-specific knowledge graph to reduce hallucinations in student-facing AI.
+- Building the AI infrastructure for an AI-first student education platform: Canvas LMS content ingestion pipeline, AI-generated wikis (concept-level knowledge base from course materials), AI video tutor, and AI interview prep coaching.
+- Engineered a **WebGPU inference pipeline** for fully local, hardware-accelerated LLM serving — private embedding models running client-side with sub-second response times.
+- Designing a **multi-model AI pipeline** for high-velocity multi-modal ingestion (text, voice, docs) powering agentic RAG across all four platform features.
 
 ### Rutgers Department of Computer Science | Research Assistant
 *Jan 2026 – Present*

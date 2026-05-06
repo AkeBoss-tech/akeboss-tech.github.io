@@ -1,107 +1,109 @@
-# Modo: apply — Asistente de Aplicación en Vivo
+# Mode: apply — Live Application Assistant
 
-Modo interactivo para cuando el candidato está rellenando un formulario de aplicación en Chrome. Lee lo que hay en pantalla, carga el contexto previo de la oferta, y genera respuestas personalizadas para cada pregunta del formulario.
+Fast-fill mode. User confirms the posting is open; Claude loads context and generates all answers immediately, ready to copy-paste.
 
-## Requisitos
+## Verification
 
-- **Mejor con Playwright visible**: En modo visible, el candidato ve el navegador y Claude puede interactuar con la página.
-- **Sin Playwright**: el candidato comparte un screenshot o pega las preguntas manualmente.
+**Do NOT require Playwright.** If the user says the posting is open (or navigates to it and confirms), proceed immediately.
+
+If the URL is unknown, ask once: "What's the application URL?" Then proceed.
 
 ## Workflow
 
 ```
-1. DETECTAR    → Leer Chrome tab activa (screenshot/URL/título)
-2. IDENTIFICAR → Extraer empresa + rol de la página
-3. BUSCAR      → Match contra reports existentes en reports/
-4. CARGAR      → Leer report completo + Section G (si existe)
-5. COMPARAR    → ¿El rol en pantalla coincide con el evaluado? Si cambió → avisar
-6. ANALIZAR    → Identificar TODAS las preguntas del formulario visibles
-7. GENERAR     → Para cada pregunta, generar respuesta personalizada
-8. PRESENTAR   → Mostrar respuestas formateadas para copy-paste
+1. CONFIRM   → User confirms posting is open (or pastes URL they verified)
+2. LOAD      → Match against reports/ by company name; load report + cv.md
+3. GENERATE  → Produce ALL standard answers immediately (no waiting for user to paste questions)
+4. PRESENT   → Formatted copy-paste block per field
+5. GAPS      → Flag any fields that need user input (salary, start date, custom essays)
+6. POST      → After user confirms submitted: update tracker to Applied, suggest /contacto
 ```
 
-## Paso 1 — Detectar la oferta
+## Step 1 — Identify the role
 
-**Con Playwright:** Tomar snapshot de la página activa. Leer título, URL, y contenido visible.
+Extract company + role from context (URL, user message, or report number). Match against `reports/` with case-insensitive grep. Load the full report.
 
-**Sin Playwright:** Pedir al candidato que:
-- Comparta un screenshot del formulario (Read tool lee imágenes)
-- O pegue las preguntas del formulario como texto
-- O diga empresa + rol para que lo busquemos
+## Step 2 — Generate answers proactively
 
-## Paso 2 — Identificar y buscar contexto
+Don't wait for the user to paste form questions. Generate answers for ALL standard Greenhouse/Lever/Ashby fields immediately using the report's Block G + Block B:
 
-1. Extraer nombre de empresa y título del rol de la página
-2. Buscar en `reports/` por nombre de empresa (Grep case-insensitive)
-3. Si hay match → cargar el report completo
-4. Si hay Section G → cargar los draft answers previos como base
-5. Si NO hay match → avisar y ofrecer ejecutar auto-pipeline rápido
+### Standard fields to fill (always generate these):
 
-## Paso 3 — Detectar cambios en el rol
+**Resume** → remind user to attach the tailored PDF from `output/cvs/`
 
-Si el rol en pantalla difiere del evaluado:
-- **Avisar al candidato**: "El rol ha cambiado de [X] a [Y]. ¿Quieres que re-evalúe o adapto las respuestas al nuevo título?"
-- **Si adaptar**: Ajustar las respuestas al nuevo rol sin re-evaluar
-- **Si re-evaluar**: Ejecutar evaluación A-F completa, actualizar report, regenerar Section G
-- **Actualizar tracker**: Cambiar título del rol en applications.md si procede
+**LinkedIn URL** → `https://linkedin.com/in/akash-dubey-06`
 
-## Paso 4 — Analizar preguntas del formulario
+**Website/Portfolio** → `https://akashdubey.me`
 
-Identificar TODAS las preguntas visibles:
-- Campos de texto libre (cover letter, why this role, etc.)
-- Dropdowns (how did you hear, work authorization, etc.)
-- Yes/No (relocation, visa, etc.)
-- Campos de salario (range, expectation)
-- Upload fields (resume, cover letter PDF)
+**GitHub** → `https://github.com/AkeBoss-tech`
 
-Clasificar cada pregunta:
-- **Ya respondida en Section G** → adaptar la respuesta existente
-- **Nueva pregunta** → generar respuesta desde el report + cv.md
+**Work Authorization** → U.S. Citizen — no sponsorship needed
 
-## Paso 5 — Generar respuestas
+**Graduation Date** → May 2027
 
-Para cada pregunta, generar la respuesta siguiendo:
+**Degree** → B.S. Computer Science and Mathematics
 
-1. **Contexto del report**: Usar proof points del bloque B, historias STAR del bloque F
-2. **Section G previa**: Si existe una respuesta draft, usarla como base y refinar
-3. **Tono "I'm choosing you"**: Mismo framework del auto-pipeline
-4. **Especificidad**: Referenciar algo concreto del JD visible en pantalla
-5. **career-ops proof point**: Incluir en "Additional info" si hay campo para ello
+**GPA** → 3.97/4.0
 
-**Formato de output:**
+**How did you hear about this role?** → Online job board / company careers page
+
+**Start date** → Ask user: "When can you start? (typical: May/June 2026)"
+
+**Why [Company]?** → Use Block G draft; personalize with 1-2 specifics from Block A
+
+**Cover Letter / Additional Info** → Use Block G answer + proof point framing from Block B
+
+**Anything else you'd like us to know?** → 2-3 sentence summary: CUDA at ARC Lab + Lykke production + TopCoder 5th
+
+### Role-specific technical questions:
+Generate from Block G and Block F stories. If Block G has a draft, use it. If not, synthesize from Block B proof points.
+
+## Step 3 — Output format
 
 ```
-## Respuestas para [Empresa] — [Rol]
-
-Basado en: Report #NNN | Score: X.X/5 | Arquetipo: [tipo]
+## Application: [Company] — [Role]
+Report: #NNN | Score: X.X/5 | Archetype: [type]
+Tailored CV: output/cvs/NNN-slug.tex (compile to PDF first)
 
 ---
 
-### 1. [Pregunta exacta del formulario]
-> [Respuesta lista para copy-paste]
+### Resume
+→ Attach: career/output/cvs/NNN-[slug].tex (compile with pdflatex first)
 
-### 2. [Siguiente pregunta]
-> [Respuesta]
+### LinkedIn
+→ https://linkedin.com/in/akash-dubey-06
 
-...
+### Website
+→ https://akashdubey.me
+
+### Work Authorization
+→ U.S. Citizen
+
+### Graduation Date
+→ May 2027
+
+### Why [Company]?
+[Copy-paste answer]
+
+### Cover Letter / Why this role?
+[Copy-paste answer]
+
+### Describe your GPU/ML/relevant experience
+[Copy-paste answer]
+
+### Anything else?
+[Copy-paste answer]
 
 ---
+⚠️  Fields needing your input:
+- Start date (when can you start?)
+- [Any custom essay questions not in Block G]
 
-Notas:
-- [Cualquier observación sobre el rol, cambios, etc.]
-- [Sugerencias de personalización que el candidato debería revisar]
+📎 After submitting: tell me and I'll update the tracker + draft a LinkedIn outreach message.
 ```
 
-## Paso 6 — Post-apply (opcional)
+## Post-apply
 
-Si el candidato confirma que envió la aplicación:
-1. Actualizar estado en `applications.md` de "Evaluada" a "Aplicado"
-2. Actualizar Section G del report con las respuestas finales
-3. Sugerir siguiente paso: `/career-ops contacto` para LinkedIn outreach
-
-## Scroll handling
-
-Si el formulario tiene más preguntas que las visibles:
-- Pedir al candidato que haga scroll y comparta otro screenshot
-- O que pegue las preguntas restantes
-- Procesar en iteraciones hasta cubrir todo el formulario
+When user confirms submitted:
+1. Update `applications.md` status from `Evaluada` → `Applied`
+2. Offer to run `/career-ops contacto` for LinkedIn outreach to a recruiter/engineer at the company
