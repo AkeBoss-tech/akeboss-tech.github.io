@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Variant 1: Stripe-inspired Mesh Gradient with sophisticated multi-layer motion.
@@ -83,7 +83,6 @@ export function MeshHero() {
 
 /**
  * Variant 2: Technical Grid with Pulses
- * A more structured, "Systems" focused background.
  */
 export function GridHero() {
   return (
@@ -100,7 +99,7 @@ export function GridHero() {
         }}
       />
       
-      {/* Random Pulse Lines */}
+      {/* Constant Pulse Lines */}
       {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
@@ -127,16 +126,36 @@ export function GridHero() {
 
 /**
  * Variant 4: Infinite Data Stream / Neural Network
- * A complex, interconnected field of nodes and pulsing paths.
  */
 export function InfiniteStream() {
+  const [mounted, setMounted] = useState(false)
+  const [items, setItems] = useState<{ paths: any[], circles: any[] }>({ paths: [], circles: [] })
+
+  useEffect(() => {
+    setMounted(true)
+    const paths = [...Array(15)].map((_, i) => ({
+      d: `M ${-20 + (i * 10)} 110 Q ${40 + (i * 20)} 50 ${120 + (i * 10)} -10`,
+      duration: 5 + Math.random() * 5,
+      delay: Math.random() * 5
+    }))
+    const circles = [...Array(30)].map(() => ({
+      cx: Math.random() * 100 + "%",
+      cy: Math.random() * 100 + "%",
+      duration: 3 + Math.random() * 4,
+      delay: Math.random() * 5
+    }))
+    setItems({ paths, circles })
+  }, [])
+
+  if (!mounted) return <div className="absolute inset-0" />
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <svg className="w-full h-full opacity-[0.15] dark:opacity-[0.25]">
-        {[...Array(15)].map((_, i) => (
+        {items.paths.map((p, i) => (
           <motion.path
             key={i}
-            d={`M ${-20 + (i * 10)} 110 Q ${40 + (i * 20)} 50 ${120 + (i * 10)} -10`}
+            d={p.d}
             fill="none"
             stroke="var(--color-accent)"
             strokeWidth="0.5"
@@ -147,22 +166,22 @@ export function InfiniteStream() {
               pathOffset: [0, 1]
             }}
             transition={{
-              duration: 5 + Math.random() * 5,
+              duration: p.duration,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: p.delay,
               ease: "linear"
             }}
           />
         ))}
         
-        {[...Array(30)].map((_, i) => (
+        {items.circles.map((c, i) => (
           <motion.circle
             key={i}
             r="1"
             fill="var(--color-accent)"
             initial={{ 
-              cx: Math.random() * 100 + "%",
-              cy: Math.random() * 100 + "%",
+              cx: c.cx,
+              cy: c.cy,
               opacity: 0
             }}
             animate={{ 
@@ -170,15 +189,14 @@ export function InfiniteStream() {
               scale: [0.5, 1.5, 0.5]
             }}
             transition={{
-              duration: 3 + Math.random() * 4,
+              duration: c.duration,
               repeat: Infinity,
-              delay: Math.random() * 5
+              delay: c.delay
             }}
           />
         ))}
       </svg>
       
-      {/* Background Gradients to blend */}
       <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg" />
     </div>
   )

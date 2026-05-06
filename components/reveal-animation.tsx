@@ -1,8 +1,25 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 export function FinalReveal() {
+  const [mounted, setMounted] = useState(false)
+  const [particles, setParticles] = useState<{ x: number, y: number, delay: number, duration: number }[]>([])
+
+  useEffect(() => {
+    setMounted(true)
+    const newParticles = [...Array(20)].map(() => ({
+      x: Math.random() * 1000 - 500,
+      y: Math.random() * 1000 - 500,
+      delay: Math.random() * 5,
+      duration: 5 + Math.random() * 5
+    }))
+    setParticles(newParticles)
+  }, [])
+
+  if (!mounted) return <div className="h-96" />
+
   return (
     <div className="relative w-full h-96 flex items-center justify-center overflow-hidden">
       {/* Background abstract shape */}
@@ -27,13 +44,13 @@ export function FinalReveal() {
       </div>
       
       {/* Floating particles */}
-      {[...Array(20)].map((_, i) => (
+      {particles.map((p, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-accent rounded-full"
           initial={{ 
-            x: Math.random() * 1000 - 500, 
-            y: Math.random() * 1000 - 500,
+            x: p.x, 
+            y: p.y,
             opacity: 0 
           }}
           animate={{ 
@@ -41,9 +58,9 @@ export function FinalReveal() {
             opacity: [0, 1, 0]
           }}
           transition={{ 
-            duration: 5 + Math.random() * 5, 
+            duration: p.duration, 
             repeat: Infinity,
-            delay: Math.random() * 5
+            delay: p.delay
           }}
         />
       ))}
