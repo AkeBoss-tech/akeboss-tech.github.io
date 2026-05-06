@@ -4,3 +4,4 @@ out
 design-shots
 *.log
 .DS_Store
+.playwright-mcp/
