@@ -9,17 +9,24 @@ const quickFacts = [
 
 const pillars = [
   {
-    title: 'How I work',
-    body: 'I like hard problems with moving parts — code, systems, data, experiments, demos, and real people who need the thing to work.',
+    title: 'Builder',
+    body: 'I like making tools, interfaces, models, and systems people can actually use.',
   },
   {
-    title: 'What I build',
-    body: 'A mix of AI systems, robotics, scientific tools, data products, and student-facing software that feels fast, useful, and well-designed.',
+    title: 'Researcher',
+    body: 'A lot of my work starts with ambiguity, hard constraints, and fast learning.',
   },
   {
-    title: 'What drives me',
-    body: 'Curiosity, competition, and the fun of turning messy ideas into clean systems people can actually use.',
+    title: 'Operator',
+    body: 'I like pressure, iteration, demos, and projects that survive contact with reality.',
   },
+]
+
+const storyBeats = [
+  'AI systems that feel useful, not theoretical.',
+  'Robotics work where software has to meet the physical world.',
+  'Research and data tooling that make complexity more legible.',
+  'Student products with real users, real friction, and real feedback loops.',
 ]
 
 export default function AboutPage() {
@@ -29,7 +36,6 @@ export default function AboutPage() {
         <Reveal>
           <div className="space-y-4">
             <div className="media-frame aspect-[4/5] max-w-md overflow-hidden rounded-[32px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/face.jpg" alt="Akash Dubey" className="h-full w-full object-cover" />
             </div>
             <div className="glass rounded-[28px] p-5">
@@ -49,13 +55,13 @@ export default function AboutPage() {
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">About</p>
             <h1 className="mt-3 max-w-4xl font-display text-5xl tracking-[-0.06em] sm:text-6xl">
-              I like building things that make complex systems feel clear, usable, and alive.
+              I like turning messy systems into things people can actually use.
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-text-muted">
-              I&apos;m Akash Dubey, a computer science and mathematics student at Rutgers Honors College. My work sits between research and product — AI systems, robotics, scientific computing, data-heavy tools, and projects that do something real outside a notebook.
+              I&apos;m Akash Dubey, a computer science and mathematics student at Rutgers Honors College. My work sits between research, engineering, and product — AI systems, robotics, scientific computing, and tools that need to do something real.
             </p>
             <p className="mt-5 max-w-3xl text-base leading-8 text-text-muted">
-              That includes work through Rutgers Economics Labs and other research groups across campus, where I keep getting pulled toward the same kind of problem: messy inputs, hard constraints, and a chance to turn them into a sharper system.
+              Even when the domains change, the pattern stays the same: hard constraints, noisy inputs, and a chance to shape complexity into something sharper.
             </p>
           </div>
         </Reveal>
@@ -73,23 +79,20 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="grid gap-6 py-8 pb-20 lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="grid gap-6 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:py-10">
         <Reveal>
           <div className="glass rounded-[32px] p-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Interests</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Story</p>
             <h2 className="mt-3 font-display text-3xl tracking-tight">The mix is the point.</h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-text-muted">
-              I&apos;m not trying to stay in one narrow lane. A lot of the fun is in crossing between AI, robotics, math, comp bio, interfaces, and product thinking until something clicks.
+              This isn&apos;t a narrow specialist portfolio. The interesting part is the crossing between AI, robotics, product, math, and research.
             </p>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[24px] border border-border bg-bg-strong/70 p-5">
-                <h3 className="font-display text-xl tracking-tight">Technical</h3>
-                <p className="mt-2 text-sm leading-7 text-text-muted">Agentic AI, motion planning, scientific computing, data systems, computational biology, research tooling.</p>
-              </div>
-              <div className="rounded-[24px] border border-border bg-bg-strong/70 p-5">
-                <h3 className="font-display text-xl tracking-tight">Outside the code</h3>
-                <p className="mt-2 text-sm leading-7 text-text-muted">Soccer, cricket, F1, performance culture, ambitious teams, and the energy around building things with other people.</p>
-              </div>
+            <div className="mt-6 grid gap-3">
+              {storyBeats.map((beat) => (
+                <div key={beat} className="rounded-[24px] border border-border bg-bg-strong/70 px-5 py-4 text-sm leading-7 text-text-muted">
+                  {beat}
+                </div>
+              ))}
             </div>
           </div>
         </Reveal>
@@ -97,14 +100,13 @@ export default function AboutPage() {
         <Reveal delay={0.06}>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             <div className="media-frame aspect-[4/3] overflow-hidden rounded-[28px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/posts/frc24/comp/image2.gif" alt="Robotics work" className="h-full w-full object-cover" />
             </div>
             <div className="glass rounded-[28px] p-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">Short version</p>
               <p className="mt-3 font-display text-2xl tracking-tight">Builder, researcher, operator.</p>
               <p className="mt-4 text-sm leading-7 text-text-muted">
-                I like projects with pressure, momentum, and enough complexity that they force you to level up.
+                I like projects with pressure, momentum, and enough complexity to force growth.
               </p>
             </div>
           </div>

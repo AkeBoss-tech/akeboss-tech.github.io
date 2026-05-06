@@ -40,13 +40,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <main className="pt-32 md:pt-24">{children}</main>
-      <footer className="mx-auto mt-24 max-w-7xl px-6 pb-10 lg:px-10">
-        <div className="glass flex flex-col gap-3 rounded-3xl px-6 py-5 text-sm text-text-muted md:flex-row md:items-center md:justify-between">
-          <p>Built around Akash&apos;s work across AI systems, robotics, research, and product experiments.</p>
-          <div className="flex gap-4">
-            <a href="https://github.com/AkeBoss-tech" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="mailto:akash.dubey@rutgers.edu">Email</a>
+      <footer className="mx-auto mt-24 max-w-7xl px-4 pb-10 sm:px-6 lg:px-10">
+        <div className="glass flex flex-col gap-5 rounded-[28px] px-5 py-5 sm:px-6 sm:py-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="font-display text-2xl tracking-tight">Akash Dubey</p>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-text-muted">AI systems, robotics, research, and products.</p>
+          </div>
+          <div className="flex flex-wrap gap-4 text-sm text-text-muted">
+            <a href="https://github.com/AkeBoss-tech" target="_blank" rel="noreferrer" className="transition hover:text-text">GitHub</a>
+            <a href="https://linkedin.com/in/akash-dubey-06" target="_blank" rel="noreferrer" className="transition hover:text-text">LinkedIn</a>
+            <a href="mailto:akash.dubey@rutgers.edu" className="transition hover:text-text">Email</a>
           </div>
         </div>
       </footer>
