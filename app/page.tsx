@@ -55,6 +55,21 @@ const valuePoints = [
   'The goal is useful systems with visual taste.',
 ]
 
+const currentBlocks = [
+  {
+    title: 'Rutgers Economics Labs',
+    body: 'Research-facing data tools and visual analysis that make messy information easier to work with.',
+  },
+  {
+    title: 'AI systems',
+    body: 'Agent workflows, useful interfaces, and product-minded ML work that has to feel real.',
+  },
+  {
+    title: 'Robotics + control',
+    body: 'Software under physical constraints, competition pressure, and hardware feedback loops.',
+  },
+]
+
 const featuredSlugs = ['scarlet-sync', 'lykke', 'hic-tad-analysis', 'personal-assistant', 'grokipedia-api', 'robot-code']
 
 export default function HomePage() {
@@ -225,6 +240,38 @@ export default function HomePage() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section className="pb-8 pt-2 sm:pb-12 lg:pb-14">
+        <Reveal>
+          <div className="glass rounded-[32px] p-6 sm:p-8 lg:p-10">
+            <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Right now</p>
+                <h2 className="mt-3 font-display text-3xl tracking-[-0.05em] sm:text-4xl text-balance">A few lanes I keep coming back to.</h2>
+                <p className="mt-4 max-w-xl text-sm leading-7 text-text-muted">
+                  Different projects, same taste: systems that have real constraints, real users, or real-world feedback.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <Link href="/about" className="rounded-full bg-accent px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5">
+                  More about me
+                </Link>
+                <Link href="/moodboard" className="glass rounded-full px-5 py-3 text-sm font-medium transition hover:-translate-y-0.5">
+                  Moodboard
+                </Link>
+              </div>
+            </div>
+            <div className="mt-6 grid gap-4 lg:grid-cols-3">
+              {currentBlocks.map((block, index) => (
+                <div key={block.title} className="rounded-[24px] border border-border bg-bg-strong/70 p-5" style={{ animationDelay: `${index * 90}ms` }}>
+                  <p className="font-display text-xl tracking-tight">{block.title}</p>
+                  <p className="mt-3 text-sm leading-7 text-text-muted">{block.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       <section className="pb-16 pt-2 sm:pb-20">

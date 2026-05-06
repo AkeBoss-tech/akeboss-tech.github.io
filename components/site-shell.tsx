@@ -48,7 +48,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
           <div className="flex flex-wrap gap-4 text-sm text-text-muted">
             <a href="https://github.com/AkeBoss-tech" target="_blank" rel="noreferrer" className="transition hover:text-text">GitHub</a>
-            <a href="https://linkedin.com/in/akash-dubey-06" target="_blank" rel="noreferrer" className="transition hover:text-text">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer" className="transition hover:text-text">LinkedIn</a>
             <a href="mailto:akash.dubey@rutgers.edu" className="transition hover:text-text">Email</a>
           </div>
         </div>
