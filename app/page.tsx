@@ -294,6 +294,13 @@ export default function HomePage() {
                   <img src={project.image} alt={project.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
                 </div>
                 <div className="px-2 pb-2 pt-4">
+                  <div className="mb-2 flex flex-wrap items-center gap-2">
+                    {project.tags.slice(0, 2).map((tag) => (
+                      <span key={tag} className="rounded-full border border-border bg-bg-strong/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-text-muted">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                   <h3 className="font-display text-2xl tracking-tight">{project.title}</h3>
                   <p className="mt-2 line-clamp-3 text-sm leading-6 text-text-muted">{project.excerpt}</p>
                 </div>

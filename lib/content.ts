@@ -16,6 +16,9 @@ export type Project = {
   rank: number
   featured: boolean
   content: string
+  sections: { id: string; title: string }[]
+  links: { label: string; url: string }[]
+  reading: string
 }
 
 export type Post = {
@@ -46,6 +49,36 @@ function stripQuotes(value: unknown, fallback = '') {
   return String(value).replace(/^['\"]|['\"]$/g, '')
 }
 
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
+
+function extractSections(content: string) {
+  return content
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => /^##\s+/.test(line))
+    .map((line) => line.replace(/^##\s+/, '').trim())
+    .filter(Boolean)
+    .map((title) => ({ id: slugify(title), title }))
+}
+
+function extractLinks(content: string) {
+  const matches = [...content.matchAll(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g)]
+  const links = matches.map((match) => ({ label: match[1].trim(), url: match[2].trim() }))
+  const seen = new Set<string>()
+  return links.filter((link) => {
+    if (seen.has(link.url)) return false
+    seen.add(link.url)
+    return true
+  }).slice(0, 4)
+}
+
 export function getProjects(): Project[] {
   return fs.readdirSync(portfolioDir).filter((file) => file.endsWith('.md')).map((file) => {
     const raw = fs.readFileSync(path.join(portfolioDir, file), 'utf8')
@@ -59,6 +92,9 @@ export function getProjects(): Project[] {
       rank: Number(data.rank || 999),
       featured: data.featured === true || data.featured === 'true',
       content,
+      sections: extractSections(content),
+      links: extractLinks(content),
+      reading: readingTime(content).text,
     }
   }).sort((a, b) => a.rank - b.rank)
 }

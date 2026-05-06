@@ -59,6 +59,8 @@ body {
 .prose { color: var(--text); max-width: 72ch; }
 .prose h1,.prose h2,.prose h3,.prose h4 { color: var(--text); font-family: var(--font-space-grotesk), sans-serif; line-height: 1.05; letter-spacing: -0.04em; }
 .prose h2,.prose h3 { margin-top: 2.5rem; }
+.prose h2 a[aria-hidden='true'], .prose h3 a[aria-hidden='true'] { margin-left: .45rem; opacity: 0; text-decoration: none; color: var(--text-muted); transition: opacity .18s ease; }
+.prose h2:hover a[aria-hidden='true'], .prose h3:hover a[aria-hidden='true'] { opacity: .7; }
 .prose p,.prose li,.prose blockquote { color: var(--text-muted); }
 .prose p { line-height: 1.9; }
 .prose ul,.prose ol { padding-left: 1.2rem; }
