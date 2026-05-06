@@ -70,10 +70,20 @@ body {
 .mood-tile { box-shadow: 0 22px 80px rgba(15, 23, 42, 0.18); animation: float-in .8s cubic-bezier(.22,1,.36,1) both; }
 .mood-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 38%, transparent 62%, rgba(255,255,255,.08)); opacity: 0; transition: opacity .35s ease; }
 .mood-tile:hover::after { opacity: 1; }
+.moodboard-hover { background: linear-gradient(to top, rgba(2,6,23,.22), rgba(2,6,23,.03) 48%, transparent); opacity: .7; transition: opacity .28s ease; }
+.mood-tile:hover .moodboard-hover { opacity: .32; }
 .moodboard-collage { align-items: stretch; }
+.moodboard-collage iframe, .moodboard-collage video, .moodboard-collage img { height: 100%; width: 100%; object-fit: cover; }
 @keyframes float-in { from { opacity: 0; transform: translateY(22px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 768px) {
   .hero-orb-a { right: -8%; top: 4%; height: 9rem; width: 9rem; }
   .hero-orb-b { left: -10%; top: 38%; height: 7rem; width: 7rem; }
+  .moodboard-collage { grid-auto-rows: 150px; }
+  .mood-tile { border-radius: 22px; }
+}
+
+@media (max-width: 640px) {
+  body { background-size: auto, auto, cover; }
+  .glass { backdrop-filter: blur(12px); }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }

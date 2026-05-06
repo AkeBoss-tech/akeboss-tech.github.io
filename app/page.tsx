@@ -3,19 +3,12 @@ import { getProjects } from '@/lib/content'
 import { Reveal } from '@/components/reveal'
 import { AutoVideo } from '@/components/auto-video'
 
-const floatingFacts = [
-  'AI systems',
-  'robotics',
-  'research',
-  'products',
-  'motion',
-  'interfaces',
-]
+const floatingFacts = ['AI systems', 'robotics', 'research', 'products', 'Rutgers', 'operator energy']
 
 const visualMoments = [
   {
-    title: 'Robotics in motion',
-    caption: 'Competition footage, control loops, and the feeling of systems actually working.',
+    title: 'Robot season',
+    caption: 'Code, controls, match pressure, and machines that actually move.',
     media: (
       <AutoVideo
         src="/images/posts/frc24/comp/image10.gif"
@@ -26,36 +19,64 @@ const visualMoments = [
     className: 'md:col-span-2 md:row-span-2',
   },
   {
-    title: 'Research, made legible',
-    caption: 'Dense technical work translated into something readable and visual.',
+    title: 'Research visuals',
+    caption: 'Scientific work turned into something readable.',
     media: <img src="/images/portfolio/hic-tad/hero.png" alt="Research visualization" className="h-full w-full object-cover" />,
   },
   {
-    title: 'Maps + systems',
-    caption: 'Spatial thinking, layered interfaces, and decision surfaces.',
-    media: <img src="/images/portfolio/nostradamus/nightvision.png" alt="Spatial interface" className="h-full w-full object-cover" />,
+    title: 'Scarlet Sync',
+    caption: 'Rutgers scheduling, planning, and student-product speed.',
+    media: <img src="/images/portfolio/scarlet-sync/home.png" alt="Scarlet Sync" className="h-full w-full object-cover" />,
   },
   {
-    title: 'Student product energy',
-    caption: 'Useful tools with personality, speed, and real users behind them.',
-    media: <img src="/images/portfolio/scarlet-sync/home.png" alt="Student product interface" className="h-full w-full object-cover" />,
+    title: 'Lykke',
+    caption: 'AI study tooling with real users and real classroom context.',
+    media: <img src="/images/portfolio/lykke/discover.png" alt="Lykke" className="h-full w-full object-cover" />,
   },
   {
-    title: 'Face behind the work',
-    caption: 'Akash Dubey — builder, researcher, operator.',
+    title: 'Akash',
+    caption: 'Builder, researcher, operator.',
     media: <img src="/images/face.jpg" alt="Akash Dubey" className="h-full w-full object-cover object-center" />,
     className: 'md:col-span-2',
   },
 ]
 
-const selectedSlugs = ['hic-tad-analysis', 'personal-assistant', 'grokipedia-api']
+const signalCards = [
+  {
+    href: '/projects/scarlet-sync',
+    eyebrow: 'Student product',
+    title: 'Scarlet Sync',
+    note: 'Scheduling + degree planning for Rutgers students.',
+  },
+  {
+    href: '/projects/lykke',
+    eyebrow: 'AI systems',
+    title: 'Lykke',
+    note: 'Course-aware study workflows powered by real class material.',
+  },
+  {
+    href: '/projects/economic-grapher',
+    eyebrow: 'Rutgers Economics Labs',
+    title: 'Economics data tooling',
+    note: 'FRED + BLS visualization work built for research and analysis.',
+  },
+  {
+    href: '/projects/robot-code',
+    eyebrow: 'Robotics',
+    title: 'FRC motion + control',
+    note: 'Programming, path planning, and on-field iteration.',
+  },
+]
+
+const featuredSlugs = ['scarlet-sync', 'lykke', 'hic-tad-analysis', 'personal-assistant', 'grokipedia-api', 'robot-code']
 
 export default function HomePage() {
   const projects = getProjects()
-  const featured = projects
-    .filter((project) => project.featured)
-    .concat(projects.filter((project) => !project.featured && selectedSlugs.includes(project.slug)))
-    .slice(0, 4)
+  const bySlug = new Map(projects.map((project) => [project.slug, project]))
+  const featured = featuredSlugs
+    .map((slug) => bySlug.get(slug))
+    .filter((project): project is NonNullable<(typeof projects)[number]> => Boolean(project))
+    .slice(0, 6)
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
@@ -64,17 +85,19 @@ export default function HomePage() {
         <div className="hero-orb hero-orb-b" />
         <div className="hero-lines" />
 
-        <div className="grid w-full items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
+        <div className="grid w-full items-center gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10">
           <Reveal>
             <div className="relative z-10 max-w-xl">
               <div className="mb-5 inline-flex rounded-full border border-border bg-bg-elevated/80 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.22em] text-text-muted backdrop-blur">
-                Akash Dubey
+                Hi, I&apos;m Akash
               </div>
-              <h1 className="font-display text-[clamp(4rem,12vw,8.8rem)] leading-[0.86] tracking-[-0.09em]">
-                Akash.
+              <h1 className="font-display text-[clamp(4.2rem,12vw,9.2rem)] leading-[0.84] tracking-[-0.1em]">
+                Akash
+                <br />
+                Dubey
               </h1>
               <p className="mt-4 max-w-md text-lg leading-7 text-text-muted sm:text-xl">
-                Computer science, math, robotics, and AI — shaped into sharp, visual systems.
+                Computer science, math, robotics, and AI — built into sharp systems, useful products, and visual stories.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link href="/projects" className="rounded-full bg-accent px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5">
@@ -82,6 +105,9 @@ export default function HomePage() {
                 </Link>
                 <Link href="/moodboard" className="glass rounded-full px-5 py-3 text-sm font-medium">
                   Moodboard
+                </Link>
+                <Link href="/resume" className="glass rounded-full px-5 py-3 text-sm font-medium">
+                  Resume
                 </Link>
               </div>
               <div className="mt-8 flex flex-wrap gap-2">
@@ -121,6 +147,28 @@ export default function HomePage() {
         <Reveal>
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Current signal</p>
+              <h2 className="mt-2 font-display text-3xl tracking-[-0.05em] sm:text-4xl">The work to notice first.</h2>
+            </div>
+          </div>
+        </Reveal>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {signalCards.map((card, index) => (
+            <Reveal key={card.title} delay={0.04 * index}>
+              <Link href={card.href} className="glass group block rounded-[28px] p-5 transition hover:-translate-y-1">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">{card.eyebrow}</p>
+                <h3 className="mt-4 font-display text-2xl tracking-tight group-hover:text-accent">{card.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-text-muted">{card.note}</p>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="pb-16 pt-2 sm:pb-20">
+        <Reveal>
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Selected work</p>
               <h2 className="mt-2 font-display text-3xl tracking-[-0.05em] sm:text-4xl">Scroll into the details.</h2>
             </div>
@@ -131,9 +179,9 @@ export default function HomePage() {
         </Reveal>
         <div className="grid gap-4 lg:grid-cols-4">
           {featured.map((project, index) => (
-            <Reveal key={project.slug} delay={0.04 * index} className={index === 0 ? 'lg:col-span-2' : ''}>
+            <Reveal key={project.slug} delay={0.04 * index} className={index === 0 || index === 1 ? 'lg:col-span-2' : ''}>
               <Link
-                href={`/projects#${project.slug}`}
+                href={`/projects/${project.slug}`}
                 className="glass group block h-full rounded-[28px] p-3 transition hover:-translate-y-1"
               >
                 <div className="media-frame aspect-[4/3] rounded-[22px] border-0">

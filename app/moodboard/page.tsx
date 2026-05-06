@@ -1,81 +1,121 @@
 import Link from 'next/link'
+import { AutoVideo } from '@/components/auto-video'
 
 const collageTiles = [
   {
     title: 'FRC match energy',
-    type: 'video still',
-    image: '/images/posts/frc24/comp/image5.jpg',
+    href: '/writing/robotics-development',
     span: 'md:col-span-2 md:row-span-2',
-    tone: 'Fast, physical, noisy, real.',
+    media: <img src="/images/posts/frc24/comp/image5.jpg" alt="FRC match energy" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Autonomy loops',
-    type: 'gif',
-    image: '/images/posts/frc24/comp/image6.gif',
-    tone: 'Motion with proof behind it.',
+    href: '/writing/robotics-development',
+    media: <AutoVideo src="/images/posts/frc24/comp/image6.gif" className="h-full w-full" />,
   },
   {
     title: 'Hi-C research',
-    type: 'paper visual',
-    image: '/images/portfolio/hic-tad/tad-triangles.png',
-    tone: 'Technical density, cleaner framing.',
+    href: '/projects/hic-tad-analysis',
+    media: <img src="/images/portfolio/hic-tad/tad-triangles.png" alt="Hi-C research" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Night maps',
-    type: 'interface',
-    image: '/images/portfolio/nostradamus/nightvision.png',
+    href: '/projects/nostradamus',
     span: 'md:row-span-2',
-    tone: 'Spatial systems, layered decisions.',
+    media: <img src="/images/portfolio/nostradamus/nightvision.png" alt="Night maps" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
-    title: 'Student app UI',
-    type: 'product',
-    image: '/images/portfolio/scarlet-sync/home.png',
-    tone: 'Useful, social, campus-native.',
+    title: 'Scarlet Sync live',
+    href: 'https://www.youtube.com/@scarletsyncapp',
+    media: (
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/D4D3lKWCRjM?controls=0&modestbranding=1&rel=0"
+        title="Scarlet Sync video"
+        className="h-full w-full"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    ),
   },
   {
     title: 'AI assistant',
-    type: 'system design',
-    image: '/images/portfolio/personal-assistant/hero.png',
-    tone: 'Tools that feel alive instead of static.',
+    href: '/projects/personal-assistant',
+    media: <img src="/images/portfolio/personal-assistant/hero.png" alt="AI assistant" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Editorial sports rhythm',
-    type: 'reference',
-    image: '/images/portfolio/racing/grand.png',
-    tone: 'Performance, pressure, spectacle.',
+    href: '/projects/kenny-racing',
+    media: <img src="/images/portfolio/racing/grand.png" alt="Editorial sports rhythm" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Newspaper grids',
-    type: 'layout',
-    image: '/images/portfolio/newspaper/front_page.png',
+    href: '/projects/newspaper-website',
     span: 'md:col-span-2',
-    tone: 'Hierarchy, pacing, clean contrast.',
+    media: <img src="/images/portfolio/newspaper/front_page.png" alt="Newspaper grids" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Campus builder vibe',
-    type: 'reference',
-    image: '/images/portfolio/lykke/discover.png',
-    tone: 'Youthful, ambitious, social momentum.',
+    href: '/projects/lykke',
+    media: <img src="/images/portfolio/lykke/discover.png" alt="Campus builder vibe" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Code + control',
-    type: 'ops',
-    image: '/images/posts/frc24/bot_prog.png',
-    tone: 'A little messy, a lot real.',
+    href: '/writing/robotics-development',
+    media: <img src="/images/posts/frc24/bot_prog.png" alt="Code and control" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Data stories',
-    type: 'visualization',
-    image: '/images/portfolio/clean-your-data/graph.png',
-    tone: 'Make complexity readable.',
+    href: '/projects/clean-your-data',
+    media: <img src="/images/portfolio/clean-your-data/graph.png" alt="Data stories" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
   },
   {
     title: 'Founder mode',
-    type: 'product frame',
-    image: '/images/portfolio/grokipedia-api/hero.png',
+    href: '/projects/grokipedia-api',
     span: 'md:col-span-2',
-    tone: 'Ambitious systems with momentum.',
+    media: <img src="/images/portfolio/grokipedia-api/hero.png" alt="Founder mode" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+  },
+  {
+    title: 'Robot sprint',
+    href: '/writing/robotics-development',
+    media: <AutoVideo src="/images/posts/frc24/comp/image7.gif" className="h-full w-full" />,
+  },
+  {
+    title: 'Akash intro',
+    href: 'https://youtu.be/BIjPviSJ0Yc',
+    span: 'md:col-span-2',
+    media: (
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/BIjPviSJ0Yc?controls=0&modestbranding=1&rel=0"
+        title="Akash intro"
+        className="h-full w-full"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    ),
+  },
+  {
+    title: 'Robot close-up',
+    href: '/writing/robotics-journal',
+    media: <AutoVideo src="/images/posts/robotics/image10.gif" className="h-full w-full" />,
+  },
+  {
+    title: 'Palantir-at-home systems',
+    href: 'https://youtu.be/ekEDCKihdVk',
+    media: (
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/ekEDCKihdVk?controls=0&modestbranding=1&rel=0"
+        title="Palantir at home systems"
+        className="h-full w-full"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    ),
   },
 ]
 
@@ -107,24 +147,29 @@ export default function MoodboardPage() {
       </section>
 
       <section className="pb-20">
-        <div className="moodboard-collage grid auto-rows-[170px] gap-3 sm:auto-rows-[210px] sm:gap-4 md:grid-cols-3 lg:auto-rows-[220px] xl:grid-cols-4">
-          {collageTiles.map((tile, index) => (
-            <article
-              key={tile.title}
-              className={`mood-tile group relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950 text-white ${tile.span ?? ''}`}
-              style={{ animationDelay: `${index * 70}ms` }}
-            >
-              <img src={tile.image} alt={tile.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/20 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/72 backdrop-blur">
-                  {tile.type}
-                </div>
-                <h2 className="mt-3 font-display text-xl tracking-tight sm:text-2xl">{tile.title}</h2>
-                <p className="mt-1 text-sm leading-6 text-white/75">{tile.tone}</p>
-              </div>
-            </article>
-          ))}
+        <div className="moodboard-collage grid auto-rows-[150px] gap-3 sm:auto-rows-[190px] sm:gap-4 md:grid-cols-3 lg:auto-rows-[210px] xl:grid-cols-4">
+          {collageTiles.map((tile, index) => {
+            const isExternal = tile.href.startsWith('http')
+            return (
+              <article
+                key={tile.title}
+                className={`mood-tile group relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950 text-white ${tile.span ?? ''}`}
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                {isExternal ? (
+                  <a href={tile.href} target="_blank" rel="noreferrer" className="block h-full w-full" aria-label={tile.title}>
+                    <div className="absolute inset-0">{tile.media}</div>
+                    <div className="moodboard-hover absolute inset-0" />
+                  </a>
+                ) : (
+                  <Link href={tile.href} className="block h-full w-full" aria-label={tile.title}>
+                    <div className="absolute inset-0">{tile.media}</div>
+                    <div className="moodboard-hover absolute inset-0" />
+                  </Link>
+                )}
+              </article>
+            )
+          })}
 
           <article className="glass md:col-span-2 rounded-[28px] p-5 sm:p-6 xl:col-span-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">Reference links</p>
