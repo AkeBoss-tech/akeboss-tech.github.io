@@ -16,7 +16,8 @@ export type Project = {
   rank: number
   featured: boolean
   content: string
-  sections: { id: string; title: string }[]
+  lead: string
+  sections: { id: string; title: string; summary: string }[]
   links: { label: string; url: string }[]
   reading: string
 }
@@ -58,14 +59,42 @@ function slugify(value: string) {
     .replace(/-+/g, '-')
 }
 
+function cleanMarkdownText(value: string) {
+  return value
+    .replace(/<img[^>]*>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/^[>*\-+\d.\s]+/gm, '')
+    .replace(/[*_#]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function extractLead(content: string) {
+  const sections = content.split(/\n\s*\n/)
+  for (const block of sections) {
+    const cleaned = cleanMarkdownText(block)
+    if (!cleaned) continue
+    if (/^[-=*]{3,}$/.test(cleaned)) continue
+    if (/^(images|more resources)$/i.test(cleaned)) continue
+    return cleaned
+  }
+  return ''
+}
+
 function extractSections(content: string) {
-  return content
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => /^##\s+/.test(line))
-    .map((line) => line.replace(/^##\s+/, '').trim())
-    .filter(Boolean)
-    .map((title) => ({ id: slugify(title), title }))
+  const matches = [...content.matchAll(/^##\s+(.+)$/gm)]
+  return matches.map((match, index) => {
+    const title = match[1].trim()
+    const start = match.index ?? 0
+    const nextStart = matches[index + 1]?.index ?? content.length
+    const body = content.slice(start + match[0].length, nextStart)
+    const summary = cleanMarkdownText(body).slice(0, 180).trim()
+    return { id: slugify(title), title, summary }
+  }).filter((section) => section.title)
 }
 
 function extractLinks(content: string) {
@@ -92,6 +121,7 @@ export function getProjects(): Project[] {
       rank: Number(data.rank || 999),
       featured: data.featured === true || data.featured === 'true',
       content,
+      lead: extractLead(content),
       sections: extractSections(content),
       links: extractLinks(content),
       reading: readingTime(content).text,

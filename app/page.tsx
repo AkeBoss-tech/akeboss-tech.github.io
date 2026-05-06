@@ -8,17 +8,17 @@ const storyCards = [
   {
     kicker: 'Build',
     title: 'Real systems.',
-    body: 'Robotics, research tools, AI products, student software.',
+    body: 'Robotics, research tools, AI products, and student software that have to work outside a slide deck.',
   },
   {
     kicker: 'Think',
-    title: 'Clear structure.',
-    body: 'Messy inputs turned into sharper systems.',
+    title: 'Structure first.',
+    body: 'Messy inputs get turned into workflows, interfaces, and decisions that feel simpler than the underlying problem.',
   },
   {
     kicker: 'Care',
-    title: 'Taste + momentum.',
-    body: 'Work that feels sharp, alive, and worth showing.',
+    title: 'Taste matters.',
+    body: 'The work should be useful, but it should also feel deliberate, calm, and worth showing to people.',
   },
 ]
 
@@ -33,7 +33,7 @@ const signalCards = [
     href: '/projects/lykke',
     eyebrow: 'AI systems',
     title: 'Lykke',
-    note: 'Course-aware study tooling.',
+    note: 'Course-aware study tooling used by real students.',
   },
   {
     href: '/projects/economic-grapher',
@@ -49,27 +49,6 @@ const signalCards = [
   },
 ]
 
-const valuePoints = [
-  'AI, robotics, research, and product fit together here.',
-  'The through-line is clarity under real constraints.',
-  'The goal is useful systems with visual taste.',
-]
-
-const currentBlocks = [
-  {
-    title: 'Rutgers Economics Labs',
-    body: 'Research-facing data tools and visual analysis that make messy information easier to work with.',
-  },
-  {
-    title: 'AI systems',
-    body: 'Agent workflows, useful interfaces, and product-minded ML work that has to feel real.',
-  },
-  {
-    title: 'Robotics + control',
-    body: 'Software under physical constraints, competition pressure, and hardware feedback loops.',
-  },
-]
-
 const featuredSlugs = ['scarlet-sync', 'lykke', 'hic-tad-analysis', 'personal-assistant', 'grokipedia-api', 'robot-code']
 
 export default function HomePage() {
@@ -79,6 +58,38 @@ export default function HomePage() {
     .map((slug) => bySlug.get(slug))
     .filter((project): project is NonNullable<(typeof projects)[number]> => Boolean(project))
     .slice(0, 6)
+
+  const totalTags = new Set(projects.flatMap((project) => project.tags)).size
+  const featuredCount = projects.filter((project) => project.featured).length
+  const writtenCount = projects.filter((project) => project.sections.length > 0).length
+
+  const trajectory = [
+    {
+      step: '01',
+      label: 'Find a painful workflow',
+      title: 'Build for an obvious user problem.',
+      body: 'A lot of the strongest work starts with friction that is easy to feel: course planning, study chaos, messy research data, robotics under match pressure.',
+    },
+    {
+      step: '02',
+      label: 'Make the system legible',
+      title: 'Turn hidden complexity into a cleaner interface.',
+      body: 'Scraping, RAG pipelines, visual analysis, and control code are different technically, but they all reward the same instinct: reduce confusion without dumbing the problem down.',
+    },
+    {
+      step: '03',
+      label: 'Pressure-test it',
+      title: 'Prefer things that survive contact with reality.',
+      body: 'Real students, real datasets, real hardware, real deadlines. That is where taste and engineering both get exposed.',
+    },
+  ]
+
+  const proofPoints = [
+    { value: String(projects.length).padStart(2, '0'), label: 'projects in the archive' },
+    { value: String(totalTags).padStart(2, '0'), label: 'distinct domains touched' },
+    { value: String(featuredCount).padStart(2, '0'), label: 'deeper case studies' },
+    { value: String(writtenCount).padStart(2, '0'), label: 'projects with narrative writeups' },
+  ]
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
@@ -152,68 +163,43 @@ export default function HomePage() {
       </section>
 
       <section className="pb-8 pt-2 sm:pb-10 lg:pb-14">
-        <Reveal>
-          <div className="glass overflow-hidden rounded-[32px] p-6 sm:p-8 lg:p-10 story-band">
-            <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Story</p>
-                <h2 className="mt-3 font-display text-4xl tracking-[-0.06em] sm:text-5xl lg:text-6xl text-balance">
-                  Different domains. Same instinct.
-                </h2>
-              </div>
-              <div className="grid gap-3">
-                {valuePoints.map((point, index) => (
-                  <div key={point} className="rounded-[22px] border border-border bg-bg-strong/70 px-4 py-4 text-sm leading-6 text-text-muted" style={{ animationDelay: `${index * 100}ms` }}>
-                    {point}
-                  </div>
+        <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <Reveal>
+            <div className="glass h-full rounded-[32px] p-6 sm:p-8 lg:p-10 story-band">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Story</p>
+              <h2 className="mt-3 font-display text-4xl tracking-[-0.06em] sm:text-5xl text-balance">
+                Different domains. Same instinct.
+              </h2>
+              <p className="mt-5 max-w-xl text-sm leading-7 text-text-muted">
+                The through-line is not just what gets built. It is the preference for systems that become clearer under pressure instead of noisier.
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                {storyCards.map((card, index) => (
+                  <article key={card.title} className="rounded-[24px] border border-border bg-bg-strong/70 p-5" style={{ animationDelay: `${index * 80}ms` }}>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">{card.kicker}</p>
+                    <h3 className="mt-3 font-display text-2xl tracking-tight">{card.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-text-muted">{card.body}</p>
+                  </article>
                 ))}
               </div>
             </div>
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="pb-8 pt-2 sm:pb-12 lg:pb-14">
-        <div className="grid gap-4 lg:grid-cols-3">
-          {storyCards.map((card, index) => (
-            <Reveal key={card.title} delay={0.05 * index}>
-              <article className="glass h-full rounded-[28px] p-6 transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(17,19,24,0.12)]">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">{card.kicker}</p>
-                <h3 className="mt-4 font-display text-2xl tracking-tight">{card.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-text-muted">{card.body}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-4 pb-10 pt-2 lg:grid-cols-[1.05fr_0.95fr] lg:pb-16">
-        <Reveal>
-          <div className="glass h-full rounded-[32px] p-3 sm:p-4">
-            <div className="media-frame aspect-[16/10] overflow-hidden rounded-[26px] border-0">
-              <img src="/images/posts/frc24/comp/image5.jpg" alt="Robotics competition" className="h-full w-full object-cover" />
-            </div>
-          </div>
-        </Reveal>
-        <div className="grid gap-4">
-          <Reveal delay={0.04}>
-            <div className="glass rounded-[28px] p-6 sm:p-7">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">Why these projects fit together</p>
-              <p className="mt-4 font-display text-3xl tracking-tight text-balance">AI, robotics, research, and product point to the same taste.</p>
-              <p className="mt-4 text-sm leading-7 text-text-muted">
-                I like work with real constraints: things that need to move, explain, decide, or survive real users.
-              </p>
-            </div>
           </Reveal>
-          <Reveal delay={0.08}>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="glass rounded-[28px] p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">What shows up</p>
-                <p className="mt-3 text-sm leading-7 text-text-muted">Robotics, AI workflows, scientific tools, dashboards, campus products.</p>
+
+          <Reveal delay={0.05}>
+            <div className="glass h-full rounded-[32px] p-6 sm:p-8 lg:p-10">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Proof</p>
+                  <h2 className="mt-3 font-display text-3xl tracking-[-0.05em] sm:text-4xl text-balance">Breadth is real, but it is not random.</h2>
+                </div>
               </div>
-              <div className="glass rounded-[28px] p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">What matters</p>
-                <p className="mt-3 text-sm leading-7 text-text-muted">Taste, clarity, pressure, curiosity.</p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {proofPoints.map((item) => (
+                  <div key={item.label} className="rounded-[24px] border border-border bg-bg-strong/70 p-5">
+                    <p className="font-display text-4xl tracking-[-0.06em]">{item.value}</p>
+                    <p className="mt-2 text-sm leading-6 text-text-muted">{item.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>
@@ -222,17 +208,49 @@ export default function HomePage() {
 
       <section className="pb-8 pt-2 sm:pb-12 lg:pb-16">
         <Reveal>
+          <div className="glass rounded-[32px] p-6 sm:p-8 lg:p-10 trajectory-shell">
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Trajectory</p>
+                <h2 className="mt-3 font-display text-3xl tracking-[-0.05em] sm:text-5xl text-balance">
+                  How the work usually unfolds.
+                </h2>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-text-muted">
+                  The projects look different on the surface, but most of them follow the same arc: spot friction, make the system legible, and test it against reality.
+                </p>
+              </div>
+              <div className="grid gap-4">
+                {trajectory.map((item, index) => (
+                  <article key={item.step} className="trajectory-step rounded-[28px] border border-border bg-bg-strong/70 p-5 sm:p-6" style={{ animationDelay: `${index * 100}ms` }}>
+                    <div className="flex items-start gap-4">
+                      <div className="trajectory-number flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl font-display text-xl">{item.step}</div>
+                      <div>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">{item.label}</p>
+                        <h3 className="mt-2 font-display text-2xl tracking-tight">{item.title}</h3>
+                        <p className="mt-3 text-sm leading-7 text-text-muted">{item.body}</p>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="pb-8 pt-2 sm:pb-12 lg:pb-16">
+        <Reveal>
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Current signal</p>
-              <h2 className="mt-2 font-display text-3xl tracking-[-0.05em] sm:text-4xl">The projects that frame the story.</h2>
+              <h2 className="mt-2 font-display text-3xl tracking-[-0.05em] sm:text-4xl">The projects that carry the story.</h2>
             </div>
           </div>
         </Reveal>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {signalCards.map((card, index) => (
             <Reveal key={card.title} delay={0.04 * index}>
-              <Link href={card.href} className="glass group block rounded-[28px] p-5 transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(17,19,24,0.12)]">
+              <Link href={card.href} className="signal-card glass group block rounded-[28px] p-5 transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(17,19,24,0.12)]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted">{card.eyebrow}</p>
                 <h3 className="mt-4 font-display text-2xl tracking-tight group-hover:text-accent">{card.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-text-muted">{card.note}</p>
@@ -240,38 +258,6 @@ export default function HomePage() {
             </Reveal>
           ))}
         </div>
-      </section>
-
-      <section className="pb-8 pt-2 sm:pb-12 lg:pb-14">
-        <Reveal>
-          <div className="glass rounded-[32px] p-6 sm:p-8 lg:p-10">
-            <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">Right now</p>
-                <h2 className="mt-3 font-display text-3xl tracking-[-0.05em] sm:text-4xl text-balance">A few lanes I keep coming back to.</h2>
-                <p className="mt-4 max-w-xl text-sm leading-7 text-text-muted">
-                  Different projects, same taste: systems that have real constraints, real users, or real-world feedback.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3 lg:justify-end">
-                <Link href="/about" className="rounded-full bg-accent px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5">
-                  More about me
-                </Link>
-                <Link href="/moodboard" className="glass rounded-full px-5 py-3 text-sm font-medium transition hover:-translate-y-0.5">
-                  Moodboard
-                </Link>
-              </div>
-            </div>
-            <div className="mt-6 grid gap-4 lg:grid-cols-3">
-              {currentBlocks.map((block, index) => (
-                <div key={block.title} className="rounded-[24px] border border-border bg-bg-strong/70 p-5" style={{ animationDelay: `${index * 90}ms` }}>
-                  <p className="font-display text-xl tracking-tight">{block.title}</p>
-                  <p className="mt-3 text-sm leading-7 text-text-muted">{block.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </section>
 
       <section className="pb-16 pt-2 sm:pb-20">
