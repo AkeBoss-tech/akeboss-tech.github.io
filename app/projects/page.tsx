@@ -1,62 +1,41 @@
-import { getProjects } from '@/lib/content'
 import { ProjectCard } from '@/components/project-card'
-import { Reveal } from '@/components/reveal'
+import { getProjects } from '@/lib/content'
+import { getProjectsByCategory } from '@/lib/site-data'
 
 export default function ProjectsPage() {
-  const projects = getProjects()
-  const featured = projects.filter((project) => project.featured)
-  const rest = projects.filter((project) => !project.featured)
+  const grouped = getProjectsByCategory(getProjects())
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-      <section className="py-16 lg:py-24">
-        <Reveal>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">Portfolio</p>
-          <h1 className="mt-4 max-w-4xl font-display text-5xl tracking-tight sm:text-7xl">
-            A archive of systems
-            <br />
-            and experiments.
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-text-muted">
-            From production-grade AI infrastructure to experimental robotics and mathematical tooling. 
-            Focused on clarity and technical rigor.
-          </p>
-        </Reveal>
+    <div className="container-wide py-10 sm:py-14">
+      <section className="max-w-4xl">
+        <p className="eyebrow">Projects</p>
+        <h1 className="mt-4 text-5xl text-text sm:text-7xl">A curated journey through code, math, robotics, and research.</h1>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-text-muted">
+          Not one giant list. More like a long night walk through the things I kept building: products, research tools, data work, systems, and the early experiments that started the obsession.
+        </p>
       </section>
 
-      {/* Featured Projects - Large Visuals */}
-      <section className="space-y-8 pb-20">
-        <Reveal>
-          <div className="mb-8 flex items-center gap-4">
-            <h2 className="font-display text-2xl tracking-tight">Core Infrastructure</h2>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
-        <div className="grid gap-8">
-          {featured.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 0.1}>
-              <ProjectCard project={project} featured />
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      <div className="mt-12 space-y-14 sm:space-y-16">
+        {grouped.map((category) => (
+          <section key={category.title}>
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-2xl">
+                <p className={`eyebrow ${category.accent}`}>{category.title}</p>
+                <h2 className="mt-3 text-3xl text-text sm:text-4xl">{category.description}</h2>
+              </div>
+              <p className="text-sm uppercase tracking-[0.2em] text-text-soft">scroll sideways ↓</p>
+            </div>
 
-      {/* Archive - Grid */}
-      <section className="py-20">
-        <Reveal>
-          <div className="mb-12 flex items-center gap-4">
-            <h2 className="font-display text-2xl tracking-tight">Experimental Archive</h2>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        </Reveal>
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {rest.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 0.05}>
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
+            <div className="project-strip flex snap-x gap-5 overflow-x-auto pb-2">
+              {category.projects.map((project) => (
+                <div key={project.slug} className={category.glow}>
+                  <ProjectCard project={project} compact />
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   )
 }

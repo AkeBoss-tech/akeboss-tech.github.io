@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPost, getPosts } from '@/lib/content'
 import { Markdown } from '@/components/markdown'
-import { Reveal } from '@/components/reveal'
+import { getPost, getPosts } from '@/lib/content'
+import { formatDate } from '@/lib/format'
 
 export function generateStaticParams() {
   return getPosts().map((post) => ({ slug: post.slug }))
@@ -12,39 +12,48 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post = getPost(slug)
   if (!post) return notFound()
+
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-      <section className="py-8 sm:py-10 lg:py-16">
-        <Reveal>
-          <div className="max-w-4xl">
-            <Link href="/writing" className="inline-flex rounded-full border border-border bg-bg-elevated/80 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-text-muted backdrop-blur">
-              ← Back to writing
-            </Link>
-            <div className="mt-5 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-text-muted">
-              <span>{post.date}</span>
-              <span>•</span>
-              <span>{post.reading}</span>
-            </div>
-            <h1 className="mt-4 font-display text-4xl tracking-[-0.06em] sm:text-5xl lg:text-6xl">{post.title}</h1>
-            {post.excerpt ? <p className="mt-5 max-w-3xl text-base leading-7 text-text-muted sm:text-lg">{post.excerpt}</p> : null}
-          </div>
-        </Reveal>
-        {post.image ? (
-          <Reveal delay={0.06}>
-            <div className="glass mt-8 rounded-[32px] p-3 sm:p-4">
-              <div className="media-frame aspect-[16/8] overflow-hidden rounded-[26px] border-0">
-                <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
-              </div>
-            </div>
-          </Reveal>
-        ) : null}
+    <div className="container-wide py-10 sm:py-14">
+      <section className="max-w-4xl">
+        <Link href="/writing" className="eyebrow inline-flex items-center gap-2 text-text-soft hover:text-text">
+          ← Back to writing
+        </Link>
+        <div className="mt-6 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-text-soft">
+          <span>{formatDate(post.date)}</span>
+          <span>•</span>
+          <span>{post.reading}</span>
+        </div>
+        <h1 className="mt-4 text-5xl text-text sm:text-7xl">{post.title}</h1>
+        {post.excerpt ? <p className="mt-5 max-w-3xl text-lg leading-8 text-text-muted">{post.excerpt}</p> : null}
       </section>
-      <section className="pb-20">
-        <Reveal>
-          <div className="glass rounded-[32px] p-6 sm:p-8 lg:p-10">
-            <Markdown content={post.content} />
+
+      {post.image ? (
+        <section className="mt-8">
+          <div className="panel-soft overflow-hidden rounded-[32px]">
+            <img src={post.image} alt={post.title} className="max-h-[34rem] w-full object-cover" />
           </div>
-        </Reveal>
+        </section>
+      ) : null}
+
+      <section className="mt-10 grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
+        <aside className="panel-soft h-fit rounded-[28px] p-5 sm:p-6">
+          <p className="eyebrow">Why it matters</p>
+          <p className="mt-4 text-sm leading-7 text-text-muted">
+            The writing pages are part of the portfolio story, not a separate archive. They capture the thinking, context, and personal momentum behind the projects.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <span key={tag} className="tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </aside>
+
+        <article className="panel rounded-[32px] px-6 py-7 sm:px-8 sm:py-9">
+          <Markdown content={post.content} />
+        </article>
       </section>
     </div>
   )
