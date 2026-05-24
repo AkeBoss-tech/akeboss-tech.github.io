@@ -34,6 +34,8 @@ const education = [
 const experience = [
   {
     title: 'New York Life Insurance',
+    href: 'https://www.newyorklife.com/',
+    logo: '/company-logos/new-york-life.svg',
     role: 'Incoming Software Engineering Intern',
     dates: 'May 2026 - Aug 2026',
     bullets: [],
@@ -41,6 +43,7 @@ const experience = [
   {
     title: 'Scarlet Sync',
     href: 'https://scarletsync.app/',
+    logo: '/company-logos/scarlet-sync.png',
     role: 'Founder',
     dates: 'Jan 2025 - Present',
     bullets: [
@@ -51,6 +54,7 @@ const experience = [
   {
     title: 'Lykke',
     href: 'https://getlykke.com/',
+    logo: '/company-logos/lykke.svg',
     role: 'Software Engineer',
     dates: 'Sep 2025 - Present',
     bullets: [
@@ -61,6 +65,7 @@ const experience = [
   {
     title: 'Samaritan Scout',
     href: 'https://www.samaritanscout.org/',
+    logo: '/company-logos/samaritan-scout.png',
     role: 'Frontend / Full Stack Engineer',
     dates: 'May 2023 - Aug 2025',
     bullets: [
@@ -300,15 +305,16 @@ export default function CVPage() {
             {experience.map((item) => (
               <article key={`${item.title}-${item.role}`} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                  <div>
-                    {'href' in item ? (
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2">
+                      <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                    </div>
+                    <div>
                       <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
                         {item.title}
                       </a>
-                    ) : (
-                      <h2 className="text-2xl text-text">{item.title}</h2>
-                    )}
-                    <p className="mt-1 text-sm text-[#d8b4fe]">{item.role}</p>
+                      <p className="mt-1 text-sm text-[#d8b4fe]">{item.role}</p>
+                    </div>
                   </div>
                   <p className="text-sm text-text-soft">{item.dates}</p>
                 </div>
