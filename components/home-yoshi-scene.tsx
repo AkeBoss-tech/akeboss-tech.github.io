@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { ContactIconLinks } from '@/components/contact-icon-links'
 import { HomeHeroScene } from '@/components/home-hero-scene'
 import type { Project } from '@/lib/content'
 
@@ -27,6 +28,15 @@ const heroLinks = [
 ]
 
 const promptText = 'scroll into the descent'
+
+const personalPhotos = [
+  '/images/homepage/2026-05-10/img_1596.png',
+  '/images/homepage/2026-05-10/img_2465.png',
+  '/images/homepage/2026-05-10/img_4350.png',
+  '/images/homepage/2026-05-10/img_6293.png',
+  '/images/homepage/2026-05-10/img_7075.png',
+  '/images/homepage/2026-05-10/img_7197.png',
+]
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value))
@@ -58,6 +68,30 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
         ) : null}
       </div>
     </article>
+  )
+}
+
+function PersonalCollage() {
+  return (
+    <section className="personal-collage-section">
+      <div className="personal-collage-copy">
+        <p className="eyebrow">Before the descent</p>
+        <h2>Some life around the work.</h2>
+        <p>
+          A small image layer between the city and the optimization map. I kept it intentionally simple so it
+          can grow later when you add more photos.
+        </p>
+        <ContactIconLinks className="mt-6" />
+      </div>
+
+      <div className="personal-collage-grid" aria-label="Photo collage">
+        {personalPhotos.map((photo, index) => (
+          <figure key={photo} className={`personal-photo personal-photo-${index + 1}`}>
+            <img src={photo} alt="" />
+          </figure>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -429,6 +463,7 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
       <div ref={scrollLabelRef} className="gd-scroll">Scroll</div>
 
       <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true">
+        <ContactIconLinks className="gd-end-icons" />
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span>Replay</span>
         </button>
@@ -608,6 +643,7 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
         </div>
       </section>
 
+      <PersonalCollage />
       <HomeGradientDescentStage points={points} />
     </div>
   )

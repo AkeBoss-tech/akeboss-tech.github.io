@@ -108,6 +108,101 @@ body.home-clean-body::after {
   color: white;
 }
 
+.personal-collage-section {
+  position: relative;
+  z-index: 12;
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  min-height: 110vh;
+  padding: clamp(5rem, 10vw, 9rem) clamp(1.25rem, 5vw, 5rem);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(132, 169, 255, 0.1), transparent 32%),
+    radial-gradient(circle at 82% 70%, rgba(143, 224, 208, 0.09), transparent 32%),
+    #000;
+}
+
+.personal-collage-copy {
+  max-width: 32rem;
+}
+
+.personal-collage-copy h2 {
+  color: #f4efeb;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.08em;
+  line-height: 0.88;
+}
+
+.personal-collage-copy p:not(.eyebrow) {
+  margin-top: 1.35rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.75;
+}
+
+.personal-collage-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(4.6rem, 7vw, 7rem);
+  gap: clamp(0.7rem, 1.3vw, 1rem);
+}
+
+.personal-photo {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: clamp(1.4rem, 2.5vw, 2.3rem);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.personal-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.18));
+}
+
+.personal-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.9) contrast(1.04);
+}
+
+.personal-photo-1 {
+  grid-column: 1 / span 5;
+  grid-row: 1 / span 4;
+}
+
+.personal-photo-2 {
+  grid-column: 6 / span 4;
+  grid-row: 1 / span 3;
+}
+
+.personal-photo-3 {
+  grid-column: 10 / span 3;
+  grid-row: 1 / span 5;
+}
+
+.personal-photo-4 {
+  grid-column: 3 / span 4;
+  grid-row: 5 / span 3;
+}
+
+.personal-photo-5 {
+  grid-column: 7 / span 3;
+  grid-row: 4 / span 4;
+}
+
+.personal-photo-6 {
+  grid-column: 10 / span 3;
+  grid-row: 6 / span 2;
+}
+
 .gd-canvas {
   position: fixed;
   inset: 0;
@@ -305,6 +400,18 @@ body.home-clean-body::after {
   will-change: opacity, transform;
 }
 
+.gd-end-icons {
+  flex-basis: 100%;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.gd-end-icons a {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 9999px;
+}
+
 .gd-end-links.is-visible {
   pointer-events: auto;
 }
@@ -371,6 +478,54 @@ button {
     transform 180ms ease,
     box-shadow 180ms ease,
     opacity 180ms ease;
+}
+
+.contact-icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.contact-icon-row a {
+  display: inline-flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(12px);
+}
+
+.contact-icon-row a:hover,
+.contact-icon-row a:focus-visible {
+  border-color: rgba(255, 255, 255, 0.24);
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+  transform: translate3d(0, -2px, 0);
+}
+
+.contact-add-button {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  padding: 0.85rem 1.15rem;
+  color: #071018;
+  background: linear-gradient(135deg, rgba(244, 239, 235, 0.94), rgba(143, 224, 208, 0.82));
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.22);
+}
+
+.contact-add-button:hover,
+.contact-add-button:focus-visible {
+  transform: translate3d(0, -2px, 0);
 }
 
 h1,
@@ -1561,6 +1716,46 @@ h4 {
 }
 
 @media (max-width: 900px) {
+  .personal-collage-section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .personal-collage-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: 5.8rem;
+  }
+
+  .personal-photo-1 {
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 3;
+  }
+
+  .personal-photo-2 {
+    grid-column: 5 / span 2;
+    grid-row: 1 / span 2;
+  }
+
+  .personal-photo-3 {
+    grid-column: 4 / span 3;
+    grid-row: 3 / span 3;
+  }
+
+  .personal-photo-4 {
+    grid-column: 1 / span 3;
+    grid-row: 4 / span 2;
+  }
+
+  .personal-photo-5 {
+    grid-column: 1 / span 2;
+    grid-row: 6 / span 2;
+  }
+
+  .personal-photo-6 {
+    grid-column: 3 / span 4;
+    grid-row: 6 / span 2;
+  }
+
   .gd-row {
     grid-template-columns: 1fr;
     min-height: auto;

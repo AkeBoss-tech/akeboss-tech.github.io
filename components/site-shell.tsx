@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
 
 const nav = [
@@ -112,6 +113,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                     If you want to talk about research, robotics, startups, math, or a project worth building together,
                     there are a few easy ways to reach me.
                   </p>
+                  <ContactIconLinks className="mt-5" />
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">

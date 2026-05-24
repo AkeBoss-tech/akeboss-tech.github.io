@@ -1,3 +1,5 @@
+import { ContactIconLinks } from '@/components/contact-icon-links'
+
 export default function ContactPage() {
   return (
     <div className="container-wide py-10 sm:py-14">
@@ -7,6 +9,11 @@ export default function ContactPage() {
         <p className="mt-6 max-w-2xl text-lg leading-8 text-text-muted">
           For internships, research, product work, collaborations, or just a thoughtful note.
         </p>
+        <ContactIconLinks className="mt-7" />
+        <a href="/akash-dubey.vcf" download className="contact-add-button mt-8">
+          <span aria-hidden="true">▣</span>
+          Add to Contacts
+        </a>
       </section>
 
       <section className="mt-10 grid gap-5 md:grid-cols-3">
