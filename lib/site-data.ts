@@ -56,7 +56,6 @@ const yoshiBlueprint = [
       { slug: 'scarlet-sync', stack: ['Next.js', 'PostgreSQL', 'Supabase'], x: 10, y: 12, w: 20, dx: -10, dy: 12 },
       { slug: 'lykke', stack: ['Next.js', 'AI', 'Education'], x: 58, y: 8, w: 18, dx: 12, dy: 10 },
       { slug: 'grokipedia-api', stack: ['Python', 'TypeScript', 'API'], x: 36, y: 42, w: 18, dx: -8, dy: 16 },
-      { slug: 'flamingo', stack: ['iOS', 'Vision AI', 'HealthKit'], x: 73, y: 54, w: 16, dx: 9, dy: 14 },
     ],
   },
   {
@@ -112,7 +111,6 @@ const yoshiBlueprint = [
       { slug: 'school-projects', stack: ['Learning', 'Experiments', 'Projects'], x: 11, y: 18, w: 20, dx: -8, dy: 10 },
       { slug: 'top-coder-challenge', stack: ['XGBoost', 'Reverse Engineering', 'ML'], x: 45, y: 10, w: 21, dx: 8, dy: 16 },
       { slug: 'kenny-racing', stack: ['Godot', '3D', 'Game'], x: 70, y: 22, w: 17, dx: 10, dy: 12 },
-      { slug: 'flamingo', stack: ['Hackathon', 'Prototype', 'Build'], x: 29, y: 56, w: 17, dx: -7, dy: 10 },
     ],
   },
 ] as const
@@ -181,9 +179,10 @@ export function getYoshiGalleryChapters(projects: Project[]) {
 }
 
 export function getWritingGroups(posts: Post[]) {
-  const reflections = posts.filter((post) => /(reflection|journal|life|school)/i.test(`${post.title} ${post.tags.join(' ')}`))
-  const buildLogs = posts.filter((post) => !reflections.includes(post) && /(robotics|programming|build|arduino)/i.test(`${post.title} ${post.tags.join(' ')}`))
-  const archive = posts.filter((post) => !buildLogs.includes(post) && !reflections.includes(post))
+  const sortNewestFirst = (items: Post[]) => [...items].sort((a, b) => (a.date < b.date ? 1 : -1))
+  const reflections = sortNewestFirst(posts.filter((post) => /(reflection|journal|life|school)/i.test(`${post.title} ${post.tags.join(' ')}`)))
+  const buildLogs = sortNewestFirst(posts.filter((post) => !reflections.includes(post) && /(robotics|programming|build|arduino)/i.test(`${post.title} ${post.tags.join(' ')}`)))
+  const archive = sortNewestFirst(posts.filter((post) => !buildLogs.includes(post) && !reflections.includes(post)))
 
   return [
     {

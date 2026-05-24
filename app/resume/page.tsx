@@ -1,7 +1,7 @@
 export default function ResumePage() {
   return (
     <div className="container-wide py-10 sm:py-14">
-      <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:items-start">
         <div className="max-w-3xl">
           <p className="eyebrow">Resume</p>
           <h1 className="mt-4 text-5xl text-text sm:text-7xl">The recruiter-facing version.</h1>
@@ -21,7 +21,7 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div className="panel rounded-[30px] p-6">
+        <div className="panel max-w-xl rounded-[30px] p-5 lg:justify-self-end">
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <p className="eyebrow">Focus</p>
@@ -30,14 +30,6 @@ export default function ResumePage() {
             <div>
               <p className="eyebrow">Education</p>
               <p className="mt-3 text-sm leading-7 text-text-muted">Computer Science and Mathematics at Rutgers, with research and student-building work running in parallel.</p>
-            </div>
-            <div>
-              <p className="eyebrow">Best companion pages</p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">Projects for case studies. Writing for process. CV for the longer record.</p>
-            </div>
-            <div>
-              <p className="eyebrow">Format</p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">Short, formal, and easy to skim.</p>
             </div>
           </div>
         </div>

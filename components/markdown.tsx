@@ -4,9 +4,9 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
-export function Markdown({ content }: { content: string }) {
+export function Markdown({ content, className }: { content: string; className?: string }) {
   return (
-    <div className="prose prose-neutral max-w-none">
+    <div className={`prose prose-neutral max-w-none ${className ?? ''}`.trim()}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[

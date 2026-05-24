@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Markdown } from '@/components/markdown'
+import { PostCard } from '@/components/post-card'
 import { getPost, getPosts } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 
@@ -12,6 +13,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post = getPost(slug)
   if (!post) return notFound()
+  const relatedPosts = getPosts()
+    .filter((candidate) => candidate.slug !== post.slug)
+    .map((candidate) => ({
+      post: candidate,
+      score: candidate.tags.filter((tag) => post.tags.includes(tag)).length,
+    }))
+    .sort((a, b) => b.score - a.score || (a.post.date < b.post.date ? 1 : -1))
+    .slice(0, 3)
+    .map(({ post }) => post)
 
   return (
     <div className="container-wide py-10 sm:py-14">
@@ -36,24 +46,44 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </section>
       ) : null}
 
-      <section className="mt-10 grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
-        <aside className="panel-soft h-fit rounded-[28px] p-5 sm:p-6">
+      <section className="mt-10">
+        <div className="panel-soft rounded-[28px] p-5 sm:p-6">
           <p className="eyebrow">Why it matters</p>
-          <p className="mt-4 text-sm leading-7 text-text-muted">
+          <div className="mt-4 grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <p className="max-w-3xl text-sm leading-7 text-text-muted">
             The writing pages are part of the portfolio story, not a separate archive. They capture the thinking, context, and personal momentum behind the projects.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span key={tag} className="tag">
-                {tag}
-              </span>
-            ))}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span key={tag} className="tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-        </aside>
+        </div>
 
-        <article className="panel rounded-[32px] px-6 py-7 sm:px-8 sm:py-9">
-          <Markdown content={post.content} />
+        <article className="panel mt-8 rounded-[32px] px-6 py-7 sm:px-8 sm:py-9">
+          <Markdown content={post.content} className="writing-prose" />
         </article>
+
+        {relatedPosts.length ? (
+          <div className="mt-10">
+            <div className="max-w-2xl">
+              <p className="eyebrow">Keep Reading</p>
+              <h2 className="mt-4 text-3xl text-text sm:text-4xl">Suggested articles</h2>
+              <p className="mt-4 text-base leading-8 text-text-muted">
+                More notes from the same thread of building, reflecting, and figuring things out.
+              </p>
+            </div>
+
+            <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {relatedPosts.map((relatedPost) => (
+                <PostCard key={relatedPost.slug} post={relatedPost} />
+              ))}
+            </div>
+          </div>
+        ) : null}
       </section>
     </div>
   )

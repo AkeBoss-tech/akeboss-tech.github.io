@@ -1,0 +1,424 @@
+<svg id="nyc-hero-background" class="nyc-bg native-animate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="nycBgTitle nycBgDesc">
+  <title id="nycBgTitle">Animated New York City night skyline background</title>
+  <desc id="nycBgDesc">A dark, cinematic New York City skyline with star field, aurora-like light ribbons, water reflections, and animated-ready SVG layer IDs.</desc>
+  <defs>
+    <linearGradient id="skyGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#020a12"/>
+      <stop offset="0.40" stop-color="#07101c"/>
+      <stop offset="0.70" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#02050a"/>
+    </linearGradient>
+    <radialGradient id="rightGlow" cx="73%" cy="45%" r="58%">
+      <stop offset="0" stop-color="#f8b5d0" stop-opacity=".28"/>
+      <stop offset=".20" stop-color="#908aff" stop-opacity=".18"/>
+      <stop offset=".46" stop-color="#233b64" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#010711" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cyanBloom" cx="65%" cy="63%" r="35%">
+      <stop offset="0" stop-color="#b8fff4" stop-opacity=".24"/>
+      <stop offset=".34" stop-color="#88ccff" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#00131e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="auroraPink" x1=".1" y1=".85" x2="1" y2=".05">
+      <stop offset="0" stop-color="#1a2d4d" stop-opacity="0"/>
+      <stop offset=".30" stop-color="#b78aff" stop-opacity=".28"/>
+      <stop offset=".62" stop-color="#ffbad0" stop-opacity=".48"/>
+      <stop offset=".82" stop-color="#f4a5c4" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#0b0f25" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="auroraBlue" x1=".1" y1=".9" x2="1" y2=".1">
+      <stop offset="0" stop-color="#42e6ff" stop-opacity="0"/>
+      <stop offset=".25" stop-color="#8fcfff" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#cfd9ff" stop-opacity=".36"/>
+      <stop offset=".86" stop-color="#75b9ff" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#06345f" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="horizonHaze" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#06101a" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#c9b3e7" stop-opacity=".16"/>
+      <stop offset=".68" stop-color="#f0adc4" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#06101a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="waterGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07131f" stop-opacity=".94"/>
+      <stop offset=".52" stop-color="#040b12" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#020407"/>
+    </linearGradient>
+    <filter id="auroraBlur" x="-20%" y="-40%" width="140%" height="190%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="softBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="starGlow" x="-300%" y="-300%" width="700%" height="700%">
+      <feGaussianBlur stdDeviation="1.7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="windowGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation=".85" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="waterBlur" x="-60%" y="-30%" width="220%" height="170%">
+      <feGaussianBlur stdDeviation="9 15"/>
+    </filter>
+    <clipPath id="waterClip"><rect x="0" y="774" width="1920" height="126"/></clipPath>
+    <style>
+      #nyc-hero-background { background:#02070d; display:block; width:100%; height:100%; }
+      .star, .window, .beacon { transform-box: fill-box; transform-origin: center; }
+      .building, .aurora-band, .ripple, .reflection { transform-box: fill-box; transform-origin: center; }
+      @keyframes starPulse { from { opacity:.18; transform:scale(.85); } to { opacity:.92; transform:scale(1.42); } }
+      @keyframes auroraDrift { from { transform:translate(-22px,-8px); opacity:.38; } to { transform:translate(42px,16px); opacity:.66; } }
+      @keyframes windowFlicker { 0%,100% { opacity:.28; } 45% { opacity:.74; } 68% { opacity:.42; } }
+      @keyframes waterDrift { from { transform:translateX(-32px); opacity:.05; } to { transform:translateX(58px); opacity:.18; } }
+      @keyframes beaconPulse { from { opacity:.28; transform:scale(.75); } to { opacity:1; transform:scale(1.65); } }
+      .native-animate .star { animation: starPulse 4s ease-in-out infinite alternate; }
+      .native-animate .star:nth-child(3n) { animation-duration: 5.8s; animation-delay: -1.3s; }
+      .native-animate .star:nth-child(5n) { animation-duration: 7.2s; animation-delay: -3.1s; }
+      .native-animate .aurora-band { animation: auroraDrift 12s ease-in-out infinite alternate; }
+      .native-animate .aurora-band:nth-child(2) { animation-duration: 15s; animation-delay:-4s; }
+      .native-animate .aurora-band:nth-child(3) { animation-duration: 10s; animation-delay:-2s; }
+      .native-animate .window { animation: windowFlicker 4.2s ease-in-out infinite; }
+      .native-animate .window:nth-child(4n) { animation-duration: 5.5s; animation-delay:-1.9s; }
+      .native-animate .window:nth-child(7n) { animation-duration: 7.1s; animation-delay:-3.2s; }
+      .native-animate .ripple, .native-animate .reflection { animation: waterDrift 7s ease-in-out infinite alternate; }
+      .native-animate .ripple:nth-child(5n) { animation-duration: 9s; animation-delay:-3s; }
+      .native-animate .beacon { animation: beaconPulse 1.8s ease-in-out infinite alternate; }
+      @media (prefers-reduced-motion: reduce) { .native-animate * { animation: none !important; } }
+    </style>
+  </defs>
+
+  <rect id="sky" width="1920" height="900" fill="url(#skyGradient)"/>
+  <rect id="right-nebula" width="1920" height="900" fill="url(#rightGlow)" opacity=".96"/>
+  <rect id="cyan-horizon-bloom" width="1920" height="900" fill="url(#cyanBloom)" opacity=".65"/>
+
+  <g id="starfield" filter="url(#starGlow)">
+    <circle class="star" cx="1233.3" cy="34.3" r="0.87" fill="#f7f1e8" opacity="0.29"/>
+    <circle class="star" cx="1306.3" cy="528.5" r="0.73" fill="#f7f1e8" opacity="0.22"/>
+    <circle class="star" cx="408.5" cy="308.1" r="0.72" fill="#d5e7ff" opacity="0.67"/>
+    <circle class="star" cx="412.1" cy="355.9" r="2.37" fill="#b7d9ff" opacity="0.69"/>
+    <circle class="star" cx="1348.4" cy="213.9" r="0.69" fill="#f7f1e8" opacity="0.70"/>
+    <circle class="star" cx="161.8" cy="75.1" r="1.84" fill="#f7f1e8" opacity="0.37"/>
+    <circle class="star" cx="1410.3" cy="325.7" r="0.95" fill="#ffd8bb" opacity="0.39"/>
+    <circle class="star" cx="1111.6" cy="421.6" r="0.76" fill="#f7f1e8" opacity="0.70"/>
+    <circle class="star" cx="1656.4" cy="513.9" r="1.07" fill="#ffd8bb" opacity="0.61"/>
+    <circle class="star" cx="298.8" cy="222.5" r="1.59" fill="#f7f1e8" opacity="0.81"/>
+    <circle class="star" cx="1173.9" cy="117.5" r="1.57" fill="#ffd8bb" opacity="0.50"/>
+    <circle class="star" cx="1919.5" cy="384.8" r="1.29" fill="#f7f1e8" opacity="0.41"/>
+    <circle class="star" cx="428.9" cy="38.3" r="0.95" fill="#ffd8bb" opacity="0.24"/>
+    <circle class="star" cx="396.7" cy="304.6" r="1.76" fill="#b7d9ff" opacity="0.37"/>
+    <circle class="star" cx="1440.2" cy="327.2" r="1.88" fill="#d5e7ff" opacity="0.78"/>
+    <circle class="star" cx="689.5" cy="588.5" r="0.80" fill="#f7f1e8" opacity="0.26"/>
+    <circle class="star" cx="1667.8" cy="107.1" r="0.92" fill="#f7f1e8" opacity="0.47"/>
+    <circle class="star" cx="734.1" cy="359.7" r="1.22" fill="#f7f1e8" opacity="0.83"/>
+    <circle class="star" cx="1313.4" cy="85.3" r="1.69" fill="#ffd8bb" opacity="0.70"/>
+    <circle class="star" cx="198.6" cy="267.8" r="0.90" fill="#ffd8bb" opacity="0.67"/>
+    <circle class="star" cx="1884.9" cy="454.3" r="1.81" fill="#ffd8bb" opacity="0.77"/>
+    <circle class="star" cx="1629.7" cy="309.4" r="0.66" fill="#f7f1e8" opacity="0.70"/>
+    <circle class="star" cx="1153.9" cy="298.5" r="0.85" fill="#ffd8bb" opacity="0.77"/>
+    <circle class="star" cx="449.3" cy="157.3" r="1.84" fill="#d5e7ff" opacity="0.26"/>
+    <circle class="star" cx="1579.4" cy="577.5" r="1.70" fill="#d5e7ff" opacity="0.28"/>
+    <circle class="star" cx="1835.8" cy="114.1" r="1.78" fill="#b7d9ff" opacity="0.48"/>
+    <circle class="star" cx="1800.7" cy="450.5" r="1.53" fill="#ffd8bb" opacity="0.40"/>
+    <circle class="star" cx="838.7" cy="315.0" r="0.61" fill="#f7f1e8" opacity="0.24"/>
+    <circle class="star" cx="1133.1" cy="151.2" r="0.60" fill="#f7f1e8" opacity="0.66"/>
+    <circle class="star" cx="428.7" cy="536.1" r="1.83" fill="#ffd8bb" opacity="0.53"/>
+    <circle class="star" cx="1291.2" cy="142.1" r="0.89" fill="#d5e7ff" opacity="0.77"/>
+    <circle class="star" cx="456.3" cy="289.6" r="1.01" fill="#d5e7ff" opacity="0.26"/>
+    <circle class="star" cx="674.4" cy="254.3" r="2.23" fill="#f7f1e8" opacity="0.64"/>
+    <circle class="star" cx="98.8" cy="435.1" r="2.36" fill="#b7d9ff" opacity="0.36"/>
+    <circle class="star" cx="1031.1" cy="99.9" r="0.71" fill="#f7f1e8" opacity="0.36"/>
+    <circle class="star" cx="848.5" cy="511.0" r="1.20" fill="#f7f1e8" opacity="0.62"/>
+    <circle class="star" cx="1879.2" cy="548.0" r="1.74" fill="#d5e7ff" opacity="0.46"/>
+    <circle class="star" cx="398.9" cy="248.6" r="0.58" fill="#d5e7ff" opacity="0.20"/>
+    <circle class="star" cx="499.8" cy="466.9" r="1.07" fill="#d5e7ff" opacity="0.65"/>
+    <circle class="star" cx="283.4" cy="189.1" r="0.73" fill="#ffd8bb" opacity="0.55"/>
+    <circle class="star" cx="92.0" cy="353.0" r="1.81" fill="#f7f1e8" opacity="0.55"/>
+    <circle class="star" cx="1863.1" cy="65.7" r="0.63" fill="#b7d9ff" opacity="0.24"/>
+    <circle class="star" cx="771.4" cy="556.7" r="1.31" fill="#f7f1e8" opacity="0.59"/>
+    <circle class="star" cx="801.7" cy="352.7" r="1.36" fill="#ffd8bb" opacity="0.37"/>
+    <circle class="star" cx="447.8" cy="245.6" r="1.93" fill="#f7f1e8" opacity="0.50"/>
+    <circle class="star" cx="-1.7" cy="374.1" r="1.87" fill="#b7d9ff" opacity="0.25"/>
+    <circle class="star" cx="971.5" cy="95.5" r="1.19" fill="#ffd8bb" opacity="0.77"/>
+    <circle class="star" cx="538.6" cy="269.8" r="1.65" fill="#f7f1e8" opacity="0.60"/>
+    <circle class="star" cx="1289.0" cy="336.1" r="1.44" fill="#ffd8bb" opacity="0.77"/>
+    <circle class="star" cx="206.2" cy="81.0" r="1.24" fill="#b7d9ff" opacity="0.38"/>
+    <circle class="star" cx="1386.5" cy="136.1" r="2.12" fill="#ffd8bb" opacity="0.53"/>
+    <circle class="star" cx="1754.5" cy="502.3" r="0.75" fill="#f7f1e8" opacity="0.74"/>
+    <circle class="star" cx="-13.1" cy="459.5" r="2.23" fill="#d5e7ff" opacity="0.31"/>
+    <circle class="star" cx="1061.3" cy="263.8" r="0.56" fill="#b7d9ff" opacity="0.81"/>
+    <circle class="star" cx="1049.4" cy="495.7" r="1.54" fill="#f7f1e8" opacity="0.48"/>
+    <circle class="star" cx="584.2" cy="532.4" r="2.47" fill="#ffd8bb" opacity="0.23"/>
+    <circle class="star" cx="391.8" cy="162.2" r="0.65" fill="#d5e7ff" opacity="0.56"/>
+    <circle class="star" cx="1888.7" cy="447.2" r="0.95" fill="#b7d9ff" opacity="0.83"/>
+    <circle class="star" cx="1707.6" cy="34.1" r="2.18" fill="#d5e7ff" opacity="0.71"/>
+    <circle class="star" cx="1552.4" cy="512.5" r="1.75" fill="#f7f1e8" opacity="0.30"/>
+    <circle class="star" cx="729.8" cy="42.1" r="1.03" fill="#d5e7ff" opacity="0.73"/>
+    <circle class="star" cx="665.3" cy="487.7" r="1.73" fill="#b7d9ff" opacity="0.22"/>
+    <circle class="star" cx="761.0" cy="178.8" r="0.86" fill="#d5e7ff" opacity="0.38"/>
+    <circle class="star" cx="1311.9" cy="500.9" r="1.22" fill="#ffd8bb" opacity="0.27"/>
+    <circle class="star" cx="330.0" cy="568.6" r="0.77" fill="#ffd8bb" opacity="0.59"/>
+    <circle class="star" cx="1407.9" cy="198.8" r="1.86" fill="#b7d9ff" opacity="0.28"/>
+    <circle class="star" cx="479.3" cy="424.0" r="0.71" fill="#b7d9ff" opacity="0.72"/>
+    <circle class="star" cx="693.9" cy="59.9" r="2.18" fill="#f7f1e8" opacity="0.61"/>
+    <circle class="star" cx="1390.7" cy="191.2" r="1.08" fill="#ffd8bb" opacity="0.41"/>
+    <circle class="star" cx="1066.6" cy="129.3" r="2.20" fill="#b7d9ff" opacity="0.64"/>
+    <circle class="star" cx="1186.4" cy="191.5" r="1.75" fill="#b7d9ff" opacity="0.40"/>
+    <circle class="star" cx="822.6" cy="350.6" r="1.64" fill="#b7d9ff" opacity="0.49"/>
+    <circle class="star" cx="981.9" cy="472.4" r="2.24" fill="#ffd8bb" opacity="0.63"/>
+    <circle class="star" cx="990.3" cy="380.8" r="0.80" fill="#b7d9ff" opacity="0.82"/>
+    <circle class="star" cx="1298.7" cy="148.0" r="0.66" fill="#d5e7ff" opacity="0.23"/>
+    <circle class="star" cx="1178.1" cy="458.0" r="1.15" fill="#b7d9ff" opacity="0.61"/>
+    <circle class="star" cx="1388.0" cy="238.9" r="1.05" fill="#f7f1e8" opacity="0.63"/>
+    <circle class="star" cx="1729.6" cy="510.5" r="0.80" fill="#d5e7ff" opacity="0.34"/>
+    <circle class="star" cx="78.4" cy="162.0" r="1.62" fill="#d5e7ff" opacity="0.29"/>
+    <circle class="star" cx="1288.5" cy="583.1" r="1.36" fill="#d5e7ff" opacity="0.69"/>
+    <circle class="star" cx="1180.8" cy="430.0" r="1.45" fill="#d5e7ff" opacity="0.79"/>
+    <circle class="star" cx="1738.5" cy="443.9" r="1.17" fill="#ffd8bb" opacity="0.69"/>
+    <circle class="star" cx="1481.0" cy="317.1" r="1.57" fill="#ffd8bb" opacity="0.49"/>
+    <circle class="star" cx="439.6" cy="211.4" r="1.19" fill="#d5e7ff" opacity="0.30"/>
+    <circle class="star" cx="1340.1" cy="422.7" r="0.67" fill="#d5e7ff" opacity="0.42"/>
+    <circle class="star" cx="794.9" cy="137.9" r="1.13" fill="#f7f1e8" opacity="0.70"/>
+    <circle class="star" cx="1659.2" cy="456.4" r="1.19" fill="#ffd8bb" opacity="0.81"/>
+    <circle class="star" cx="1456.8" cy="506.5" r="1.92" fill="#b7d9ff" opacity="0.69"/>
+    <circle class="star" cx="936.9" cy="175.6" r="0.92" fill="#d5e7ff" opacity="0.42"/>
+    <circle class="star" cx="1399.4" cy="499.1" r="0.99" fill="#d5e7ff" opacity="0.55"/>
+    <circle class="star" cx="1140.1" cy="397.9" r="0.75" fill="#d5e7ff" opacity="0.29"/>
+    <circle class="star" cx="336.2" cy="168.3" r="0.86" fill="#d5e7ff" opacity="0.41"/>
+    <circle class="star" cx="525.4" cy="562.2" r="1.05" fill="#f7f1e8" opacity="0.25"/>
+    <circle class="star" cx="1448.1" cy="49.7" r="0.86" fill="#f7f1e8" opacity="0.24"/>
+    <circle class="star" cx="1458.3" cy="561.3" r="0.94" fill="#b7d9ff" opacity="0.60"/>
+    <circle class="star" cx="227.4" cy="401.6" r="1.84" fill="#ffd8bb" opacity="0.50"/>
+    <circle class="star" cx="1483.1" cy="115.6" r="1.85" fill="#b7d9ff" opacity="0.67"/>
+    <circle class="star" cx="1870.9" cy="81.6" r="0.85" fill="#d5e7ff" opacity="0.57"/>
+    <circle class="star" cx="757.4" cy="427.6" r="0.73" fill="#b7d9ff" opacity="0.74"/>
+    <circle class="star" cx="179.7" cy="460.3" r="2.18" fill="#f7f1e8" opacity="0.72"/>
+    <circle class="star" cx="660.5" cy="264.2" r="0.78" fill="#f7f1e8" opacity="0.62"/>
+    <circle class="star" cx="1645.2" cy="488.7" r="0.68" fill="#d5e7ff" opacity="0.44"/>
+    <circle class="star" cx="1366.3" cy="268.2" r="1.82" fill="#d5e7ff" opacity="0.62"/>
+    <circle class="star" cx="891.2" cy="490.7" r="1.33" fill="#f7f1e8" opacity="0.75"/>
+    <circle class="star" cx="526.7" cy="277.0" r="1.96" fill="#d5e7ff" opacity="0.60"/>
+    <circle class="star" cx="639.3" cy="301.8" r="0.84" fill="#ffd8bb" opacity="0.34"/>
+    <circle class="star" cx="647.1" cy="521.8" r="2.14" fill="#b7d9ff" opacity="0.56"/>
+    <circle class="star" cx="147.8" cy="430.4" r="1.23" fill="#d5e7ff" opacity="0.36"/>
+    <circle class="star" cx="1246.0" cy="299.8" r="1.52" fill="#d5e7ff" opacity="0.39"/>
+    <circle class="star" cx="1335.9" cy="194.5" r="1.40" fill="#ffd8bb" opacity="0.56"/>
+    <circle class="star" cx="814.0" cy="445.2" r="0.93" fill="#ffd8bb" opacity="0.49"/>
+    <circle class="star" cx="472.8" cy="88.8" r="0.73" fill="#b7d9ff" opacity="0.68"/>
+    <circle class="star" cx="355.4" cy="441.0" r="1.11" fill="#ffd8bb" opacity="0.83"/>
+    <circle class="star" cx="1901.8" cy="494.6" r="0.86" fill="#f7f1e8" opacity="0.32"/>
+    <circle class="star" cx="1367.7" cy="92.2" r="0.87" fill="#b7d9ff" opacity="0.56"/>
+    <circle class="star" cx="1230.2" cy="449.1" r="0.83" fill="#d5e7ff" opacity="0.57"/>
+    <circle class="star" cx="918.3" cy="214.2" r="0.61" fill="#f7f1e8" opacity="0.76"/>
+    <circle class="star" cx="1591.3" cy="248.4" r="0.73" fill="#b7d9ff" opacity="0.65"/>
+    <circle class="star" cx="272.4" cy="340.8" r="0.79" fill="#d5e7ff" opacity="0.36"/>
+    <circle class="star" cx="1168.4" cy="470.7" r="0.91" fill="#d5e7ff" opacity="0.45"/>
+    <circle class="star" cx="562.8" cy="355.5" r="1.08" fill="#f7f1e8" opacity="0.60"/>
+    <circle class="star" cx="1837.3" cy="138.4" r="0.71" fill="#b7d9ff" opacity="0.25"/>
+    <circle class="star" cx="320.7" cy="62.8" r="0.67" fill="#d5e7ff" opacity="0.65"/>
+    <circle class="star" cx="550.9" cy="151.9" r="1.60" fill="#f7f1e8" opacity="0.76"/>
+    <circle class="star" cx="1327.3" cy="546.6" r="2.29" fill="#b7d9ff" opacity="0.58"/>
+    <circle class="star" cx="813.3" cy="330.4" r="1.48" fill="#b7d9ff" opacity="0.37"/>
+    <circle class="star" cx="120.0" cy="114.6" r="1.05" fill="#ffd8bb" opacity="0.74"/>
+    <circle class="star" cx="840.7" cy="287.2" r="1.10" fill="#d5e7ff" opacity="0.81"/>
+    <circle class="star" cx="838.0" cy="360.9" r="1.34" fill="#f7f1e8" opacity="0.59"/>
+    <circle class="star" cx="159.0" cy="568.3" r="2.36" fill="#f7f1e8" opacity="0.58"/>
+    <circle class="star" cx="1939.2" cy="403.2" r="1.04" fill="#b7d9ff" opacity="0.70"/>
+    <circle class="star" cx="902.2" cy="391.4" r="0.84" fill="#d5e7ff" opacity="0.58"/>
+    <circle class="star" cx="1879.3" cy="287.9" r="1.10" fill="#b7d9ff" opacity="0.64"/>
+    <circle class="star" cx="626.4" cy="415.4" r="1.08" fill="#f7f1e8" opacity="0.46"/>
+    <circle class="star" cx="871.5" cy="199.3" r="0.81" fill="#f7f1e8" opacity="0.70"/>
+    <circle class="star" cx="1269.0" cy="329.3" r="0.93" fill="#d5e7ff" opacity="0.54"/>
+    <circle class="star" cx="1205.8" cy="453.2" r="0.71" fill="#ffd8bb" opacity="0.29"/>
+    <circle class="star" cx="838.7" cy="418.0" r="0.54" fill="#b7d9ff" opacity="0.61"/>
+    <circle class="star" cx="1371.2" cy="197.1" r="0.72" fill="#f7f1e8" opacity="0.26"/>
+    <circle class="star" cx="884.4" cy="87.0" r="1.65" fill="#ffd8bb" opacity="0.81"/>
+    <circle class="star" cx="977.4" cy="175.9" r="1.98" fill="#d5e7ff" opacity="0.51"/>
+    <circle class="star" cx="1060.5" cy="238.6" r="1.51" fill="#f7f1e8" opacity="0.77"/>
+    <circle class="star" cx="521.4" cy="470.3" r="1.10" fill="#ffd8bb" opacity="0.71"/>
+    <circle class="star" cx="1588.3" cy="181.2" r="1.17" fill="#d5e7ff" opacity="0.58"/>
+    <circle class="star" cx="1675.9" cy="274.5" r="1.11" fill="#d5e7ff" opacity="0.56"/>
+    <circle class="star" cx="872.5" cy="203.4" r="0.99" fill="#d5e7ff" opacity="0.36"/>
+    <circle class="star" cx="437.8" cy="462.1" r="0.64" fill="#d5e7ff" opacity="0.51"/>
+    <circle class="star" cx="736.7" cy="398.3" r="2.15" fill="#f7f1e8" opacity="0.30"/>
+    <circle class="star" cx="227.4" cy="570.3" r="1.18" fill="#d5e7ff" opacity="0.77"/>
+    <circle class="star" cx="175.4" cy="539.0" r="0.78" fill="#b7d9ff" opacity="0.47"/>
+    <circle class="star hero-star" cx="180" cy="220" r="2.4" fill="#cce9ff" opacity="0.65"/>
+    <circle class="star hero-star" cx="620" cy="62" r="1.8" fill="#f7f1e8" opacity="0.72"/>
+    <circle class="star hero-star" cx="1285" cy="345" r="2.0" fill="#f7f1e8" opacity="0.72"/>
+    <circle class="star hero-star" cx="1430" cy="325" r="2.3" fill="#e9f6ff" opacity="0.82"/>
+    <circle class="star hero-star" cx="1810" cy="360" r="1.9" fill="#ffd8bb" opacity="0.7"/>
+  </g>
+
+  <g id="aurora" opacity=".96">
+    <path id="aurora-pink-wide" class="aurora-band" d="M420 715 C690 600 815 510 1015 455 C1230 395 1384 350 1528 255 C1660 168 1758 76 1864 -28" fill="none" stroke="url(#auroraPink)" stroke-width="138" stroke-linecap="round" opacity=".57" filter="url(#auroraBlur)"/>
+    <path id="aurora-blue-wide" class="aurora-band" d="M682 660 C884 552 1025 448 1202 338 C1378 228 1494 136 1586 -40" fill="none" stroke="url(#auroraBlue)" stroke-width="120" stroke-linecap="round" opacity=".50" filter="url(#auroraBlur)"/>
+    <path id="aurora-pink-sharp" class="aurora-band" d="M805 667 C1045 555 1190 495 1332 417 C1488 331 1616 226 1776 28" fill="none" stroke="url(#auroraPink)" stroke-width="26" stroke-linecap="round" opacity=".52" filter="url(#softBlur)"/>
+    <path id="aurora-cyan-line" class="aurora-band" d="M728 688 C940 594 1096 523 1242 458 C1374 399 1452 346 1570 230" fill="none" stroke="#bdfff4" stroke-width="5" stroke-linecap="round" opacity=".28" filter="url(#softBlur)"/>
+  </g>
+  <ellipse id="low-haze" cx="1180" cy="705" rx="720" ry="165" fill="url(#horizonHaze)" opacity=".78" filter="url(#softBlur)"/>
+
+  <g id="city" aria-label="New York City skyline">
+    <g id="skyline-far">
+      <g class="building far" data-depth="far" opacity="0.75"><rect x="-10.0" y="663.7" width="24.5" height="110.3" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.80"><rect x="30.5" y="699.8" width="50.4" height="74.2" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.75"><rect x="88.9" y="714.3" width="48.5" height="59.7" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.66"><rect x="142.5" y="693.1" width="39.7" height="80.9" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.68"><rect x="198.4" y="672.3" width="25.3" height="101.7" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.74"><rect x="230.2" y="693.1" width="50.0" height="80.9" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.80"><rect x="289.3" y="711.1" width="32.3" height="62.9" fill="#091521" opacity="1" /><line x1="305.4" y1="711.1" x2="305.4" y2="656.9" stroke="#0e1d2d" stroke-width="2" opacity=".9"/></g>
+      <g class="building far" data-depth="far" opacity="0.79"><rect x="333.8" y="708.9" width="25.8" height="65.1" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.66"><rect x="372.6" y="731.6" width="43.2" height="42.4" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.75"><rect x="426.6" y="605.3" width="31.0" height="168.7" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.73"><rect x="464.5" y="694.2" width="24.3" height="79.8" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.79"><rect x="499.8" y="700.8" width="23.2" height="73.2" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.70"><rect x="534.6" y="684.1" width="37.3" height="89.9" fill="#050b11" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.75"><rect x="587.7" y="672.3" width="46.4" height="101.7" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.72"><rect x="647.0" y="732.3" width="51.9" height="41.7" fill="#050b11" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.69"><rect x="716.3" y="663.2" width="40.0" height="110.8" fill="#050b11" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.64"><rect x="762.3" y="706.4" width="43.8" height="67.6" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.71"><rect x="819.6" y="723.8" width="30.2" height="50.2" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.74"><rect x="862.0" y="580.1" width="31.6" height="193.9" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.76"><rect x="901.8" y="719.6" width="50.6" height="54.4" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.78"><rect x="959.9" y="631.7" width="38.8" height="142.3" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.66"><rect x="1010.1" y="683.6" width="37.8" height="90.4" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.77"><rect x="1055.2" y="718.2" width="51.1" height="55.8" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.65"><rect x="1115.2" y="733.0" width="45.9" height="41.0" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.72"><rect x="1174.7" y="711.7" width="29.2" height="62.3" fill="#050b11" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.73"><rect x="1220.9" y="659.4" width="25.7" height="114.6" fill="#050b11" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.80"><rect x="1258.3" y="715.5" width="25.8" height="58.5" fill="#050b11" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.78"><rect x="1290.9" y="683.2" width="35.7" height="90.8" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.77"><rect x="1336.5" y="627.0" width="29.6" height="147.0" fill="#091521" opacity="1" /><line x1="1351.3" y1="627.0" x2="1351.3" y2="578.9" stroke="#0e1d2d" stroke-width="2" opacity=".9"/></g>
+      <g class="building far" data-depth="far" opacity="0.73"><rect x="1383.3" y="590.5" width="51.3" height="183.5" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.72"><rect x="1445.9" y="596.4" width="22.2" height="177.6" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.63"><rect x="1482.2" y="561.4" width="36.2" height="212.6" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.61"><rect x="1530.8" y="684.9" width="41.5" height="89.1" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.75"><rect x="1580.0" y="567.7" width="48.3" height="206.3" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.71"><rect x="1639.7" y="699.4" width="28.4" height="74.6" fill="#091521" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.61"><rect x="1684.0" y="575.5" width="38.1" height="198.5" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.80"><rect x="1731.3" y="567.3" width="31.4" height="206.7" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.62"><rect x="1771.4" y="665.0" width="45.5" height="109.0" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.79"><rect x="1831.0" y="703.8" width="22.3" height="70.2" fill="#07101a" opacity="1" /></g>
+      <g class="building far" data-depth="far" opacity="0.66"><rect x="1865.2" y="554.3" width="29.9" height="219.7" fill="#091521" opacity="1" /><line x1="1880.1" y1="554.3" x2="1880.1" y2="521.2" stroke="#0e1d2d" stroke-width="2" opacity=".9"/></g>
+      <g class="building far" data-depth="far" opacity="0.62"><rect x="1905.4" y="692.7" width="51.6" height="81.3" fill="#091521" opacity="1" /></g>
+    </g>
+    <g id="skyline-landmarks">
+      <g id="near-01" class="building near" data-depth="near"><rect x="620.0" y="634.0" width="48.0" height="140.0" fill="#06111b" opacity="1" /></g>
+      <g id="near-02" class="building near" data-depth="near"><rect x="680.0" y="646.0" width="68.0" height="128.0" fill="#08141f" opacity="1" /></g>
+      <g id="near-03" class="building near" data-depth="near"><rect x="765.0" y="584.0" width="48.0" height="190.0" fill="#07121c" opacity="1" /></g>
+      <g id="near-04" class="building near" data-depth="near"><rect x="840.0" y="672.0" width="62.0" height="102.0" fill="#06111b" opacity="1" /><path d="M840.0,676.0 L871.0,654.0 L902.0,676.0 Z" fill="#06111b"/></g>
+      <g id="near-05" class="building near" data-depth="near"><rect x="920.0" y="641.0" width="42.0" height="133.0" fill="#08131d" opacity="1" /><path d="M920.0,643.0 L941.0,619.0 L962.0,643.0 Z" fill="#08131d"/><line x1="941.0" y1="619.0" x2="941.0" y2="569.0" stroke="#4c6175" stroke-width="2" opacity=".7"/></g>
+      <g id="near-06" class="building near" data-depth="near"><rect x="985.0" y="639.0" width="35.0" height="135.0" fill="#07111b" opacity="1" /></g>
+      <g id="near-07" class="building near" data-depth="near"><rect x="1040.0" y="688.0" width="50.0" height="86.0" fill="#061019" opacity="1" /><path d="M1040.0,690.0 L1065.0,666.0 L1090.0,690.0 Z" fill="#061019"/><line x1="1065.0" y1="666.0" x2="1065.0" y2="616.0" stroke="#4c6175" stroke-width="2" opacity=".7"/></g>
+      <g id="near-08" class="building near" data-depth="near"><rect x="1115.0" y="594.0" width="42.0" height="180.0" fill="#08131d" opacity="1" /></g>
+      <g id="near-09" class="building near" data-depth="near"><rect x="1328.0" y="670.0" width="38.0" height="104.0" fill="#06111b" opacity="1" /><path d="M1328.0,672.0 L1347.0,648.0 L1366.0,672.0 Z" fill="#06111b"/><line x1="1347.0" y1="648.0" x2="1347.0" y2="598.0" stroke="#4c6175" stroke-width="2" opacity=".7"/></g>
+      <g id="near-10" class="building near" data-depth="near"><path d="M1390.0,774.0 L1390.0,606.0 L1445.0,584.0 L1445.0,774.0 Z" fill="#07121c"/></g>
+      <g id="near-11" class="building near" data-depth="near"><rect x="1462.0" y="629.0" width="74.0" height="145.0" fill="#07131e" opacity="1" /></g>
+      <g id="near-12" class="building near" data-depth="near"><rect x="1580.0" y="654.0" width="56.0" height="120.0" fill="#061019" opacity="1" /></g>
+      <g id="near-13" class="building near" data-depth="near"><rect x="1710.0" y="654.0" width="42.0" height="120.0" fill="#07131e" opacity="1" /></g>
+      <g id="near-14" class="building near" data-depth="near"><rect x="1748.0" y="684.0" width="36.0" height="90.0" fill="#061019" opacity="1" /></g>
+      <g id="empire-state" class="building landmark" data-depth="near">
+        <rect x="1202" y="545" width="72" height="229" fill="#08131d"/>
+        <rect x="1211" y="513" width="54" height="36" fill="#0b1824"/>
+        <rect x="1220" y="488" width="36" height="29" fill="#0d1b28"/>
+        <path d="M1228,488 L1238.0,464 L1248,488 Z" fill="#0f2233"/>
+        <line x1="1238.0" y1="464" x2="1238.0" y2="379" stroke="#657588" stroke-width="3" opacity=".88"/>
+        <circle class="beacon" cx="1238.0" cy="376" r="3.2" fill="#e3f7ff" opacity=".9"/>
+      </g>
+      <g id="one-wtc" class="building landmark" data-depth="near">
+        <path d="M1625,774 L1633,524 L1653,482 L1683,774 Z" fill="#07121c"/>
+        <path d="M1653,482 L1664,482 L1667,774 L1647,774 Z" fill="#0b1824" opacity=".9"/>
+        <line x1="1659" y1="482" x2="1659" y2="332" stroke="#dbeaff" stroke-width="3" opacity=".85"/>
+        <line x1="1659" y1="359" x2="1659" y2="304" stroke="#dbeaff" stroke-width="1.7" opacity=".65"/>
+        <circle class="beacon" cx="1659" cy="302" r="2.8" fill="#eaf8ff" opacity=".8"/>
+      </g>
+      <g id="chrysler" class="building landmark" data-depth="near">
+        <rect x="1518" y="613" width="48" height="161" fill="#08131d"/>
+        <path d="M1522,618 C1528,581 1556,581 1562,618 Z" fill="#0e1d2d"/>
+        <path d="M1528,602 C1536,576 1548,576 1556,602" fill="none" stroke="#e1d6bd" stroke-width="2" opacity=".65"/>
+        <path d="M1534,590 C1541,571 1543,571 1550,590" fill="none" stroke="#e1d6bd" stroke-width="2" opacity=".55"/>
+        <line x1="1542.0" y1="573" x2="1542.0" y2="511" stroke="#d7c4a6" stroke-width="2" opacity=".6"/>
+      </g>
+      <g id="brooklyn-bridge" class="bridge" opacity=".74">
+        <line x1="1740" y1="745" x2="1925" y2="745" stroke="#1e2a36" stroke-width="5"/>
+        <line x1="1732" y1="760" x2="1925" y2="760" stroke="#101b27" stroke-width="8"/>
+        <g class="bridge-tower">
+          <rect x="1812" y="664" width="20" height="96" fill="#07121b"/>
+          <rect x="1851" y="664" width="20" height="96" fill="#07121b"/>
+          <path d="M1810 665 L1832 640 L1834 665 Z" fill="#0b1824"/>
+          <path d="M1849 665 L1871 640 L1873 665 Z" fill="#0b1824"/>
+        </g>
+        <path class="bridge-cable" d="M1704 751 C1766 696 1823 682 1860 659 C1893 683 1926 708 1960 735" fill="none" stroke="#b6a991" stroke-width="2" opacity=".55"/>
+        <path class="bridge-cable" d="M1725 759 C1776 713 1822 695 1860 674 C1888 696 1920 719 1952 742" fill="none" stroke="#8d8070" stroke-width="1.4" opacity=".45"/>
+        <g id="bridge-lights">
+          <circle class="bridge-light window" cx="1715" cy="748.5" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1737" cy="750.0" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1759" cy="748.9" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1781" cy="746.0" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1803" cy="743.1" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1825" cy="742.0" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1847" cy="743.4" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1869" cy="746.4" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1891" cy="749.2" r="1.7" fill="#ffd8a0" opacity=".65"/><circle class="bridge-light window" cx="1913" cy="749.9" r="1.7" fill="#ffd8a0" opacity=".65"/>
+        </g>
+      </g>
+    </g>
+    <g id="windows" filter="url(#windowGlow)">
+      <rect class="window near-window" x="626.0" y="650.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.38"/>
+      <rect class="window near-window" x="638.0" y="668.7" width="4.2" height="5.8" rx=".7" fill="#ffd99a" opacity="0.72"/>
+      <rect class="window near-window" x="686.0" y="678.7" width="4.2" height="5.8" rx=".7" fill="#a9d7ff" opacity="0.70"/>
+      <rect class="window near-window" x="700.0" y="662.0" width="4.2" height="5.8" rx=".7" fill="#a9d7ff" opacity="0.68"/>
+      <rect class="window near-window" x="714.0" y="695.3" width="4.2" height="5.8" rx=".7" fill="#f4ba92" opacity="0.62"/>
+      <rect class="window near-window" x="742.0" y="745.3" width="4.2" height="5.8" rx=".7" fill="#ffd99a" opacity="0.59"/>
+      <rect class="window near-window" x="783.0" y="654.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.54"/>
+      <rect class="window near-window" x="795.0" y="744.0" width="4.2" height="5.8" rx=".7" fill="#f4ba92" opacity="0.67"/>
+      <rect class="window near-window" x="846.0" y="762.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.71"/>
+      <rect class="window near-window" x="883.5" y="688.4" width="4.2" height="5.8" rx=".7" fill="#a9d7ff" opacity="0.66"/>
+      <rect class="window near-window" x="926.0" y="743.9" width="4.2" height="5.8" rx=".7" fill="#f4ba92" opacity="0.60"/>
+      <rect class="window near-window" x="956.0" y="743.9" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.64"/>
+      <rect class="window near-window" x="991.0" y="655.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.65"/>
+      <rect class="window near-window" x="1046.0" y="682.0" width="4.2" height="5.8" rx=".7" fill="#f4ba92" opacity="0.65"/>
+      <rect class="window near-window" x="1121.0" y="677.6" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.57"/>
+      <rect class="window near-window" x="1334.0" y="713.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.62"/>
+      <rect class="window near-window" x="1396.0" y="744.0" width="4.2" height="5.8" rx=".7" fill="#a9d7ff" opacity="0.61"/>
+      <rect class="window near-window" x="1439.0" y="708.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.66"/>
+      <rect class="window near-window" x="1480.4" y="661.7" width="4.2" height="5.8" rx=".7" fill="#ffd99a" opacity="0.71"/>
+      <rect class="window near-window" x="1517.6" y="745.3" width="4.2" height="5.8" rx=".7" fill="#f4ba92" opacity="0.60"/>
+      <rect class="window near-window" x="1586.0" y="670.0" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.65"/>
+      <rect class="window near-window" x="1615.3" y="743.6" width="4.2" height="5.8" rx=".7" fill="#fff0c8" opacity="0.70"/>
+      <rect class="window near-window" x="1746.0" y="743.6" width="4.2" height="5.8" rx=".7" fill="#ffd99a" opacity="0.61"/>
+      <rect class="window landmark-window" x="1211.0" y="637.0" width="3.8" height="6" rx=".7" fill="#fff4d6" opacity="0.75"/>
+      <rect class="window landmark-window" x="1221.5" y="589.0" width="3.8" height="6" rx=".7" fill="#ffe1a4" opacity="0.80"/>
+      <rect class="window landmark-window" x="1232.0" y="717.0" width="3.8" height="6" rx=".7" fill="#ffe1a4" opacity="0.67"/>
+      <rect class="window landmark-window" x="1242.5" y="669.0" width="3.8" height="6" rx=".7" fill="#c8e6ff" opacity="0.75"/>
+      <rect class="window landmark-window" x="1263.5" y="669.0" width="3.8" height="6" rx=".7" fill="#ffe1a4" opacity="0.76"/>
+      <rect class="window landmark-window" x="1647.0" y="719.0" width="3.8" height="5.5" rx=".5" fill="#fce2ad" opacity="0.70"/>
+      <rect class="window landmark-window" x="1655.0" y="745.0" width="3.8" height="5.5" rx=".5" fill="#cce9ff" opacity="0.70"/>
+      <rect class="window landmark-window" x="1671.0" y="732.0" width="3.8" height="5.5" rx=".5" fill="#cce9ff" opacity="0.68"/>
+      <rect class="window landmark-window" x="1524.0" y="725.0" width="3.5" height="5.5" rx=".5" fill="#ffe1a4" opacity="0.73"/>
+      <rect class="window landmark-window" x="1555.5" y="741.0" width="3.5" height="5.5" rx=".5" fill="#ffe1a4" opacity="0.73"/>
+    </g>
+  </g>
+
+  <g id="water" clip-path="url(#waterClip)">
+    <rect x="0" y="774" width="1920" height="126" fill="url(#waterGradient)"/>
+    <g id="water-reflections">
+      <rect class="reflection" x="628" y="780" width="45" height="70" fill="#bcd7ff" opacity="0.08" filter="url(#waterBlur)"/>
+      <rect class="reflection" x="780" y="780" width="60" height="100" fill="#f6d39a" opacity="0.1" filter="url(#waterBlur)"/>
+      <rect class="reflection" x="1210" y="780" width="62" height="142" fill="#f6d39a" opacity="0.18" filter="url(#waterBlur)"/>
+      <rect class="reflection" x="1522" y="780" width="40" height="80" fill="#fff4d6" opacity="0.13" filter="url(#waterBlur)"/>
+      <rect class="reflection" x="1632" y="780" width="45" height="150" fill="#bfe8ff" opacity="0.2" filter="url(#waterBlur)"/>
+      <rect class="reflection" x="1860" y="780" width="50" height="55" fill="#ffd8a0" opacity="0.08" filter="url(#waterBlur)"/>
+    </g>
+    <g id="water-lines">
+      <line class="ripple" x1="98.9" y1="781.8" x2="208.4" y2="781.8" stroke="#9dc3e6" stroke-width="1.06" opacity="0.08"/>
+      <line class="ripple" x1="1527.3" y1="788.4" x2="1853.8" y2="788.4" stroke="#9dc3e6" stroke-width="0.80" opacity="0.14"/>
+      <line class="ripple" x1="1543.0" y1="794.0" x2="1785.0" y2="794.0" stroke="#9dc3e6" stroke-width="0.93" opacity="0.13"/>
+      <line class="ripple" x1="690.9" y1="800.3" x2="905.3" y2="800.3" stroke="#9dc3e6" stroke-width="0.42" opacity="0.11"/>
+      <line class="ripple" x1="33.5" y1="804.4" x2="294.6" y2="804.4" stroke="#9dc3e6" stroke-width="0.87" opacity="0.16"/>
+      <line class="ripple" x1="1484.7" y1="821.8" x2="1703.4" y2="821.8" stroke="#9dc3e6" stroke-width="1.03" opacity="0.09"/>
+      <line class="ripple" x1="165.0" y1="909.4" x2="514.0" y2="909.4" stroke="#9dc3e6" stroke-width="0.96" opacity="0.06"/>
+      <line class="ripple" x1="759.3" y1="914.8" x2="1118.1" y2="914.8" stroke="#9dc3e6" stroke-width="0.76" opacity="0.14"/>
+      <circle class="shore-light window" cx="78.6" cy="767.1" r="2.0" fill="#ffd6a4" opacity="0.52"/>
+      <circle class="shore-light window" cx="341.1" cy="763.9" r="2.1" fill="#ffd6a4" opacity="0.51"/>
+      <circle class="shore-light window" cx="600.1" cy="765.3" r="2.0" fill="#ffd6a4" opacity="0.63"/>
+      <circle class="shore-light window" cx="764.2" cy="763.7" r="2.0" fill="#ffd6a4" opacity="0.56"/>
+      <circle class="shore-light window" cx="1099.3" cy="767.5" r="1.9" fill="#ffd6a4" opacity="0.63"/>
+      <circle class="shore-light window" cx="1372.3" cy="765.2" r="1.6" fill="#ffd6a4" opacity="0.64"/>
+      <circle class="shore-light window" cx="1828.6" cy="768.9" r="1.8" fill="#ffd6a4" opacity="0.56"/>
+    </g>
+    <rect x="0" y="774" width="1920" height="26" fill="#01070e" opacity=".45"/>
+  </g>
+  <rect id="vignette" x="0" y="0" width="1920" height="900" fill="none" stroke="#000" stroke-width="120" opacity=".18"/>
+</svg>

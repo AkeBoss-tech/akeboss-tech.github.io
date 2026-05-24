@@ -19,7 +19,7 @@ export function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className={`group panel-soft block overflow-hidden rounded-[30px] border border-white/10 ${compact ? 'w-[20rem] shrink-0 snap-start' : ''}`}
+      className={`group panel-soft block overflow-hidden rounded-[30px] border border-white/10 shadow-none ${compact ? 'w-[20rem] shrink-0 snap-start' : ''}`}
     >
       <div className="relative overflow-hidden border-b border-white/8">
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-90" />
@@ -30,8 +30,13 @@ export function ProjectCard({
         />
       </div>
 
-      <div className="p-5 sm:p-6">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-col p-5 sm:p-6">
+        <h3 className={`text-text transition group-hover:text-white ${compact ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}>
+          {project.title}
+        </h3>
+        <p className="mt-4 text-sm leading-7 text-text-muted">{project.excerpt}</p>
+
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <span className="tag">{status}</span>
           {project.tags.slice(0, 2).map((tag) => (
             <span key={tag} className="tag">
@@ -40,25 +45,6 @@ export function ProjectCard({
           ))}
         </div>
 
-        <h3 className={`mt-4 text-text transition group-hover:text-white ${compact ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}>
-          {project.title}
-        </h3>
-        <p className="mt-4 text-sm leading-7 text-text-muted">{project.excerpt}</p>
-
-        <div className="mt-6 rounded-[20px] border border-white/8 bg-black/30 p-4">
-          <p className="terminal-line">`&gt; loading project impact...`</p>
-          <p className="terminal-line mt-2">
-            {project.sections[0]?.summary
-              ? `> ${project.sections[0].summary.slice(0, 74)}${project.sections[0].summary.length > 74 ? '...' : ''}`
-              : '> status: in archive'}
-          </p>
-          <p className="terminal-line mt-2">{`> status: ${status.toLowerCase()}`}</p>
-        </div>
-
-        <div className="mt-6 flex items-center justify-between text-sm text-text-muted">
-          <span>{project.reading}</span>
-          <span className="text-accent transition group-hover:translate-x-1">Read more →</span>
-        </div>
       </div>
     </Link>
   )

@@ -4,22 +4,22 @@ import { formatDate } from '@/lib/format'
 
 export function PostCard({ post }: { post: Post }) {
   return (
-    <Link href={`/writing/${post.slug}`} className="group panel-soft block rounded-[28px] p-5 sm:p-6">
-      <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-text-soft">
-        <span>{formatDate(post.date)}</span>
-        <span>•</span>
-        <span>{post.reading}</span>
+    <Link href={`/writing/${post.slug}`} className="group panel-soft block overflow-hidden rounded-[28px]">
+      <div className="relative overflow-hidden border-b border-white/8">
+        <img
+          src={post.image || '/images/posts/doing-things-hero.png'}
+          alt={post.title}
+          className="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+        />
       </div>
-      <h3 className="mt-4 text-2xl text-text transition group-hover:text-white sm:text-3xl">{post.title}</h3>
-      <p className="mt-4 text-sm leading-7 text-text-muted">
-        {post.excerpt || 'Reflections, build notes, and chapters from the longer story behind the work.'}
-      </p>
-      <div className="mt-6 flex flex-wrap gap-2">
-        {post.tags.slice(0, 3).map((tag) => (
-          <span key={tag} className="tag">
-            {tag}
-          </span>
-        ))}
+      <div className="p-5 sm:p-6">
+        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-soft">
+          {formatDate(post.date)}
+        </div>
+        <h3 className="mt-4 text-2xl text-text transition group-hover:text-white sm:text-3xl">{post.title}</h3>
+        <p className="mt-4 line-clamp-3 text-sm leading-7 text-text-muted">
+          {post.excerpt || 'Notes, reflections, and build logs.'}
+        </p>
       </div>
     </Link>
   )
