@@ -6,8 +6,9 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export function GradientDescentBackground() {
+export function GradientDescentBackground({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -24,12 +25,12 @@ export function GradientDescentBackground() {
       if (disposed || !canvas) return
 
       const scene = new THREE.Scene()
-      const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 1200)
+      const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 1200)
       camera.position.set(0, 27, 36)
 
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-      renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.setSize(1, 1)
       renderer.setClearColor(0x000000, 0)
 
       scene.add(new THREE.AmbientLight(0xffffff, 0.9))
@@ -191,11 +192,15 @@ export function GradientDescentBackground() {
       }
 
       const onResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight
+        const bounds = containerRef.current?.getBoundingClientRect()
+        const width = Math.max(1, bounds?.width ?? window.innerWidth)
+        const height = Math.max(1, bounds?.height ?? window.innerHeight)
+        camera.aspect = width / height
         camera.updateProjectionMatrix()
-        renderer.setSize(window.innerWidth, window.innerHeight)
+        renderer.setSize(width, height)
       }
 
+      onResize()
       window.addEventListener('resize', onResize)
       cleanupCallbacks.push(() => window.removeEventListener('resize', onResize))
 
@@ -268,7 +273,7 @@ export function GradientDescentBackground() {
   }, [])
 
   return (
-    <div className="gradient-descent-bg" aria-hidden="true">
+    <div ref={containerRef} className={className ? `gradient-descent-bg ${className}` : 'gradient-descent-bg'} aria-hidden="true">
       <div className="gradient-descent-glow" />
       <canvas ref={canvasRef} />
     </div>

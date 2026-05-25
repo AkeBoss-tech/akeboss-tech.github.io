@@ -7,6 +7,106 @@ import Link from 'next/link'
 import type { Project } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 
+const semanticAliases: Record<string, string[]> = {
+  ai: ['llm', 'llms', 'language model', 'language models', 'rag', 'retrieval', 'agent', 'agents', 'transformer'],
+  llm: ['ai', 'language model', 'language models', 'transformer'],
+  math: ['mathematics', 'proof', 'theory', 'equation', 'calculus', 'algebra', 'graph theory', 'optimization'],
+  economics: ['econ', 'economic', 'finance', 'forecasting', 'econometrics', 'market'],
+  finance: ['economics', 'quant', 'quantitative', 'econometrics', 'market'],
+  health: ['healthtech', 'healthcare', 'medical', 'wellness', 'biomedical'],
+  robotics: ['robot', 'autonomous', 'motion planning', 'control', 'vision', 'frc'],
+  biology: ['bio', 'genome', 'genomics', 'hic', 'chromatin', 'computational biology'],
+  research: ['paper', 'study', 'experiment', 'analysis', 'benchmark'],
+  web: ['frontend', 'full stack', 'website', 'browser', 'react', 'next'],
+  data: ['analysis', 'analytics', 'dataset', 'scraping', 'pipeline', 'visualization'],
+  scheduling: ['planner', 'planning', 'course', 'timetable', 'calendar'],
+}
+
+function normalizeSearchText(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function tokenize(value: string) {
+  return normalizeSearchText(value).split(' ').filter((token) => token.length > 1)
+}
+
+function stemToken(token: string) {
+  if (token.endsWith('ies') && token.length > 4) return `${token.slice(0, -3)}y`
+  if (token.endsWith('ing') && token.length > 5) return token.slice(0, -3)
+  if (token.endsWith('ed') && token.length > 4) return token.slice(0, -2)
+  if (token.endsWith('s') && token.length > 3) return token.slice(0, -1)
+  return token
+}
+
+function expandQueryTerms(query: string) {
+  const baseTokens = tokenize(query)
+  const expanded = new Set<string>()
+
+  for (const token of baseTokens) {
+    expanded.add(token)
+    expanded.add(stemToken(token))
+
+    const aliases = semanticAliases[token] ?? semanticAliases[stemToken(token)] ?? []
+    for (const alias of aliases) {
+      expanded.add(normalizeSearchText(alias))
+      for (const aliasToken of tokenize(alias)) {
+        expanded.add(aliasToken)
+        expanded.add(stemToken(aliasToken))
+      }
+    }
+  }
+
+  const normalizedQuery = normalizeSearchText(query)
+  if (normalizedQuery) expanded.add(normalizedQuery)
+
+  return [...expanded].filter(Boolean)
+}
+
+function getProjectSearchFields(project: Project) {
+  return {
+    title: normalizeSearchText(project.title),
+    excerpt: normalizeSearchText(project.excerpt),
+    tags: project.tags.map((tag) => normalizeSearchText(tag)),
+    lead: normalizeSearchText(project.lead),
+    sections: project.sections.map((section) => normalizeSearchText(`${section.title} ${section.summary}`)),
+    content: normalizeSearchText(project.content),
+    links: project.links.map((link) => normalizeSearchText(`${link.label} ${link.url}`)),
+  }
+}
+
+function getProjectSearchScore(project: Project, query: string) {
+  if (!query) return 1
+
+  const fields = getProjectSearchFields(project)
+  const expandedTerms = expandQueryTerms(query)
+  const normalizedQuery = normalizeSearchText(query)
+  let score = 0
+
+  if (normalizedQuery && fields.title.includes(normalizedQuery)) score += 14
+  if (normalizedQuery && fields.excerpt.includes(normalizedQuery)) score += 8
+  if (normalizedQuery && fields.lead.includes(normalizedQuery)) score += 8
+  if (normalizedQuery && fields.sections.some((section) => section.includes(normalizedQuery))) score += 7
+  if (normalizedQuery && fields.content.includes(normalizedQuery)) score += 5
+
+  for (const term of expandedTerms) {
+    if (!term) continue
+
+    if (fields.tags.some((tag) => tag === term || tag.includes(term))) score += 8
+    if (fields.title.includes(term)) score += 6
+    if (fields.excerpt.includes(term)) score += 4
+    if (fields.lead.includes(term)) score += 4
+    if (fields.sections.some((section) => section.includes(term))) score += 3
+    if (fields.links.some((link) => link.includes(term))) score += 2
+    if (fields.content.includes(term)) score += 1
+  }
+
+  return score
+}
+
 function ProjectFeedCard({ project, favorite = false }: { project: Project; favorite?: boolean }) {
   return (
     <article className={`project-feed-card ${favorite ? 'project-feed-card-favorite' : ''}`}>
@@ -61,8 +161,7 @@ function matchesProject(project: Project, query: string, activeTag: string) {
   if (!matchesTag) return false
   if (!query) return true
 
-  const haystack = [project.title, project.excerpt, ...project.tags].join(' ').toLowerCase()
-  return haystack.includes(query)
+  return getProjectSearchScore(project, query) > 0
 }
 
 export function ProjectFeedSearch({
@@ -81,12 +180,20 @@ export function ProjectFeedSearch({
     [favoriteProjects, recentProjects],
   )
 
+  function getVisibleProjects(projects: Project[]) {
+    const filtered = projects.filter((project) => matchesProject(project, normalizedQuery, activeTag))
+
+    if (!normalizedQuery) return filtered
+
+    return [...filtered].sort((a, b) => getProjectSearchScore(b, normalizedQuery) - getProjectSearchScore(a, normalizedQuery))
+  }
+
   const visibleFavorites = useMemo(
-    () => favoriteProjects.filter((project) => matchesProject(project, normalizedQuery, activeTag)),
+    () => getVisibleProjects(favoriteProjects),
     [favoriteProjects, normalizedQuery, activeTag],
   )
   const visibleRecent = useMemo(
-    () => recentProjects.filter((project) => matchesProject(project, normalizedQuery, activeTag)),
+    () => getVisibleProjects(recentProjects),
     [recentProjects, normalizedQuery, activeTag],
   )
 

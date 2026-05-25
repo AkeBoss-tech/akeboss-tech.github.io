@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import type { CSSProperties, TouchEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
+import { GradientDescentBackground } from '@/components/gradient-descent-background'
 import type { Project } from '@/lib/content'
 
 type HomeYoshiSceneProps = {
@@ -164,6 +165,31 @@ const placeMoments: PlaceMoment[] = [
   },
 ]
 
+const collageLayout = [
+  { x: 5, y: 8, w: 13, h: 20, r: -4 },
+  { x: 20, y: 5, w: 10, h: 16, r: 3 },
+  { x: 33, y: 9, w: 14, h: 22, r: -2 },
+  { x: 51, y: 4, w: 11, h: 18, r: 5 },
+  { x: 66, y: 8, w: 13, h: 20, r: -3 },
+  { x: 82, y: 6, w: 10, h: 18, r: 4 },
+  { x: 11, y: 33, w: 11, h: 17, r: 5 },
+  { x: 25, y: 28, w: 14, h: 22, r: -5 },
+  { x: 42, y: 34, w: 10, h: 16, r: 3 },
+  { x: 56, y: 28, w: 15, h: 23, r: -2 },
+  { x: 75, y: 33, w: 12, h: 18, r: 5 },
+  { x: 89, y: 30, w: 10, h: 17, r: -4 },
+  { x: 2, y: 58, w: 12, h: 19, r: 3 },
+  { x: 17, y: 57, w: 15, h: 24, r: -2 },
+  { x: 36, y: 60, w: 11, h: 18, r: 4 },
+  { x: 50, y: 56, w: 13, h: 21, r: -5 },
+  { x: 67, y: 59, w: 15, h: 22, r: 2 },
+  { x: 85, y: 56, w: 12, h: 20, r: -3 },
+  { x: 9, y: 82, w: 12, h: 16, r: -3 },
+  { x: 28, y: 80, w: 13, h: 18, r: 4 },
+  { x: 56, y: 81, w: 12, h: 17, r: 3 },
+  { x: 76, y: 80, w: 14, h: 18, r: -4 },
+]
+
 function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'right' }) {
   return (
     <article className={`gd-row ${align}`}>
@@ -206,6 +232,9 @@ function IntroHero() {
         <p>
           I'm currently studying computer science and math at the Rutgers University Honors College. I'm excited to continue learning and exploring my interests!
         </p>
+        <a href="#visual-notes" className="home-intro-down" aria-label="Scroll to visual notes">
+          <span aria-hidden="true">↓</span>
+        </a>
       </div>
 
       <div className="home-portrait-frame">
@@ -217,102 +246,115 @@ function IntroHero() {
 
 function PlacesSection() {
   const [activePlace, setActivePlace] = useState(0)
-  const touchStartX = useRef<number | null>(null)
+  const [cursor, setCursor] = useState({ x: 50, y: 50, active: false })
+  const stageRef = useRef<HTMLDivElement | null>(null)
   const active = placeMoments[activePlace]
-  const totalPlaces = placeMoments.length
-  const visibleSlots = [
-    { offset: 0, slot: 'active' },
-    { offset: 1, slot: 'next' },
-    { offset: 2, slot: 'far' },
-    { offset: -1, slot: 'previous' },
-  ]
 
-  const getPlaceIndex = (offset: number) => (activePlace + offset + totalPlaces) % totalPlaces
+  const updateActiveFromPoint = useCallback((clientX: number, clientY: number) => {
+    const stage = stageRef.current
+    if (!stage) return
 
-  const movePlaces = (direction: 1 | -1) => {
-    setActivePlace((current) => (current + direction + totalPlaces) % totalPlaces)
-  }
+    const rect = stage.getBoundingClientRect()
+    const x = ((clientX - rect.left) / rect.width) * 100
+    const y = ((clientY - rect.top) / rect.height) * 100
+    let nextActive = 0
+    let nearestDistance = Number.POSITIVE_INFINITY
 
-  const onTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    touchStartX.current = event.touches[0]?.clientX ?? null
-  }
+    collageLayout.forEach((tile, index) => {
+      const centerX = tile.x + tile.w / 2
+      const centerY = tile.y + tile.h / 2
+      const distance = Math.hypot(centerX - x, centerY - y)
 
-  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    if (touchStartX.current === null) return
-    const delta = (event.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current
-    touchStartX.current = null
-    if (Math.abs(delta) < 42) return
-    movePlaces(delta < 0 ? 1 : -1)
-  }
+      if (distance < nearestDistance) {
+        nearestDistance = distance
+        nextActive = index
+      }
+    })
+
+    setCursor({ x, y, active: true })
+    setActivePlace((current) => (current === nextActive ? current : nextActive))
+  }, [])
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+
+    const handleMouseMove = (event: MouseEvent) => updateActiveFromPoint(event.clientX, event.clientY)
+    const handleMouseEnter = (event: MouseEvent) => updateActiveFromPoint(event.clientX, event.clientY)
+    const handleMouseLeave = () => setCursor((current) => ({ ...current, active: false }))
+
+    stage.addEventListener('mousemove', handleMouseMove)
+    stage.addEventListener('mouseenter', handleMouseEnter)
+    stage.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      stage.removeEventListener('mousemove', handleMouseMove)
+      stage.removeEventListener('mouseenter', handleMouseEnter)
+      stage.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [updateActiveFromPoint])
 
   return (
     <section
+      id="visual-notes"
       className="places-section"
       style={{
         '--active-place-tone': active.tone,
+        '--cursor-x': `${cursor.x}%`,
+        '--cursor-y': `${cursor.y}%`,
       } as CSSProperties}
     >
       <div className="visual-journal">
-        <div className="places-section-heading">
-          <p className="eyebrow">Visual Notes</p>
-          <h2>Images from the map.</h2>
-          <p className="places-section-subtitle">
-            Small scenes collected between projects, classes, and late walks.
-          </p>
-
-          <div className="places-carousel-controls" aria-label="Places gallery controls">
-            <span className="places-counter" aria-live="polite">
-              {String(activePlace + 1).padStart(2, '0')} / {String(totalPlaces).padStart(2, '0')}
-            </span>
-            <button
-              type="button"
-              className="places-arrow"
-              onClick={() => movePlaces(-1)}
-              aria-label="Previous visual note"
-            >
-              ←
-            </button>
-            <button
-              type="button"
-              className="places-arrow"
-              onClick={() => movePlaces(1)}
-              aria-label="Next visual note"
-            >
-              →
-            </button>
-          </div>
-        </div>
-
         <div
+          ref={stageRef}
           className="visual-journal-stage"
-          aria-label="Visual notes carousel"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
+          aria-label="Interactive image collage"
+          onMouseMove={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
+          onMouseEnter={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
+          onPointerMove={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
+          onPointerEnter={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
+          onPointerLeave={() => setCursor((current) => ({ ...current, active: false }))}
         >
-          <div className="visual-journal-glow" aria-hidden="true">
+          <div className={`visual-journal-spotlight ${cursor.active ? 'is-active' : ''}`} aria-hidden="true" />
+
+          <div className="visual-journal-preview" aria-hidden="true">
             <img src={active.image} alt="" />
           </div>
 
-          {visibleSlots.map(({ offset, slot }) => {
-            const index = getPlaceIndex(offset)
-            const place = placeMoments[index]
+          {placeMoments.map((place, index) => {
+            const tile = collageLayout[index]
+            const centerX = tile.x + tile.w / 2
+            const centerY = tile.y + tile.h / 2
+            const distance = Math.hypot(centerX - cursor.x, centerY - cursor.y)
+            const proximity = cursor.active ? Math.max(0, 1 - distance / 32) : 0
+            const isActive = index === activePlace
+            const push = cursor.active && distance < 28 && !isActive ? (1 - distance / 28) * 22 : 0
+            const pushX = push ? ((centerX - cursor.x) / Math.max(distance, 1)) * push : 0
+            const pushY = push ? ((centerY - cursor.y) / Math.max(distance, 1)) * push : 0
 
             return (
               <button
-                key={`${place.image}-${slot}`}
+                key={place.image}
                 type="button"
                 className="visual-journal-card"
-                data-slot={slot}
+                data-active={isActive ? 'true' : undefined}
                 onClick={() => setActivePlace(index)}
-                aria-current={slot === 'active' ? 'true' : undefined}
-                aria-label={slot === 'active' ? `${place.title}: ${place.description}` : `Show ${place.title}`}
-                style={{ '--place-tone': place.tone } as CSSProperties}
+                onFocus={() => setActivePlace(index)}
+                aria-current={isActive ? 'true' : undefined}
+                aria-label={place.title}
+                style={{
+                  '--place-tone': place.tone,
+                  '--tile-x': `${tile.x}%`,
+                  '--tile-y': `${tile.y}%`,
+                  '--tile-w': `${tile.w}%`,
+                  '--tile-h': `${tile.h}%`,
+                  '--tile-rotate': `${tile.r}deg`,
+                  '--tile-proximity': proximity,
+                  '--tile-push-x': `${pushX}px`,
+                  '--tile-push-y': `${pushY}px`,
+                } as CSSProperties}
               >
-                <img src={place.image} alt={place.title} />
-                <span className="visual-journal-caption">
-                  <strong>{place.title}</strong>
-                  <span>{place.description}</span>
-                </span>
+                <img src={place.image} alt="" />
               </button>
             )
           })}
@@ -649,6 +691,7 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
       <div ref={scrollLabelRef} className="gd-scroll">Scroll</div>
 
       <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true">
+        <p className="gd-end-name">Akash Dubey</p>
         <ContactIconLinks className="gd-end-icons" />
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span>Replay</span>
@@ -724,8 +767,11 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
 
   return (
     <div className="home-clean-page">
-      <IntroHero />
-      <PlacesSection />
+      <div className="home-top-slope">
+        <GradientDescentBackground className="home-top-gradient" />
+        <IntroHero />
+        <PlacesSection />
+      </div>
       <HomeGradientDescentStage points={points} />
     </div>
   )

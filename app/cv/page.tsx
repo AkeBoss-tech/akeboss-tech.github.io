@@ -11,14 +11,14 @@ const education = [
   {
     title: 'Rutgers University Honors College, School of Arts and Sciences',
     href: 'https://honorscollege.rutgers.edu/',
-    logo: '/school-logos/rutgers-shield.png',
+    logo: '/school-logos/rutgers-block-r.svg',
     logoTileStyle: {
       backgroundColor: 'transparent',
       borderColor: 'transparent',
     },
     location: 'New Brunswick, NJ',
     dates: 'Sep 2024 - May 2027',
-    lines: [
+    summaryItems: [
       'B.S. in Computer Science and Mathematics',
       'Minor in Quantitative Economics',
       'GPA: 4.0',
@@ -27,15 +27,16 @@ const education = [
   {
     title: 'Academy for Information Technology, Union County Vocational-Technical Schools',
     href: 'https://www.ucvts.org/domain/19',
-    logo: '/school-logos/ucvts.png',
+    logo: '/school-logos/ait-logo.png',
     logoTileStyle: {
-      backgroundColor: 'rgba(226, 232, 240, 0.12)',
-      borderColor: 'rgba(226, 232, 240, 0.2)',
+      backgroundColor: 'rgba(255, 255, 255, 0.96)',
+      borderColor: 'rgba(255, 255, 255, 0.72)',
     },
     location: 'Scotch Plains, NJ',
     dates: 'Sep 2020 - Jun 2024',
-    lines: [
+    summaryItems: [
       'High school diploma',
+      'Mathematics Award',
       'QPA: 97.92',
     ],
   },
@@ -46,6 +47,10 @@ const experience = [
     title: 'New York Life Insurance',
     href: 'https://www.newyorklife.com/',
     logo: '/company-logos/new-york-life.svg',
+    logoTileStyle: {
+      backgroundColor: 'rgba(37, 99, 235, 0.92)',
+      borderColor: 'rgba(96, 165, 250, 0.46)',
+    },
     role: 'Incoming Software Engineering Intern',
     dates: 'May 2026 - Aug 2026',
     bullets: [],
@@ -65,6 +70,10 @@ const experience = [
     title: 'Lykke',
     href: 'https://getlykke.com/',
     logo: '/company-logos/lykke.svg',
+    logoTileStyle: {
+      backgroundColor: 'rgba(87, 64, 211, 0.92)',
+      borderColor: 'rgba(167, 139, 250, 0.46)',
+    },
     role: 'Software Engineer',
     dates: 'Sep 2025 - Present',
     bullets: [
@@ -93,10 +102,10 @@ const research = [
   {
     title: 'Rutgers Economics Labs',
     href: 'https://rutgerseconomics.org',
-    logo: '/school-logos/rutgers-block-r.svg',
+    logo: '/company-logos/rutgers-economics-labs.jpg',
     logoTileStyle: {
-      backgroundColor: 'rgba(16, 40, 46, 0.9)',
-      borderColor: 'rgba(64, 191, 211, 0.35)',
+      backgroundColor: 'rgba(255, 255, 255, 0.96)',
+      borderColor: 'rgba(255, 255, 255, 0.72)',
     },
     role: 'President; formerly Research Director, Team Lead, Economic Researcher',
     dates: 'Oct 2024 - Present',
@@ -160,13 +169,17 @@ const leadership = [
   },
   {
     title: 'UCVTS Robotics Team 1257 Programming Manager',
-    logo: '/activity-logos/first.svg',
+    logo: '/activity-logos/team-1257.png',
     dates: 'Sep 2022 - Jun 2024',
     body: 'Led a 30+ member programming group across robot code, control systems, vision, and training.',
   },
   {
     title: 'Newspaper Club Layout Editor',
-    logo: '/activity-logos/ucvts.png',
+    logo: '/activity-logos/newspaper-club.png',
+    logoTileStyle: {
+      backgroundColor: 'rgba(64, 120, 255, 0.2)',
+      borderColor: 'rgba(96, 156, 255, 0.4)',
+    },
     dates: 'Sep 2023 - Jun 2024',
     body: 'Led the programming and migration work for the club website and taught editors markdown workflows.',
   },
@@ -192,9 +205,15 @@ const leadership = [
 
 const collegeActivities = [
   {
-    title: 'College activities',
+    title: 'Rutgers Quantitative Finance Club',
+    logo: '/activity-logos/rutgers-qfc.png',
+    logoTileStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.96)',
+      borderColor: 'rgba(255, 255, 255, 0.72)',
+    },
+    role: 'Presenting Chair',
     dates: 'Sep 2024 - Present',
-    body: 'Add Rutgers clubs, organizations, competitions, and campus leadership here.',
+    body: 'In charge of teaching students about math, computer science, statistics, and quantitative finance.',
   },
 ] as const
 
@@ -341,9 +360,14 @@ export default function CVPage() {
                   <p className="text-sm text-text-soft">{item.dates}</p>
                 </div>
                 <p className="mt-2 pl-16 text-sm text-text-soft">{item.location}</p>
-                <div className="mt-3 grid gap-2 pl-16 text-sm leading-7 text-text-muted">
-                  {item.lines.map((line) => (
-                    <p key={line} className={line.includes('GPA') || line.includes('QPA') ? 'text-[#d8b4fe]' : ''}>{line}</p>
+                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 pl-16 text-sm leading-7 text-text-muted">
+                  {item.summaryItems.map((line) => (
+                    <p
+                      key={line}
+                      className={line.includes('GPA') || line.includes('QPA') ? 'text-[#d8b4fe]' : ''}
+                    >
+                      {line}
+                    </p>
                   ))}
                 </div>
               </article>
@@ -455,10 +479,21 @@ export default function CVPage() {
               {collegeActivities.map((item) => (
                 <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <h2 className="text-lg text-text">{item.title}</h2>
+                    <div className="flex items-start gap-4">
+                      <div
+                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                        style={item.logoTileStyle}
+                      >
+                        <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                      </div>
+                      <div>
+                        <h2 className="text-lg text-text">{item.title}</h2>
+                        <p className="mt-1 text-sm text-[#84a9ff]">{item.role}</p>
+                      </div>
+                    </div>
                     <p className="text-sm text-text-soft">{item.dates}</p>
                   </div>
-                  <p className="mt-2 text-sm leading-7 text-text-muted">{item.body}</p>
+                  <p className="mt-1 text-sm leading-7 text-text-muted sm:pl-16">{item.body}</p>
                 </article>
               ))}
             </div>
@@ -470,7 +505,10 @@ export default function CVPage() {
                 <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                     <div className="flex items-start gap-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2">
+                      <div
+                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                        style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
+                      >
                         <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
                       </div>
                       <h2 className="text-lg text-text">{item.title}</h2>
