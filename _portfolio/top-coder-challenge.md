@@ -3,6 +3,7 @@ title: "TopCoder Reimbursement Challenge — Top Performer"
 excerpt: "Reverse-engineered a 60-year-old undocumented travel reimbursement system from 1,000 I/O examples using XGBoost and feature engineering — recognized as a top performer and invited to interview at 8090 AI"
 image: "/images/portfolio/top-coder/hero.png"
 collection: portfolio
+date: 2025-06-24
 tags: [AI, Data, Algorithms]
 rank: 2
 ---

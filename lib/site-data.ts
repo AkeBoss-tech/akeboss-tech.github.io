@@ -179,14 +179,21 @@ export function getYoshiGalleryChapters(projects: Project[]) {
 }
 
 export function getWritingGroups(posts: Post[]) {
-  const sortNewestFirst = (items: Post[]) => [...items].sort((a, b) => (a.date < b.date ? 1 : -1))
+  const sortNewestFirst = (items: Post[]) => [...items].sort((a, b) => {
+    const aTime = Date.parse(a.date)
+    const bTime = Date.parse(b.date)
+    if (Number.isNaN(aTime) || Number.isNaN(bTime)) {
+      return a.date < b.date ? 1 : -1
+    }
+    return bTime - aTime
+  })
   const reflections = sortNewestFirst(posts.filter((post) => /(reflection|journal|life|school)/i.test(`${post.title} ${post.tags.join(' ')}`)))
   const buildLogs = sortNewestFirst(posts.filter((post) => !reflections.includes(post) && /(robotics|programming|build|arduino)/i.test(`${post.title} ${post.tags.join(' ')}`)))
   const archive = sortNewestFirst(posts.filter((post) => !buildLogs.includes(post) && !reflections.includes(post)))
 
   return [
     {
-      title: 'Build Logs',
+      title: 'Blog Posts',
       description: 'Technical notes, robotics updates, project process, and the work while it is still moving.',
       posts: buildLogs,
     },

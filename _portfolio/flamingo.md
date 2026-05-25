@@ -3,6 +3,7 @@ title: "FlaminGo! — Your Personal Bone Health Companion"
 excerpt: "An iOS app empowering women 50+ to build stronger bones and prevent falls using Vision AI for posture analysis and HealthKit for movement tracking. Built for HealthHack2025."
 image: "/images/portfolio/flamingo/image.png"
 collection: portfolio
+date: 2025-10-18
 tags: [Mobile, AI, HealthTech]
 rank: 5
 ---

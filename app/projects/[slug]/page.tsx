@@ -44,22 +44,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
 
-          {project.sections.length > 0 ? (
-            <div className="panel mt-6 max-w-xl rounded-[22px] p-3.5 sm:p-4">
-              <p className="eyebrow">Chapter map</p>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {project.sections.map((section) => (
-                  <a
-                    key={section.id}
-                    href={`#${section.id}`}
-                    className="block rounded-[14px] border border-white/8 bg-black/16 px-3 py-2 text-xs leading-5 text-text-muted hover:border-white/14 hover:text-text"
-                  >
-                    {section.title}
-                  </a>
-                ))}
-              </div>
-            </div>
-          ) : null}
         </div>
 
         <div className="panel-soft aspect-video overflow-hidden rounded-[32px] bg-black lg:mt-56">
@@ -74,7 +58,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               className="h-full w-full object-contain"
             />
           ) : (
-            <img src={project.image || '/images/portfolio/home.png'} alt={project.title} className="h-full w-full object-cover" />
+            <img src={project.image || '/images/portfolio/home.png'} alt={project.title} className="h-full w-full object-contain" />
           )}
         </div>
       </section>

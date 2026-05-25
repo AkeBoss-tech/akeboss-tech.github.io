@@ -3,6 +3,7 @@ title: "High School Programming Projects"
 excerpt: "MSDS and Advanced Software Development Projects"
 image: "/images/portfolio/home.png"
 collection: portfolio
+date: 2023-04-15
 tags: [Web]
 rank: 10
 ---
@@ -26,9 +27,3 @@ https://github.com/AkeBoss-tech/RecordIslands/tree/happy
 
 # ASD Projects
 https://github.com/AkeBoss-tech/ASD_Projects
-
-so many talk about the different branches
-
-and bhol bhai
-
-bhai lang lol

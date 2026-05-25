@@ -3,6 +3,7 @@ title: "FRC Robot Code"
 excerpt: "Team 1257's 2024 Robot Code"
 image: "/images/portfolio/2024.png"
 collection: portfolio
+date: 2024-04-20
 tags: [Robotics]
 rank: 3
 ---

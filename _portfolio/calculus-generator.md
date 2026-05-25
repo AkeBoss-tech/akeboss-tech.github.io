@@ -3,6 +3,7 @@ title: "AP Calculus Problem Generator"
 excerpt: "a calculus problem generator made for final project"
 image: "/images/portfolio/home.png"
 collection: portfolio
+date: 2023-05-20
 tags: [Web]
 rank: 10
 ---

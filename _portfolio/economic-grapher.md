@@ -3,6 +3,7 @@ title: "Economic Series Plotter"
 excerpt: "A plotter for FED and BLS data"
 image: "/images/portfolio/vis/economic-plotter.png"
 collection: portfolio
+date: 2024-11-14
 tags: [Data, Web]
 rank: 3
 ---

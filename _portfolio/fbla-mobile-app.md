@@ -3,6 +3,7 @@ title: "FBLA Portfolio Making Android App"
 excerpt: "An Android app for people to make and share portfolios!"
 image: "/images/portfolio/android/title.png"
 collection: portfolio
+date: 2023-12-16
 tags: [Mobile]
 rank: 9
 ---

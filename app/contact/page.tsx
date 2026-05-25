@@ -10,27 +10,24 @@ export default function ContactPage() {
           For internships, research, product work, collaborations, or just a thoughtful note.
         </p>
         <ContactIconLinks className="mt-7" />
-        <a href="/akash-dubey.vcf" download className="contact-add-button mt-8">
+        <a href="/akash-dubey.vcf" download className="contact-add-button contact-glow-button mt-8">
           <span aria-hidden="true">▣</span>
           Add to Contacts
         </a>
       </section>
 
       <section className="mt-10 grid gap-5 md:grid-cols-3">
-        <a href="mailto:akash.dubey@rutgers.edu" className="panel rounded-[28px] p-6">
+        <a href="mailto:akash.dubey@rutgers.edu" className="panel contact-glow-button rounded-[28px] p-6">
           <p className="eyebrow">Email</p>
           <p className="mt-4 text-2xl text-text">akash.dubey@rutgers.edu</p>
-          <p className="mt-3 text-sm leading-7 text-text-muted">Best for direct outreach, opportunities, and longer conversations.</p>
         </a>
-        <a href="https://github.com/AkeBoss-tech" target="_blank" rel="noreferrer" className="panel rounded-[28px] p-6">
+        <a href="https://github.com/AkeBoss-tech" target="_blank" rel="noreferrer" className="panel contact-glow-button rounded-[28px] p-6">
           <p className="eyebrow">GitHub</p>
           <p className="mt-4 text-2xl text-text">AkeBoss-tech</p>
-          <p className="mt-3 text-sm leading-7 text-text-muted">Code, experiments, repositories, and public project history.</p>
         </a>
-        <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer" className="panel rounded-[28px] p-6">
+        <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer" className="panel contact-glow-button rounded-[28px] p-6">
           <p className="eyebrow">LinkedIn</p>
           <p className="mt-4 text-2xl text-text">Professional profile</p>
-          <p className="mt-3 text-sm leading-7 text-text-muted">The clean professional snapshot if you prefer that entry point.</p>
         </a>
       </section>
     </div>

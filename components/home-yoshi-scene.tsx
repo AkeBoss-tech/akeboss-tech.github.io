@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { CSSProperties, TouchEvent } from 'react'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
-import { HomeHeroScene } from '@/components/home-hero-scene'
 import type { Project } from '@/lib/content'
 
 type HomeYoshiSceneProps = {
@@ -15,32 +15,154 @@ type HomePoint = {
   title: string
   body: string
   href?: string
+  logo?: string
+  logoAlt?: string
   image?: string
   imageAlt?: string
   gallery?: Array<{ src: string; alt: string }>
 }
 
-const heroLinks = [
-  { label: 'Explore', href: '#gradient-work', primary: true },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Writing', href: '/writing' },
-  { label: 'Resume', href: '/files/resume.pdf' },
-]
-
-const promptText = 'scroll into the descent'
-
-const personalPhotos = [
-  '/images/homepage/2026-05-10/img_1596.png',
-  '/images/homepage/2026-05-10/img_2465.png',
-  '/images/homepage/2026-05-10/img_4350.png',
-  '/images/homepage/2026-05-10/img_6293.png',
-  '/images/homepage/2026-05-10/img_7075.png',
-  '/images/homepage/2026-05-10/img_7197.png',
-]
-
-function clamp(value: number, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, value))
+type PlaceMoment = {
+  title: string
+  description: string
+  image: string
+  tone: string
 }
+
+const placeMoments: PlaceMoment[] = [
+  {
+    title: 'Rutgers In Bloom',
+    description: 'A quiet campus reset between classes.',
+    image: '/images/homepage/2026-05-10/img_1596.png',
+    tone: '#d7b7c4',
+  },
+  {
+    title: 'Blue Hour Tower',
+    description: 'Rutgers looking cinematic for a few minutes.',
+    image: '/images/homepage/2026-05-10/img_2465.png',
+    tone: '#7aa0df',
+  },
+  {
+    title: 'Glasshouse Light',
+    description: 'Greenhouse geometry and a slower kind of attention.',
+    image: '/images/homepage/2026-05-10/img_4350.png',
+    tone: '#8ed2b4',
+  },
+  {
+    title: 'Atlantic Reflection',
+    description: 'Ocean air as a reliable debugging tool.',
+    image: '/images/homepage/2026-05-10/img_6293.png',
+    tone: '#9ab6d6',
+  },
+  {
+    title: 'City From Above',
+    description: 'A reminder that systems read differently from distance.',
+    image: '/images/homepage/2026-05-10/img_7075.png',
+    tone: '#87aee2',
+  },
+  {
+    title: 'Golden Gate Light',
+    description: 'Bridge, fog, and orange steel doing the obvious thing.',
+    image: '/images/homepage/2026-05-10/img_7197.png',
+    tone: '#d2a27a',
+  },
+  {
+    title: 'All In',
+    description: 'A map pin for the moments that feel fully alive.',
+    image: '/images/homepage/2026-05-24/allin1.png',
+    tone: '#d6a6be',
+  },
+  {
+    title: 'Random Glance',
+    description: 'An image worth keeping before overthinking it.',
+    image: '/images/homepage/2026-05-24/rando.png',
+    tone: '#91a8d8',
+  },
+  {
+    title: 'NVIDIA',
+    description: 'A nod to the robotics and VLA thread in the work.',
+    image: '/images/homepage/2026-05-24/nvidia.png',
+    tone: '#91c777',
+  },
+  {
+    title: 'Glum',
+    description: 'Moody light, good texture, no need to force cheerfulness.',
+    image: '/images/homepage/2026-05-24/glum.png',
+    tone: '#7f94b4',
+  },
+  {
+    title: 'Rutgers After Rain',
+    description: 'Campus with a little extra atmosphere still hanging around.',
+    image: '/images/homepage/2026-05-24/postru.png',
+    tone: '#8ca8c8',
+  },
+  {
+    title: 'DC',
+    description: 'A city-frame checkpoint in the wider map.',
+    image: '/images/homepage/2026-05-24/dc.png',
+    tone: '#c7b18a',
+  },
+  {
+    title: 'Plane Window',
+    description: 'Movement, altitude, and a useful reset in perspective.',
+    image: '/images/homepage/2026-05-24/plane.png',
+    tone: '#8eb0d8',
+  },
+  {
+    title: 'Lake Blue',
+    description: 'A quieter kind of horizon line.',
+    image: '/images/homepage/2026-05-24/lakeb.png',
+    tone: '#8aa8d1',
+  },
+  {
+    title: 'Chicago',
+    description: 'Big-grid energy and a city that reads like a system.',
+    image: '/images/homepage/2026-05-24/chicago.png',
+    tone: '#92a4bf',
+  },
+  {
+    title: 'Beach Bloom',
+    description: 'Color, water, and a softer edge to the scene.',
+    image: '/images/homepage/2026-05-24/beach_bloom.png',
+    tone: '#d4b1c4',
+  },
+  {
+    title: 'Beach One',
+    description: 'Salt air and the kind of space that clears the stack.',
+    image: '/images/homepage/2026-05-24/beach1.png',
+    tone: '#9eb8d6',
+  },
+  {
+    title: 'Vector Sky',
+    description: 'Clean lines and a sky that already feels diagrammed.',
+    image: '/images/homepage/2026-05-24/vecsky.png',
+    tone: '#97b7df',
+  },
+  {
+    title: 'Rutgers Road',
+    description: 'A campus path that feels more symbolic than literal.',
+    image: '/images/homepage/2026-05-24/ruroad.png',
+    tone: '#9cb58e',
+  },
+  {
+    title: 'Cool Building',
+    description: 'Good geometry deserves a slot on the map too.',
+    image: '/images/homepage/2026-05-24/cool-building.png',
+    tone: '#b9b4cc',
+  },
+  {
+    title: '1073',
+    description: 'One of those frames that earns a place by feel alone.',
+    image: '/images/homepage/2026-05-24/1073.png',
+    tone: '#b39dcb',
+  },
+  {
+    title: 'Kali',
+    description: 'A quieter portrait moment tucked into the image stream.',
+    image: '/images/homepage/2026-05-24/kali.png',
+    tone: '#b79fc6',
+  },
+]
 
 function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'right' }) {
   return (
@@ -48,6 +170,11 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
       <div className="gd-content">
         <div className="gd-card">
           <p className="gd-eyebrow">{point.eyebrow}</p>
+          {point.logo ? (
+            <div className="gd-card-logo">
+              <img src={point.logo} alt={point.logoAlt || `${point.title} logo`} />
+            </div>
+          ) : null}
           <h2>{point.title}</h2>
           <p>{point.body}</p>
           {point.href ? <a href={point.href}>Open details ↗</a> : null}
@@ -71,25 +198,125 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
   )
 }
 
-function PersonalCollage() {
+function IntroHero() {
   return (
-    <section className="personal-collage-section">
-      <div className="personal-collage-copy">
-        <p className="eyebrow">Before the descent</p>
-        <h2>Some life around the work.</h2>
+    <section className="home-intro-hero">
+      <div className="home-intro-copy">
+        <h1>Akash Dubey</h1>
         <p>
-          A small image layer between the city and the optimization map. I kept it intentionally simple so it
-          can grow later when you add more photos.
+          I'm currently studying computer science and math at the Rutgers University Honors College. I'm excited to continue learning and exploring my interests!
         </p>
-        <ContactIconLinks className="mt-6" />
       </div>
 
-      <div className="personal-collage-grid" aria-label="Photo collage">
-        {personalPhotos.map((photo, index) => (
-          <figure key={photo} className={`personal-photo personal-photo-${index + 1}`}>
-            <img src={photo} alt="" />
-          </figure>
-        ))}
+      <div className="home-portrait-frame">
+        <img src="/images/face.jpg" alt="Akash Dubey" />
+      </div>
+    </section>
+  )
+}
+
+function PlacesSection() {
+  const [activePlace, setActivePlace] = useState(0)
+  const touchStartX = useRef<number | null>(null)
+  const active = placeMoments[activePlace]
+  const totalPlaces = placeMoments.length
+  const visibleSlots = [
+    { offset: 0, slot: 'active' },
+    { offset: 1, slot: 'next' },
+    { offset: 2, slot: 'far' },
+    { offset: -1, slot: 'previous' },
+  ]
+
+  const getPlaceIndex = (offset: number) => (activePlace + offset + totalPlaces) % totalPlaces
+
+  const movePlaces = (direction: 1 | -1) => {
+    setActivePlace((current) => (current + direction + totalPlaces) % totalPlaces)
+  }
+
+  const onTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null
+  }
+
+  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null) return
+    const delta = (event.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current
+    touchStartX.current = null
+    if (Math.abs(delta) < 42) return
+    movePlaces(delta < 0 ? 1 : -1)
+  }
+
+  return (
+    <section
+      className="places-section"
+      style={{
+        '--active-place-tone': active.tone,
+      } as CSSProperties}
+    >
+      <div className="visual-journal">
+        <div className="places-section-heading">
+          <p className="eyebrow">Visual Notes</p>
+          <h2>Images from the map.</h2>
+          <p className="places-section-subtitle">
+            Small scenes collected between projects, classes, and late walks.
+          </p>
+
+          <div className="places-carousel-controls" aria-label="Places gallery controls">
+            <span className="places-counter" aria-live="polite">
+              {String(activePlace + 1).padStart(2, '0')} / {String(totalPlaces).padStart(2, '0')}
+            </span>
+            <button
+              type="button"
+              className="places-arrow"
+              onClick={() => movePlaces(-1)}
+              aria-label="Previous visual note"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              className="places-arrow"
+              onClick={() => movePlaces(1)}
+              aria-label="Next visual note"
+            >
+              →
+            </button>
+          </div>
+        </div>
+
+        <div
+          className="visual-journal-stage"
+          aria-label="Visual notes carousel"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="visual-journal-glow" aria-hidden="true">
+            <img src={active.image} alt="" />
+          </div>
+
+          {visibleSlots.map(({ offset, slot }) => {
+            const index = getPlaceIndex(offset)
+            const place = placeMoments[index]
+
+            return (
+              <button
+                key={`${place.image}-${slot}`}
+                type="button"
+                className="visual-journal-card"
+                data-slot={slot}
+                onClick={() => setActivePlace(index)}
+                aria-current={slot === 'active' ? 'true' : undefined}
+                aria-label={slot === 'active' ? `${place.title}: ${place.description}` : `Show ${place.title}`}
+                style={{ '--place-tone': place.tone } as CSSProperties}
+              >
+                <img src={place.image} alt={place.title} />
+                <span className="visual-journal-caption">
+                  <strong>{place.title}</strong>
+                  <span>{place.description}</span>
+                </span>
+              </button>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -111,7 +338,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
 
     let disposed = false
     let animationFrame = 0
-    let trail: import('three').Line | undefined
     const cleanupCallbacks: Array<() => void> = []
 
     async function start() {
@@ -139,9 +365,7 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
       const surfaceSize = 92
       const surfaceSegments = 220
       const functionScale = 50 / surfaceSize
-      const pointRadius = 0.45
       const surfaceLift = 0.08
-      const trailLift = 0.12
 
       function f(x: number, z: number) {
         const sx = x * functionScale
@@ -254,32 +478,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
       }
 
       const mainPath = createPath(27, -25)
-      const point = new THREE.Mesh(
-        new THREE.SphereGeometry(pointRadius, 40, 40),
-        new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#ffffff', emissiveIntensity: 4, metalness: 1, roughness: 0 }),
-      )
-      const smoothedMainXZ = new THREE.Vector2(mainPath[0].x, mainPath[0].z)
-      point.position.copy(surfacePoint(mainPath[0].x, mainPath[0].z, pointRadius))
-      world.add(point)
-
-      const trailMaterial = new THREE.LineBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.9 })
-
-      function replaceTrail(path: typeof mainPath, idx: number) {
-        if (trail) {
-          trail.geometry.dispose()
-          world.remove(trail)
-        }
-
-        const pts: import('three').Vector3[] = []
-        const startIndex = Math.max(0, idx - 900)
-        for (let i = startIndex; i <= idx; i += 3) {
-          pts.push(surfacePoint(path[i].x, path[i].z, trailLift))
-        }
-
-        trail = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), trailMaterial)
-        world.add(trail)
-      }
-
       const pageLoadTime = performance.now()
       let lastScrollTime = pageLoadTime
       let endOrbitStart = 0
@@ -389,14 +587,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
           setMaterialOpacity(arrow.cone.material, arrowOpacity)
         })
 
-        if (!endMode) {
-          const idx = Math.floor(p * (mainPath.length - 1))
-          const current = mainPath[idx]
-          smoothedMainXZ.lerp(new THREE.Vector2(current.x, current.z), 0.14)
-          point.position.copy(surfacePoint(smoothedMainXZ.x, smoothedMainXZ.y, pointRadius))
-          replaceTrail(mainPath, idx)
-        }
-
         const bottomNavProgress = THREE.MathUtils.smoothstep(endOrbitBlend, 0.22, 0.86)
         if (endLinksRef.current) {
           endLinksRef.current.classList.toggle('is-visible', bottomNavProgress > 0.35)
@@ -421,10 +611,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         geo.dispose()
         fillMat.dispose()
         wireMat.dispose()
-        point.geometry.dispose()
-        ;(point.material as import('three').Material).dispose()
-        trail?.geometry.dispose()
-        trailMaterial.dispose()
       })
     }
 
@@ -476,10 +662,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
 }
 
 export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
-  const heroRef = useRef<HTMLElement | null>(null)
-  const [heroProgress, setHeroProgress] = useState(0)
-  const [typedCount, setTypedCount] = useState(0)
-
   const projectBySlug = useMemo(() => new Map(projects.map((project) => [project.slug, project])), [projects])
   const scarletSync = projectBySlug.get('scarlet-sync')
   const lykke = projectBySlug.get('lykke')
@@ -494,6 +676,8 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       eyebrow: 'Incoming intern',
       title: 'New York Life Insurance',
       body: 'The next update step: an incoming internship bringing software, data, and systems thinking into a larger financial technology environment.',
+      logo: '/company-logos/new-york-life.svg',
+      logoAlt: 'New York Life Insurance logo',
     },
     {
       eyebrow: 'Product builds',
@@ -533,117 +717,15 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       title: 'High school robotics',
       body: 'FRC programming was the early pressure test: autonomous routines, vision, subsystem design, leadership, and debugging when the robot needs to move.',
       href: robotCode ? `/projects/${robotCode.slug}` : undefined,
-      image: robotCode?.image || '/images/portfolio/2024.png',
+      image: robotCode?.image || '/images/portfolio/2024-upscaled.png',
       imageAlt: 'FRC robot project',
     },
   ], [compBio, drp, economicGrapher, llmResearch, lykke, robotCode, scarletSync])
 
-  useEffect(() => {
-    const node = heroRef.current
-    if (!node) return
-
-    let frame = 0
-
-    const update = () => {
-      frame = 0
-      const rect = node.getBoundingClientRect()
-      const total = Math.max(node.offsetHeight - window.innerHeight, 1)
-      setHeroProgress(clamp(-rect.top / total))
-    }
-
-    const onScroll = () => {
-      if (frame) return
-      frame = window.requestAnimationFrame(update)
-    }
-
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
-
-  useEffect(() => {
-    let frame = 0
-    let timeout = 0
-
-    const tick = () => {
-      setTypedCount((count) => {
-        if (count >= promptText.length) return count
-        timeout = window.setTimeout(() => {
-          frame = window.requestAnimationFrame(tick)
-        }, count > 18 ? 34 : 48)
-        return count + 1
-      })
-    }
-
-    frame = window.requestAnimationFrame(tick)
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame)
-      if (timeout) window.clearTimeout(timeout)
-    }
-  }, [])
-
-  const heroFade = clamp(heroProgress / 0.22)
-  const heroLift = clamp((heroProgress - 0.1) / 0.3)
-  const heroBlackout = clamp((heroProgress - 0.28) / 0.18)
-
   return (
     <div className="home-clean-page">
-      <section ref={heroRef} className="relative h-[165vh]">
-        <div className="sticky top-0 h-screen overflow-hidden">
-          <HomeHeroScene heroFade={heroFade} />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(90deg, rgba(4, 8, 14, 0.72) 0%, rgba(4, 8, 14, 0.5) 30%, rgba(4, 8, 14, 0.18) 58%, rgba(4, 8, 14, 0) 78%)',
-              opacity: 1 - heroFade * 0.16,
-            }}
-          />
-          <div className="absolute inset-0 bg-[#020305]" style={{ opacity: heroBlackout * 0.92 }} />
-          <div
-            className="relative z-20 flex h-full items-start px-6 pt-10 sm:px-10 lg:px-16"
-            style={{
-              opacity: 1 - heroFade * 1.08,
-              transform: `translate3d(0, ${heroLift * -30}px, 0)`,
-            }}
-          >
-            <div className="max-w-[34rem] pt-10 sm:pt-14 lg:pt-16">
-              <h1 className="max-w-[9ch] text-[clamp(4rem,7vw,7.25rem)] font-light tracking-[-0.08em] text-[#f4efeb]">
-                Akash Dubey
-              </h1>
-              <div className="mt-5 h-px w-16 bg-[#c4a1a6]/70" />
-              <p className="mt-8 max-w-[24ch] text-[clamp(1.1rem,1.7vw,1.8rem)] leading-[1.45] text-[#ece6e1]">
-                Software, robotics, math, research, and the things built between them.
-              </p>
-              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 text-[clamp(1rem,1.1vw,1.2rem)] text-[#ece6e1]">
-                {heroLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={link.href.endsWith('.pdf') ? '_blank' : undefined}
-                    rel={link.href.endsWith('.pdf') ? 'noreferrer' : undefined}
-                    className={link.primary ? 'hero-primary-link' : 'hero-link'}
-                  >
-                    {link.label} <span className="hero-link-arrow" aria-hidden="true">{link.primary ? '↓' : '↗'}</span>
-                  </a>
-                ))}
-              </div>
-              <div className="typed-prompt mt-10 text-[clamp(1rem,1.2vw,1.22rem)] text-[#9e9ca9]">
-                <span className="scroll-cue">{promptText.slice(0, typedCount)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <PersonalCollage />
+      <IntroHero />
+      <PlacesSection />
       <HomeGradientDescentStage points={points} />
     </div>
   )

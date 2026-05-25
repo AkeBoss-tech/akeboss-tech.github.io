@@ -11,9 +11,11 @@ export type Project = {
   slug: string
   title: string
   excerpt: string
+  date: string
   image?: string
   tags: string[]
   rank: number
+  favorite: boolean
   featured: boolean
   content: string
   lead: string
@@ -30,6 +32,7 @@ export type Post = {
   image?: string
   tags: string[]
   content: string
+  lead: string
   reading: string
 }
 
@@ -59,6 +62,15 @@ function slugify(value: string) {
     .replace(/-+/g, '-')
 }
 
+function compareDatesNewestFirst(a: string, b: string) {
+  const aTime = Date.parse(a)
+  const bTime = Date.parse(b)
+  if (Number.isNaN(aTime) || Number.isNaN(bTime)) {
+    return a < b ? 1 : -1
+  }
+  return bTime - aTime
+}
+
 function cleanMarkdownText(value: string) {
   return value
     .replace(/<img[^>]*>/gi, ' ')
@@ -73,13 +85,23 @@ function cleanMarkdownText(value: string) {
     .trim()
 }
 
+function normalizeLeadBlock(value: string) {
+  return value
+    .replace(/^\s*\d{1,2}\/\d{1,2}\/\d{2,4}\s*\n[=-]{2,}\s*/m, '')
+    .replace(/^\s*\d{4}-\d{2}-\d{2}\s*\n[=-]{2,}\s*/m, '')
+    .trim()
+}
+
 function extractLead(content: string) {
   const sections = content.split(/\n\s*\n/)
   for (const block of sections) {
-    const cleaned = cleanMarkdownText(block)
+    const normalized = normalizeLeadBlock(block)
+    const cleaned = cleanMarkdownText(normalized)
     if (!cleaned) continue
     if (/^[-=*]{3,}$/.test(cleaned)) continue
     if (/^(images|more resources)$/i.test(cleaned)) continue
+    if (/^\/?\d{1,2}\/\d{1,2}\/\d{2,4}\b/i.test(cleaned)) continue
+    if (/^\d{4}-\d{2}-\d{2}\s*=+/i.test(cleaned)) continue
     return cleaned
   }
   return ''
@@ -110,16 +132,21 @@ function extractLinks(content: string) {
 
 export function getProjects(): Project[] {
   return fs.readdirSync(portfolioDir).filter((file) => file.endsWith('.md')).map((file) => {
-    const raw = fs.readFileSync(path.join(portfolioDir, file), 'utf8')
+    const filePath = path.join(portfolioDir, file)
+    const raw = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(raw)
+    const featured = data.featured === true || data.featured === 'true'
+    const favorite = data.favorite === true || data.favorite === 'true' || featured
     return {
       slug: file.replace(/\.md$/, ''),
       title: stripQuotes(data.title),
       excerpt: stripQuotes(data.excerpt),
+      date: stripQuotes(data.date, fs.statSync(filePath).mtime.toISOString()),
       image: stripQuotes(data.image),
       tags: parseTags(data.tags),
       rank: Number(data.rank || 999),
-      featured: data.featured === true || data.featured === 'true',
+      favorite,
+      featured,
       content,
       lead: extractLead(content),
       sections: extractSections(content),
@@ -145,9 +172,10 @@ export function getPosts(): Post[] {
       image: stripQuotes(data.image),
       tags: parseTags(data.tags),
       content,
+      lead: extractLead(content),
       reading: readingTime(content).text,
     }
-  }).sort((a, b) => (a.date < b.date ? 1 : -1))
+  }).sort((a, b) => compareDatesNewestFirst(a.date, b.date))
 }
 
 export function getPost(slug: string) {

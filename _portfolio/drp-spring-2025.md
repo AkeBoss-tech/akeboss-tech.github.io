@@ -3,6 +3,7 @@ title: "q-Binomial Theorem Presentation - Spring 2025 DRP Program"
 excerpt: "Reseaarch and presentation of the q-Binomial theorem and symmetric functions for the 2025 Rutgers Directed Reading Program."
 image: "/images/portfolio/drp.png"
 collection: portfolio
+date: 2025-05-02
 tags: [Research, Math]
 rank: 5
 ---

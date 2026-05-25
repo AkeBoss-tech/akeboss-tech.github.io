@@ -3,6 +3,7 @@ title: "American Statistical Association Fall Data Challenge 2023"
 excerpt: "analysis of the Stack Overflow Developer Survey data for the Fall Data Challenge 2023"
 image: "/images/portfolio/asa-data/Capture.PNG"
 collection: portfolio
+date: 2023-11-18
 tags: [Data, Research]
 rank: 9
 ---

@@ -3,6 +3,7 @@ title: "SLM Optimization & Post-Training (GSM8k)"
 excerpt: "Fine-tuning and deploying small language models (SLMs) on the Rutgers High Performance Computing (Amarel) cluster for optimal math reasoning capabilities."
 image: "/images/portfolio/llm-research/image.png"
 collection: portfolio
+date: 2025-08-22
 tags: [AI, Research, Infrastructure]
 rank: 5
 ---

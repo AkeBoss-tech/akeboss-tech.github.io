@@ -11,6 +11,11 @@ const education = [
   {
     title: 'Rutgers University Honors College, School of Arts and Sciences',
     href: 'https://honorscollege.rutgers.edu/',
+    logo: '/school-logos/rutgers-shield.png',
+    logoTileStyle: {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+    },
     location: 'New Brunswick, NJ',
     dates: 'Sep 2024 - May 2027',
     lines: [
@@ -22,6 +27,11 @@ const education = [
   {
     title: 'Academy for Information Technology, Union County Vocational-Technical Schools',
     href: 'https://www.ucvts.org/domain/19',
+    logo: '/school-logos/ucvts.png',
+    logoTileStyle: {
+      backgroundColor: 'rgba(226, 232, 240, 0.12)',
+      borderColor: 'rgba(226, 232, 240, 0.2)',
+    },
     location: 'Scotch Plains, NJ',
     dates: 'Sep 2020 - Jun 2024',
     lines: [
@@ -66,6 +76,10 @@ const experience = [
     title: 'Samaritan Scout',
     href: 'https://www.samaritanscout.org/',
     logo: '/company-logos/samaritan-scout.png',
+    logoTileStyle: {
+      backgroundColor: 'rgba(36, 84, 60, 0.95)',
+      borderColor: 'rgba(92, 196, 141, 0.52)',
+    },
     role: 'Frontend / Full Stack Engineer',
     dates: 'May 2023 - Aug 2025',
     bullets: [
@@ -79,6 +93,11 @@ const research = [
   {
     title: 'Rutgers Economics Labs',
     href: 'https://rutgerseconomics.org',
+    logo: '/school-logos/rutgers-block-r.svg',
+    logoTileStyle: {
+      backgroundColor: 'rgba(16, 40, 46, 0.9)',
+      borderColor: 'rgba(64, 191, 211, 0.35)',
+    },
     role: 'President; formerly Research Director, Team Lead, Economic Researcher',
     dates: 'Oct 2024 - Present',
     bullets: [
@@ -89,6 +108,11 @@ const research = [
   {
     title: 'Rutgers Department of Computer Science',
     href: 'https://cs.rutgers.edu/',
+    logo: '/school-logos/rutgers-block-r.svg',
+    logoTileStyle: {
+      backgroundColor: 'rgba(52, 20, 23, 0.88)',
+      borderColor: 'rgba(204, 0, 51, 0.35)',
+    },
     role: 'Research Assistant',
     dates: 'Jan 2026 - Present',
     bullets: [
@@ -99,6 +123,11 @@ const research = [
   {
     title: 'Algorithmic Robotics and Control Lab, Rutgers CS',
     href: 'https://arc-lab-robotics.github.io/',
+    logo: '/school-logos/rutgers-block-r.svg',
+    logoTileStyle: {
+      backgroundColor: 'rgba(52, 20, 23, 0.88)',
+      borderColor: 'rgba(204, 0, 51, 0.35)',
+    },
     role: 'Research Assistant',
     dates: 'Jan 2026 - Present',
     bullets: [
@@ -109,6 +138,11 @@ const research = [
   {
     title: 'Kwan Lab, Rutgers Cancer Institute of New Jersey',
     href: 'https://sites.rutgers.edu/kwan-lab/',
+    logo: '/school-logos/rutgers-block-r.svg',
+    logoTileStyle: {
+      backgroundColor: 'rgba(52, 20, 23, 0.88)',
+      borderColor: 'rgba(204, 0, 51, 0.35)',
+    },
     role: 'Computational Biology Research Assistant',
     dates: 'Jan 2026 - Present',
     bullets: [
@@ -120,31 +154,37 @@ const research = [
 const leadership = [
   {
     title: 'AIT Math League Officer & President',
+    logo: '/activity-logos/ucvts.png',
     dates: 'Sep 2021 - Jun 2024',
     body: 'Organized practices, competitions, and study culture for 50+ students; consistent top-three scorer.',
   },
   {
     title: 'UCVTS Robotics Team 1257 Programming Manager',
+    logo: '/activity-logos/first.svg',
     dates: 'Sep 2022 - Jun 2024',
     body: 'Led a 30+ member programming group across robot code, control systems, vision, and training.',
   },
   {
     title: 'Newspaper Club Layout Editor',
+    logo: '/activity-logos/ucvts.png',
     dates: 'Sep 2023 - Jun 2024',
     body: 'Led the programming and migration work for the club website and taught editors markdown workflows.',
   },
   {
     title: 'Coding Club Board Member',
+    logo: '/activity-logos/ucvts.png',
     dates: 'Sep 2023 - Jun 2024',
     body: 'Ran beginner and advanced coding workshops and helped organize competitions.',
   },
   {
     title: 'The Connection',
+    logo: '/activity-logos/the-connection.svg',
     dates: 'Dec 2022 - Present',
     body: 'English as a Second Language Instructor. Taught 50+ adult learners in small groups and built worksheets, tutoring tools, and classroom resources.',
   },
   {
     title: 'Berkeley Heights Public Library',
+    logo: '/activity-logos/bh-library.svg',
     dates: 'High school',
     body: 'Book Shelving Volunteer.',
   },
@@ -170,9 +210,12 @@ const certifications = [
   'Oracle Database Foundations (1Z0-006)',
 ] as const
 
-const awards = [
+const collegeAwards = [
   'TechStart Challenge - 2nd Place',
   'RUHealthHacks - prize winner',
+] as const
+
+const highSchoolAwards = [
   'Dean’s List Semifinalist, 2023 FIRST Robotics Season',
   'RIT High School Science and Math Award',
   'AP Scholar with Distinction',
@@ -284,13 +327,21 @@ export default function CVPage() {
             {education.map((item) => (
               <article key={item.title} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                  <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
-                    {item.title}
-                  </a>
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
+                    >
+                      <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                    </div>
+                    <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
+                      {item.title}
+                    </a>
+                  </div>
                   <p className="text-sm text-text-soft">{item.dates}</p>
                 </div>
-                <p className="mt-2 text-sm text-text-soft">{item.location}</p>
-                <div className="mt-3 grid gap-2 text-sm leading-7 text-text-muted">
+                <p className="mt-2 pl-16 text-sm text-text-soft">{item.location}</p>
+                <div className="mt-3 grid gap-2 pl-16 text-sm leading-7 text-text-muted">
                   {item.lines.map((line) => (
                     <p key={line} className={line.includes('GPA') || line.includes('QPA') ? 'text-[#d8b4fe]' : ''}>{line}</p>
                   ))}
@@ -306,7 +357,10 @@ export default function CVPage() {
               <article key={`${item.title}-${item.role}`} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
+                    >
                       <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
                     </div>
                     <div>
@@ -335,15 +389,23 @@ export default function CVPage() {
             {research.map((item) => (
               <article key={`${item.title}-${item.role}`} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                  <div>
-                    <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
-                      {item.title}
-                    </a>
-                    <p className="mt-1 text-sm text-[#8be9fd]">{item.role}</p>
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      style={item.logoTileStyle}
+                    >
+                      <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                    </div>
+                    <div>
+                      <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
+                        {item.title}
+                      </a>
+                      <p className="mt-1 text-sm text-[#8be9fd]">{item.role}</p>
+                    </div>
                   </div>
                   <p className="text-sm text-text-soft">{item.dates}</p>
                 </div>
-                <ul className="mt-4 grid gap-2 text-sm leading-7 text-text-muted">
+                <ul className="mt-4 grid gap-2 pl-16 text-sm leading-7 text-text-muted">
                   {item.bullets.map((bullet) => (
                     <li key={bullet} className="pl-4 relative before:absolute before:left-0 before:top-[0.8em] before:h-1 before:w-1 before:rounded-full before:bg-[#8be9fd]">{bullet}</li>
                   ))}
@@ -354,37 +416,16 @@ export default function CVPage() {
         </Section>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <Section title="High School" accentClass="text-[#f6c177]">
-            <div className="grid gap-4">
-              {leadership.map((item) => (
-                <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <h2 className="text-lg text-text">{item.title}</h2>
-                    <p className="text-sm text-text-soft">{item.dates}</p>
-                  </div>
-                  <p className="mt-2 text-sm leading-7 text-text-muted">{item.body}</p>
-                </article>
+          <Section title="Skills" accentClass="text-[#84a9ff]">
+            <div className="flex flex-wrap gap-2">
+              {skills.map((item) => (
+                <span key={item} className="tag">
+                  {item}
+                </span>
               ))}
             </div>
           </Section>
 
-          <Section title="College" accentClass="text-[#84a9ff]">
-            <div className="grid gap-4">
-              {collegeActivities.map((item) => (
-                <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <h2 className="text-lg text-text">{item.title}</h2>
-                    <p className="text-sm text-text-soft">{item.dates}</p>
-                  </div>
-                  <p className="mt-2 text-sm leading-7 text-text-muted">{item.body}</p>
-                </article>
-              ))}
-            </div>
-          </Section>
-
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-2">
           <Section title="Certifications" accentClass="text-[#84a9ff]">
             <div className="flex flex-wrap gap-2">
               {certifications.map((item) => (
@@ -404,16 +445,69 @@ export default function CVPage() {
           </Section>
         </div>
 
+        <div className="mt-2">
+          <p className="eyebrow text-[#84a9ff]">Activities and Leadership</p>
+        </div>
+
         <div className="grid gap-6 lg:grid-cols-2">
-          <Section title="Awards and Competitions" accentClass="text-[#f6c177]">
-            <div className="grid gap-2 text-sm leading-7 text-text-muted">
-              {awards.map((item) => (
-                <p key={item}>{item}</p>
+          <Section title="College" accentClass="text-[#84a9ff]">
+            <div className="grid gap-4">
+              {collegeActivities.map((item) => (
+                <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                    <h2 className="text-lg text-text">{item.title}</h2>
+                    <p className="text-sm text-text-soft">{item.dates}</p>
+                  </div>
+                  <p className="mt-2 text-sm leading-7 text-text-muted">{item.body}</p>
+                </article>
               ))}
             </div>
           </Section>
 
-          <Section title="Scores" accentClass="text-[#d8b4fe]">
+          <Section title="High School" accentClass="text-[#f6c177]">
+            <div className="grid gap-4">
+              {leadership.map((item) => (
+                <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2">
+                        <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                      </div>
+                      <h2 className="text-lg text-text">{item.title}</h2>
+                    </div>
+                    <p className="text-sm text-text-soft">{item.dates}</p>
+                  </div>
+                  <p className="mt-1 text-sm leading-7 text-text-muted sm:pl-16">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </Section>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Section title="Awards and Competitions" accentClass="text-[#f6c177]">
+            <div className="grid gap-6 text-sm leading-7 text-text-muted">
+              <div>
+                <p className="eyebrow text-[#84a9ff]">College</p>
+                <div className="mt-3 grid gap-2">
+                  {collegeAwards.map((item) => (
+                    <p key={item}>{item}</p>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border-t border-white/8 pt-5">
+                <p className="eyebrow text-[#f6c177]">High School</p>
+                <div className="mt-3 grid gap-2">
+                  {highSchoolAwards.map((item) => (
+                    <p key={item}>{item}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Section>
+
+          <Section title="Scores (High School)" accentClass="text-[#d8b4fe]">
             <div className="grid gap-2 text-sm leading-7 text-text-muted">
               {scores.map((item) => (
                 <p key={item} className={item.startsWith('SAT') ? 'text-[#d8b4fe]' : ''}>{item}</p>
@@ -422,23 +516,13 @@ export default function CVPage() {
           </Section>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6">
           <Section title="Selected Projects" accentClass="text-[#8be9fd]">
             <div className="grid gap-2 text-sm leading-7 text-text-muted">
               {selectedProjects.map((item) => (
-                <a key={item.title} href={item.href} className="story-link text-text-muted hover:text-text">
+                <a key={item.title} href={item.href} className="story-link selected-project-link text-text-muted hover:text-text">
                   {item.title}
                 </a>
-              ))}
-            </div>
-          </Section>
-
-          <Section title="Skills" accentClass="text-[#84a9ff]">
-            <div className="flex flex-wrap gap-2">
-              {skills.map((item) => (
-                <span key={item} className="tag">
-                  {item}
-                </span>
               ))}
             </div>
           </Section>

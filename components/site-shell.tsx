@@ -106,14 +106,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <footer className="relative z-10 mt-20 border-t border-white/6">
           <div className="container-wide py-10">
             <div className="panel footer-panel rounded-[34px] px-5 py-6 sm:px-6 sm:py-7">
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
-                <div className="self-center">
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
+                <div className="min-w-0 self-center">
                   <p className="text-3xl tracking-[-0.06em] text-text sm:text-4xl">Akash Dubey</p>
                   <p className="mt-4 max-w-2xl text-sm leading-7 text-text-muted sm:text-base">
                     If you want to talk about research, robotics, startups, math, or a project worth building together,
                     there are a few easy ways to reach me.
                   </p>
-                  <ContactIconLinks className="mt-5" />
+                  <ContactIconLinks className="footer-contact-icons mt-5 pb-1" />
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">

@@ -3,6 +3,7 @@ title: "The Campus Chronicle Website"
 excerpt: "The UCVTS Newspaper Club's new website!"
 image: "/images/portfolio/newspaper/front_page.png"
 collection: portfolio
+date: 2024-02-18
 tags: [Web]
 rank: 4
 ---

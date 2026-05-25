@@ -3,6 +3,7 @@ title: "ESL Worksheet Generator"
 excerpt: "A Python App that generates basic English worksheets!"
 image: "/images/portfolio/esl/home.png"
 collection: portfolio
+date: 2023-12-08
 tags: [Web, AI]
 rank: 5
 ---
