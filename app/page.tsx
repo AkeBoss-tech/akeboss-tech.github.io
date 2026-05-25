@@ -1,8 +1,46 @@
 import { HomeStory } from '@/components/home-story'
 import { getProjects } from '@/lib/content'
+import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Home',
+  description:
+    'Akash Dubey builds software, AI systems, robotics projects, and research-driven products across startups, labs, and student work.',
+  path: '/',
+  image: '/hero-nyc.png',
+})
 
 export default function HomePage() {
   const projects = getProjects()
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        name: siteName,
+        url: siteUrl,
+        image: `${siteUrl}/images/face.jpg`,
+        sameAs: ['https://github.com/AkeBoss-tech', 'https://www.linkedin.com/in/akash---dubey/'],
+        alumniOf: [
+          {
+            '@type': 'CollegeOrUniversity',
+            name: 'Rutgers University',
+          },
+        ],
+        knowsAbout: ['Software engineering', 'Artificial intelligence', 'Robotics', 'Mathematics', 'Research'],
+      },
+      {
+        '@type': 'WebSite',
+        name: siteName,
+        url: siteUrl,
+      },
+    ],
+  }
 
-  return <HomeStory projects={projects} />
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <HomeStory projects={projects} />
+    </>
+  )
 }

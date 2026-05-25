@@ -1,8 +1,28 @@
 import Link from 'next/link'
+import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'About',
+  description:
+    'About Akash Dubey: builder, researcher, and operator working across software engineering, AI, product, and quantitative research.',
+  path: '/about',
+  image: '/images/face.jpg',
+})
 
 export default function AboutPage() {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: siteName,
+    url: `${siteUrl}/about`,
+    image: `${siteUrl}/images/face.jpg`,
+    jobTitle: 'Software engineer and researcher',
+    sameAs: ['https://github.com/AkeBoss-tech', 'https://www.linkedin.com/in/akash---dubey/'],
+  }
+
   return (
     <div className="container-wide py-10 sm:py-14">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <section className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div className="panel-soft overflow-hidden rounded-[32px]">
           <img src="/images/face.jpg" alt="Akash Dubey" className="h-full w-full object-cover" />

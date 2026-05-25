@@ -1,3 +1,13 @@
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Resume',
+  description:
+    'Resume and recruiter-facing experience summary for Akash Dubey, focused on software engineering, AI systems, research, and product work.',
+  path: '/resume',
+  image: '/images/face.jpg',
+})
+
 export default function ResumePage() {
   return (
     <div className="container-wide py-10 sm:py-14">

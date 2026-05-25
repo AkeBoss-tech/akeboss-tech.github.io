@@ -1,5 +1,14 @@
 import Link from 'next/link'
 import { AutoVideo } from '@/components/auto-video'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Moodboard',
+  description: 'Internal visual reference board for the Akash Dubey portfolio.',
+  path: '/moodboard',
+  image: '/images/portfolio/grokipedia-api/hero.png',
+  noIndex: true,
+})
 
 const collageTiles = [
   {

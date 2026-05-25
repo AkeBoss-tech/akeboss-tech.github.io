@@ -265,6 +265,7 @@ body.home-clean-body::after {
   position: relative;
   z-index: 12;
   min-height: 112vh;
+  scroll-margin-top: 6rem;
   overflow: hidden;
   padding: clamp(5rem, 12vh, 9rem) 0 clamp(6rem, 13vh, 10rem);
   background:
@@ -482,7 +483,6 @@ body.home-clean-body::after {
 .visual-journal {
   position: relative;
   width: min(94vw, 86rem);
-  min-height: 82vh;
   margin: 0 auto;
 }
 
@@ -493,147 +493,108 @@ body.home-clean-body::after {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at var(--cursor-x) var(--cursor-y), color-mix(in srgb, var(--active-place-tone) 28%, transparent), transparent 30%),
     radial-gradient(circle at 16% 26%, rgba(0, 120, 255, 0.08), transparent 34%),
     radial-gradient(circle at 82% 74%, rgba(0, 255, 200, 0.07), transparent 34%);
   filter: blur(54px);
   opacity: 0.86;
-  transition: background 180ms ease;
 }
 
-.visual-journal-stage {
-  position: relative;
-  min-height: clamp(36rem, 78vh, 52rem);
-  overflow: hidden;
-  isolation: isolate;
-  border-radius: clamp(1.25rem, 2.5vw, 2rem);
-  touch-action: pan-y;
+.visual-journal-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(7rem, 10vw, 10.5rem);
+  gap: clamp(0.7rem, 1.1vw, 1rem);
 }
 
-.visual-journal-spotlight {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    radial-gradient(circle 17rem at var(--cursor-x) var(--cursor-y), rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.07) 38%, transparent 70%),
-    radial-gradient(circle 28rem at var(--cursor-x) var(--cursor-y), color-mix(in srgb, var(--active-place-tone) 18%, transparent), transparent 74%);
-  mix-blend-mode: screen;
-  opacity: 0;
-  transition: opacity 220ms ease;
-}
-
-.visual-journal-spotlight.is-active {
-  opacity: 1;
-}
-
-.visual-journal-preview {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 4;
-  width: min(35rem, 42vw);
-  height: min(48rem, 66vh);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--active-place-tone) 46%, rgba(255, 255, 255, 0.2));
-  border-radius: clamp(1.2rem, 2vw, 2rem);
-  background: rgba(6, 9, 15, 0.7);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 38px 120px rgba(0, 0, 0, 0.48),
-    0 0 70px color-mix(in srgb, var(--active-place-tone) 18%, transparent);
-  opacity: 0.98;
-  pointer-events: none;
-  transform: translate3d(-50%, -50%, 0);
-  transition:
-    border-color 260ms ease,
-    box-shadow 260ms ease;
-}
-
-.visual-journal-preview::after,
 .visual-journal-card::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.16), transparent 32%),
-    linear-gradient(180deg, rgba(1, 4, 9, 0.02), rgba(1, 4, 9, 0.2) 72%, rgba(1, 4, 9, 0.46));
+    linear-gradient(180deg, rgba(1, 4, 9, 0) 44%, rgba(1, 4, 9, 0.62)),
+    radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.14), transparent 30%);
+  opacity: 0.85;
 }
 
-.visual-journal-preview img,
 .visual-journal-card img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
-}
-
-.visual-journal-preview img {
-  filter: saturate(1.08) contrast(1.04) brightness(1.04);
-  transform: scale(1.012);
+  transition: transform 180ms ease;
 }
 
 .visual-journal-card {
-  --tile-proximity: 0;
-  position: absolute;
-  left: var(--tile-x);
-  top: var(--tile-y);
-  z-index: 1;
-  width: var(--tile-w);
-  height: var(--tile-h);
+  position: relative;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--place-tone) calc(16% + (var(--tile-proximity) * 46%)), rgba(255, 255, 255, 0.12));
-  border-radius: clamp(0.9rem, 1.6vw, 1.45rem);
+  min-height: 0;
+  margin: 0;
+  border: 1px solid rgba(180, 196, 232, 0.18);
+  border-radius: clamp(0.9rem, 1.6vw, 1.5rem);
   background: rgba(6, 9, 15, 0.76);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.09),
-    0 18px 64px rgba(0, 0, 0, 0.24);
-  opacity: calc(0.34 + (var(--tile-proximity) * 0.5));
-  outline: none;
-  filter:
-    grayscale(calc(0.78 - (var(--tile-proximity) * 0.78)))
-    brightness(calc(0.58 + (var(--tile-proximity) * 0.5)))
-    saturate(calc(0.66 + (var(--tile-proximity) * 0.52)))
-    blur(calc((1 - var(--tile-proximity)) * 0.9px));
-  transform:
-    translate3d(var(--tile-push-x), var(--tile-push-y), 0)
-    rotate(var(--tile-rotate))
-    scale(calc(0.86 + (var(--tile-proximity) * 0.18)));
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 16px 48px rgba(0, 0, 0, 0.2);
+  transform: translate3d(0, 0, 0);
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
-    filter 180ms ease,
-    opacity 180ms ease,
-    transform 240ms cubic-bezier(0.2, 0.72, 0.22, 1);
+    transform 180ms ease;
 }
 
-.visual-journal-card[data-active="true"] {
-  z-index: 3;
-  opacity: 0.98;
-  border-color: color-mix(in srgb, var(--place-tone) 72%, rgba(255, 255, 255, 0.22));
+.visual-journal-card:hover {
+  border-color: rgba(226, 234, 255, 0.34);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    0 28px 90px rgba(0, 0, 0, 0.42),
-    0 0 48px color-mix(in srgb, var(--place-tone) 22%, transparent);
-  filter: saturate(1.12) contrast(1.04) brightness(1.02);
-  transform:
-    translate3d(var(--tile-push-x), var(--tile-push-y), 0)
-    rotate(0deg)
-    scale(1.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 60px rgba(0, 0, 0, 0.32);
+  transform: translate3d(0, -2px, 0);
 }
 
-.visual-journal-card:focus-visible {
-  outline: 2px solid rgba(244, 239, 235, 0.82);
-  outline-offset: 4px;
+.visual-journal-card:hover img {
+  transform: scale(1.025);
 }
 
-.visual-journal-card img {
-  transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
+.visual-journal-card figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  padding: 1rem;
+  color: rgba(244, 248, 255, 0.9);
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  line-height: 1.2;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
 }
 
-.visual-journal-card[data-active="true"] img {
-  transform: scale(1.055);
+.visual-journal-card figcaption span {
+  display: block;
+  max-width: 14rem;
+}
+
+.visual-journal-card-1,
+.visual-journal-card-8 {
+  grid-column: span 5;
+  grid-row: span 3;
+}
+
+.visual-journal-card-2,
+.visual-journal-card-4,
+.visual-journal-card-7,
+.visual-journal-card-10 {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+.visual-journal-card-3,
+.visual-journal-card-6,
+.visual-journal-card-9 {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+
+.visual-journal-card-5 {
+  grid-column: span 4;
+  grid-row: span 3;
 }
 
 .gd-stage {
@@ -1541,6 +1502,12 @@ h4 {
 .liquid-glass-scrolled::after {
   transform: translate3d(2%, -18%, 0) scaleX(1.08);
   opacity: 0.84;
+}
+
+@media (max-width: 767px) {
+  .liquid-glass-mobile-open {
+    border-radius: 28px;
+  }
 }
 
 .tag {
@@ -2663,6 +2630,11 @@ h4 {
     font-size: 1.15rem;
   }
 
+  .home-intro-down {
+    display: flex;
+    margin-inline: auto;
+  }
+
   .home-portrait-frame {
     width: min(76vw, 23rem);
     min-width: 0;
@@ -2671,27 +2643,43 @@ h4 {
 
   .places-section {
     min-height: auto;
-    padding-block: 5rem 7rem;
+    padding-block: 6.5rem 7rem;
   }
 
   .visual-journal {
-    min-height: auto;
+    width: min(92vw, 38rem);
   }
 
-  .visual-journal-stage {
-    min-height: clamp(34rem, 135vw, 48rem);
-    border-radius: 1.15rem;
+  .visual-journal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: clamp(9rem, 36vw, 13rem);
+    gap: 0.75rem;
   }
 
-  .visual-journal-preview {
-    width: min(19rem, 64vw);
-    height: min(29rem, 72vw);
+  .visual-journal-card,
+  .visual-journal-card-1,
+  .visual-journal-card-2,
+  .visual-journal-card-3,
+  .visual-journal-card-4,
+  .visual-journal-card-5,
+  .visual-journal-card-6,
+  .visual-journal-card-7,
+  .visual-journal-card-8,
+  .visual-journal-card-9,
+  .visual-journal-card-10 {
+    grid-column: span 1;
+    grid-row: span 1;
+    border-radius: 1rem;
   }
 
-  .visual-journal-card {
-    min-width: 3.65rem;
-    min-height: 5.2rem;
-    border-radius: 0.85rem;
+  .visual-journal-card:nth-child(3n + 1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .visual-journal-card figcaption {
+    padding: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .places-track {

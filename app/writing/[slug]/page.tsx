@@ -1,18 +1,44 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Markdown } from '@/components/markdown'
 import { PostCard } from '@/components/post-card'
 import { getPost, getPosts } from '@/lib/content'
 import { formatDate } from '@/lib/format'
+import { absoluteUrl, buildPageMetadata, siteName } from '@/lib/seo'
 
 export function generateStaticParams() {
   return getPosts().map((post) => ({ slug: post.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPost(slug)
+
+  if (!post) {
+    return buildPageMetadata({
+      title: 'Writing',
+      description: 'Article not found.',
+      path: `/writing/${slug}`,
+      noIndex: true,
+      type: 'article',
+    })
+  }
+
+  return buildPageMetadata({
+    title: post.title,
+    description: post.excerpt || post.lead,
+    path: `/writing/${post.slug}`,
+    image: post.image,
+    type: 'article',
+  })
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = getPost(slug)
   if (!post) return notFound()
+  const articleDescription = post.excerpt || post.lead
   const relatedPosts = getPosts()
     .filter((candidate) => candidate.slug !== post.slug)
     .map((candidate) => ({
@@ -22,9 +48,24 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     .sort((a, b) => b.score - a.score || (a.post.date < b.post.date ? 1 : -1))
     .slice(0, 3)
     .map(({ post }) => post)
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: articleDescription,
+    url: absoluteUrl(`/writing/${post.slug}`),
+    image: post.image ? [absoluteUrl(post.image)] : undefined,
+    author: {
+      '@type': 'Person',
+      name: siteName,
+    },
+    datePublished: post.date,
+    keywords: post.tags.join(', '),
+  }
 
   return (
     <div className="container-wide py-10 sm:py-14">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <section className="max-w-4xl">
         <Link href="/writing" className="eyebrow inline-flex items-center gap-2 text-text-soft hover:text-text">
           ← Back to writing

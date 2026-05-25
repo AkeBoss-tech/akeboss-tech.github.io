@@ -1,7 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { CSSProperties } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
@@ -165,31 +164,6 @@ const placeMoments: PlaceMoment[] = [
   },
 ]
 
-const collageLayout = [
-  { x: 5, y: 8, w: 13, h: 20, r: -4 },
-  { x: 20, y: 5, w: 10, h: 16, r: 3 },
-  { x: 33, y: 9, w: 14, h: 22, r: -2 },
-  { x: 51, y: 4, w: 11, h: 18, r: 5 },
-  { x: 66, y: 8, w: 13, h: 20, r: -3 },
-  { x: 82, y: 6, w: 10, h: 18, r: 4 },
-  { x: 11, y: 33, w: 11, h: 17, r: 5 },
-  { x: 25, y: 28, w: 14, h: 22, r: -5 },
-  { x: 42, y: 34, w: 10, h: 16, r: 3 },
-  { x: 56, y: 28, w: 15, h: 23, r: -2 },
-  { x: 75, y: 33, w: 12, h: 18, r: 5 },
-  { x: 89, y: 30, w: 10, h: 17, r: -4 },
-  { x: 2, y: 58, w: 12, h: 19, r: 3 },
-  { x: 17, y: 57, w: 15, h: 24, r: -2 },
-  { x: 36, y: 60, w: 11, h: 18, r: 4 },
-  { x: 50, y: 56, w: 13, h: 21, r: -5 },
-  { x: 67, y: 59, w: 15, h: 22, r: 2 },
-  { x: 85, y: 56, w: 12, h: 20, r: -3 },
-  { x: 9, y: 82, w: 12, h: 16, r: -3 },
-  { x: 28, y: 80, w: 13, h: 18, r: 4 },
-  { x: 56, y: 81, w: 12, h: 17, r: 3 },
-  { x: 76, y: 80, w: 14, h: 18, r: -4 },
-]
-
 function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'right' }) {
   return (
     <article className={`gd-row ${align}`}>
@@ -245,119 +219,18 @@ function IntroHero() {
 }
 
 function PlacesSection() {
-  const [activePlace, setActivePlace] = useState(0)
-  const [cursor, setCursor] = useState({ x: 50, y: 50, active: false })
-  const stageRef = useRef<HTMLDivElement | null>(null)
-  const active = placeMoments[activePlace]
-
-  const updateActiveFromPoint = useCallback((clientX: number, clientY: number) => {
-    const stage = stageRef.current
-    if (!stage) return
-
-    const rect = stage.getBoundingClientRect()
-    const x = ((clientX - rect.left) / rect.width) * 100
-    const y = ((clientY - rect.top) / rect.height) * 100
-    let nextActive = 0
-    let nearestDistance = Number.POSITIVE_INFINITY
-
-    collageLayout.forEach((tile, index) => {
-      const centerX = tile.x + tile.w / 2
-      const centerY = tile.y + tile.h / 2
-      const distance = Math.hypot(centerX - x, centerY - y)
-
-      if (distance < nearestDistance) {
-        nearestDistance = distance
-        nextActive = index
-      }
-    })
-
-    setCursor({ x, y, active: true })
-    setActivePlace((current) => (current === nextActive ? current : nextActive))
-  }, [])
-
-  useEffect(() => {
-    const stage = stageRef.current
-    if (!stage) return
-
-    const handleMouseMove = (event: MouseEvent) => updateActiveFromPoint(event.clientX, event.clientY)
-    const handleMouseEnter = (event: MouseEvent) => updateActiveFromPoint(event.clientX, event.clientY)
-    const handleMouseLeave = () => setCursor((current) => ({ ...current, active: false }))
-
-    stage.addEventListener('mousemove', handleMouseMove)
-    stage.addEventListener('mouseenter', handleMouseEnter)
-    stage.addEventListener('mouseleave', handleMouseLeave)
-
-    return () => {
-      stage.removeEventListener('mousemove', handleMouseMove)
-      stage.removeEventListener('mouseenter', handleMouseEnter)
-      stage.removeEventListener('mouseleave', handleMouseLeave)
-    }
-  }, [updateActiveFromPoint])
-
   return (
-    <section
-      id="visual-notes"
-      className="places-section"
-      style={{
-        '--active-place-tone': active.tone,
-        '--cursor-x': `${cursor.x}%`,
-        '--cursor-y': `${cursor.y}%`,
-      } as CSSProperties}
-    >
+    <section id="visual-notes" className="places-section">
       <div className="visual-journal">
-        <div
-          ref={stageRef}
-          className="visual-journal-stage"
-          aria-label="Interactive image collage"
-          onMouseMove={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
-          onMouseEnter={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
-          onPointerMove={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
-          onPointerEnter={(event) => updateActiveFromPoint(event.clientX, event.clientY)}
-          onPointerLeave={() => setCursor((current) => ({ ...current, active: false }))}
-        >
-          <div className={`visual-journal-spotlight ${cursor.active ? 'is-active' : ''}`} aria-hidden="true" />
-
-          <div className="visual-journal-preview" aria-hidden="true">
-            <img src={active.image} alt="" />
-          </div>
-
-          {placeMoments.map((place, index) => {
-            const tile = collageLayout[index]
-            const centerX = tile.x + tile.w / 2
-            const centerY = tile.y + tile.h / 2
-            const distance = Math.hypot(centerX - cursor.x, centerY - cursor.y)
-            const proximity = cursor.active ? Math.max(0, 1 - distance / 32) : 0
-            const isActive = index === activePlace
-            const push = cursor.active && distance < 28 && !isActive ? (1 - distance / 28) * 22 : 0
-            const pushX = push ? ((centerX - cursor.x) / Math.max(distance, 1)) * push : 0
-            const pushY = push ? ((centerY - cursor.y) / Math.max(distance, 1)) * push : 0
-
-            return (
-              <button
-                key={place.image}
-                type="button"
-                className="visual-journal-card"
-                data-active={isActive ? 'true' : undefined}
-                onClick={() => setActivePlace(index)}
-                onFocus={() => setActivePlace(index)}
-                aria-current={isActive ? 'true' : undefined}
-                aria-label={place.title}
-                style={{
-                  '--place-tone': place.tone,
-                  '--tile-x': `${tile.x}%`,
-                  '--tile-y': `${tile.y}%`,
-                  '--tile-w': `${tile.w}%`,
-                  '--tile-h': `${tile.h}%`,
-                  '--tile-rotate': `${tile.r}deg`,
-                  '--tile-proximity': proximity,
-                  '--tile-push-x': `${pushX}px`,
-                  '--tile-push-y': `${pushY}px`,
-                } as CSSProperties}
-              >
-                <img src={place.image} alt="" />
-              </button>
-            )
-          })}
+        <div className="visual-journal-grid" aria-label="Photo grid">
+          {placeMoments.map((place, index) => (
+            <figure key={place.image} className={`visual-journal-card visual-journal-card-${(index % 10) + 1}`}>
+              <img src={place.image} alt={place.title} loading={index > 5 ? 'lazy' : undefined} />
+              <figcaption>
+                <span>{place.title}</span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>

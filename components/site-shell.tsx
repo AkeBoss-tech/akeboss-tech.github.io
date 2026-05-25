@@ -18,6 +18,7 @@ const nav = [
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
@@ -31,6 +32,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.body.classList.toggle('home-clean-body', pathname === '/')
+    setMobileNavOpen(false)
     return () => {
       document.body.classList.remove('home-clean-body')
     }
@@ -44,12 +46,26 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       ) : null}
       <header className={`pointer-events-none fixed inset-x-0 z-50 px-3 sm:px-5 ${scrolled ? 'top-2' : 'top-4 sm:top-5'}`}>
         <div
-          className={`liquid-glass mx-auto w-[min(94vw,72rem)] pointer-events-auto transition-all duration-500 ${scrolled ? 'liquid-glass-scrolled' : 'liquid-glass-top'}`}
+          className={`liquid-glass mx-auto w-[min(94vw,72rem)] pointer-events-auto transition-all duration-500 ${mobileNavOpen ? 'liquid-glass-mobile-open' : ''} ${scrolled ? 'liquid-glass-scrolled' : 'liquid-glass-top'}`}
         >
           <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
             <Link href="/" className="story-link text-base font-semibold tracking-[-0.04em] text-text sm:text-lg">
               Akash Dubey
             </Link>
+            <button
+              type="button"
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-site-nav"
+              aria-label={mobileNavOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              onClick={() => setMobileNavOpen((open) => !open)}
+              className="story-link flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:bg-white/10 md:hidden"
+            >
+              <span className="flex w-4 flex-col gap-1">
+                <span className={`h-px rounded-full bg-current transition-transform duration-300 ${mobileNavOpen ? 'translate-y-1 rotate-45' : ''}`} />
+                <span className={`h-px rounded-full bg-current transition-opacity duration-300 ${mobileNavOpen ? 'opacity-0' : 'opacity-100'}`} />
+                <span className={`h-px rounded-full bg-current transition-transform duration-300 ${mobileNavOpen ? '-translate-y-1 -rotate-45' : ''}`} />
+              </span>
+            </button>
             <nav className="hidden items-center gap-2 text-sm text-text-muted md:flex">
               {nav.map((item) => (
                 item.external ? (
@@ -74,29 +90,35 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
           </div>
-          <nav className="project-strip flex gap-2 overflow-x-auto px-4 pb-4 text-xs text-text-muted md:hidden sm:px-6">
-            {nav.map((item) => (
-              item.external ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`shrink-0 rounded-full border px-4 py-2 ${pathname === item.href ? 'border-white/18 bg-white/10 text-text' : 'border-white/10 bg-white/[0.03]'}`}
-                >
-                  {item.label}
-                </Link>
-              )
-            ))}
-          </nav>
+          {mobileNavOpen ? (
+            <nav id="mobile-site-nav" className="px-3 text-sm text-text-muted md:hidden sm:px-5">
+              <div className="grid gap-1 border-t border-white/10 pb-3 pt-2">
+                {nav.map((item) => (
+                  item.external ? (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setMobileNavOpen(false)}
+                      className="rounded-2xl px-3 py-3 transition-all duration-300 hover:bg-white/8"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileNavOpen(false)}
+                      className={`rounded-2xl px-3 py-3 transition-all duration-300 ${pathname === item.href ? 'bg-white/10 text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' : 'hover:bg-white/8'}`}
+                    >
+                      {item.label}
+                    </Link>
+                  )
+                ))}
+              </div>
+            </nav>
+          ) : null}
         </div>
       </header>
 

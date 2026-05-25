@@ -1,20 +1,59 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Markdown } from '@/components/markdown'
-import { getProjects } from '@/lib/content'
+import { getProject, getProjects } from '@/lib/content'
+import { absoluteUrl, buildPageMetadata, siteName } from '@/lib/seo'
 
 export function generateStaticParams() {
   return getProjects().map((project) => ({ slug: project.slug }))
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const project = getProject(slug)
+
+  if (!project) {
+    return buildPageMetadata({
+      title: 'Project',
+      description: 'Project not found.',
+      path: `/projects/${slug}`,
+      noIndex: true,
+    })
+  }
+
+  return buildPageMetadata({
+    title: project.title,
+    description: project.excerpt || project.lead,
+    path: `/projects/${project.slug}`,
+    image: project.image,
+  })
+}
+
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const project = getProjects().find((entry) => entry.slug === slug)
+  const project = getProject(slug)
   if (!project) return notFound()
   const scarletSyncVideo = project.slug === 'scarlet-sync' ? '/videos/scarlet-sync-demo.mp4' : null
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    headline: project.title,
+    name: project.title,
+    description: project.excerpt || project.lead,
+    url: absoluteUrl(`/projects/${project.slug}`),
+    image: project.image ? [absoluteUrl(project.image)] : undefined,
+    author: {
+      '@type': 'Person',
+      name: siteName,
+    },
+    datePublished: project.date,
+    keywords: project.tags.join(', '),
+  }
 
   return (
     <div className="container-wide py-10 sm:py-14">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
         <div className="max-w-3xl">
           <Link href="/projects" className="eyebrow inline-flex items-center gap-2 text-text-soft hover:text-text">

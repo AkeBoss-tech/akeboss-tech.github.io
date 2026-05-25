@@ -1,4 +1,13 @@
 import { ContactIconLinks } from '@/components/contact-icon-links'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'CV',
+  description:
+    'Academic and research CV for Akash Dubey, including education, research roles, experience, leadership, and awards.',
+  path: '/cv',
+  image: '/images/face.jpg',
+})
 
 const topStats = [
   { label: 'Rutgers', value: 'Honors College', accent: 'text-[#84a9ff]' },

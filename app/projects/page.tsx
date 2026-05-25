@@ -1,5 +1,14 @@
 import { ProjectFeedSearch } from '@/components/project-feed-search'
 import { getProjects } from '@/lib/content'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Projects',
+  description:
+    'Selected projects by Akash Dubey across AI, data, robotics, research, startups, and full-stack product work.',
+  path: '/projects',
+  image: '/images/portfolio/home.png',
+})
 
 function sortNewestFirst(a: { date: string; rank: number }, b: { date: string; rank: number }) {
   const aTime = Date.parse(a.date)

@@ -1,6 +1,15 @@
 import { PostCard } from '@/components/post-card'
 import { getPosts } from '@/lib/content'
 import { getWritingGroups } from '@/lib/site-data'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Writing',
+  description:
+    'Writing by Akash Dubey on robotics, programming, school, reflection, and the thinking behind the projects.',
+  path: '/writing',
+  image: '/images/posts/doing-things-hero.png',
+})
 
 export default function WritingPage() {
   const groups = getWritingGroups(getPosts())

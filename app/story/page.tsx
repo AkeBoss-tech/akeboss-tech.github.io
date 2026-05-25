@@ -1,5 +1,14 @@
 import Link from 'next/link'
 import { storyTimeline } from '@/lib/site-data'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Story',
+  description:
+    'A timeline of Akash Dubey’s projects, ideas, research, robotics work, and product experiments.',
+  path: '/story',
+  image: '/hero-nyc.png',
+})
 
 export default function StoryPage() {
   return (

@@ -1,4 +1,13 @@
 import { ContactIconLinks } from '@/components/contact-icon-links'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata({
+  title: 'Contact',
+  description:
+    'Contact Akash Dubey for internships, research, software engineering, product collaborations, and project work.',
+  path: '/contact',
+  image: '/images/face.jpg',
+})
 
 export default function ContactPage() {
   return (
