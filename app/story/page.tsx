@@ -1,4 +1,6 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
 import Link from 'next/link'
+import { buildStoryLlmMarkdown } from '@/lib/llm'
 import { storyTimeline } from '@/lib/site-data'
 import { buildPageMetadata } from '@/lib/seo'
 
@@ -11,8 +13,10 @@ export const metadata = buildPageMetadata({
 })
 
 export default function StoryPage() {
+  const llmMarkdown = buildStoryLlmMarkdown()
   return (
     <div className="container-wide py-10 sm:py-14">
+      <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <p className="eyebrow">Story</p>
         <h1 className="mt-4 text-5xl text-text sm:text-7xl">A timeline of projects, ideas, and experiments.</h1>

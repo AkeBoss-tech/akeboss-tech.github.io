@@ -22,6 +22,73 @@ const semanticAliases: Record<string, string[]> = {
   scheduling: ['planner', 'planning', 'course', 'timetable', 'calendar'],
 }
 
+const selectedWorkSlugs = [
+  'clean-your-data',
+  'hic-tad-analysis',
+  'llm-research',
+  'top-coder-challenge',
+  'personal-assistant',
+  'puerto-rico-migration',
+  'rutgers-bus-analysis',
+]
+
+const selectedWorkSlugSet = new Set(selectedWorkSlugs)
+
+const curatedViews = [
+  {
+    key: 'all',
+    label: 'All Projects',
+    description: 'Full portfolio across featured work, deeper builds, and archive experiments.',
+    matches: () => true,
+  },
+  {
+    key: 'featured',
+    label: 'Featured',
+    description: 'The projects that define the headline story.',
+    matches: (project: Project) => project.featured,
+  },
+  {
+    key: 'ai-systems',
+    label: 'AI Systems',
+    description: 'Agents, model work, and AI-powered product systems.',
+    matches: (project: Project) =>
+      project.tags.some((tag) => ['ai', 'infrastructure', 'healthtech'].includes(tag.toLowerCase())) || project.featured,
+  },
+  {
+    key: 'data-research',
+    label: 'Data + Research',
+    description: 'Analysis-heavy builds, technical investigations, and research projects.',
+    matches: (project: Project) =>
+      project.tags.some((tag) => ['data', 'research', 'math', 'algorithms'].includes(tag.toLowerCase())),
+  },
+  {
+    key: 'products',
+    label: 'Startups / Products',
+    description: 'Productized tools, platforms, and developer-facing apps.',
+    matches: (project: Project) =>
+      ['lykke', 'scarlet-sync', 'clean-your-data', 'grokipedia-api', 'personal-assistant', 'flamingo'].includes(project.slug),
+  },
+  {
+    key: 'math-algorithms',
+    label: 'Math + Algorithms',
+    description: 'Optimization, proofs, algorithm demos, and quantitative reasoning.',
+    matches: (project: Project) =>
+      ['drp-spring-2025', 'path-finder', 'calculus-generator', 'top-coder-challenge', 'llm-research'].includes(project.slug) ||
+      project.tags.some((tag) => ['math', 'algorithms'].includes(tag.toLowerCase())),
+  },
+  {
+    key: 'early-builds',
+    label: 'Early Builds',
+    description: 'Smaller projects, competition work, and older experiments.',
+    matches: (project: Project) => {
+      const year = getProjectYear(project)
+      return year !== null && year <= 2024 && !project.featured && !selectedWorkSlugSet.has(project.slug)
+    },
+  },
+] as const
+
+type CuratedViewKey = (typeof curatedViews)[number]['key']
+
 function normalizeSearchText(value: string) {
   return value
     .toLowerCase()
@@ -107,21 +174,186 @@ function getProjectSearchScore(project: Project, query: string) {
   return score
 }
 
-function ProjectFeedCard({ project, favorite = false }: { project: Project; favorite?: boolean }) {
+function normalizeWhitespace(value: string) {
+  return value.replace(/\s+/g, ' ').trim()
+}
+
+function shortenText(value: string, maxLength = 190) {
+  const normalized = normalizeWhitespace(value)
+  if (normalized.length <= maxLength) return normalized
+  return `${normalized.slice(0, maxLength).trimEnd()}...`
+}
+
+function getSentence(value: string, fallback: string, maxLength = 180) {
+  const normalized = normalizeWhitespace(value)
+  if (!normalized) return fallback
+  const match = normalized.match(/.+?[.!?](?=\s|$)/)
+  const sentence = match?.[0] ?? normalized
+  return shortenText(sentence, maxLength)
+}
+
+function dedupeText(values: string[]) {
+  const seen = new Set<string>()
+  const unique: string[] = []
+
+  for (const value of values) {
+    const normalized = normalizeSearchText(value)
+    if (!normalized || seen.has(normalized)) continue
+    seen.add(normalized)
+    unique.push(value)
+  }
+
+  return unique
+}
+
+function getProjectYear(project: Project) {
+  const parsed = Date.parse(project.date)
+  if (!Number.isNaN(parsed)) return new Date(parsed).getFullYear()
+  const match = project.date.match(/\b(20\d{2})\b/)
+  return match ? Number(match[1]) : null
+}
+
+function getFeatureHighlights(project: Project) {
+  return dedupeText([
+    getSentence(project.lead, project.excerpt, 160),
+    ...project.sections.slice(0, 3).map((section) => getSentence(section.summary, project.excerpt, 160)),
+    getSentence(project.excerpt, project.excerpt, 160),
+  ]).slice(0, 3)
+}
+
+function getMiniCaseStudy(project: Project) {
+  const firstSection = project.sections[0]
+  const secondSection = project.sections[1]
+  const finalSection = project.sections.at(-1)
+
+  return {
+    problem: getSentence(project.lead, project.excerpt, 220),
+    build: getSentence(firstSection?.summary ?? project.excerpt, project.excerpt, 220),
+    technical: getSentence(
+      secondSection?.summary ?? `Built across ${project.tags.join(', ')} with implementation details in the full writeup.`,
+      `Built across ${project.tags.join(', ')} with implementation details in the full writeup.`,
+      220,
+    ),
+    outcome: getSentence(
+      finalSection?.summary ?? 'The full case study includes the broader outcome, tradeoffs, and lessons from the build.',
+      'The full case study includes the broader outcome, tradeoffs, and lessons from the build.',
+      220,
+    ),
+  }
+}
+
+function matchesProject(project: Project, query: string, activeTag: string, activeView: CuratedViewKey) {
+  const matchesTag = !activeTag || project.tags.some((tag) => tag.toLowerCase() === activeTag)
+  const view = curatedViews.find((item) => item.key === activeView)
+  const matchesView = view ? view.matches(project) : true
+
+  if (!matchesTag || !matchesView) return false
+  if (!query) return true
+
+  return getProjectSearchScore(project, query) > 0
+}
+
+function sortProjects(projects: Project[], query: string) {
+  if (!query) return projects
+  return [...projects].sort((a, b) => getProjectSearchScore(b, query) - getProjectSearchScore(a, query))
+}
+
+function ProjectSection({
+  title,
+  description,
+  children,
+}: {
+  title: string
+  description: string
+  children: ReactNode
+}) {
   return (
-    <article className={`project-feed-card ${favorite ? 'project-feed-card-favorite' : ''}`}>
-      <Link href={`/projects/${project.slug}`} className="project-feed-image" aria-label={`View ${project.title}`}>
+    <section className="project-tier-section">
+      <div className="project-tier-heading">
+        <p className="eyebrow">{title}</p>
+        <p>{description}</p>
+      </div>
+      {children}
+    </section>
+  )
+}
+
+function FeaturedCaseStudy({ project, index }: { project: Project; index: number }) {
+  const highlights = getFeatureHighlights(project)
+
+  return (
+    <article className="featured-case-study">
+      <Link href={`/projects/${project.slug}`} className="featured-case-study-media" aria-label={`Read ${project.title} case study`}>
         <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
       </Link>
 
-      <div className="project-feed-body">
+      <div className="featured-case-study-copy">
+        <div className="featured-case-study-meta">
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <time dateTime={project.date}>{formatDate(project.date)}</time>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span key={tag} className="project-feed-tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <h2>{project.title}</h2>
+        <p className="featured-case-study-excerpt">{project.excerpt}</p>
+
+        <ul className="featured-case-study-points">
+          {highlights.map((highlight) => (
+            <li key={highlight}>{highlight}</li>
+          ))}
+        </ul>
+
+        <div className="featured-case-study-notes">
+          <div>
+            <span className="eyebrow">Focus</span>
+            <p>{project.tags.join(' · ')}</p>
+          </div>
+          <div>
+            <span className="eyebrow">Depth</span>
+            <p>{project.sections.length > 0 ? `${project.sections.length} major sections in the writeup` : 'Project story and implementation notes'}</p>
+          </div>
+          <div>
+            <span className="eyebrow">Read Time</span>
+            <p>{project.reading}</p>
+          </div>
+        </div>
+
+        <Link href={`/projects/${project.slug}`} className="project-feed-link">
+          Read Case Study →
+        </Link>
+      </div>
+    </article>
+  )
+}
+
+function SelectedWorkCard({
+  project,
+  expanded,
+  onToggle,
+}: {
+  project: Project
+  expanded: boolean
+  onToggle: () => void
+}) {
+  const miniCaseStudy = getMiniCaseStudy(project)
+  const drawerId = `project-drawer-${project.slug}`
+
+  return (
+    <article className={`selected-work-card ${expanded ? 'selected-work-card-expanded' : ''}`}>
+      <Link href={`/projects/${project.slug}`} className="selected-work-media" aria-label={`View ${project.title}`}>
+        <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
+      </Link>
+
+      <div className="selected-work-body">
         <div className="project-feed-meta">
           <div className="flex flex-wrap items-center gap-2">
-            {favorite ? (
-              <span className="project-heart" aria-hidden="true">
-                ♥
-              </span>
-            ) : null}
             {project.tags.map((tag) => (
               <span key={tag} className="project-feed-tag">
                 {tag}
@@ -131,37 +363,67 @@ function ProjectFeedCard({ project, favorite = false }: { project: Project; favo
           <time dateTime={project.date}>{formatDate(project.date)}</time>
         </div>
 
-        <h2>
-          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-        </h2>
+        <h3>{project.title}</h3>
         <p>{project.excerpt}</p>
 
-        <Link href={`/projects/${project.slug}`} className="project-feed-link">
-          View Project →
-        </Link>
+        <div className="selected-work-actions">
+          <Link href={`/projects/${project.slug}`} className="project-feed-link">
+            View Project →
+          </Link>
+          <button
+            type="button"
+            className="selected-work-toggle"
+            aria-expanded={expanded}
+            aria-controls={drawerId}
+            onClick={onToggle}
+          >
+            {expanded ? 'Hide Summary ↑' : 'Expand Summary ↓'}
+          </button>
+        </div>
+      </div>
+
+      <div id={drawerId} className={`selected-work-drawer ${expanded ? 'selected-work-drawer-open' : ''}`}>
+        <div className="selected-work-drawer-grid">
+          <div>
+            <span className="eyebrow">Problem</span>
+            <p>{miniCaseStudy.problem}</p>
+          </div>
+          <div>
+            <span className="eyebrow">What I Built</span>
+            <p>{miniCaseStudy.build}</p>
+          </div>
+          <div>
+            <span className="eyebrow">Technical Details</span>
+            <p>{miniCaseStudy.technical}</p>
+          </div>
+          <div>
+            <span className="eyebrow">Outcome / What I Learned</span>
+            <p>{miniCaseStudy.outcome}</p>
+          </div>
+        </div>
       </div>
     </article>
   )
 }
 
-function ProjectSection({ title, children }: { title: string; children: ReactNode }) {
+function ArchiveTile({ project }: { project: Project }) {
+  const year = getProjectYear(project)
+
   return (
-    <section className="project-feed-section">
-      <div className="project-feed-section-heading">
-        <p className="eyebrow">{title}</p>
+    <Link href={`/projects/${project.slug}`} className="archive-project-tile">
+      <div className="archive-project-tile-media">
+        <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
       </div>
-      <div className="project-feed-list">{children}</div>
-    </section>
+      <div className="archive-project-tile-body">
+        <div className="archive-project-tile-meta">
+          <span>{year ?? 'Archive'}</span>
+          <span>{project.tags.slice(0, 2).join(' · ')}</span>
+        </div>
+        <h3>{project.title}</h3>
+        <p>{shortenText(project.excerpt, 110)}</p>
+      </div>
+    </Link>
   )
-}
-
-function matchesProject(project: Project, query: string, activeTag: string) {
-  const matchesTag = !activeTag || project.tags.some((tag) => tag.toLowerCase() === activeTag)
-
-  if (!matchesTag) return false
-  if (!query) return true
-
-  return getProjectSearchScore(project, query) > 0
 }
 
 export function ProjectFeedSearch({
@@ -173,31 +435,79 @@ export function ProjectFeedSearch({
 }) {
   const [query, setQuery] = useState('')
   const [activeTag, setActiveTag] = useState('')
+  const [activeView, setActiveView] = useState<CuratedViewKey>('all')
+  const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
 
   const normalizedQuery = query.trim().toLowerCase()
-  const allTags = useMemo(
-    () => [...new Set([...favoriteProjects, ...recentProjects].flatMap((project) => project.tags))].sort(),
+  const allProjects = useMemo(
+    () => [...favoriteProjects, ...recentProjects],
     [favoriteProjects, recentProjects],
+  )
+  const allTags = useMemo(
+    () => [...new Set(allProjects.flatMap((project) => project.tags))].sort(),
+    [allProjects],
+  )
+
+  const featuredProjects = useMemo(
+    () => allProjects.filter((project) => project.featured),
+    [allProjects],
+  )
+  const selectedProjects = useMemo(
+    () => allProjects.filter((project) => selectedWorkSlugSet.has(project.slug)),
+    [allProjects],
+  )
+  const archiveProjects = useMemo(
+    () => allProjects.filter((project) => !project.featured && !selectedWorkSlugSet.has(project.slug)),
+    [allProjects],
   )
 
   function getVisibleProjects(projects: Project[]) {
-    const filtered = projects.filter((project) => matchesProject(project, normalizedQuery, activeTag))
-
-    if (!normalizedQuery) return filtered
-
-    return [...filtered].sort((a, b) => getProjectSearchScore(b, normalizedQuery) - getProjectSearchScore(a, normalizedQuery))
+    return sortProjects(
+      projects.filter((project) => matchesProject(project, normalizedQuery, activeTag, activeView)),
+      normalizedQuery,
+    )
   }
 
-  const visibleFavorites = useMemo(
-    () => getVisibleProjects(favoriteProjects),
-    [favoriteProjects, normalizedQuery, activeTag],
+  const visibleFeatured = useMemo(
+    () => getVisibleProjects(featuredProjects),
+    [featuredProjects, normalizedQuery, activeTag, activeView],
   )
-  const visibleRecent = useMemo(
-    () => getVisibleProjects(recentProjects),
-    [recentProjects, normalizedQuery, activeTag],
+  const visibleSelected = useMemo(
+    () => getVisibleProjects(selectedProjects),
+    [selectedProjects, normalizedQuery, activeTag, activeView],
+  )
+  const visibleArchive = useMemo(
+    () => getVisibleProjects(archiveProjects),
+    [archiveProjects, normalizedQuery, activeTag, activeView],
+  )
+  const visibleTimeline = useMemo(
+    () => sortProjects(
+      allProjects.filter((project) => matchesProject(project, normalizedQuery, activeTag, activeView)),
+      normalizedQuery,
+    ),
+    [allProjects, normalizedQuery, activeTag, activeView],
   )
 
-  const hasResults = visibleFavorites.length > 0 || visibleRecent.length > 0
+  const timelineByYear = useMemo(() => {
+    const grouped = new Map<number, Project[]>()
+
+    for (const project of visibleTimeline) {
+      const year = getProjectYear(project)
+      if (year === null) continue
+      const current = grouped.get(year) ?? []
+      current.push(project)
+      grouped.set(year, current)
+    }
+
+    return [...grouped.entries()].sort((a, b) => b[0] - a[0])
+  }, [visibleTimeline])
+
+  const hasResults =
+    visibleFeatured.length > 0 ||
+    visibleSelected.length > 0 ||
+    visibleArchive.length > 0
+
+  const activeViewMeta = curatedViews.find((view) => view.key === activeView) ?? curatedViews[0]
 
   return (
     <>
@@ -208,10 +518,25 @@ export function ProjectFeedSearch({
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search projects or labels"
+            placeholder="Search projects, tools, research areas, or labels"
             className="project-search-input"
           />
         </label>
+
+        <div className="project-curated-views" aria-label="Curated views">
+          {curatedViews.map((view) => (
+            <button
+              key={view.key}
+              type="button"
+              className={`project-view-pill ${activeView === view.key ? 'project-view-pill-active' : ''}`}
+              onClick={() => setActiveView(view.key)}
+            >
+              {view.label}
+            </button>
+          ))}
+        </div>
+
+        <p className="project-active-view-copy">{activeViewMeta.description}</p>
 
         <div className="project-search-tags" aria-label="Project labels">
           <button
@@ -219,7 +544,7 @@ export function ProjectFeedSearch({
             className={`project-search-tag ${activeTag === '' ? 'project-search-tag-active' : ''}`}
             onClick={() => setActiveTag('')}
           >
-            All
+            All labels
           </button>
           {allTags.map((tag) => {
             const normalizedTag = tag.toLowerCase()
@@ -238,26 +563,76 @@ export function ProjectFeedSearch({
       </section>
 
       <div className="project-feed mt-12">
-        {visibleFavorites.length > 0 ? (
-          <ProjectSection title="Favorites">
-            {visibleFavorites.map((project) => (
-              <ProjectFeedCard key={project.slug} project={project} favorite />
-            ))}
+        {visibleFeatured.length > 0 ? (
+          <ProjectSection
+            title="Featured Case Studies"
+            description="The projects carrying the strongest product story, technical depth, and overall impact."
+          >
+            <div className="featured-case-study-list">
+              {visibleFeatured.map((project, index) => (
+                <FeaturedCaseStudy key={project.slug} project={project} index={index} />
+              ))}
+            </div>
           </ProjectSection>
         ) : null}
 
-        {visibleRecent.length > 0 ? (
-          <ProjectSection title="Recent">
-            {visibleRecent.map((project) => (
-              <ProjectFeedCard key={project.slug} project={project} />
-            ))}
+        {visibleSelected.length > 0 ? (
+          <ProjectSection
+            title="Selected Work"
+            description="Supporting projects with enough substance to deserve more than a card, without giving each one a full-screen hero."
+          >
+            <div className="selected-work-grid">
+              {visibleSelected.map((project) => (
+                <SelectedWorkCard
+                  key={project.slug}
+                  project={project}
+                  expanded={expandedSlug === project.slug}
+                  onToggle={() => setExpandedSlug(expandedSlug === project.slug ? null : project.slug)}
+                />
+              ))}
+            </div>
+          </ProjectSection>
+        ) : null}
+
+        {visibleArchive.length > 0 ? (
+          <ProjectSection
+            title="Project Archive"
+            description="Compressed experiments, competition work, and older builds that still add range and history to the portfolio."
+          >
+            <div className="archive-project-grid">
+              {visibleArchive.map((project) => (
+                <ArchiveTile key={project.slug} project={project} />
+              ))}
+            </div>
+          </ProjectSection>
+        ) : null}
+
+        {timelineByYear.length > 0 ? (
+          <ProjectSection
+            title="Timeline"
+            description="A chronological scan of how the work has evolved from early experiments into larger systems."
+          >
+            <div className="project-timeline">
+              {timelineByYear.map(([year, projects]) => (
+                <div key={year} className="project-timeline-row">
+                  <div className="project-timeline-year">{year}</div>
+                  <div className="project-timeline-links">
+                    {projects.map((project) => (
+                      <Link key={project.slug} href={`/projects/${project.slug}`}>
+                        {project.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </ProjectSection>
         ) : null}
 
         {!hasResults ? (
           <section className="project-feed-empty">
             <p className="eyebrow">No matches</p>
-            <p>Try another project name, keyword, or label.</p>
+            <p>Try another project name, label, or curated view.</p>
           </section>
         ) : null}
       </div>

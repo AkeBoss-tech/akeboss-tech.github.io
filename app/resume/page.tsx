@@ -1,3 +1,5 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
+import { buildResumeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -9,8 +11,10 @@ export const metadata = buildPageMetadata({
 })
 
 export default function ResumePage() {
+  const llmMarkdown = buildResumeLlmMarkdown()
   return (
     <div className="container-wide py-10 sm:py-14">
+      <LlmMarkdown content={llmMarkdown} />
       <section className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:items-start">
         <div className="max-w-3xl">
           <p className="eyebrow">Resume</p>

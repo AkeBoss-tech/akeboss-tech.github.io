@@ -1,4 +1,6 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
 import Link from 'next/link'
+import { buildAboutLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -10,6 +12,7 @@ export const metadata = buildPageMetadata({
 })
 
 export default function AboutPage() {
+  const llmMarkdown = buildAboutLlmMarkdown()
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -23,6 +26,7 @@ export default function AboutPage() {
   return (
     <div className="container-wide py-10 sm:py-14">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <LlmMarkdown content={llmMarkdown} />
       <section className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div className="panel-soft overflow-hidden rounded-[32px]">
           <img src="/images/face.jpg" alt="Akash Dubey" className="h-full w-full object-cover" />

@@ -1,5 +1,7 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
 import { PostCard } from '@/components/post-card'
 import { getPosts } from '@/lib/content'
+import { buildWritingLlmMarkdown } from '@/lib/llm'
 import { getWritingGroups } from '@/lib/site-data'
 import { buildPageMetadata } from '@/lib/seo'
 
@@ -12,10 +14,13 @@ export const metadata = buildPageMetadata({
 })
 
 export default function WritingPage() {
-  const groups = getWritingGroups(getPosts())
+  const posts = getPosts()
+  const groups = getWritingGroups(posts)
+  const llmMarkdown = buildWritingLlmMarkdown(posts)
 
   return (
     <div className="container-wide py-10 sm:py-14">
+      <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <h1 className="text-5xl text-text sm:text-7xl">Writing.</h1>
         <p className="mt-3 max-w-2xl text-text-soft">More coming soon!</p>

@@ -1,5 +1,7 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
 import { HomeStory } from '@/components/home-story'
 import { getProjects } from '@/lib/content'
+import { buildHomeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -12,6 +14,7 @@ export const metadata = buildPageMetadata({
 
 export default function HomePage() {
   const projects = getProjects()
+  const llmMarkdown = buildHomeLlmMarkdown(projects)
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -40,6 +43,7 @@ export default function HomePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <LlmMarkdown content={llmMarkdown} />
       <HomeStory projects={projects} />
     </>
   )

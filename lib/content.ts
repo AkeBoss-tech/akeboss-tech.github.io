@@ -71,7 +71,7 @@ function compareDatesNewestFirst(a: string, b: string) {
   return bTime - aTime
 }
 
-function cleanMarkdownText(value: string) {
+export function cleanMarkdownText(value: string) {
   return value
     .replace(/<img[^>]*>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
@@ -164,6 +164,21 @@ const placeMoments: PlaceMoment[] = [
   },
 ]
 
+const visiblePlaceCount = 8
+
+function shufflePlaces(places: PlaceMoment[]) {
+  const shuffled = [...places]
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1))
+    const currentPlace = shuffled[index]
+    shuffled[index] = shuffled[swapIndex]
+    shuffled[swapIndex] = currentPlace
+  }
+
+  return shuffled
+}
+
 function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'right' }) {
   return (
     <article className={`gd-row ${align}`}>
@@ -219,20 +234,87 @@ function IntroHero() {
 }
 
 function PlacesSection() {
+  const [places, setPlaces] = useState(placeMoments)
+  const [showAllPlaces, setShowAllPlaces] = useState(false)
+  const [expandedPlace, setExpandedPlace] = useState<PlaceMoment | null>(null)
+  const visiblePlaces = showAllPlaces ? places : places.slice(0, visiblePlaceCount)
+
+  useEffect(() => {
+    setPlaces(shufflePlaces(placeMoments))
+  }, [])
+
+  useEffect(() => {
+    if (!expandedPlace) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setExpandedPlace(null)
+    }
+
+    document.body.style.overflow = 'hidden'
+    document.body.classList.add('visual-journal-expanded')
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = ''
+      document.body.classList.remove('visual-journal-expanded')
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [expandedPlace])
+
   return (
     <section id="visual-notes" className="places-section">
       <div className="visual-journal">
         <div className="visual-journal-grid" aria-label="Photo grid">
-          {placeMoments.map((place, index) => (
-            <figure key={place.image} className={`visual-journal-card visual-journal-card-${(index % 10) + 1}`}>
+          {visiblePlaces.map((place, index) => (
+            <button
+              key={place.image}
+              type="button"
+              className={`visual-journal-card visual-journal-card-${(index % 10) + 1} ${showAllPlaces && index >= visiblePlaceCount ? 'visual-journal-card-reveal' : ''}`}
+              onClick={() => setExpandedPlace(place)}
+              aria-label={`Expand ${place.title}`}
+            >
               <img src={place.image} alt={place.title} loading={index > 5 ? 'lazy' : undefined} />
-              <figcaption>
+              <span className="visual-journal-card-caption">
                 <span>{place.title}</span>
-              </figcaption>
-            </figure>
+              </span>
+            </button>
           ))}
         </div>
+
+        {!showAllPlaces ? (
+          <div className="visual-journal-actions">
+            <button type="button" className="visual-journal-more" onClick={() => setShowAllPlaces(true)}>
+              See more
+            </button>
+          </div>
+        ) : null}
       </div>
+
+      {expandedPlace ? (
+        <div
+          className="visual-journal-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={expandedPlace.title}
+          onClick={() => setExpandedPlace(null)}
+        >
+          <div className="visual-journal-lightbox-inner" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="visual-journal-lightbox-close"
+              onClick={() => setExpandedPlace(null)}
+              aria-label="Close expanded image"
+            >
+              <span aria-hidden="true" />
+            </button>
+            <img src={expandedPlace.image} alt={expandedPlace.title} />
+            <div className="visual-journal-lightbox-caption">
+              <h2>{expandedPlace.title}</h2>
+              <p>{expandedPlace.description}</p>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   )
 }
@@ -373,6 +455,200 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
 
       world.add(arrows)
 
+      function makeBallTexture(kind: 'tennis' | 'cricket' | 'soccer' | 'basketball') {
+        const canvas = document.createElement('canvas')
+        canvas.width = 256
+        canvas.height = 256
+        const context = canvas.getContext('2d')
+        if (!context) return null
+        const ctx = context
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        function fillBase(color: string, highlight: string, shadow: string) {
+          const gradient = ctx.createRadialGradient(76, 58, 12, 144, 148, 190)
+          gradient.addColorStop(0, highlight)
+          gradient.addColorStop(0.48, color)
+          gradient.addColorStop(1, shadow)
+          ctx.fillStyle = gradient
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
+        }
+
+        function addSpeckles(color: string, count: number, alpha: number) {
+          ctx.save()
+          ctx.globalAlpha = alpha
+          ctx.fillStyle = color
+          for (let i = 0; i < count; i += 1) {
+            const x = (Math.sin(i * 37.2) * 0.5 + 0.5) * canvas.width
+            const y = (Math.cos(i * 23.7) * 0.5 + 0.5) * canvas.height
+            const size = 0.7 + ((i * 17) % 5) * 0.35
+            ctx.beginPath()
+            ctx.arc(x, y, size, 0, Math.PI * 2)
+            ctx.fill()
+          }
+          ctx.restore()
+        }
+
+        if (kind === 'tennis') {
+          fillBase('#c8f34a', '#f0ff7c', '#6f9d20')
+          addSpeckles('#f7ffd5', 900, 0.22)
+          addSpeckles('#5f7d16', 420, 0.14)
+          context.strokeStyle = '#f6fff2'
+          context.lineWidth = 18
+          context.beginPath()
+          context.arc(62, 128, 91, -Math.PI / 2, Math.PI / 2)
+          context.stroke()
+          context.beginPath()
+          context.arc(194, 128, 91, Math.PI / 2, Math.PI * 1.5)
+          context.stroke()
+          context.strokeStyle = 'rgba(255,255,255,0.42)'
+          context.lineWidth = 5
+          context.stroke()
+        } else if (kind === 'cricket') {
+          fillBase('#9f2427', '#d75150', '#4e1015')
+          addSpeckles('#2b090b', 360, 0.18)
+          addSpeckles('#f4a2a0', 160, 0.12)
+          context.strokeStyle = '#f6eed8'
+          context.lineWidth = 9
+          context.beginPath()
+          context.moveTo(128, 0)
+          context.bezierCurveTo(102, 58, 154, 116, 128, 256)
+          context.stroke()
+          context.setLineDash([4, 7])
+          context.lineWidth = 3
+          context.beginPath()
+          context.moveTo(112, 0)
+          context.bezierCurveTo(88, 58, 142, 116, 112, 256)
+          context.stroke()
+          context.beginPath()
+          context.moveTo(144, 0)
+          context.bezierCurveTo(116, 58, 170, 116, 144, 256)
+          context.stroke()
+          context.setLineDash([])
+        } else if (kind === 'soccer') {
+          fillBase('#f7f8f4', '#ffffff', '#aeb2ad')
+          context.fillStyle = '#111317'
+          context.strokeStyle = '#111317'
+          context.lineWidth = 5
+          const centers = [
+            [128, 128, 34],
+            [42, 46, 25],
+            [214, 54, 25],
+            [58, 210, 25],
+            [204, 204, 25],
+            [128, 18, 20],
+            [128, 238, 20],
+          ]
+          centers.forEach(([cx, cy, size]) => {
+            context.beginPath()
+            for (let i = 0; i < 5; i += 1) {
+              const angle = -Math.PI / 2 + (i * Math.PI * 2) / 5
+              const x = cx + Math.cos(angle) * size
+              const y = cy + Math.sin(angle) * size
+              if (i === 0) context.moveTo(x, y)
+              else context.lineTo(x, y)
+            }
+            context.closePath()
+            context.fill()
+            context.stroke()
+          })
+          context.strokeStyle = 'rgba(17,19,23,0.52)'
+          context.lineWidth = 6
+          context.beginPath()
+          context.moveTo(128, 128)
+          context.lineTo(42, 46)
+          context.moveTo(128, 128)
+          context.lineTo(214, 54)
+          context.moveTo(128, 128)
+          context.lineTo(58, 210)
+          context.moveTo(128, 128)
+          context.lineTo(204, 204)
+          context.stroke()
+        } else {
+          fillBase('#d97722', '#f7a648', '#7b3512')
+          addSpeckles('#2b160b', 1100, 0.22)
+          addSpeckles('#ffd08a', 260, 0.08)
+          context.strokeStyle = '#21150e'
+          context.lineWidth = 10
+          context.beginPath()
+          context.moveTo(128, 0)
+          context.lineTo(128, 256)
+          context.stroke()
+          context.beginPath()
+          context.moveTo(0, 128)
+          context.lineTo(256, 128)
+          context.stroke()
+          context.beginPath()
+          context.arc(48, 128, 84, -Math.PI / 2, Math.PI / 2)
+          context.stroke()
+          context.beginPath()
+          context.arc(208, 128, 84, Math.PI / 2, Math.PI * 1.5)
+          context.stroke()
+        }
+
+        const texture = new THREE.CanvasTexture(canvas)
+        texture.colorSpace = THREE.SRGBColorSpace
+        texture.anisotropy = 4
+        return texture
+      }
+
+      const sportsBalls = new THREE.Group()
+      const ballSpecs = [
+        { kind: 'tennis' as const, startX: 7, startZ: 23, radius: 0.9, delay: 250, speed: 9600 },
+        { kind: 'cricket' as const, startX: 19, startZ: -21, radius: 0.78, delay: 650, speed: 7800 },
+        { kind: 'soccer' as const, startX: -12, startZ: 17, radius: 1.05, delay: 1200, speed: 8400 },
+        { kind: 'basketball' as const, startX: 25, startZ: 10, radius: 1, delay: 1800, speed: 9000 },
+      ]
+
+      const ballStates = ballSpecs.map((spec) => {
+        const texture = makeBallTexture(spec.kind)
+        const material = new THREE.MeshStandardMaterial({
+          color: texture ? '#ffffff' : '#d8d8d8',
+          map: texture || undefined,
+          roughness: spec.kind === 'tennis' ? 0.86 : 0.62,
+          metalness: 0.02,
+        })
+        const mesh = new THREE.Mesh(new THREE.SphereGeometry(spec.radius, 48, 32), material)
+        mesh.visible = false
+        mesh.castShadow = false
+        sportsBalls.add(mesh)
+
+        return {
+          ...spec,
+          mesh,
+          material,
+          texture,
+          x: spec.startX,
+          z: spec.startZ,
+          y: f(spec.startX, spec.startZ) + spec.radius,
+          vx: 0,
+          vz: 0,
+          vy: 0,
+          started: false,
+          lastKick: 0,
+          lastPoint: surfacePoint(spec.startX, spec.startZ, spec.radius),
+        }
+      })
+
+      world.add(sportsBalls)
+
+      function resetBall(ball: (typeof ballStates)[number], index: number) {
+        const direction = downhillDirection(ball.startX, ball.startZ)
+        ball.x = ball.startX
+        ball.z = ball.startZ
+        ball.y = f(ball.x, ball.z) + ball.radius + 5.8 + index * 1.15
+        ball.vx = direction.x * (2.2 + index * 0.35) + Math.sin(index * 1.7) * 0.75
+        ball.vz = direction.z * (2.2 + index * 0.35) + Math.cos(index * 1.4) * 0.75
+        ball.vy = 0.7 + index * 0.28
+        ball.started = false
+        ball.lastKick = 0
+        ball.lastPoint.copy(new THREE.Vector3(ball.x, ball.y, ball.z))
+        ball.mesh.position.copy(ball.lastPoint)
+        ball.mesh.visible = false
+      }
+
+      ballStates.forEach(resetBall)
+
       function createPath(startX: number, startZ: number) {
         let px = startX
         let pz = startZ
@@ -400,6 +676,7 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
       let wasEndMode = false
       let endOrbitBlend = 0
       let cameraStateReady = false
+      let previousFrameTime = pageLoadTime
 
       const cameraState = {
         angle: 0,
@@ -442,6 +719,8 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         animationFrame = window.requestAnimationFrame(animate)
 
         const now = performance.now()
+        const deltaSeconds = Math.min((now - previousFrameTime) / 1000, 0.033)
+        previousFrameTime = now
         const p = progress()
         const sectionRect = stage.getBoundingClientRect()
         const stageVisibility = THREE.MathUtils.smoothstep(window.innerHeight - sectionRect.top, 0, window.innerHeight * 0.75)
@@ -454,7 +733,7 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
           gradientRef.current.style.opacity = String(stageVisibility)
         }
 
-        world.rotation.y = THREE.MathUtils.lerp(world.rotation.y, p * Math.PI * 1.45, 0.035)
+        world.rotation.y = THREE.MathUtils.lerp(world.rotation.y, p * Math.PI * 1.08, 0.026)
 
         const introProgress = THREE.MathUtils.smoothstep(now - pageLoadTime, 0, 3000)
         const introOnly = 1 - THREE.MathUtils.smoothstep(p, 0.01, 0.12)
@@ -472,13 +751,14 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         if (endMode && !wasEndMode) {
           endOrbitStart = now
           endOrbitBaseAngle = cameraState.angle
+          ballStates.forEach(resetBall)
         }
 
         wasEndMode = endMode
         endOrbitBlend = THREE.MathUtils.lerp(endOrbitBlend, endMode ? 1 : 0, endMode ? 0.026 : 0.065)
 
         const endOrbitElapsed = now - endOrbitStart
-        const orbitAngle = endOrbitBaseAngle + endOrbitElapsed * 0.00022
+        const orbitAngle = endOrbitBaseAngle + endOrbitElapsed * 0.00008
         const blendedAngle = blendAngle(normalAngle, orbitAngle, endOrbitBlend)
         const blendedRadius = THREE.MathUtils.lerp(normalRadius, 37.5, endOrbitBlend)
         const blendedHeight = THREE.MathUtils.lerp(normalHeight, 27 + Math.sin(orbitAngle) * 2, endOrbitBlend)
@@ -500,6 +780,81 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
           const arrow = child as import('three').ArrowHelper
           setMaterialOpacity(arrow.line.material, arrowOpacity)
           setMaterialOpacity(arrow.cone.material, arrowOpacity)
+        })
+
+        const sportsOpacity = THREE.MathUtils.smoothstep(endOrbitBlend, 0.18, 0.62)
+        sportsBalls.visible = sportsOpacity > 0.01
+        ballStates.forEach((ball, index) => {
+          const elapsed = Math.max(0, endOrbitElapsed - ball.delay)
+          const isActive = sportsOpacity > 0.01 && elapsed > 0
+
+          if (isActive && !ball.started) {
+            ball.started = true
+            ball.lastKick = now
+          }
+
+          if (isActive) {
+            const gradient = gradientAt(ball.x, ball.z)
+            const surfaceY = f(ball.x, ball.z) + ball.radius
+            const grounded = ball.y <= surfaceY + 0.02 && ball.vy <= 0.08
+            const groundFriction = grounded ? 1.35 : 0.22
+            const airDrag = 0.08
+            const slopeForce = 10.8
+            const bounds = surfaceSize * 0.32
+
+            ball.vx += -gradient.dx * slopeForce * deltaSeconds
+            ball.vz += -gradient.dz * slopeForce * deltaSeconds
+            ball.vx *= Math.exp(-(groundFriction + airDrag) * deltaSeconds)
+            ball.vz *= Math.exp(-(groundFriction + airDrag) * deltaSeconds)
+            ball.vy -= 16.8 * deltaSeconds
+
+            ball.x += ball.vx * deltaSeconds
+            ball.z += ball.vz * deltaSeconds
+            ball.y += ball.vy * deltaSeconds
+
+            if (ball.x < -bounds || ball.x > bounds) {
+              ball.x = THREE.MathUtils.clamp(ball.x, -bounds, bounds)
+              ball.vx *= -0.62
+            }
+
+            if (ball.z < -bounds || ball.z > bounds) {
+              ball.z = THREE.MathUtils.clamp(ball.z, -bounds, bounds)
+              ball.vz *= -0.62
+            }
+
+            const nextSurfaceY = f(ball.x, ball.z) + ball.radius
+            if (ball.y <= nextSurfaceY) {
+              ball.y = nextSurfaceY
+              ball.vy = Math.abs(ball.vy) > 0.35 ? Math.abs(ball.vy) * 0.52 : 0
+
+              const speed = Math.hypot(ball.vx, ball.vz)
+              if (speed < 1.05 && Math.abs(ball.vy) < 0.18 && now - ball.lastKick > 760) {
+                const direction = downhillDirection(ball.x, ball.z)
+                const sideKick = new THREE.Vector3(-direction.z, 0, direction.x).multiplyScalar(Math.sin(now * 0.001 + index) * 1.05)
+                ball.vx += direction.x * (4.8 + index * 0.42) + sideKick.x
+                ball.vz += direction.z * (4.8 + index * 0.42) + sideKick.z
+                ball.vy = 5.25 + ball.radius * 1.55
+                ball.lastKick = now
+              }
+            }
+          }
+
+          const currentPoint = new THREE.Vector3(ball.x, ball.y, ball.z)
+          const movement = currentPoint.clone().sub(ball.lastPoint)
+          const distance = movement.length()
+
+          ball.mesh.visible = isActive
+          ball.mesh.position.copy(currentPoint)
+          ball.mesh.scale.setScalar(0.72 + sportsOpacity * 0.28)
+
+          if (distance > 0.001) {
+            const axis = new THREE.Vector3(movement.z, 0, -movement.x).normalize()
+            ball.mesh.rotateOnWorldAxis(axis, distance / ball.radius)
+          }
+
+          ball.lastPoint.copy(currentPoint)
+          ball.material.opacity = sportsOpacity
+          ball.material.transparent = sportsOpacity < 1
         })
 
         const bottomNavProgress = THREE.MathUtils.smoothstep(endOrbitBlend, 0.22, 0.86)
@@ -526,10 +881,17 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         geo.dispose()
         fillMat.dispose()
         wireMat.dispose()
+        ballStates.forEach((ball) => {
+          ball.mesh.geometry.dispose()
+          ball.material.dispose()
+          ball.texture?.dispose()
+        })
       })
     }
 
-    start()
+    start().catch((error) => {
+      console.error('Gradient scene failed to start', error)
+    })
 
     return () => {
       disposed = true

@@ -1,4 +1,6 @@
 import { ContactIconLinks } from '@/components/contact-icon-links'
+import { LlmMarkdown } from '@/components/llm-markdown'
+import { buildContactLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -10,8 +12,10 @@ export const metadata = buildPageMetadata({
 })
 
 export default function ContactPage() {
+  const llmMarkdown = buildContactLlmMarkdown()
   return (
     <div className="container-wide py-10 sm:py-14">
+      <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <p className="eyebrow">Contact</p>
         <h1 className="mt-4 text-5xl text-text sm:text-7xl">Open line.</h1>

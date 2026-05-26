@@ -282,6 +282,19 @@ const selectedProjects = [
   { title: 'Analysis of the Rutgers Bus System', href: '/projects/rutgers-bus-analysis' },
 ] as const
 
+const cvCollageImages = [
+  { src: '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync interface', className: 'sm:col-span-2 sm:row-span-2' },
+  { src: '/images/portfolio/hic-tad/hero.png', alt: 'Hi-C TAD analysis visualization', className: '' },
+  { src: '/images/portfolio/random_environment.png', alt: 'Path finding visualization', className: '' },
+  { src: '/images/portfolio/lykke/hero.png', alt: 'Lykke study product interface', className: 'sm:col-span-2' },
+  { src: '/images/portfolio/llm-research/image.png', alt: 'LLM research chart', className: '' },
+  { src: '/images/portfolio/vis/economic-plotter.png', alt: 'Economic feature plotting interface', className: '' },
+  { src: '/images/portfolio/2024-upscaled.png', alt: 'FRC robot project', className: 'sm:col-span-2 sm:row-span-2' },
+  { src: '/images/homepage/2026-05-24/nvidia.png', alt: 'NVIDIA campus photo', className: '' },
+  { src: '/images/homepage/2026-05-24/dc.png', alt: 'Washington DC photo', className: '' },
+  { src: '/images/homepage/2026-05-24/ruroad.png', alt: 'Rutgers road at night', className: 'sm:col-span-2' },
+] as const
+
 const skills = [
   'Python',
   'C++',
@@ -570,6 +583,25 @@ export default function CVPage() {
                 <a key={item.title} href={item.href} className="story-link selected-project-link text-text-muted hover:text-text">
                   {item.title}
                 </a>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Visual Collage" accentClass="text-[#d8b4fe]">
+            <div className="grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] sm:grid-cols-4">
+              {cvCollageImages.map((image) => (
+                <figure
+                  key={image.src}
+                  className={`group relative overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.03] ${image.className}`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_54%,rgba(0,0,0,0.48))]" />
+                </figure>
               ))}
             </div>
           </Section>

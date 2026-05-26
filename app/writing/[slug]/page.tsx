@@ -1,3 +1,4 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -5,6 +6,7 @@ import { Markdown } from '@/components/markdown'
 import { PostCard } from '@/components/post-card'
 import { getPost, getPosts } from '@/lib/content'
 import { formatDate } from '@/lib/format'
+import { buildPostLlmMarkdown } from '@/lib/llm'
 import { absoluteUrl, buildPageMetadata, siteName } from '@/lib/seo'
 
 export function generateStaticParams() {
@@ -38,6 +40,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const post = getPost(slug)
   if (!post) return notFound()
+  const llmMarkdown = buildPostLlmMarkdown(post)
   const articleDescription = post.excerpt || post.lead
   const relatedPosts = getPosts()
     .filter((candidate) => candidate.slug !== post.slug)
@@ -66,6 +69,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <div className="container-wide py-10 sm:py-14">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <Link href="/writing" className="eyebrow inline-flex items-center gap-2 text-text-soft hover:text-text">
           ← Back to writing

@@ -1,5 +1,7 @@
+import { LlmMarkdown } from '@/components/llm-markdown'
 import { ProjectFeedSearch } from '@/components/project-feed-search'
 import { getProjects } from '@/lib/content'
+import { buildProjectsLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -22,11 +24,13 @@ function sortNewestFirst(a: { date: string; rank: number }, b: { date: string; r
 }
 export default function ProjectsPage() {
   const projects = getProjects()
+  const llmMarkdown = buildProjectsLlmMarkdown(projects)
   const favoriteProjects = projects.filter((project) => project.favorite).sort(sortNewestFirst)
   const recentProjects = projects.filter((project) => !project.favorite).sort(sortNewestFirst)
 
   return (
     <div className="container-wide py-10 sm:py-14">
+      <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <h1 className="text-5xl text-text sm:text-7xl">Projects.</h1>
         <p className="mt-3 max-w-2xl text-text-soft">Things I&apos;m building and exploring.</p>
