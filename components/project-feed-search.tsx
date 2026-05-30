@@ -221,27 +221,6 @@ function getFeatureHighlights(project: Project) {
   ]).slice(0, 3)
 }
 
-function getMiniCaseStudy(project: Project) {
-  const firstSection = project.sections[0]
-  const secondSection = project.sections[1]
-  const finalSection = project.sections.at(-1)
-
-  return {
-    problem: getSentence(project.lead, project.excerpt, 220),
-    build: getSentence(firstSection?.summary ?? project.excerpt, project.excerpt, 220),
-    technical: getSentence(
-      secondSection?.summary ?? `Built across ${project.tags.join(', ')} with implementation details in the full writeup.`,
-      `Built across ${project.tags.join(', ')} with implementation details in the full writeup.`,
-      220,
-    ),
-    outcome: getSentence(
-      finalSection?.summary ?? 'The full case study includes the broader outcome, tradeoffs, and lessons from the build.',
-      'The full case study includes the broader outcome, tradeoffs, and lessons from the build.',
-      220,
-    ),
-  }
-}
-
 function matchesProject(project: Project, query: string, activeTag: string, activeView: CuratedViewKey) {
   const matchesTag = !activeTag || project.tags.some((tag) => tag.toLowerCase() === activeTag)
   const view = curatedViews.find((item) => item.key === activeView)
@@ -264,14 +243,14 @@ function ProjectSection({
   children,
 }: {
   title: string
-  description: string
+  description?: string
   children: ReactNode
 }) {
   return (
     <section className="project-tier-section">
       <div className="project-tier-heading">
         <p className="eyebrow">{title}</p>
-        <p>{description}</p>
+        {description ? <p>{description}</p> : null}
       </div>
       {children}
     </section>
@@ -280,11 +259,27 @@ function ProjectSection({
 
 function FeaturedCaseStudy({ project, index }: { project: Project; index: number }) {
   const highlights = getFeatureHighlights(project)
+  const mediaImages = project.mediaImages.length > 0 ? project.mediaImages : [project.image || '/images/portfolio/home.png']
+  const [coverImage, ...collageImages] = mediaImages
 
   return (
     <article className="featured-case-study">
       <Link href={`/projects/${project.slug}`} className="featured-case-study-media" aria-label={`Read ${project.title} case study`}>
-        <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
+        <div className="featured-case-study-media-top">
+          <img src={coverImage} alt={project.title} />
+        </div>
+        {collageImages.length > 0 ? (
+          <div className="featured-case-study-collage">
+            {collageImages.slice(0, 3).map((image, imageIndex) => (
+              <div
+                key={image}
+                className={`featured-case-study-collage-item featured-case-study-collage-item-${imageIndex + 1}`}
+              >
+                <img src={image} alt={`${project.title} detail ${imageIndex + 1}`} />
+              </div>
+            ))}
+          </div>
+        ) : null}
       </Link>
 
       <div className="featured-case-study-copy">
@@ -310,21 +305,6 @@ function FeaturedCaseStudy({ project, index }: { project: Project; index: number
           ))}
         </ul>
 
-        <div className="featured-case-study-notes">
-          <div>
-            <span className="eyebrow">Focus</span>
-            <p>{project.tags.join(' · ')}</p>
-          </div>
-          <div>
-            <span className="eyebrow">Depth</span>
-            <p>{project.sections.length > 0 ? `${project.sections.length} major sections in the writeup` : 'Project story and implementation notes'}</p>
-          </div>
-          <div>
-            <span className="eyebrow">Read Time</span>
-            <p>{project.reading}</p>
-          </div>
-        </div>
-
         <Link href={`/projects/${project.slug}`} className="project-feed-link">
           Read Case Study →
         </Link>
@@ -335,18 +315,11 @@ function FeaturedCaseStudy({ project, index }: { project: Project; index: number
 
 function SelectedWorkCard({
   project,
-  expanded,
-  onToggle,
 }: {
   project: Project
-  expanded: boolean
-  onToggle: () => void
 }) {
-  const miniCaseStudy = getMiniCaseStudy(project)
-  const drawerId = `project-drawer-${project.slug}`
-
   return (
-    <article className={`selected-work-card ${expanded ? 'selected-work-card-expanded' : ''}`}>
+    <article className="selected-work-card">
       <Link href={`/projects/${project.slug}`} className="selected-work-media" aria-label={`View ${project.title}`}>
         <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
       </Link>
@@ -370,36 +343,6 @@ function SelectedWorkCard({
           <Link href={`/projects/${project.slug}`} className="project-feed-link">
             View Project →
           </Link>
-          <button
-            type="button"
-            className="selected-work-toggle"
-            aria-expanded={expanded}
-            aria-controls={drawerId}
-            onClick={onToggle}
-          >
-            {expanded ? 'Hide Summary ↑' : 'Expand Summary ↓'}
-          </button>
-        </div>
-      </div>
-
-      <div id={drawerId} className={`selected-work-drawer ${expanded ? 'selected-work-drawer-open' : ''}`}>
-        <div className="selected-work-drawer-grid">
-          <div>
-            <span className="eyebrow">Problem</span>
-            <p>{miniCaseStudy.problem}</p>
-          </div>
-          <div>
-            <span className="eyebrow">What I Built</span>
-            <p>{miniCaseStudy.build}</p>
-          </div>
-          <div>
-            <span className="eyebrow">Technical Details</span>
-            <p>{miniCaseStudy.technical}</p>
-          </div>
-          <div>
-            <span className="eyebrow">Outcome / What I Learned</span>
-            <p>{miniCaseStudy.outcome}</p>
-          </div>
         </div>
       </div>
     </article>
@@ -426,6 +369,24 @@ function ArchiveTile({ project }: { project: Project }) {
   )
 }
 
+function TimelineMarker({ isLast }: { isLast: boolean }) {
+  return (
+    <div className={`project-timeline-marker ${isLast ? 'project-timeline-marker-last' : ''}`} aria-hidden="true">
+      <svg viewBox="0 0 28 28" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="projectTimelineNode" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#f4efeb" />
+            <stop offset="52%" stopColor="#efe8e1" />
+            <stop offset="100%" stopColor="#8fe0d0" />
+          </radialGradient>
+        </defs>
+        <circle cx="14" cy="14" r="9" className="project-timeline-node-glow" />
+        <circle cx="14" cy="14" r="5.4" className="project-timeline-node-core" />
+      </svg>
+    </div>
+  )
+}
+
 export function ProjectFeedSearch({
   favoriteProjects,
   recentProjects,
@@ -436,7 +397,6 @@ export function ProjectFeedSearch({
   const [query, setQuery] = useState('')
   const [activeTag, setActiveTag] = useState('')
   const [activeView, setActiveView] = useState<CuratedViewKey>('all')
-  const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
 
   const normalizedQuery = query.trim().toLowerCase()
   const allProjects = useMemo(
@@ -535,9 +495,6 @@ export function ProjectFeedSearch({
             </button>
           ))}
         </div>
-
-        <p className="project-active-view-copy">{activeViewMeta.description}</p>
-
         <div className="project-search-tags" aria-label="Project labels">
           <button
             type="button"
@@ -579,15 +536,12 @@ export function ProjectFeedSearch({
         {visibleSelected.length > 0 ? (
           <ProjectSection
             title="Selected Work"
-            description="Supporting projects with enough substance to deserve more than a card, without giving each one a full-screen hero."
           >
             <div className="selected-work-grid">
               {visibleSelected.map((project) => (
                 <SelectedWorkCard
                   key={project.slug}
                   project={project}
-                  expanded={expandedSlug === project.slug}
-                  onToggle={() => setExpandedSlug(expandedSlug === project.slug ? null : project.slug)}
                 />
               ))}
             </div>
@@ -597,7 +551,6 @@ export function ProjectFeedSearch({
         {visibleArchive.length > 0 ? (
           <ProjectSection
             title="Project Archive"
-            description="Compressed experiments, competition work, and older builds that still add range and history to the portfolio."
           >
             <div className="archive-project-grid">
               {visibleArchive.map((project) => (
@@ -613,8 +566,9 @@ export function ProjectFeedSearch({
             description="A chronological scan of how the work has evolved from early experiments into larger systems."
           >
             <div className="project-timeline">
-              {timelineByYear.map(([year, projects]) => (
+              {timelineByYear.map(([year, projects], index) => (
                 <div key={year} className="project-timeline-row">
+                  <TimelineMarker isLast={index === timelineByYear.length - 1} />
                   <div className="project-timeline-year">{year}</div>
                   <div className="project-timeline-links">
                     {projects.map((project) => (

@@ -17,9 +17,17 @@ type HomePoint = {
   href?: string
   logo?: string
   logoAlt?: string
+  logos?: Array<{ src: string; alt: string }>
   image?: string
   imageAlt?: string
   gallery?: Array<{ src: string; alt: string }>
+  gallerySide?: 'left' | 'right'
+  galleryLayout?: 'default' | 'feature-left-stack-right'
+}
+
+type HomeGradientDescentStageProps = {
+  points: HomePoint[]
+  topBackgroundRef: React.RefObject<HTMLDivElement | null>
 }
 
 type PlaceMoment = {
@@ -67,26 +75,26 @@ const placeMoments: PlaceMoment[] = [
     tone: '#d2a27a',
   },
   {
-    title: 'All In',
+    title: 'All-In Summit',
     description: 'A map pin for the moments that feel fully alive.',
     image: '/images/homepage/2026-05-24/allin1.png',
     tone: '#d6a6be',
   },
   {
-    title: 'Random Glance',
-    description: 'An image worth keeping before overthinking it.',
+    title: 'Neon Night Facade',
+    description: 'A neon-lit facade that felt too good to leave unnamed.',
     image: '/images/homepage/2026-05-24/rando.png',
     tone: '#91a8d8',
   },
   {
-    title: 'NVIDIA',
+    title: 'NVIDIA GTC',
     description: 'A nod to the robotics and VLA thread in the work.',
     image: '/images/homepage/2026-05-24/nvidia.png',
     tone: '#91c777',
   },
   {
-    title: 'Glum',
-    description: 'Moody light, good texture, no need to force cheerfulness.',
+    title: 'Foglit Trees',
+    description: 'Fog, backlight, and a frame that works because it stays quiet.',
     image: '/images/homepage/2026-05-24/glum.png',
     tone: '#7f94b4',
   },
@@ -97,20 +105,20 @@ const placeMoments: PlaceMoment[] = [
     tone: '#8ca8c8',
   },
   {
-    title: 'DC',
-    description: 'A city-frame checkpoint in the wider map.',
+    title: 'U.S. Capitol',
+    description: 'A cleaner title for a landmark that does not need abbreviation.',
     image: '/images/homepage/2026-05-24/dc.png',
     tone: '#c7b18a',
   },
   {
-    title: 'Plane Window',
-    description: 'Movement, altitude, and a useful reset in perspective.',
+    title: 'SR-71 Blackbird',
+    description: 'A museum stop with a machine that earns the center of the frame.',
     image: '/images/homepage/2026-05-24/plane.png',
     tone: '#8eb0d8',
   },
   {
-    title: 'Lake Blue',
-    description: 'A quieter kind of horizon line.',
+    title: 'Lakeside Pavilion',
+    description: 'Pastel water and a shoreline pavilion right at dusk.',
     image: '/images/homepage/2026-05-24/lakeb.png',
     tone: '#8aa8d1',
   },
@@ -133,7 +141,7 @@ const placeMoments: PlaceMoment[] = [
     tone: '#9eb8d6',
   },
   {
-    title: 'Vector Sky',
+    title: 'Sunset in Florida',
     description: 'Clean lines and a sky that already feels diagrammed.',
     image: '/images/homepage/2026-05-24/vecsky.png',
     tone: '#97b7df',
@@ -145,20 +153,20 @@ const placeMoments: PlaceMoment[] = [
     tone: '#9cb58e',
   },
   {
-    title: 'Cool Building',
-    description: 'Good geometry deserves a slot on the map too.',
+    title: 'Hoover Tower',
+    description: 'A landmark where the architecture is strong enough to be specific.',
     image: '/images/homepage/2026-05-24/cool-building.png',
     tone: '#b9b4cc',
   },
   {
-    title: '1073',
-    description: 'One of those frames that earns a place by feel alone.',
+    title: 'San Francisco Streetcar',
+    description: 'Streetcar tracks and a downhill city frame that finally gets named.',
     image: '/images/homepage/2026-05-24/1073.png',
     tone: '#b39dcb',
   },
   {
-    title: 'Kali',
-    description: 'A quieter portrait moment tucked into the image stream.',
+    title: 'Bay Bridge View',
+    description: 'Water, steel, and a cleaner label than the original placeholder.',
     image: '/images/homepage/2026-05-24/kali.png',
     tone: '#b79fc6',
   },
@@ -180,60 +188,186 @@ function shufflePlaces(places: PlaceMoment[]) {
 }
 
 function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'right' }) {
-  return (
-    <article className={`gd-row ${align}`}>
-      <div className="gd-content">
-        <div className="gd-card">
-          <p className="gd-eyebrow">{point.eyebrow}</p>
-          {point.logo ? (
-            <div className="gd-card-logo">
-              <img src={point.logo} alt={point.logoAlt || `${point.title} logo`} />
-            </div>
-          ) : null}
-          <h2>{point.title}</h2>
-          <p>{point.body}</p>
-          {point.href ? <a href={point.href}>Open details ↗</a> : null}
-        </div>
-
-        {point.gallery ? (
-          <div className="gd-image-gallery three">
-            {point.gallery.map((image, index) => (
-              <div key={image.src} className={`gd-image-wrap ${index === 0 ? 'feature' : ''}`}>
-                <img src={image.src} alt={image.alt} />
+  const [expandedImage, setExpandedImage] = useState<{ src: string; alt: string } | null>(null)
+  const gallery = point.gallery ? (
+    <div className="gd-image-gallery three">
+      {point.gallery.map((image, index) => (
+        <button
+          key={image.src}
+          type="button"
+          className={`gd-image-wrap ${index === 0 ? 'feature' : ''}`}
+          onClick={() => setExpandedImage(image)}
+          aria-label={`Expand ${image.alt}`}
+        >
+          <img src={image.src} alt={image.alt} />
+        </button>
+      ))}
+    </div>
+  ) : point.image ? (
+    <button
+      type="button"
+      className="gd-image-wrap"
+      onClick={() => setExpandedImage({ src: point.image!, alt: point.imageAlt || point.title })}
+      aria-label={`Expand ${point.imageAlt || point.title}`}
+    >
+      <img src={point.image} alt={point.imageAlt || point.title} />
+    </button>
+  ) : null
+  const hasInlineLogo = Boolean(point.logo && !point.logos?.length)
+  const featureImage = point.gallery?.[0]
+  const secondaryImages = point.gallery?.slice(1) ?? []
+  const card = (
+    <div className="gd-card">
+      <div className={`gd-card-header ${hasInlineLogo ? 'gd-card-header-inline-logo' : ''}`}>
+        {hasInlineLogo ? (
+          <div className="gd-card-logo gd-card-logo-inline">
+            <img src={point.logo} alt={point.logoAlt || `${point.title} logo`} />
+          </div>
+        ) : null}
+        <p className="gd-eyebrow">{point.eyebrow}</p>
+        {point.logos?.length ? (
+          <div className="gd-card-logos">
+            {point.logos.map((logo) => (
+              <div key={logo.src} className="gd-card-logo gd-card-logo-inline">
+                <img src={logo.src} alt={logo.alt} />
               </div>
             ))}
           </div>
-        ) : point.image ? (
-          <div className="gd-image-wrap">
-            <img src={point.image} alt={point.imageAlt || point.title} />
-          </div>
         ) : null}
       </div>
+      <h2>{point.title}</h2>
+      <p>{point.body}</p>
+      {point.href ? <a href={point.href}>Open details ↗</a> : null}
+    </div>
+  )
+
+  return (
+    <>
+    <article className={`gd-row ${align} ${point.galleryLayout === 'feature-left-stack-right' ? 'gd-row-feature-full' : ''}`}>
+      <div
+        className={[
+          'gd-content',
+          point.gallery ? 'gd-content-gallery' : '',
+          point.gallerySide === 'right' ? 'gd-content-gallery-right' : '',
+          point.galleryLayout === 'feature-left-stack-right' ? 'gd-content-gallery-feature-left' : '',
+        ].filter(Boolean).join(' ')}
+      >
+        {point.galleryLayout === 'feature-left-stack-right' && featureImage ? (
+          <div className="gd-feature-split">
+            <div className="gd-feature-top">
+              <button
+                type="button"
+                className="gd-image-wrap gd-image-wrap-feature-panel"
+                onClick={() => setExpandedImage(featureImage)}
+                aria-label={`Expand ${featureImage.alt}`}
+              >
+                <img src={featureImage.src} alt={featureImage.alt} />
+              </button>
+              {card}
+            </div>
+            <div className="gd-feature-bottom">
+              <div aria-hidden="true" />
+              <div className="gd-image-gallery gd-image-gallery-secondary">
+                {secondaryImages.map((image) => (
+                  <button
+                    key={image.src}
+                    type="button"
+                    className="gd-image-wrap"
+                    onClick={() => setExpandedImage(image)}
+                    aria-label={`Expand ${image.alt}`}
+                  >
+                    <img src={image.src} alt={image.alt} />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+        {point.gallerySide === 'right' ? null : gallery}
+        {card}
+        {point.gallerySide === 'right' ? gallery : null}
+          </>
+        )}
+      </div>
     </article>
+    {expandedImage ? (
+      <div
+        className="visual-journal-lightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label={expandedImage.alt}
+        onClick={() => setExpandedImage(null)}
+      >
+        <div className="visual-journal-lightbox-inner" onClick={(event) => event.stopPropagation()}>
+          <button
+            type="button"
+            className="visual-journal-lightbox-close"
+            onClick={() => setExpandedImage(null)}
+            aria-label="Close expanded image"
+          >
+            <span aria-hidden="true" />
+          </button>
+          <img src={expandedImage.src} alt={expandedImage.alt} />
+        </div>
+      </div>
+    ) : null}
+    </>
   )
 }
 
 function IntroHero() {
+  const introTitle = 'Akash Dubey'
+  const [typedIntroLength, setTypedIntroLength] = useState(0)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTypedIntroLength(introTitle.length)
+      return
+    }
+
+    setTypedIntroLength(0)
+    let index = 0
+    const timer = window.setInterval(() => {
+      index += 1
+      setTypedIntroLength(index)
+      if (index >= introTitle.length) {
+        window.clearInterval(timer)
+      }
+    }, 85)
+
+    return () => window.clearInterval(timer)
+  }, [])
+
   return (
     <section className="home-intro-hero">
       <div className="home-intro-copy">
-        <h1>Akash Dubey</h1>
-        <p>
-          I'm currently studying computer science and math at the Rutgers University Honors College. I'm excited to continue learning and exploring my interests!
-        </p>
+        <h1 className="home-intro-title" aria-label={introTitle}>
+          <span className="home-intro-title-ghost" aria-hidden="true">{introTitle}</span>
+          <span className="home-intro-title-live">
+            {introTitle.slice(0, typedIntroLength)}
+            {typedIntroLength < introTitle.length ? (
+              <span className="home-intro-caret" aria-hidden="true" />
+            ) : null}
+          </span>
+        </h1>
+        <p>Building product, AI systems, and research tools from Rutgers.</p>
         <a href="#visual-notes" className="home-intro-down" aria-label="Scroll to visual notes">
           <span aria-hidden="true">↓</span>
         </a>
       </div>
 
       <div className="home-portrait-frame">
-        <img src="/images/face.jpg" alt="Akash Dubey" />
+        <img src="/images/homepage/2026-05-29/better-akash-enhanced.png" alt="Akash Dubey" />
       </div>
     </section>
   )
 }
 
 function PlacesSection() {
+  const sectionRef = useRef<HTMLElement | null>(null)
   const [places, setPlaces] = useState(placeMoments)
   const [showAllPlaces, setShowAllPlaces] = useState(false)
   const [expandedPlace, setExpandedPlace] = useState<PlaceMoment | null>(null)
@@ -242,6 +376,23 @@ function PlacesSection() {
   useEffect(() => {
     setPlaces(shufflePlaces(placeMoments))
   }, [])
+
+  useEffect(() => {
+    if (!showAllPlaces) return
+
+    const handleScroll = () => {
+      const section = sectionRef.current
+      if (!section) return
+      const rect = section.getBoundingClientRect()
+
+      if (rect.bottom < window.innerHeight * 0.3) {
+        setShowAllPlaces(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [showAllPlaces])
 
   useEffect(() => {
     if (!expandedPlace) return
@@ -262,8 +413,18 @@ function PlacesSection() {
   }, [expandedPlace])
 
   return (
-    <section id="visual-notes" className="places-section">
+    <section id="visual-notes" ref={sectionRef} className="places-section">
       <div className="visual-journal">
+        {showAllPlaces ? (
+          <button
+            type="button"
+            className="visual-journal-collapse"
+            onClick={() => setShowAllPlaces(false)}
+            aria-label="Collapse visual notes"
+          >
+            <span aria-hidden="true">↑</span>
+          </button>
+        ) : null}
         <div className="visual-journal-grid" aria-label="Photo grid">
           {visiblePlaces.map((place, index) => (
             <button
@@ -281,13 +442,17 @@ function PlacesSection() {
           ))}
         </div>
 
-        {!showAllPlaces ? (
-          <div className="visual-journal-actions">
+        <div className="visual-journal-actions">
+          {!showAllPlaces ? (
             <button type="button" className="visual-journal-more" onClick={() => setShowAllPlaces(true)}>
               See more
             </button>
-          </div>
-        ) : null}
+          ) : (
+            <button type="button" className="visual-journal-less" onClick={() => setShowAllPlaces(false)}>
+              Show less
+            </button>
+          )}
+        </div>
       </div>
 
       {expandedPlace ? (
@@ -319,12 +484,15 @@ function PlacesSection() {
   )
 }
 
-function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
+function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDescentStageProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const sectionRef = useRef<HTMLElement | null>(null)
+  const heroRef = useRef<HTMLElement | null>(null)
   const gradientRef = useRef<HTMLDivElement | null>(null)
   const endLinksRef = useRef<HTMLElement | null>(null)
   const scrollLabelRef = useRef<HTMLDivElement | null>(null)
+  const [typedHeadlineLength, setTypedHeadlineLength] = useState(0)
+  const headlineText = 'What I’m working on now.'
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -455,200 +623,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
 
       world.add(arrows)
 
-      function makeBallTexture(kind: 'tennis' | 'cricket' | 'soccer' | 'basketball') {
-        const canvas = document.createElement('canvas')
-        canvas.width = 256
-        canvas.height = 256
-        const context = canvas.getContext('2d')
-        if (!context) return null
-        const ctx = context
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-        function fillBase(color: string, highlight: string, shadow: string) {
-          const gradient = ctx.createRadialGradient(76, 58, 12, 144, 148, 190)
-          gradient.addColorStop(0, highlight)
-          gradient.addColorStop(0.48, color)
-          gradient.addColorStop(1, shadow)
-          ctx.fillStyle = gradient
-          ctx.fillRect(0, 0, canvas.width, canvas.height)
-        }
-
-        function addSpeckles(color: string, count: number, alpha: number) {
-          ctx.save()
-          ctx.globalAlpha = alpha
-          ctx.fillStyle = color
-          for (let i = 0; i < count; i += 1) {
-            const x = (Math.sin(i * 37.2) * 0.5 + 0.5) * canvas.width
-            const y = (Math.cos(i * 23.7) * 0.5 + 0.5) * canvas.height
-            const size = 0.7 + ((i * 17) % 5) * 0.35
-            ctx.beginPath()
-            ctx.arc(x, y, size, 0, Math.PI * 2)
-            ctx.fill()
-          }
-          ctx.restore()
-        }
-
-        if (kind === 'tennis') {
-          fillBase('#c8f34a', '#f0ff7c', '#6f9d20')
-          addSpeckles('#f7ffd5', 900, 0.22)
-          addSpeckles('#5f7d16', 420, 0.14)
-          context.strokeStyle = '#f6fff2'
-          context.lineWidth = 18
-          context.beginPath()
-          context.arc(62, 128, 91, -Math.PI / 2, Math.PI / 2)
-          context.stroke()
-          context.beginPath()
-          context.arc(194, 128, 91, Math.PI / 2, Math.PI * 1.5)
-          context.stroke()
-          context.strokeStyle = 'rgba(255,255,255,0.42)'
-          context.lineWidth = 5
-          context.stroke()
-        } else if (kind === 'cricket') {
-          fillBase('#9f2427', '#d75150', '#4e1015')
-          addSpeckles('#2b090b', 360, 0.18)
-          addSpeckles('#f4a2a0', 160, 0.12)
-          context.strokeStyle = '#f6eed8'
-          context.lineWidth = 9
-          context.beginPath()
-          context.moveTo(128, 0)
-          context.bezierCurveTo(102, 58, 154, 116, 128, 256)
-          context.stroke()
-          context.setLineDash([4, 7])
-          context.lineWidth = 3
-          context.beginPath()
-          context.moveTo(112, 0)
-          context.bezierCurveTo(88, 58, 142, 116, 112, 256)
-          context.stroke()
-          context.beginPath()
-          context.moveTo(144, 0)
-          context.bezierCurveTo(116, 58, 170, 116, 144, 256)
-          context.stroke()
-          context.setLineDash([])
-        } else if (kind === 'soccer') {
-          fillBase('#f7f8f4', '#ffffff', '#aeb2ad')
-          context.fillStyle = '#111317'
-          context.strokeStyle = '#111317'
-          context.lineWidth = 5
-          const centers = [
-            [128, 128, 34],
-            [42, 46, 25],
-            [214, 54, 25],
-            [58, 210, 25],
-            [204, 204, 25],
-            [128, 18, 20],
-            [128, 238, 20],
-          ]
-          centers.forEach(([cx, cy, size]) => {
-            context.beginPath()
-            for (let i = 0; i < 5; i += 1) {
-              const angle = -Math.PI / 2 + (i * Math.PI * 2) / 5
-              const x = cx + Math.cos(angle) * size
-              const y = cy + Math.sin(angle) * size
-              if (i === 0) context.moveTo(x, y)
-              else context.lineTo(x, y)
-            }
-            context.closePath()
-            context.fill()
-            context.stroke()
-          })
-          context.strokeStyle = 'rgba(17,19,23,0.52)'
-          context.lineWidth = 6
-          context.beginPath()
-          context.moveTo(128, 128)
-          context.lineTo(42, 46)
-          context.moveTo(128, 128)
-          context.lineTo(214, 54)
-          context.moveTo(128, 128)
-          context.lineTo(58, 210)
-          context.moveTo(128, 128)
-          context.lineTo(204, 204)
-          context.stroke()
-        } else {
-          fillBase('#d97722', '#f7a648', '#7b3512')
-          addSpeckles('#2b160b', 1100, 0.22)
-          addSpeckles('#ffd08a', 260, 0.08)
-          context.strokeStyle = '#21150e'
-          context.lineWidth = 10
-          context.beginPath()
-          context.moveTo(128, 0)
-          context.lineTo(128, 256)
-          context.stroke()
-          context.beginPath()
-          context.moveTo(0, 128)
-          context.lineTo(256, 128)
-          context.stroke()
-          context.beginPath()
-          context.arc(48, 128, 84, -Math.PI / 2, Math.PI / 2)
-          context.stroke()
-          context.beginPath()
-          context.arc(208, 128, 84, Math.PI / 2, Math.PI * 1.5)
-          context.stroke()
-        }
-
-        const texture = new THREE.CanvasTexture(canvas)
-        texture.colorSpace = THREE.SRGBColorSpace
-        texture.anisotropy = 4
-        return texture
-      }
-
-      const sportsBalls = new THREE.Group()
-      const ballSpecs = [
-        { kind: 'tennis' as const, startX: 7, startZ: 23, radius: 0.9, delay: 250, speed: 9600 },
-        { kind: 'cricket' as const, startX: 19, startZ: -21, radius: 0.78, delay: 650, speed: 7800 },
-        { kind: 'soccer' as const, startX: -12, startZ: 17, radius: 1.05, delay: 1200, speed: 8400 },
-        { kind: 'basketball' as const, startX: 25, startZ: 10, radius: 1, delay: 1800, speed: 9000 },
-      ]
-
-      const ballStates = ballSpecs.map((spec) => {
-        const texture = makeBallTexture(spec.kind)
-        const material = new THREE.MeshStandardMaterial({
-          color: texture ? '#ffffff' : '#d8d8d8',
-          map: texture || undefined,
-          roughness: spec.kind === 'tennis' ? 0.86 : 0.62,
-          metalness: 0.02,
-        })
-        const mesh = new THREE.Mesh(new THREE.SphereGeometry(spec.radius, 48, 32), material)
-        mesh.visible = false
-        mesh.castShadow = false
-        sportsBalls.add(mesh)
-
-        return {
-          ...spec,
-          mesh,
-          material,
-          texture,
-          x: spec.startX,
-          z: spec.startZ,
-          y: f(spec.startX, spec.startZ) + spec.radius,
-          vx: 0,
-          vz: 0,
-          vy: 0,
-          started: false,
-          lastKick: 0,
-          lastPoint: surfacePoint(spec.startX, spec.startZ, spec.radius),
-        }
-      })
-
-      world.add(sportsBalls)
-
-      function resetBall(ball: (typeof ballStates)[number], index: number) {
-        const direction = downhillDirection(ball.startX, ball.startZ)
-        ball.x = ball.startX
-        ball.z = ball.startZ
-        ball.y = f(ball.x, ball.z) + ball.radius + 5.8 + index * 1.15
-        ball.vx = direction.x * (2.2 + index * 0.35) + Math.sin(index * 1.7) * 0.75
-        ball.vz = direction.z * (2.2 + index * 0.35) + Math.cos(index * 1.4) * 0.75
-        ball.vy = 0.7 + index * 0.28
-        ball.started = false
-        ball.lastKick = 0
-        ball.lastPoint.copy(new THREE.Vector3(ball.x, ball.y, ball.z))
-        ball.mesh.position.copy(ball.lastPoint)
-        ball.mesh.visible = false
-      }
-
-      ballStates.forEach(resetBall)
-
       function createPath(startX: number, startZ: number) {
         let px = startX
         let pz = startZ
@@ -723,7 +697,8 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         previousFrameTime = now
         const p = progress()
         const sectionRect = stage.getBoundingClientRect()
-        const stageVisibility = THREE.MathUtils.smoothstep(window.innerHeight - sectionRect.top, 0, window.innerHeight * 0.75)
+        const sectionEntry = window.innerHeight - sectionRect.top
+        const stageVisibility = THREE.MathUtils.smoothstep(sectionEntry, window.innerHeight * 0.1, window.innerHeight * 0.72)
         const atEnd = p >= 0.995
         const scrollHasStopped = now - lastScrollTime > 520
         const endMode = atEnd && scrollHasStopped
@@ -731,6 +706,9 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         stageCanvas.style.opacity = String(stageVisibility)
         if (gradientRef.current) {
           gradientRef.current.style.opacity = String(stageVisibility)
+        }
+        if (topBackgroundRef.current) {
+          topBackgroundRef.current.style.opacity = String(1 - stageVisibility)
         }
 
         world.rotation.y = THREE.MathUtils.lerp(world.rotation.y, p * Math.PI * 1.08, 0.026)
@@ -751,7 +729,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         if (endMode && !wasEndMode) {
           endOrbitStart = now
           endOrbitBaseAngle = cameraState.angle
-          ballStates.forEach(resetBall)
         }
 
         wasEndMode = endMode
@@ -782,81 +759,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
           setMaterialOpacity(arrow.cone.material, arrowOpacity)
         })
 
-        const sportsOpacity = THREE.MathUtils.smoothstep(endOrbitBlend, 0.18, 0.62)
-        sportsBalls.visible = sportsOpacity > 0.01
-        ballStates.forEach((ball, index) => {
-          const elapsed = Math.max(0, endOrbitElapsed - ball.delay)
-          const isActive = sportsOpacity > 0.01 && elapsed > 0
-
-          if (isActive && !ball.started) {
-            ball.started = true
-            ball.lastKick = now
-          }
-
-          if (isActive) {
-            const gradient = gradientAt(ball.x, ball.z)
-            const surfaceY = f(ball.x, ball.z) + ball.radius
-            const grounded = ball.y <= surfaceY + 0.02 && ball.vy <= 0.08
-            const groundFriction = grounded ? 1.35 : 0.22
-            const airDrag = 0.08
-            const slopeForce = 10.8
-            const bounds = surfaceSize * 0.32
-
-            ball.vx += -gradient.dx * slopeForce * deltaSeconds
-            ball.vz += -gradient.dz * slopeForce * deltaSeconds
-            ball.vx *= Math.exp(-(groundFriction + airDrag) * deltaSeconds)
-            ball.vz *= Math.exp(-(groundFriction + airDrag) * deltaSeconds)
-            ball.vy -= 16.8 * deltaSeconds
-
-            ball.x += ball.vx * deltaSeconds
-            ball.z += ball.vz * deltaSeconds
-            ball.y += ball.vy * deltaSeconds
-
-            if (ball.x < -bounds || ball.x > bounds) {
-              ball.x = THREE.MathUtils.clamp(ball.x, -bounds, bounds)
-              ball.vx *= -0.62
-            }
-
-            if (ball.z < -bounds || ball.z > bounds) {
-              ball.z = THREE.MathUtils.clamp(ball.z, -bounds, bounds)
-              ball.vz *= -0.62
-            }
-
-            const nextSurfaceY = f(ball.x, ball.z) + ball.radius
-            if (ball.y <= nextSurfaceY) {
-              ball.y = nextSurfaceY
-              ball.vy = Math.abs(ball.vy) > 0.35 ? Math.abs(ball.vy) * 0.52 : 0
-
-              const speed = Math.hypot(ball.vx, ball.vz)
-              if (speed < 1.05 && Math.abs(ball.vy) < 0.18 && now - ball.lastKick > 760) {
-                const direction = downhillDirection(ball.x, ball.z)
-                const sideKick = new THREE.Vector3(-direction.z, 0, direction.x).multiplyScalar(Math.sin(now * 0.001 + index) * 1.05)
-                ball.vx += direction.x * (4.8 + index * 0.42) + sideKick.x
-                ball.vz += direction.z * (4.8 + index * 0.42) + sideKick.z
-                ball.vy = 5.25 + ball.radius * 1.55
-                ball.lastKick = now
-              }
-            }
-          }
-
-          const currentPoint = new THREE.Vector3(ball.x, ball.y, ball.z)
-          const movement = currentPoint.clone().sub(ball.lastPoint)
-          const distance = movement.length()
-
-          ball.mesh.visible = isActive
-          ball.mesh.position.copy(currentPoint)
-          ball.mesh.scale.setScalar(0.72 + sportsOpacity * 0.28)
-
-          if (distance > 0.001) {
-            const axis = new THREE.Vector3(movement.z, 0, -movement.x).normalize()
-            ball.mesh.rotateOnWorldAxis(axis, distance / ball.radius)
-          }
-
-          ball.lastPoint.copy(currentPoint)
-          ball.material.opacity = sportsOpacity
-          ball.material.transparent = sportsOpacity < 1
-        })
-
         const bottomNavProgress = THREE.MathUtils.smoothstep(endOrbitBlend, 0.22, 0.86)
         if (endLinksRef.current) {
           endLinksRef.current.classList.toggle('is-visible', bottomNavProgress > 0.35)
@@ -881,11 +783,6 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
         geo.dispose()
         fillMat.dispose()
         wireMat.dispose()
-        ballStates.forEach((ball) => {
-          ball.mesh.geometry.dispose()
-          ball.material.dispose()
-          ball.texture?.dispose()
-        })
       })
     }
 
@@ -899,20 +796,53 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTypedHeadlineLength(headlineText.length)
+      return
+    }
+
+    const updateHeadline = () => {
+      const hero = heroRef.current
+      if (!hero) return
+      const rect = hero.getBoundingClientRect()
+      const start = window.innerHeight * 0.82
+      const end = window.innerHeight * 0.18
+      const progress = Math.max(0, Math.min(1, (start - rect.top) / Math.max(1, start - end)))
+      setTypedHeadlineLength(Math.round(progress * headlineText.length))
+    }
+
+    updateHeadline()
+    window.addEventListener('scroll', updateHeadline, { passive: true })
+    window.addEventListener('resize', updateHeadline)
+
+    return () => {
+      window.removeEventListener('scroll', updateHeadline)
+      window.removeEventListener('resize', updateHeadline)
+    }
+  }, [])
+
+  const visibleHeadline = typedHeadlineLength > 0 ? headlineText.slice(0, typedHeadlineLength) : ''
+
   return (
     <section ref={sectionRef} id="gradient-work" className="gd-stage">
       <div ref={gradientRef} className="gd-gradient" aria-hidden="true" />
       <canvas ref={canvasRef} className="gd-canvas" aria-hidden="true" />
 
       <main className="gd-overlay">
-        <section className="gd-hero" id="top">
+        <section ref={heroRef} className="gd-hero" id="top">
           <div className="gd-hero-inner">
-            <p className="gd-eyebrow">Optimizing work</p>
-            <h1>Gradient descent through the work.</h1>
-            <p>
-              A cleaner path through the important pieces: internship, product work, research, AI systems,
-              economics, math, and robotics.
-            </p>
+            <p className="gd-eyebrow">Current work</p>
+            <h1 className="gd-hero-title" aria-label={headlineText}>
+              <span className="gd-hero-title-ghost" aria-hidden="true">{headlineText}</span>
+              <span className="gd-hero-title-live">
+                {visibleHeadline}
+                <span className="gd-hero-caret" aria-hidden="true" />
+              </span>
+            </h1>
+            <p>Product, research, AI systems, and what&apos;s next.</p>
           </div>
         </section>
 
@@ -927,6 +857,15 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
 
       <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true">
         <p className="gd-end-name">Akash Dubey</p>
+        <a
+          href="/akash-dubey.vcf"
+          download
+          className="gd-end-contact-shortcut"
+          tabIndex={-1}
+          title="Add to Contacts"
+        >
+          <span>Add to Contacts</span>
+        </a>
         <ContactIconLinks className="gd-end-icons" />
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span>Replay</span>
@@ -940,74 +879,115 @@ function HomeGradientDescentStage({ points }: { points: HomePoint[] }) {
 }
 
 export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
+  const topBackgroundRef = useRef<HTMLDivElement | null>(null)
   const projectBySlug = useMemo(() => new Map(projects.map((project) => [project.slug, project])), [projects])
   const scarletSync = projectBySlug.get('scarlet-sync')
   const lykke = projectBySlug.get('lykke')
   const compBio = projectBySlug.get('hic-tad-analysis')
   const llmResearch = projectBySlug.get('llm-research')
   const drp = projectBySlug.get('drp-spring-2025')
-  const robotCode = projectBySlug.get('robot-code')
   const economicGrapher = projectBySlug.get('economic-grapher')
+  const pathFinder = projectBySlug.get('path-finder')
 
   const points = useMemo<HomePoint[]>(() => [
     {
-      eyebrow: 'Incoming intern',
+      eyebrow: 'Currently',
       title: 'New York Life Insurance',
-      body: 'The next update step: an incoming internship bringing software, data, and systems thinking into a larger financial technology environment.',
+      body: 'Preparing for a software engineering internship focused on production systems and applied data work.',
       logo: '/company-logos/new-york-life.svg',
       logoAlt: 'New York Life Insurance logo',
     },
     {
-      eyebrow: 'Product builds',
-      title: 'Scarlet Sync and Lykke',
-      body: 'Two useful products: one for Rutgers schedule planning, one for turning course material into AI-assisted study workflows.',
+      eyebrow: 'Right now',
+      title: 'Scarlet Sync',
+      body: 'Building a smarter Rutgers course planner for generating workable schedules around real student constraints.',
       href: scarletSync ? `/projects/${scarletSync.slug}` : undefined,
+      logo: '/company-logos/scarlet-sync.png',
+      logoAlt: 'Scarlet Sync logo',
       gallery: [
         { src: scarletSync?.image || '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync interface' },
+        { src: '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync planner view' },
+        { src: '/images/portfolio/clean-your-data/hero.png', alt: 'Scheduling workflow interface detail' },
+      ],
+    },
+    {
+      eyebrow: 'Right now',
+      title: 'Lykke',
+      body: 'Shipping an AI study platform that turns course material into flashcards, notes, quizzes, and shared workflows.',
+      href: lykke ? `/projects/${lykke.slug}` : undefined,
+      logos: [
+        { src: '/company-logos/lykke.svg', alt: 'Lykke logo' },
+      ],
+      galleryLayout: 'feature-left-stack-right',
+      gallery: [
         { src: lykke?.image || '/images/portfolio/lykke/hero.png', alt: 'Lykke interface' },
         { src: '/images/portfolio/lykke/study.png', alt: 'Lykke study tools' },
+        { src: '/images/portfolio/lykke/discover.png', alt: 'Lykke discover feed' },
       ],
     },
     {
       eyebrow: 'Research',
-      title: 'Robotics and computational biology',
-      body: 'Path planning, motion planning, and 3D genome analysis: optimization shows up in robots, biology, and the algorithms between them.',
-      href: compBio ? `/projects/${compBio.slug}` : undefined,
+      title: 'ARC Lab',
+      body: 'Working on motion-planning optimization and vision-language-action directions for robotics at Rutgers.',
+      href: pathFinder ? `/projects/${pathFinder.slug}` : 'https://arc-lab-robotics.github.io/',
+      gallerySide: 'right',
       gallery: [
-        { src: '/images/portfolio/random_environment.png', alt: 'A* path finding visualization' },
-        { src: compBio?.image || '/images/portfolio/hic-tad/hero.png', alt: 'Hi-C TAD analysis visualization' },
-        { src: '/images/portfolio/hic-tad/polymer-3d.png', alt: '3D genome polymer simulation' },
+        { src: '/images/posts/frc24/images/image3.jpg', alt: 'FRC robot navigating a practice field' },
+        { src: '/images/portfolio/random_environment.png', alt: 'Path planning environment visualization' },
+        { src: '/images/portfolio/2024-upscaled.png', alt: 'FRC robot systems work' },
       ],
     },
     {
-      eyebrow: 'AI and analysis',
-      title: 'LLMs, economics, and DRP',
-      body: 'A compact workbench for language-model research, economic analysis, directed reading, and the math/data tools that make bigger systems sharper.',
+      eyebrow: 'Research',
+      title: 'Kwan Lab',
+      body: 'Building computational biology tooling for TAD-boundary deletion analysis, chromatin simulation, and Hi-C driven experiments.',
+      href: compBio ? `/projects/${compBio.slug}` : undefined,
+      gallerySide: 'right',
+      gallery: [
+        { src: compBio?.image || '/images/portfolio/hic-tad/hero.png', alt: 'Hi-C TAD analysis visualization' },
+        { src: '/images/portfolio/hic-tad/polymer-3d.png', alt: '3D genome polymer simulation' },
+        { src: '/images/portfolio/hic-tad/deletion-celltype.png', alt: 'Deletion analysis across cell types' },
+      ],
+    },
+    {
+      eyebrow: 'Research',
+      title: 'LLM Research',
+      body: 'Studying small-model optimization, post-training, and agentic systems for non-sequential code generation.',
       href: llmResearch ? `/projects/${llmResearch.slug}` : undefined,
       gallery: [
         { src: llmResearch?.image || '/images/portfolio/llm-research/image.png', alt: 'LLM research results' },
-        { src: economicGrapher?.image || '/images/portfolio/vis/economic-plotter.png', alt: 'Economic series plotter' },
-        { src: drp?.image || '/images/portfolio/drp.png', alt: 'DRP presentation' },
       ],
     },
     {
-      eyebrow: 'Foundations',
-      title: 'High school robotics',
-      body: 'FRC programming was the early pressure test: autonomous routines, vision, subsystem design, leadership, and debugging when the robot needs to move.',
-      href: robotCode ? `/projects/${robotCode.slug}` : undefined,
-      image: robotCode?.image || '/images/portfolio/2024-upscaled.png',
-      imageAlt: 'FRC robot project',
+      eyebrow: 'Analysis',
+      title: 'Economics',
+      body: 'Building quantitative tools and visualizations for economic series, migration analysis, and data-heavy questions.',
+      href: economicGrapher ? `/projects/${economicGrapher.slug}` : undefined,
+      gallery: [
+        { src: economicGrapher?.image || '/images/portfolio/vis/economic-plotter.png', alt: 'Economic series plotter' },
+      ],
     },
-  ], [compBio, drp, economicGrapher, llmResearch, lykke, robotCode, scarletSync])
+    {
+      eyebrow: 'Math',
+      title: 'Directed Reading Program',
+      body: 'Using DRP to push deeper into proof-writing, q-binomial identities, and the kind of math that sharpens everything else.',
+      href: drp ? `/projects/${drp.slug}` : undefined,
+      gallery: [
+        { src: drp?.image || '/images/portfolio/drp.png', alt: 'DRP presentation' },
+      ],
+    },
+  ], [compBio, drp, economicGrapher, llmResearch, lykke, pathFinder, scarletSync])
 
   return (
     <div className="home-clean-page">
       <div className="home-top-slope">
-        <GradientDescentBackground className="home-top-gradient" />
+        <div ref={topBackgroundRef} className="home-top-gradient-shell">
+          <GradientDescentBackground className="home-top-gradient" />
+        </div>
         <IntroHero />
         <PlacesSection />
       </div>
-      <HomeGradientDescentStage points={points} />
+      <HomeGradientDescentStage points={points} topBackgroundRef={topBackgroundRef} />
     </div>
   )
 }

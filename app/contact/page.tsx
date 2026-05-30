@@ -17,14 +17,28 @@ export default function ContactPage() {
     <div className="container-wide py-10 sm:py-14">
       <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
-        <p className="eyebrow">Contact</p>
-        <h1 className="mt-4 text-5xl text-text sm:text-7xl">Open line.</h1>
+        <h1 className="mt-4 text-5xl text-text sm:text-7xl">Contact</h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-text-muted">
-          For internships, research, product work, collaborations, or just a thoughtful note.
+          If you ever need to reach me
         </p>
         <ContactIconLinks className="mt-7" />
         <a href="/akash-dubey.vcf" download className="contact-add-button contact-glow-button mt-8">
-          <span aria-hidden="true">▣</span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="contact-add-icon"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3.5" y="5.5" width="17" height="13" rx="3" />
+            <circle cx="9" cy="11" r="1.9" />
+            <path d="M6.7 15.2c.8-1.5 2.1-2.3 3.8-2.3 1.6 0 2.9.8 3.7 2.3" />
+            <path d="M15.8 9h2.7" />
+            <path d="M15.8 12h2.7" />
+          </svg>
           Add to Contacts
         </a>
       </section>
