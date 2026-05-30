@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Inconsolata } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import { SiteShell } from '@/components/site-shell'
+import { PostHogProvider } from '@/components/posthog-provider'
+import PostHogPageView from './posthog-pageview'
 import { defaultDescription, defaultOgImage, siteName, siteUrl } from '@/lib/seo'
 
 const inconsolata = Inconsolata({ subsets: ['latin'], variable: '--font-inconsolata' })
@@ -54,9 +56,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inconsolata.variable}`}>
-        <ThemeProvider>
-          <SiteShell>{children}</SiteShell>
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider>
+            <PostHogPageView />
+            <SiteShell>{children}</SiteShell>
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   )
