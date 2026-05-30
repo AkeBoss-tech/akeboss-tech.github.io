@@ -5,7 +5,7 @@ import { buildHomeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Software Engineer, AI, Robotics, Research',
+  title: 'Akash Dubey',
   description:
     'Akash Dubey builds software, AI systems, robotics projects, and research-driven products across startups, labs, and student work.',
   path: '/',

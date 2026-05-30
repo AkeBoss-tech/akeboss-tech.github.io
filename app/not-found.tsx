@@ -16,7 +16,7 @@ export default function NotFound() {
       </Reveal>
 
       <Reveal delay={0.1}>
-        <h1 className="text-6xl font-bold tracking-tight text-text sm:text-8xl">
+        <h1 className="text-6xl tracking-tight text-text sm:text-8xl">
           Page not found.
         </h1>
       </Reveal>

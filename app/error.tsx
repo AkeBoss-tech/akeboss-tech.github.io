@@ -25,7 +25,7 @@ export default function Error({
       </Reveal>
 
       <Reveal delay={0.1}>
-        <h1 className="text-6xl font-bold tracking-tight text-text sm:text-8xl">
+        <h1 className="text-6xl tracking-tight text-text sm:text-8xl">
           Something failed.
         </h1>
       </Reveal>

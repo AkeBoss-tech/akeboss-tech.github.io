@@ -903,7 +903,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
           <span>Add to Contacts</span>
         </a>
         <div className="gd-end-theme">
-          <ThemeToggle />
+          <ThemeToggle className="gd-end-theme-button" />
         </div>
         <ContactIconLinks className="gd-end-icons" />
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
