@@ -1,4 +1,5 @@
 import { LlmMarkdown } from '@/components/llm-markdown'
+import { ResponsiveImage } from '@/components/responsive-image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -37,7 +38,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const project = getProject(slug)
   if (!project) return notFound()
   const llmMarkdown = buildProjectLlmMarkdown(project)
-  const scarletSyncVideo = project.slug === 'scarlet-sync' ? '/videos/scarlet-sync-demo.mp4' : null
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -100,19 +100,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
 
         <div className="panel-soft aspect-video overflow-hidden rounded-[32px] bg-black">
-          {scarletSyncVideo ? (
-            <video
-              src={scarletSyncVideo}
-              poster={project.image || '/images/portfolio/home.png'}
-              controls
-              muted
-              playsInline
-              preload="metadata"
-              className="h-full w-full object-contain"
-            />
-          ) : (
-            <img src={project.image || '/images/portfolio/home.png'} alt={project.title} className="h-full w-full object-contain" />
-          )}
+          <ResponsiveImage
+            src={project.image || '/images/portfolio/home.png'}
+            alt={project.title}
+            className="h-full w-full object-contain"
+            sizes="(max-width: 1024px) 92vw, 42rem"
+            loading="eager"
+          />
         </div>
       </section>
 

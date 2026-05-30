@@ -1,4 +1,5 @@
 import { LlmMarkdown } from '@/components/llm-markdown'
+import { ResponsiveImage } from '@/components/responsive-image'
 import Link from 'next/link'
 import { buildAboutLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
@@ -29,7 +30,13 @@ export default function AboutPage() {
       <LlmMarkdown content={llmMarkdown} />
       <section className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div className="panel-soft overflow-hidden rounded-[32px]">
-          <img src="/images/face.jpg" alt="Akash Dubey" className="h-full w-full object-cover" />
+          <ResponsiveImage
+            src="/images/face.jpg"
+            alt="Akash Dubey"
+            className="h-full w-full object-cover"
+            sizes="(max-width: 1024px) 92vw, 32rem"
+            loading="eager"
+          />
         </div>
 
         <div>

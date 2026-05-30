@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
+import { ResponsiveImage } from '@/components/responsive-image'
 import { ThemeToggle } from '@/components/theme-toggle'
 import type { Project } from '@/lib/content'
 
@@ -201,7 +202,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
       onClick={() => setExpandedImage(primaryImage)}
       aria-label={`Expand ${primaryImage.alt}`}
     >
-      <img src={primaryImage.src} alt={primaryImage.alt} />
+      <ResponsiveImage src={primaryImage.src} alt={primaryImage.alt} sizes="(max-width: 1024px) 92vw, 38rem" />
     </button>
   ) : point.image ? (
     <button
@@ -210,7 +211,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
       onClick={() => setExpandedImage({ src: point.image!, alt: point.imageAlt || point.title })}
       aria-label={`Expand ${point.imageAlt || point.title}`}
     >
-      <img src={point.image} alt={point.imageAlt || point.title} />
+      <ResponsiveImage src={point.image} alt={point.imageAlt || point.title} sizes="(max-width: 1024px) 92vw, 38rem" />
     </button>
   ) : (
     <div className="gd-visual-placeholder" aria-hidden="true" />
@@ -221,7 +222,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
       <div className={`gd-card-header ${hasInlineLogo ? 'gd-card-header-inline-logo' : ''}`}>
         {hasInlineLogo ? (
           <div className="gd-card-logo gd-card-logo-inline">
-            <img src={point.logo} alt={point.logoAlt || `${point.title} logo`} />
+            <ResponsiveImage src={point.logo!} alt={point.logoAlt || `${point.title} logo`} sizes="64px" />
           </div>
         ) : null}
         <p className="gd-eyebrow">{point.eyebrow}</p>
@@ -229,7 +230,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
           <div className="gd-card-logos">
             {point.logos.map((logo) => (
               <div key={logo.src} className="gd-card-logo gd-card-logo-inline">
-                <img src={logo.src} alt={logo.alt} />
+                <ResponsiveImage src={logo.src} alt={logo.alt} sizes="64px" />
               </div>
             ))}
           </div>
@@ -272,7 +273,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
                           onClick={() => setExpandedImage(image)}
                           aria-label={`Expand ${image.alt}`}
                         >
-                          <img src={image.src} alt={image.alt} />
+                          <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 1024px) 44vw, 18rem" />
                         </button>
                       ))}
                     </div>
@@ -290,7 +291,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
                           onClick={() => setExpandedImage(image)}
                           aria-label={`Expand ${image.alt}`}
                         >
-                          <img src={image.src} alt={image.alt} />
+                          <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 1024px) 44vw, 18rem" />
                         </button>
                       ))}
                     </div>
@@ -318,7 +319,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
           >
             <span aria-hidden="true">×</span>
           </button>
-          <img src={expandedImage.src} alt={expandedImage.alt} />
+          <ResponsiveImage src={expandedImage.src} alt={expandedImage.alt} sizes="92vw" />
         </div>
       </div>
     ) : null}
@@ -370,7 +371,13 @@ function IntroHero() {
       </div>
 
       <div className="home-portrait-frame">
-        <img src="/images/homepage/2026-05-29/better-akash-enhanced.png" alt="Akash Dubey" />
+        <ResponsiveImage
+          src="/images/homepage/2026-05-29/better-akash-enhanced.png"
+          alt="Akash Dubey"
+          sizes="(max-width: 640px) 82vw, 28rem"
+          loading="eager"
+          fetchPriority="high"
+        />
       </div>
     </section>
   )
@@ -444,7 +451,12 @@ function PlacesSection() {
               onClick={() => setExpandedPlace(place)}
               aria-label={`Expand ${place.title}`}
             >
-              <img src={place.image} alt={place.title} loading={index > 5 ? 'lazy' : undefined} />
+              <ResponsiveImage
+                src={place.image}
+                alt={place.title}
+                sizes="(max-width: 640px) 42vw, (max-width: 1024px) 28vw, 16rem"
+                loading={index > 5 ? 'lazy' : 'eager'}
+              />
               <span className="visual-journal-card-caption">
                 <span>{place.title}</span>
               </span>
@@ -482,7 +494,7 @@ function PlacesSection() {
             >
               <span aria-hidden="true">×</span>
             </button>
-            <img src={expandedPlace.image} alt={expandedPlace.title} />
+            <ResponsiveImage src={expandedPlace.image} alt={expandedPlace.title} sizes="92vw" />
             <div className="visual-journal-lightbox-caption">
               <h2>{expandedPlace.title}</h2>
               <p>{expandedPlace.description}</p>
@@ -893,17 +905,19 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
 
       <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true">
         <p className="gd-end-name">Akash Dubey</p>
-        <a
-          href="/akash-dubey.vcf"
-          download
-          className="gd-end-contact-shortcut"
-          tabIndex={-1}
-          title="Add to Contacts"
-        >
-          <span>Add to Contacts</span>
-        </a>
-        <div className="gd-end-theme">
-          <ThemeToggle className="gd-end-theme-button" />
+        <div className="gd-end-top-actions">
+          <a
+            href="/akash-dubey.vcf"
+            download
+            className="gd-end-contact-shortcut"
+            tabIndex={-1}
+            title="Add to Contacts"
+          >
+            <span>Add to Contacts</span>
+          </a>
+          <div className="gd-end-theme">
+            <ThemeToggle className="gd-end-theme-button" />
+          </div>
         </div>
         <ContactIconLinks className="gd-end-icons" />
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>

@@ -1,0 +1,1285 @@
+{
+  "assets": [
+    {
+      "src": "/activity-logos/newspaper-club.png",
+      "widths": [
+        150
+      ]
+    },
+    {
+      "src": "/activity-logos/rutgers-qfc.png",
+      "widths": [
+        160,
+        170
+      ]
+    },
+    {
+      "src": "/activity-logos/team-1257.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/activity-logos/ucvts.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1000
+      ]
+    },
+    {
+      "src": "/company-logos/rutgers-economics-labs.jpg",
+      "widths": [
+        160,
+        320,
+        500
+      ]
+    },
+    {
+      "src": "/company-logos/samaritan-scout.png",
+      "widths": [
+        160,
+        320,
+        500
+      ]
+    },
+    {
+      "src": "/company-logos/scarlet-sync.png",
+      "widths": [
+        160,
+        180
+      ]
+    },
+    {
+      "src": "/hero-nyc.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/icons/apple-icon.png",
+      "widths": [
+        160,
+        192
+      ]
+    },
+    {
+      "src": "/images/face.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-10/img_1596.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-10/img_2465.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-10/img_4350.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-10/img_6293.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-10/img_7075.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-10/img_7197.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/1073.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/allin1.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/beach1.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/beach_bloom.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/chicago.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/cool-building.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/dc.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/glum.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/kali.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/lakeb.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/nvidia.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/plane.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/postru.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/rando.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/ruroad.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-24/vecsky.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-29/better-akash-enhanced.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/homepage/2026-05-29/nyl.avif",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/2024-upscaled.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1236
+      ]
+    },
+    {
+      "src": "/images/portfolio/2024.png",
+      "widths": [
+        160,
+        320,
+        618
+      ]
+    },
+    {
+      "src": "/images/portfolio/android/title.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1103
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/bus-data.png",
+      "widths": [
+        160,
+        320,
+        640,
+        867
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/image-1.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/image-3.png",
+      "widths": [
+        160,
+        320,
+        578
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/image-4.png",
+      "widths": [
+        160,
+        320,
+        579
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/image-5.png",
+      "widths": [
+        160,
+        320,
+        574
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/image-7.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        996
+      ]
+    },
+    {
+      "src": "/images/portfolio/bus/image-8.png",
+      "widths": [
+        160,
+        320,
+        640,
+        841
+      ]
+    },
+    {
+      "src": "/images/portfolio/clean-your-data/analysis.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/clean-your-data/graph.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/clean-your-data/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/derivative.png",
+      "widths": [
+        160,
+        300
+      ]
+    },
+    {
+      "src": "/images/portfolio/drawn_environment.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1126
+      ]
+    },
+    {
+      "src": "/images/portfolio/drp.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/environment_settings.png",
+      "widths": [
+        160,
+        320,
+        640,
+        850
+      ]
+    },
+    {
+      "src": "/images/portfolio/esl/home.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1216
+      ]
+    },
+    {
+      "src": "/images/portfolio/fbla/908.png",
+      "widths": [
+        160,
+        320,
+        615
+      ]
+    },
+    {
+      "src": "/images/portfolio/fbla/comments.png",
+      "widths": [
+        160,
+        320,
+        597
+      ]
+    },
+    {
+      "src": "/images/portfolio/fbla/form.png",
+      "widths": [
+        160,
+        320,
+        405
+      ]
+    },
+    {
+      "src": "/images/portfolio/fbla/main.png",
+      "widths": [
+        160,
+        320,
+        636
+      ]
+    },
+    {
+      "src": "/images/portfolio/fbla/prez.png",
+      "widths": [
+        160,
+        320,
+        640,
+        868
+      ]
+    },
+    {
+      "src": "/images/portfolio/fbla/search.png",
+      "widths": [
+        160,
+        320,
+        640,
+        798
+      ]
+    },
+    {
+      "src": "/images/portfolio/flamingo/image.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/grokipedia-api/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/hic-tad/deletion-celltype.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/hic-tad/deletion-scan.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/hic-tad/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/hic-tad/multiscale-insulation.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/hic-tad/polymer-3d.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/hic-tad/tad-triangles.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/home.png",
+      "widths": [
+        160,
+        320,
+        640,
+        725
+      ]
+    },
+    {
+      "src": "/images/portfolio/integral.png",
+      "widths": [
+        160,
+        255
+      ]
+    },
+    {
+      "src": "/images/portfolio/llm-research/image.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/lykke/discover.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/lykke/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/lykke/infographic.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/lykke/study.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/newspaper/article_page.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1067
+      ]
+    },
+    {
+      "src": "/images/portfolio/newspaper/author_page.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/newspaper/front_page.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/newspaper/science_page.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/nostradamus/data-layers.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/nostradamus/flood-zones.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/nostradamus/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/nostradamus/nightvision.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/personal-assistant/finance.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/personal-assistant/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/puerto-rico/image.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/racing/grand.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1207
+      ]
+    },
+    {
+      "src": "/images/portfolio/racing/title.png",
+      "widths": [
+        160,
+        320,
+        640,
+        932
+      ]
+    },
+    {
+      "src": "/images/portfolio/racing/two.png",
+      "widths": [
+        160,
+        320,
+        640,
+        934
+      ]
+    },
+    {
+      "src": "/images/portfolio/random_environment.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1127
+      ]
+    },
+    {
+      "src": "/images/portfolio/revolve.png",
+      "widths": [
+        160,
+        320,
+        640,
+        820
+      ]
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/home.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/stereo/boxplot.png",
+      "widths": [
+        160,
+        320,
+        558
+      ]
+    },
+    {
+      "src": "/images/portfolio/stereo/poster.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/stereo/results.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        999
+      ]
+    },
+    {
+      "src": "/images/portfolio/stereo/right_image.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/stereo/stereo_disparity_map.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/portfolio/top-coder/hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1200
+      ]
+    },
+    {
+      "src": "/images/portfolio/vis/economic-plotter.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1168
+      ]
+    },
+    {
+      "src": "/images/posts/december-journal-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/doing-things-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/first-post-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/black.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1058
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/bot_prog.png",
+      "widths": [
+        160,
+        320,
+        640,
+        756
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/comms.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        999
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/comp/image5.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        799
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/comp/image8.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/configure.png",
+      "widths": [
+        160,
+        320,
+        428
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/controller_commands.png",
+      "widths": [
+        160,
+        320,
+        640,
+        648
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/dcmp/image2.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        981
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/gittmerged.png",
+      "widths": [
+        160,
+        320,
+        640,
+        794
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/gittt.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        982
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/images/image2.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/images/image3.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/images/image4.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/images/image5.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/images/image6.png",
+      "widths": [
+        160,
+        320,
+        640,
+        853
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/shooter.png",
+      "widths": [
+        160,
+        320,
+        640,
+        681
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/sim.png",
+      "widths": [
+        160,
+        320,
+        380
+      ]
+    },
+    {
+      "src": "/images/posts/frc24/speaker_aim.png",
+      "widths": [
+        160,
+        320,
+        639
+      ]
+    },
+    {
+      "src": "/images/posts/freshmen-reflection-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/junior-reflection-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/mountain-man.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/october-journal-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/robotics-journal-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/robotics-programming-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image1.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image11.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image12.png",
+      "widths": [
+        160,
+        320,
+        640,
+        716
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image13.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1010
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image2.png",
+      "widths": [
+        160,
+        299
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image3.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image6.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1140
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image8.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ]
+    },
+    {
+      "src": "/images/posts/robotics/image9.png",
+      "widths": [
+        160,
+        320,
+        640,
+        827
+      ]
+    },
+    {
+      "src": "/images/posts/sophomore-reflection-hero.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1024
+      ]
+    },
+    {
+      "src": "/school-logos/ait-logo.png",
+      "widths": [
+        160,
+        320,
+        512
+      ]
+    }
+  ]
+}

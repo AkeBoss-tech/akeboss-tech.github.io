@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 
+import { ResponsiveImage } from '@/components/responsive-image'
 import type { Project } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 
@@ -271,7 +272,7 @@ function FeaturedCaseStudy({ project, index }: { project: Project; index: number
     <article className="featured-case-study">
       <Link href={`/projects/${project.slug}`} className="featured-case-study-media" aria-label={`Read ${project.title} case study`}>
         <div className="featured-case-study-media-top">
-          <img src={coverImage} alt={project.title} />
+          <ResponsiveImage src={coverImage} alt={project.title} sizes="(max-width: 1024px) 92vw, 38rem" loading="eager" />
         </div>
         {collageImages.length > 0 ? (
           <div className="featured-case-study-collage">
@@ -280,7 +281,7 @@ function FeaturedCaseStudy({ project, index }: { project: Project; index: number
                 key={image}
                 className={`featured-case-study-collage-item featured-case-study-collage-item-${imageIndex + 1}`}
               >
-                <img src={image} alt={`${project.title} detail ${imageIndex + 1}`} />
+                <ResponsiveImage src={image} alt={`${project.title} detail ${imageIndex + 1}`} sizes="(max-width: 1024px) 30vw, 12rem" />
               </div>
             ))}
           </div>
@@ -327,7 +328,7 @@ function SelectedWorkCard({
   return (
     <article className="selected-work-card">
       <Link href={`/projects/${project.slug}`} className="selected-work-media" aria-label={`View ${project.title}`}>
-        <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
+        <ResponsiveImage src={project.image || '/images/portfolio/home.png'} alt={project.title} sizes="(max-width: 1024px) 92vw, 32rem" />
       </Link>
 
       <div className="selected-work-body">
@@ -361,7 +362,7 @@ function ArchiveTile({ project }: { project: Project }) {
   return (
     <Link href={`/projects/${project.slug}`} className="archive-project-tile">
       <div className="archive-project-tile-media">
-        <img src={project.image || '/images/portfolio/home.png'} alt={project.title} />
+        <ResponsiveImage src={project.image || '/images/portfolio/home.png'} alt={project.title} sizes="(max-width: 768px) 92vw, 18rem" />
       </div>
       <div className="archive-project-tile-body">
         <div className="archive-project-tile-meta">

@@ -1,4 +1,5 @@
 import { ContactIconLinks } from '@/components/contact-icon-links'
+import { ResponsiveImage } from '@/components/responsive-image'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -35,7 +36,7 @@ const education = [
   },
   {
     title: 'Academy for Information Technology, Union County Vocational-Technical Schools',
-    href: 'https://www.ucvts.org/domain/19',
+    href: 'https://ait.ucvts.org/',
     logo: '/school-logos/ait-logo.png',
     logoTileStyle: {
       backgroundColor: 'rgba(255, 255, 255, 0.96)',
@@ -172,18 +173,21 @@ const research = [
 const leadership = [
   {
     title: 'AIT Math League Officer & President',
+    href: 'https://www.mathleague.com/',
     logo: '/activity-logos/ucvts.png',
     dates: 'Sep 2021 - Jun 2024',
     body: 'Organized practices, competitions, and study culture for 50+ students; consistent top-three scorer.',
   },
   {
     title: 'UCVTS Robotics Team 1257 Programming Manager',
+    href: 'https://frc1257.org/',
     logo: '/activity-logos/team-1257.png',
     dates: 'Sep 2022 - Jun 2024',
     body: 'Led a 30+ member programming group across robot code, control systems, vision, and training.',
   },
   {
     title: 'Newspaper Club Layout Editor',
+    href: 'https://ucvts-campus-chronicle.com/',
     logo: '/activity-logos/newspaper-club.png',
     logoTileStyle: {
       backgroundColor: 'var(--cv-newspaper-logo-bg)',
@@ -194,18 +198,21 @@ const leadership = [
   },
   {
     title: 'Coding Club Board Member',
+    href: 'https://hackuc-iv.devpost.com/',
     logo: '/activity-logos/ucvts.png',
     dates: 'Sep 2023 - Jun 2024',
     body: 'Ran beginner and advanced coding workshops and helped organize competitions.',
   },
   {
     title: 'The Connection',
+    href: 'https://www.theconnectiononline.org/english-as-a-second-language/',
     logo: '/activity-logos/the-connection.svg',
     dates: 'Dec 2022 - Present',
     body: 'English as a Second Language Instructor. Taught 50+ adult learners in small groups and built worksheets, tutoring tools, and classroom resources.',
   },
   {
     title: 'Berkeley Heights Public Library',
+    href: 'https://bhplnj.org/',
     logo: '/activity-logos/bh-library.svg',
     dates: 'High school',
     body: 'Book Shelving Volunteer.',
@@ -215,6 +222,7 @@ const leadership = [
 const collegeActivities = [
   {
     title: 'Rutgers Quantitative Finance Club',
+    href: 'https://www.rutgersqfc.com/',
     logo: '/activity-logos/rutgers-qfc.png',
     logoTileStyle: {
       backgroundColor: 'rgba(255, 255, 255, 0.96)',
@@ -375,7 +383,7 @@ export default function CVPage() {
                       className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
                       style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
                     >
-                      <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                      <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
                       {item.title}
@@ -409,7 +417,7 @@ export default function CVPage() {
                       className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
                       style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
                     >
-                      <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                      <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <div>
                       <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
@@ -442,7 +450,7 @@ export default function CVPage() {
                       className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
                       style={item.logoTileStyle}
                     >
-                      <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
+                      <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <div>
                       <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
@@ -502,20 +510,22 @@ export default function CVPage() {
             <div className="grid gap-4">
               {collegeActivities.map((item) => (
                 <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <div className="flex items-start gap-4">
-                      <div
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
-                        style={item.logoTileStyle}
-                      >
-                        <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
-                      </div>
-                      <div>
-                        <h2 className="text-lg text-text">{item.title}</h2>
-                        <p className="mt-1 text-sm text-[#84a9ff]">{item.role}</p>
-                      </div>
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      style={item.logoTileStyle}
+                    >
+                      <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
-                    <p className="text-sm text-text-soft">{item.dates}</p>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                        <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-lg text-text hover:text-white">
+                          {item.title}
+                        </a>
+                        <p className="shrink-0 text-sm text-text-soft">{item.dates}</p>
+                      </div>
+                      <p className="mt-1 text-sm text-[#84a9ff]">{item.role}</p>
+                    </div>
                   </div>
                   <p className="mt-1 text-sm leading-7 text-text-muted sm:pl-16">{item.body}</p>
                 </article>
@@ -527,17 +537,21 @@ export default function CVPage() {
             <div className="grid gap-4">
               {leadership.map((item) => (
                 <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <div className="flex items-start gap-4">
-                      <div
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
-                        style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
-                      >
-                        <img src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" />
-                      </div>
-                      <h2 className="text-lg text-text">{item.title}</h2>
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
+                    >
+                      <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
-                    <p className="text-sm text-text-soft">{item.dates}</p>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                        <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-lg text-text hover:text-white">
+                          {item.title}
+                        </a>
+                        <p className="shrink-0 text-sm text-text-soft">{item.dates}</p>
+                      </div>
+                    </div>
                   </div>
                   <p className="mt-1 text-sm leading-7 text-text-muted sm:pl-16">{item.body}</p>
                 </article>
@@ -580,7 +594,7 @@ export default function CVPage() {
 
         <div className="grid gap-6">
           <Section title="Selected Projects" accentClass="text-[#8be9fd]">
-            <div className="grid gap-2 text-sm leading-7 text-text-muted">
+            <div className="grid gap-x-8 gap-y-2 text-sm leading-7 text-text-muted sm:grid-cols-2">
               {selectedProjects.map((item) => (
                 <a key={item.title} href={item.href} className="story-link selected-project-link text-text-muted hover:text-text">
                   {item.title}
@@ -596,11 +610,12 @@ export default function CVPage() {
                   key={image.src}
                   className={`group relative overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.03] ${image.className}`}
                 >
-                  <img
+                  <ResponsiveImage
                     src={image.src}
                     alt={image.alt}
-                    loading="lazy"
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
+                    sizes="(max-width: 768px) 44vw, 18rem"
+                    loading="lazy"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_54%,rgba(0,0,0,0.48))]" />
                 </figure>

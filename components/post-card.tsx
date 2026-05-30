@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ResponsiveImage } from '@/components/responsive-image'
 import type { Post } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 
@@ -15,10 +16,11 @@ export function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/writing/${post.slug}`} className="group panel-soft block overflow-hidden rounded-[28px]">
       <div className="relative overflow-hidden border-b border-white/8">
-        <img
+        <ResponsiveImage
           src={post.image || '/images/posts/doing-things-hero.png'}
           alt={post.title}
           className="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          sizes="(max-width: 768px) 92vw, 24rem"
         />
       </div>
       <div className="p-5 sm:p-6">

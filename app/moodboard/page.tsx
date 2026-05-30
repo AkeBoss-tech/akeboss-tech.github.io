@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { AutoVideo } from '@/components/auto-video'
+import { ResponsiveImage } from '@/components/responsive-image'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
@@ -15,7 +16,7 @@ const collageTiles = [
     title: 'FRC match energy',
     href: '/writing/robotics-development',
     span: 'md:col-span-2 md:row-span-2',
-    media: <img src="/images/posts/frc24/comp/image5.jpg" alt="FRC match energy" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/posts/frc24/comp/image5.jpg" alt="FRC match energy" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 42rem" />,
   },
   {
     title: 'Autonomy loops',
@@ -25,13 +26,13 @@ const collageTiles = [
   {
     title: 'Hi-C research',
     href: '/projects/hic-tad-analysis',
-    media: <img src="/images/portfolio/hic-tad/tad-triangles.png" alt="Hi-C research" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/hic-tad/tad-triangles.png" alt="Hi-C research" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Night maps',
     href: '/projects/nostradamus',
     span: 'md:row-span-2',
-    media: <img src="/images/portfolio/nostradamus/nightvision.png" alt="Night maps" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/nostradamus/nightvision.png" alt="Night maps" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 24rem" />,
   },
   {
     title: 'Scarlet Sync live',
@@ -51,39 +52,39 @@ const collageTiles = [
   {
     title: 'AI assistant',
     href: '/projects/personal-assistant',
-    media: <img src="/images/portfolio/personal-assistant/hero.png" alt="AI assistant" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/personal-assistant/hero.png" alt="AI assistant" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Editorial sports rhythm',
     href: '/projects/kenny-racing',
-    media: <img src="/images/portfolio/racing/grand.png" alt="Editorial sports rhythm" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/racing/grand.png" alt="Editorial sports rhythm" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Newspaper grids',
     href: '/projects/newspaper-website',
     span: 'md:col-span-2',
-    media: <img src="/images/portfolio/newspaper/front_page.png" alt="Newspaper grids" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/newspaper/front_page.png" alt="Newspaper grids" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 42rem" />,
   },
   {
     title: 'Campus builder vibe',
     href: '/projects/lykke',
-    media: <img src="/images/portfolio/lykke/discover.png" alt="Campus builder vibe" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/lykke/discover.png" alt="Campus builder vibe" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Code + control',
     href: '/writing/robotics-development',
-    media: <img src="/images/posts/frc24/bot_prog.png" alt="Code and control" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/posts/frc24/bot_prog.png" alt="Code and control" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Data stories',
     href: '/projects/clean-your-data',
-    media: <img src="/images/portfolio/clean-your-data/graph.png" alt="Data stories" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/clean-your-data/graph.png" alt="Data stories" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Founder mode',
     href: '/projects/grokipedia-api',
     span: 'md:col-span-2',
-    media: <img src="/images/portfolio/grokipedia-api/hero.png" alt="Founder mode" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />,
+    media: <ResponsiveImage src="/images/portfolio/grokipedia-api/hero.png" alt="Founder mode" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 42rem" />,
   },
   {
     title: 'Robot sprint',

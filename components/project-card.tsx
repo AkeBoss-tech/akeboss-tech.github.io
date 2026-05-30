@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ResponsiveImage } from '@/components/responsive-image'
 import type { Project } from '@/lib/content'
 
 function getStatus(project: Project) {
@@ -23,10 +24,11 @@ export function ProjectCard({
     >
       <div className="relative overflow-hidden border-b border-white/8">
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-90" />
-        <img
+        <ResponsiveImage
           src={project.image || '/images/portfolio/home.png'}
           alt={project.title}
           className={`w-full object-cover transition duration-500 group-hover:scale-[1.03] ${compact ? 'h-52' : 'h-64 sm:h-72'}`}
+          sizes={compact ? '(max-width: 768px) 92vw, 20rem' : '(max-width: 768px) 92vw, 28rem'}
         />
       </div>
 

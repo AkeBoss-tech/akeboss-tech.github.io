@@ -1,6 +1,7 @@
 node_modules
 .next
 out
+public/generated-images
 design-shots
 *.log
 .DS_Store

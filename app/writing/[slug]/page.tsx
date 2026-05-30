@@ -1,4 +1,5 @@
 import { LlmMarkdown } from '@/components/llm-markdown'
+import { ResponsiveImage } from '@/components/responsive-image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -96,7 +97,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       {post.image ? (
         <section className="mt-8">
           <div className="panel-soft overflow-hidden rounded-[32px]">
-            <img src={post.image} alt={post.title} className="max-h-[34rem] w-full object-cover" />
+            <ResponsiveImage
+              src={post.image}
+              alt={post.title}
+              className="max-h-[34rem] w-full object-cover"
+              sizes="(max-width: 1024px) 92vw, 64rem"
+              loading="eager"
+            />
           </div>
         </section>
       ) : null}

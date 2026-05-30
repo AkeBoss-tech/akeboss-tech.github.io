@@ -3,6 +3,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { ResponsiveImage } from '@/components/responsive-image'
 
 function fallbackImageAlt(src?: string) {
   if (!src) return 'Content image'
@@ -27,7 +28,15 @@ export function Markdown({ content, className }: { content: string; className?: 
         ]}
         components={{
           iframe: (props) => <div className="media-frame my-8 aspect-video"><iframe {...(props as any)} className="h-full w-full" /></div>,
-          img: (props) => <img {...props} alt={props.alt?.trim() || fallbackImageAlt(typeof props.src === 'string' ? props.src : undefined)} className="my-8 h-auto w-full" loading="lazy" decoding="async" />,
+          img: (props) => (
+            <ResponsiveImage
+              src={typeof props.src === 'string' ? props.src : ''}
+              alt={props.alt?.trim() || fallbackImageAlt(typeof props.src === 'string' ? props.src : undefined)}
+              className="my-8 h-auto w-full"
+              sizes="(max-width: 1024px) 92vw, 64rem"
+              loading="lazy"
+            />
+          ),
           a: (props) => <a {...props} target={String(props.href).startsWith('http') ? '_blank' : undefined} rel="noreferrer" />,
           h2: (props) => <h2 {...props} className="group scroll-mt-28" />,
           h3: (props) => <h3 {...props} className="group scroll-mt-28" />,
