@@ -3990,6 +3990,23 @@ h4 {
   .gd-feature-top,
   .gd-feature-bottom {
     grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    gap: 16px;
+  }
+
+  .gd-feature-split-card-first .gd-feature-top,
+  .gd-feature-split-card-first .gd-feature-bottom,
+  .gd-feature-split-visual-first .gd-feature-top,
+  .gd-feature-split-visual-first .gd-feature-bottom {
+    grid-auto-flow: row;
+  }
+
+  .gd-image-wrap-feature-panel {
+    height: 320px;
+  }
+
+  .gd-card {
+    padding: 24px;
   }
 
   .gd-image-gallery .gd-image-wrap.feature {
