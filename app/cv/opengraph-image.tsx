@@ -1,5 +1,7 @@
 import { renderOgCard } from '@/lib/og'
 
+export const dynamic = 'force-static'
+
 export const alt = 'CV of Akash Dubey'
 export const size = {
   width: 1200,

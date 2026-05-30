@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import { getProject } from '@/lib/content'
 import { renderOgCard } from '@/lib/og'
 
+export const dynamic = 'force-static'
+
 export const alt = 'Project preview'
 export const size = {
   width: 1200,

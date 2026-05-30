@@ -3,6 +3,8 @@ import { formatDate } from '@/lib/format'
 import { getPost } from '@/lib/content'
 import { renderOgCard } from '@/lib/og'
 
+export const dynamic = 'force-static'
+
 export const alt = 'Writing preview'
 export const size = {
   width: 1200,
