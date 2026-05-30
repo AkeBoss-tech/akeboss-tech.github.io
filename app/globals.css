@@ -1291,7 +1291,7 @@ body.visual-journal-expanded header {
   display: flex;
   flex-direction: column;
   gap: 22vh;
-  padding: 10vh clamp(20px, 5vw, 80px) 24vh;
+  padding: 10vh clamp(20px, 5vw, 80px) 100vh;
 }
 
 .gd-row {
@@ -1588,13 +1588,13 @@ body.visual-journal-expanded header {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: clamp(28px, 6vh, 64px);
+  bottom: clamp(40px, 10vh, 100px);
   z-index: 35;
   width: min(900px, calc(100% - 32px));
   margin-inline: auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   opacity: var(--end-progress, 0);
@@ -1621,7 +1621,7 @@ body.visual-journal-expanded header {
 .gd-end-icons {
   flex-basis: 100%;
   justify-content: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .gd-end-theme {
@@ -1640,7 +1640,7 @@ body.visual-journal-expanded header {
   min-height: 2.85rem;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.15rem;
+  margin-bottom: 1.25rem;
   padding: 0.7rem 1.2rem;
   border: 1px solid var(--icon-button-border);
   border-radius: 9999px;
