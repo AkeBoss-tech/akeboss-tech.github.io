@@ -1,6 +1,8 @@
 import { getPosts, getProjects } from '@/lib/content'
 import { absoluteUrl } from '@/lib/seo'
 
+export const dynamic = 'force-static'
+
 function xmlEscape(value: string) {
   return value
     .replace(/&/g, '&amp;')

@@ -1,4 +1,23 @@
+import { getProjects, getPosts } from '@/lib/content'
 import { getMarkdownForPath } from '@/lib/llm'
+
+export const dynamic = 'force-static'
+
+export function generateStaticParams() {
+  const projects = getProjects().map((p) => ({ slug: ['projects', p.slug] }))
+  const posts = getPosts().map((p) => ({ slug: ['writing', p.slug] }))
+  return [
+    { slug: [] },
+    { slug: ['about'] },
+    { slug: ['projects'] },
+    { slug: ['writing'] },
+    { slug: ['story'] },
+    { slug: ['resume'] },
+    { slug: ['contact'] },
+    ...projects,
+    ...posts,
+  ]
+}
 
 export async function GET(_: Request, context: { params: Promise<{ slug?: string[] }> }) {
   const params = await context.params
