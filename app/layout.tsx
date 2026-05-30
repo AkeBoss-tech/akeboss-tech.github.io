@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inconsolata } from 'next/font/google'
+import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { SiteShell } from '@/components/site-shell'
 import { PostHogProvider } from '@/components/posthog-provider'
@@ -8,6 +9,8 @@ import PostHogPageView from './posthog-pageview'
 import { defaultDescription, defaultOgImage, siteName, siteUrl } from '@/lib/seo'
 
 const inconsolata = Inconsolata({ subsets: ['latin'], variable: '--font-inconsolata' })
+
+const GA_MEASUREMENT_ID = 'G-JJ2HKRJL6Z'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -55,6 +58,23 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body className={`${inconsolata.variable}`}>
         <PostHogProvider>
           <ThemeProvider>
