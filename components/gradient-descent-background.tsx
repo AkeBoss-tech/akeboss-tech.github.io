@@ -37,7 +37,7 @@ export function GradientDescentBackground({ className }: { className?: string })
             arrowColor: '#0f2d16',
             heightColor: (y: number) => {
               const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
-              return new THREE.Color().setHSL(0.01 + normalized * 0.29, 0.8, 0.54 - normalized * 0.14)
+              return new THREE.Color().setHSL(0.0 + normalized * 0.36, 0.85, 0.44 - normalized * 0.12)
             },
           }
         : {
