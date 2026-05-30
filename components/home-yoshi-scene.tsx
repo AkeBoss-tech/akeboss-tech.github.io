@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTheme } from 'next-themes'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
+import { ThemeToggle } from '@/components/theme-toggle'
 import type { Project } from '@/lib/content'
 
 type HomeYoshiSceneProps = {
@@ -189,33 +191,31 @@ function shufflePlaces(places: PlaceMoment[]) {
 
 function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'right' }) {
   const [expandedImage, setExpandedImage] = useState<{ src: string; alt: string } | null>(null)
-  const gallery = point.gallery ? (
-    <div className="gd-image-gallery three">
-      {point.gallery.map((image, index) => (
-        <button
-          key={image.src}
-          type="button"
-          className={`gd-image-wrap ${index === 0 ? 'feature' : ''}`}
-          onClick={() => setExpandedImage(image)}
-          aria-label={`Expand ${image.alt}`}
-        >
-          <img src={image.src} alt={image.alt} />
-        </button>
-      ))}
-    </div>
+  const cardFirst = align === 'left'
+  const primaryImage = point.gallery?.[0]
+  const secondaryImages = point.gallery?.slice(1) ?? []
+  const visual = primaryImage ? (
+    <button
+      type="button"
+      className="gd-image-wrap gd-image-wrap-feature-panel"
+      onClick={() => setExpandedImage(primaryImage)}
+      aria-label={`Expand ${primaryImage.alt}`}
+    >
+      <img src={primaryImage.src} alt={primaryImage.alt} />
+    </button>
   ) : point.image ? (
     <button
       type="button"
-      className="gd-image-wrap"
+      className="gd-image-wrap gd-image-wrap-feature-panel"
       onClick={() => setExpandedImage({ src: point.image!, alt: point.imageAlt || point.title })}
       aria-label={`Expand ${point.imageAlt || point.title}`}
     >
       <img src={point.image} alt={point.imageAlt || point.title} />
     </button>
-  ) : null
+  ) : (
+    <div className="gd-visual-placeholder" aria-hidden="true" />
+  )
   const hasInlineLogo = Boolean(point.logo && !point.logos?.length)
-  const featureImage = point.gallery?.[0]
-  const secondaryImages = point.gallery?.slice(1) ?? []
   const card = (
     <div className="gd-card">
       <div className={`gd-card-header ${hasInlineLogo ? 'gd-card-header-inline-logo' : ''}`}>
@@ -243,52 +243,62 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
 
   return (
     <>
-    <article className={`gd-row ${align} ${point.galleryLayout === 'feature-left-stack-right' ? 'gd-row-feature-full' : ''}`}>
-      <div
-        className={[
-          'gd-content',
-          point.gallery ? 'gd-content-gallery' : '',
-          point.gallerySide === 'right' ? 'gd-content-gallery-right' : '',
-          point.galleryLayout === 'feature-left-stack-right' ? 'gd-content-gallery-feature-left' : '',
-        ].filter(Boolean).join(' ')}
-      >
-        {point.galleryLayout === 'feature-left-stack-right' && featureImage ? (
-          <div className="gd-feature-split">
+    <article className={`gd-row ${align} gd-row-feature-full`}>
+      <div className="gd-content gd-content-gallery-feature-left">
+        <div className={`gd-feature-split ${cardFirst ? 'gd-feature-split-card-first' : 'gd-feature-split-visual-first'}`}>
             <div className="gd-feature-top">
-              <button
-                type="button"
-                className="gd-image-wrap gd-image-wrap-feature-panel"
-                onClick={() => setExpandedImage(featureImage)}
-                aria-label={`Expand ${featureImage.alt}`}
-              >
-                <img src={featureImage.src} alt={featureImage.alt} />
-              </button>
-              {card}
+              {cardFirst ? (
+                <>
+                  {card}
+                  {visual}
+                </>
+              ) : (
+                <>
+                  {visual}
+                  {card}
+                </>
+              )}
             </div>
-            <div className="gd-feature-bottom">
-              <div aria-hidden="true" />
-              <div className="gd-image-gallery gd-image-gallery-secondary">
-                {secondaryImages.map((image) => (
-                  <button
-                    key={image.src}
-                    type="button"
-                    className="gd-image-wrap"
-                    onClick={() => setExpandedImage(image)}
-                    aria-label={`Expand ${image.alt}`}
-                  >
-                    <img src={image.src} alt={image.alt} />
-                  </button>
-                ))}
+            {secondaryImages.length ? (
+              <div className="gd-feature-bottom">
+                {cardFirst ? (
+                  <>
+                    <div className="gd-image-gallery gd-image-gallery-secondary">
+                      {secondaryImages.map((image) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          className="gd-image-wrap"
+                          onClick={() => setExpandedImage(image)}
+                          aria-label={`Expand ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} />
+                        </button>
+                      ))}
+                    </div>
+                    <div aria-hidden="true" />
+                  </>
+                ) : (
+                  <>
+                    <div aria-hidden="true" />
+                    <div className="gd-image-gallery gd-image-gallery-secondary">
+                      {secondaryImages.map((image) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          className="gd-image-wrap"
+                          onClick={() => setExpandedImage(image)}
+                          aria-label={`Expand ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} />
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
-            </div>
+            ) : null}
           </div>
-        ) : (
-          <>
-        {point.gallerySide === 'right' ? null : gallery}
-        {card}
-        {point.gallerySide === 'right' ? gallery : null}
-          </>
-        )}
       </div>
     </article>
     {expandedImage ? (
@@ -306,7 +316,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
             onClick={() => setExpandedImage(null)}
             aria-label="Close expanded image"
           >
-            <span aria-hidden="true" />
+            <span aria-hidden="true">×</span>
           </button>
           <img src={expandedImage.src} alt={expandedImage.alt} />
         </div>
@@ -470,7 +480,7 @@ function PlacesSection() {
               onClick={() => setExpandedPlace(null)}
               aria-label="Close expanded image"
             >
-              <span aria-hidden="true" />
+              <span aria-hidden="true">×</span>
             </button>
             <img src={expandedPlace.image} alt={expandedPlace.title} />
             <div className="visual-journal-lightbox-caption">
@@ -493,6 +503,8 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
   const scrollLabelRef = useRef<HTMLDivElement | null>(null)
   const [typedHeadlineLength, setTypedHeadlineLength] = useState(0)
   const headlineText = 'What I’m working on now.'
+  const { resolvedTheme } = useTheme()
+  const currentTheme = resolvedTheme === 'light' ? 'light' : 'dark'
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -508,6 +520,35 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
     async function start() {
       const THREE = await import('three')
       if (disposed) return
+      const palette = currentTheme === 'light'
+        ? {
+            ambient: 1,
+            directional: 2.02,
+            fillOpacity: 0.26,
+            wireOpacity: 0.48,
+            emissive: '#122318',
+            arrowBoost: 0.92,
+            pointColor: '#112015',
+            stageGradientOpacity: 0.82,
+            heightColor: (y: number, saturation = 0.58, lightness = 0.66) => {
+              const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
+              return new THREE.Color().setHSL(0.01 + normalized * 0.31, 0.84, 0.54 - normalized * 0.16)
+            },
+          }
+        : {
+            ambient: 0.9,
+            directional: 2.2,
+            fillOpacity: 0.055,
+            wireOpacity: 0.28,
+            emissive: '#ffffff',
+            arrowBoost: 0.85,
+            pointColor: '#ffffff',
+            stageGradientOpacity: 1,
+            heightColor: (y: number, saturation = 0.9, lightness = 0.55) => {
+              const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
+              return new THREE.Color().setHSL(0.72 - normalized * 0.45, saturation, lightness)
+            },
+          }
 
       const scene = new THREE.Scene()
       const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 1200)
@@ -518,9 +559,9 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       renderer.setSize(window.innerWidth, window.innerHeight)
       renderer.setClearColor(0x000000, 0)
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.9))
+      scene.add(new THREE.AmbientLight(0xffffff, palette.ambient))
 
-      const light = new THREE.DirectionalLight(0xffffff, 2.2)
+      const light = new THREE.DirectionalLight(0xffffff, palette.directional)
       light.position.set(10, 34, 20)
       scene.add(light)
 
@@ -556,11 +597,6 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         return surfacePoint(x - g.dx * step, z - g.dz * step).sub(surfacePoint(x, z)).normalize()
       }
 
-      function heightColor(y: number, saturation = 0.9, lightness = 0.55) {
-        const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
-        return new THREE.Color().setHSL(0.72 - normalized * 0.45, saturation, lightness)
-      }
-
       function setMaterialOpacity(material: import('three').Material | import('three').Material[], opacity: number) {
         const materials = Array.isArray(material) ? material : [material]
         materials.forEach((item) => {
@@ -578,7 +614,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         const z = pos.getY(i)
         const y = f(x, z)
         pos.setXYZ(i, x, y, z)
-        const color = heightColor(y)
+        const color = palette.heightColor(y)
         colors.push(color.r, color.g, color.b)
       }
 
@@ -590,7 +626,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         vertexColors: true,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.055,
+        opacity: palette.fillOpacity,
         roughness: 0.9,
         metalness: 0,
       })
@@ -599,8 +635,8 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         vertexColors: true,
         wireframe: true,
         transparent: true,
-        opacity: 0.28,
-        emissive: '#ffffff',
+        opacity: palette.wireOpacity,
+        emissive: palette.emissive,
         emissiveIntensity: 0.28,
       })
 
@@ -614,9 +650,9 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       for (let x = -fieldSize; x <= fieldSize; x += spacing) {
         for (let z = -fieldSize; z <= fieldSize; z += spacing) {
           const y = f(x, z)
-          const arrow = new THREE.ArrowHelper(downhillDirection(x, z), surfacePoint(x, z, surfaceLift), 1.15, heightColor(y, 0.95, 0.62), 0.3, 0.14)
-          setMaterialOpacity(arrow.line.material, 0.85)
-          setMaterialOpacity(arrow.cone.material, 0.85)
+          const arrow = new THREE.ArrowHelper(downhillDirection(x, z), surfacePoint(x, z, surfaceLift), 1.15, palette.heightColor(y, currentTheme === 'light' ? 0.96 : 0.95, currentTheme === 'light' ? 0.38 : 0.62), 0.3, 0.14)
+          setMaterialOpacity(arrow.line.material, palette.arrowBoost)
+          setMaterialOpacity(arrow.cone.material, palette.arrowBoost)
           arrows.add(arrow)
         }
       }
@@ -705,7 +741,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
 
         stageCanvas.style.opacity = String(stageVisibility)
         if (gradientRef.current) {
-          gradientRef.current.style.opacity = String(stageVisibility)
+          gradientRef.current.style.opacity = String(stageVisibility * palette.stageGradientOpacity)
         }
         if (topBackgroundRef.current) {
           topBackgroundRef.current.style.opacity = String(1 - stageVisibility)
@@ -747,11 +783,11 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         camera.lookAt(0, 0, 0)
 
         const whiteness = THREE.MathUtils.smoothstep(p, 0.5, 0.95)
-        wireMat.opacity = 0.28 + whiteness * 0.25
-        fillMat.opacity = 0.055 + whiteness * 0.045
+        wireMat.opacity = palette.wireOpacity + whiteness * (currentTheme === 'light' ? 0.16 : 0.25)
+        fillMat.opacity = palette.fillOpacity + whiteness * (currentTheme === 'light' ? 0.035 : 0.045)
 
         const arrowFade = THREE.MathUtils.smoothstep(p, 0.82, 0.985)
-        const arrowOpacity = endMode ? 0 : 0.85 * (1 - arrowFade)
+        const arrowOpacity = endMode ? 0 : palette.arrowBoost * (1 - arrowFade)
         arrows.visible = arrowOpacity > 0.01
         arrows.children.forEach((child) => {
           const arrow = child as import('three').ArrowHelper
@@ -794,7 +830,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       disposed = true
       cleanupCallbacks.forEach((cleanup) => cleanup())
     }
-  }, [])
+  }, [currentTheme])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -866,6 +902,9 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         >
           <span>Add to Contacts</span>
         </a>
+        <div className="gd-end-theme">
+          <ThemeToggle />
+        </div>
         <ContactIconLinks className="gd-end-icons" />
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span>Replay</span>
@@ -896,6 +935,8 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       body: 'Preparing for a software engineering internship focused on production systems and applied data work.',
       logo: '/company-logos/new-york-life.svg',
       logoAlt: 'New York Life Insurance logo',
+      image: '/images/homepage/2026-05-29/nyl.avif',
+      imageAlt: 'New York Life building at night in Midtown Manhattan',
     },
     {
       eyebrow: 'Right now',

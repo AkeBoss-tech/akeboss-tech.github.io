@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useTheme } from 'next-themes'
 
 function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -9,6 +10,8 @@ function prefersReducedMotion() {
 export function GradientDescentBackground({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const { resolvedTheme } = useTheme()
+  const currentTheme = resolvedTheme === 'light' ? 'light' : 'dark'
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -23,6 +26,32 @@ export function GradientDescentBackground({ className }: { className?: string })
     async function start() {
       const THREE = await import('three')
       if (disposed || !canvas) return
+      const palette = currentTheme === 'light'
+        ? {
+            ambient: 1.02,
+            directional: 2.08,
+            wireOpacity: 0.5,
+            fillOpacity: 0.24,
+            pointColor: '#132117',
+            trailColor: '#61161c',
+            arrowColor: '#0f2d16',
+            heightColor: (y: number) => {
+              const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
+              return new THREE.Color().setHSL(0.01 + normalized * 0.29, 0.8, 0.54 - normalized * 0.14)
+            },
+          }
+        : {
+            ambient: 0.9,
+            directional: 2.2,
+            wireOpacity: 0.16,
+            fillOpacity: 0.035,
+            pointColor: '#ffffff',
+            trailColor: '#ffffff',
+            heightColor: (y: number) => {
+              const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
+              return new THREE.Color().setHSL(0.58 - normalized * 0.08, 0.06, 0.82 + normalized * 0.12)
+            },
+          }
 
       const scene = new THREE.Scene()
       const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 1200)
@@ -33,9 +62,9 @@ export function GradientDescentBackground({ className }: { className?: string })
       renderer.setSize(1, 1)
       renderer.setClearColor(0x000000, 0)
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.9))
+      scene.add(new THREE.AmbientLight(0xffffff, palette.ambient))
 
-      const light = new THREE.DirectionalLight(0xffffff, 2.2)
+      const light = new THREE.DirectionalLight(0xffffff, palette.directional)
       light.position.set(10, 34, 20)
       scene.add(light)
 
@@ -73,11 +102,6 @@ export function GradientDescentBackground({ className }: { className?: string })
         return surfacePoint(x - g.dx * step, z - g.dz * step).sub(surfacePoint(x, z)).normalize()
       }
 
-      function heightColor(y: number, saturation = 0.06, lightness = 0.82) {
-        const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
-        return new THREE.Color().setHSL(0.58 - normalized * 0.08, saturation, lightness + normalized * 0.12)
-      }
-
       function setMaterialOpacity(material: import('three').Material | import('three').Material[], opacity: number) {
         const materials = Array.isArray(material) ? material : [material]
         materials.forEach((item) => {
@@ -95,7 +119,7 @@ export function GradientDescentBackground({ className }: { className?: string })
         const z = pos.getY(i)
         const y = f(x, z)
         pos.setXYZ(i, x, y, z)
-        const color = heightColor(y)
+        const color = palette.heightColor(y)
         colors.push(color.r, color.g, color.b)
       }
 
@@ -107,7 +131,7 @@ export function GradientDescentBackground({ className }: { className?: string })
         vertexColors: true,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.035,
+        opacity: palette.fillOpacity,
         roughness: 0.9,
         metalness: 0,
       })
@@ -116,9 +140,9 @@ export function GradientDescentBackground({ className }: { className?: string })
         vertexColors: true,
         wireframe: true,
         transparent: true,
-        opacity: 0.16,
-        emissive: '#ffffff',
-        emissiveIntensity: 0.18,
+        opacity: palette.wireOpacity,
+        emissive: currentTheme === 'light' ? '#17221a' : '#ffffff',
+        emissiveIntensity: currentTheme === 'light' ? 0.22 : 0.18,
       })
 
       world.add(new THREE.Mesh(geo.clone(), fillMat))
@@ -130,9 +154,9 @@ export function GradientDescentBackground({ className }: { className?: string })
 
       for (let x = -fieldSize; x <= fieldSize; x += spacing) {
         for (let z = -fieldSize; z <= fieldSize; z += spacing) {
-          const arrow = new THREE.ArrowHelper(downhillDirection(x, z), surfacePoint(x, z, surfaceLift), 0.95, new THREE.Color('#f8fbff'), 0.24, 0.11)
-          setMaterialOpacity(arrow.line.material, 0.22)
-          setMaterialOpacity(arrow.cone.material, 0.22)
+          const arrow = new THREE.ArrowHelper(downhillDirection(x, z), surfacePoint(x, z, surfaceLift), 0.95, new THREE.Color(currentTheme === 'light' ? palette.arrowColor : '#f8fbff'), 0.24, 0.11)
+          setMaterialOpacity(arrow.line.material, currentTheme === 'light' ? 0.62 : 0.22)
+          setMaterialOpacity(arrow.cone.material, currentTheme === 'light' ? 0.62 : 0.22)
           arrows.add(arrow)
         }
       }
@@ -161,13 +185,13 @@ export function GradientDescentBackground({ className }: { className?: string })
       const mainPath = createPath(27, -25)
       const point = new THREE.Mesh(
         new THREE.SphereGeometry(pointRadius, 32, 32),
-        new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#ffffff', emissiveIntensity: 2.4, metalness: 1, roughness: 0 }),
+        new THREE.MeshStandardMaterial({ color: palette.pointColor, emissive: palette.pointColor, emissiveIntensity: 2.4, metalness: 1, roughness: 0 }),
       )
       const smoothedMainXZ = new THREE.Vector2(mainPath[0].x, mainPath[0].z)
       point.position.copy(surfacePoint(mainPath[0].x, mainPath[0].z, pointRadius))
       world.add(point)
 
-      const trailMaterial = new THREE.LineBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.42 })
+      const trailMaterial = new THREE.LineBasicMaterial({ color: palette.trailColor, transparent: true, opacity: currentTheme === 'light' ? 0.26 : 0.42 })
 
       function replaceTrail(path: typeof mainPath, idx: number) {
         if (trail) {
@@ -229,8 +253,8 @@ export function GradientDescentBackground({ className }: { className?: string })
         camera.position.set(Math.sin(cameraState.angle) * cameraState.radius, cameraState.height, Math.cos(cameraState.angle) * cameraState.radius)
         camera.lookAt(0, 0, 0)
 
-        wireMat.opacity = 0.14 + Math.sin(now * 0.00022) * 0.025
-        fillMat.opacity = 0.03 + Math.sin(now * 0.00018) * 0.008
+        wireMat.opacity = palette.wireOpacity + Math.sin(now * 0.00022) * 0.025
+        fillMat.opacity = palette.fillOpacity + Math.sin(now * 0.00018) * 0.008
 
         const arrowOpacity = 0.16 + Math.sin(now * 0.0002) * 0.04
         arrows.visible = true
@@ -270,7 +294,7 @@ export function GradientDescentBackground({ className }: { className?: string })
       disposed = true
       cleanupCallbacks.forEach((cleanup) => cleanup())
     }
-  }, [])
+  }, [currentTheme])
 
   return (
     <div ref={containerRef} className={className ? `gradient-descent-bg ${className}` : 'gradient-descent-bg'} aria-hidden="true">

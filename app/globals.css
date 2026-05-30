@@ -14,6 +14,215 @@
   --accent-gold: #d1bf8a;
   --accent-scarlet: #c15353;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  --panel-bg: linear-gradient(180deg, rgba(19, 25, 33, 0.92), rgba(9, 11, 16, 0.96));
+  --panel-soft-bg: linear-gradient(180deg, rgba(16, 20, 28, 0.7), rgba(8, 10, 15, 0.92));
+  --footer-panel-bg: linear-gradient(180deg, rgba(19, 25, 33, 0.66), rgba(9, 11, 16, 0.76));
+  --liquid-glass-bg:
+    linear-gradient(180deg, rgba(16, 23, 37, 0.74), rgba(8, 11, 18, 0.58)),
+    radial-gradient(circle at 12% -10%, rgba(170, 193, 255, 0.22), transparent 35%);
+  --liquid-glass-bg-scrolled:
+    linear-gradient(180deg, rgba(8, 13, 23, 0.88), rgba(5, 8, 14, 0.78)),
+    radial-gradient(circle at 18% 0%, rgba(170, 193, 255, 0.24), transparent 34%);
+  --liquid-glass-border: rgba(147, 179, 255, 0.18);
+  --liquid-glass-border-strong: rgba(190, 207, 255, 0.24);
+  --liquid-glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 20px 55px rgba(0, 0, 0, 0.24);
+  --liquid-glass-shadow-scrolled:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 22px 70px rgba(0, 0, 0, 0.36);
+  --liquid-glass-highlight:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 30%, transparent 68%, rgba(255, 255, 255, 0.08)),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.12), transparent 28%);
+  --liquid-glass-glow: rgba(144, 186, 255, 0.16);
+  --hero-title-color: #f4efeb;
+  --hero-copy-color: rgba(244, 239, 235, 0.72);
+  --hero-overline-color: rgba(244, 239, 235, 0.58);
+  --hero-caret-color: rgba(244, 239, 235, 0.9);
+  --hero-caret-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+  --hero-button-border: rgba(255, 255, 255, 0.16);
+  --hero-button-bg-hover: rgba(255, 255, 255, 0.04);
+  --hero-button-text: rgba(244, 239, 235, 0.84);
+  --gd-card-bg: rgba(255, 255, 255, 0.04);
+  --gd-card-border: rgba(255, 255, 255, 0.08);
+  --gd-card-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+  --gd-card-title: rgba(255, 255, 255, 0.96);
+  --gd-card-copy: rgba(255, 255, 255, 0.68);
+  --gd-card-link: rgba(255, 255, 255, 0.86);
+  --gd-logo-bg: rgba(255, 255, 255, 0.04);
+  --gd-logo-border: rgba(255, 255, 255, 0.1);
+  --gd-image-bg: #050505;
+  --gd-image-feature-bg: #08111d;
+  --gd-end-name-color: rgba(255, 255, 255, 0.88);
+  --gd-end-button-border: rgba(255, 255, 255, 0.16);
+  --gd-end-button-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.035));
+  --gd-end-button-color: rgba(255, 255, 255, 0.88);
+  --gd-end-button-hover-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  --icon-button-border: rgba(255, 255, 255, 0.1);
+  --icon-button-bg: rgba(255, 255, 255, 0.025);
+  --icon-button-color: rgba(255, 255, 255, 0.72);
+  --icon-button-hover-bg: rgba(255, 255, 255, 0.06);
+  --icon-button-hover-color: #ffffff;
+  --tag-border: rgba(255, 255, 255, 0.12);
+  --tag-bg: rgba(255, 255, 255, 0.04);
+  --project-glass-border: rgba(210, 230, 255, 0.14);
+  --project-glass-bg:
+    linear-gradient(180deg, rgba(20, 27, 36, 0.32), rgba(5, 8, 13, 0.2)),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.08), transparent 30%),
+    rgba(4, 7, 12, 0.16);
+  --project-glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 20px 70px rgba(0, 0, 0, 0.2);
+  --project-glass-highlight:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 28%, transparent 70%, rgba(255, 255, 255, 0.03)),
+    radial-gradient(circle at 86% 28%, rgba(132, 169, 255, 0.06), transparent 24%);
+  --body-gradient:
+    radial-gradient(circle at top left, rgba(132, 169, 255, 0.12), transparent 26%),
+    radial-gradient(circle at 80% 12%, rgba(191, 175, 175, 0.09), transparent 22%),
+    linear-gradient(180deg, #0f1b27 0%, #0d0d0d 28%, #090b10 100%);
+  --body-stars:
+    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 16%, rgba(255, 255, 255, 0.75) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 44% 12%, rgba(132, 169, 255, 0.75) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 18% 72%, rgba(255, 255, 255, 0.62) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 58%, rgba(209, 191, 138, 0.58) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 84% 78%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px);
+  --body-grid:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  --home-shell-bg: #000;
+  --home-intro-overlay:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.28), transparent 72%),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 72%);
+  --home-intro-bottom-fade: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.22));
+  --stage-gradient:
+    radial-gradient(circle at 20% 20%, rgba(0, 120, 255, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 40%, rgba(255, 0, 140, 0.12), transparent 35%),
+    radial-gradient(circle at 50% 90%, rgba(0, 255, 200, 0.1), transparent 35%);
+  --bg-field-gradient:
+    radial-gradient(circle at 20% 20%, rgba(210, 230, 255, 0.055), transparent 35%),
+    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.035), transparent 35%),
+    radial-gradient(circle at 50% 90%, rgba(210, 255, 245, 0.04), transparent 35%);
+  --bg-field-glow:
+    radial-gradient(circle at 24% 24%, rgba(210, 230, 255, 0.055), transparent 34%),
+    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.035), transparent 36%),
+    radial-gradient(circle at 50% 90%, rgba(210, 255, 245, 0.04), transparent 38%);
+  --bg-field-canvas-filter: grayscale(0.85) saturate(0.55) contrast(1.05);
+  --bg-field-canvas-opacity: 0.32;
+  --bg-field-glow-opacity: 0.68;
+  --bg-field-canvas-blend: screen;
+}
+
+[data-theme="light"] {
+  --bg: #eef3f8;
+  --bg-deep: #f7fafc;
+  --bg-elevated: rgba(255, 255, 255, 0.8);
+  --bg-strong: rgba(247, 250, 252, 0.96);
+  --text: #112030;
+  --text-muted: #4f6478;
+  --text-soft: #6f8193;
+  --border: rgba(17, 32, 48, 0.12);
+  --shadow: 0 24px 80px rgba(26, 43, 63, 0.12);
+  --panel-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(244, 248, 252, 0.96));
+  --panel-soft-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(244, 248, 252, 0.9));
+  --footer-panel-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(244, 248, 252, 0.84));
+  --liquid-glass-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(243, 247, 252, 0.64)),
+    radial-gradient(circle at 12% -10%, rgba(116, 167, 241, 0.12), transparent 35%);
+  --liquid-glass-bg-scrolled:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(242, 246, 251, 0.78)),
+    radial-gradient(circle at 18% 0%, rgba(116, 167, 241, 0.14), transparent 34%);
+  --liquid-glass-border: rgba(60, 86, 118, 0.14);
+  --liquid-glass-border-strong: rgba(60, 86, 118, 0.2);
+  --liquid-glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 20px 55px rgba(82, 105, 128, 0.12);
+  --liquid-glass-shadow-scrolled:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 22px 70px rgba(82, 105, 128, 0.16);
+  --liquid-glass-highlight:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.68), transparent 30%, transparent 68%, rgba(140, 174, 214, 0.1)),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.52), transparent 28%);
+  --liquid-glass-glow: rgba(170, 202, 242, 0.18);
+  --hero-title-color: #102130;
+  --hero-copy-color: rgba(17, 32, 48, 0.7);
+  --hero-overline-color: rgba(17, 32, 48, 0.52);
+  --hero-caret-color: rgba(17, 32, 48, 0.82);
+  --hero-caret-shadow: 0 0 16px rgba(116, 167, 241, 0.16);
+  --hero-button-border: rgba(17, 32, 48, 0.12);
+  --hero-button-bg-hover: rgba(17, 32, 48, 0.04);
+  --hero-button-text: rgba(17, 32, 48, 0.74);
+  --gd-card-bg: rgba(255, 255, 255, 0.42);
+  --gd-card-border: rgba(17, 32, 48, 0.09);
+  --gd-card-shadow: 0 18px 48px rgba(86, 109, 138, 0.12);
+  --gd-card-title: rgba(17, 32, 48, 0.96);
+  --gd-card-copy: rgba(17, 32, 48, 0.68);
+  --gd-card-link: rgba(17, 32, 48, 0.84);
+  --gd-logo-bg: rgba(255, 255, 255, 0.5);
+  --gd-logo-border: rgba(17, 32, 48, 0.1);
+  --gd-image-bg: #f8fbff;
+  --gd-image-feature-bg: #edf3f8;
+  --gd-end-name-color: rgba(17, 32, 48, 0.86);
+  --gd-end-button-border: rgba(17, 32, 48, 0.12);
+  --gd-end-button-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(242, 246, 251, 0.74));
+  --gd-end-button-color: rgba(17, 32, 48, 0.86);
+  --gd-end-button-hover-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(236, 242, 249, 0.86));
+  --icon-button-border: rgba(17, 32, 48, 0.12);
+  --icon-button-bg: rgba(255, 255, 255, 0.42);
+  --icon-button-color: rgba(17, 32, 48, 0.72);
+  --icon-button-hover-bg: rgba(255, 255, 255, 0.72);
+  --icon-button-hover-color: rgba(17, 32, 48, 0.92);
+  --tag-border: rgba(17, 32, 48, 0.12);
+  --tag-bg: rgba(255, 255, 255, 0.46);
+  --project-glass-border: rgba(17, 32, 48, 0.08);
+  --project-glass-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(244, 248, 252, 0.62)),
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.7), transparent 30%),
+    rgba(239, 245, 250, 0.42);
+  --project-glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 20px 70px rgba(82, 105, 128, 0.12);
+  --project-glass-highlight:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 28%, transparent 70%, rgba(116, 167, 241, 0.04)),
+    radial-gradient(circle at 86% 28%, rgba(116, 167, 241, 0.08), transparent 24%);
+  --body-gradient:
+    radial-gradient(circle at top left, rgba(114, 172, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 82% 10%, rgba(255, 168, 201, 0.16), transparent 24%),
+    linear-gradient(180deg, #fffdf8 0%, #f7f4ec 32%, #eef4f9 100%);
+  --body-stars:
+    radial-gradient(circle at 12% 22%, rgba(132, 169, 255, 0.28) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 16%, rgba(255, 164, 200, 0.26) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 44% 12%, rgba(98, 175, 255, 0.24) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 18% 72%, rgba(120, 180, 160, 0.2) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 58%, rgba(230, 182, 118, 0.2) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 84% 78%, rgba(125, 165, 215, 0.22) 0 1px, transparent 1.5px);
+  --body-grid:
+    linear-gradient(rgba(65, 96, 132, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(65, 96, 132, 0.05) 1px, transparent 1px);
+  --home-shell-bg: linear-gradient(180deg, #ffffff 0%, #f6faff 42%, #eef5fb 100%);
+  --home-intro-overlay:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.42), transparent 70%),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.34), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 72%);
+  --home-intro-bottom-fade: linear-gradient(180deg, transparent, rgba(224, 233, 244, 0.42));
+  --stage-gradient:
+    radial-gradient(circle at 18% 18%, rgba(168, 44, 54, 0.42), transparent 34%),
+    radial-gradient(circle at 82% 38%, rgba(70, 146, 48, 0.42), transparent 34%),
+    radial-gradient(circle at 50% 88%, rgba(173, 121, 57, 0.24), transparent 34%);
+  --bg-field-gradient:
+    radial-gradient(circle at 20% 20%, rgba(166, 42, 52, 0.48), transparent 36%),
+    radial-gradient(circle at 80% 38%, rgba(68, 142, 45, 0.44), transparent 36%),
+    radial-gradient(circle at 50% 90%, rgba(174, 123, 58, 0.3), transparent 36%),
+    linear-gradient(180deg, rgba(255, 252, 245, 0.98), rgba(243, 237, 223, 0.96));
+  --bg-field-glow:
+    radial-gradient(circle at 24% 24%, rgba(166, 42, 52, 0.4), transparent 36%),
+    radial-gradient(circle at 80% 40%, rgba(68, 142, 45, 0.38), transparent 38%),
+    radial-gradient(circle at 50% 90%, rgba(174, 123, 58, 0.26), transparent 40%);
+  --bg-field-canvas-filter: grayscale(0.01) saturate(1.16) brightness(0.97) contrast(1.08);
+  --bg-field-canvas-opacity: 0.9;
+  --bg-field-glow-opacity: 1;
+  --bg-field-canvas-blend: normal;
 }
 
 @theme inline {
@@ -44,10 +253,7 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at top left, rgba(132, 169, 255, 0.12), transparent 26%),
-    radial-gradient(circle at 80% 12%, rgba(191, 175, 175, 0.09), transparent 22%),
-    linear-gradient(180deg, #0f1b27 0%, #0d0d0d 28%, #090b10 100%);
+  background: var(--body-gradient);
   color: var(--text);
   font-family: var(--font-inconsolata), monospace;
 }
@@ -58,13 +264,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   opacity: 0.55;
-  background-image:
-    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 76% 16%, rgba(255, 255, 255, 0.75) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 44% 12%, rgba(132, 169, 255, 0.75) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 18% 72%, rgba(255, 255, 255, 0.62) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 68% 58%, rgba(209, 191, 138, 0.58) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 84% 78%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px);
+  background-image: var(--body-stars);
   animation: driftStars 20s linear infinite alternate;
 }
 
@@ -73,16 +273,14 @@ body::after {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: var(--body-grid);
   background-size: 52px 52px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 90%);
   opacity: 0.2;
 }
 
 body.home-clean-body {
-  background: #000;
+  background: var(--home-shell-bg);
 }
 
 body.home-clean-body::before,
@@ -97,14 +295,14 @@ body.visual-journal-expanded header {
 }
 
 .home-clean-shell {
-  background: #000;
+  background: var(--home-shell-bg);
 }
 
 .home-clean-page {
   position: relative;
   min-height: 100vh;
   overflow: visible;
-  background: #000;
+  background: var(--home-shell-bg);
 }
 
 .home-clean-page::before {
@@ -156,10 +354,7 @@ body.visual-journal-expanded header {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.28), transparent 72%),
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 72%);
+  background: var(--home-intro-overlay);
 }
 
 .home-intro-hero::after {
@@ -169,7 +364,7 @@ body.visual-journal-expanded header {
   z-index: -1;
   height: 18rem;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.22));
+  background: var(--home-intro-bottom-fade);
 }
 
 .home-intro-copy {
@@ -177,7 +372,7 @@ body.visual-journal-expanded header {
 }
 
 .home-intro-copy h1 {
-  color: #f4efeb;
+  color: var(--hero-title-color);
   font-size: clamp(4rem, 10vw, 9rem);
   font-weight: 300;
   letter-spacing: -0.085em;
@@ -197,7 +392,7 @@ body.visual-journal-expanded header {
   position: absolute;
   inset: 0;
   display: inline-block;
-  color: #f4efeb;
+  color: var(--hero-title-color);
   white-space: pre-wrap;
 }
 
@@ -207,15 +402,15 @@ body.visual-journal-expanded header {
   height: 0.82em;
   margin-left: 0.05em;
   vertical-align: -0.08em;
-  background: rgba(244, 239, 235, 0.9);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+  background: var(--hero-caret-color);
+  box-shadow: var(--hero-caret-shadow);
   animation: gdCaretBlink 1s steps(1, end) infinite;
 }
 
 .home-intro-copy p {
   margin-top: clamp(1.5rem, 3vw, 2.3rem);
   max-width: 46rem;
-  color: rgba(244, 239, 235, 0.72);
+  color: var(--hero-copy-color);
   font-size: clamp(1.2rem, 2.1vw, 2rem);
   line-height: 1.55;
 }
@@ -227,9 +422,9 @@ body.visual-journal-expanded header {
   width: 3rem;
   height: 3rem;
   margin-top: 1.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--hero-button-border);
   border-radius: 9999px;
-  color: rgba(244, 239, 235, 0.84);
+  color: var(--hero-button-text);
   font-size: 1.5rem;
   line-height: 1;
   transition:
@@ -244,8 +439,8 @@ body.visual-journal-expanded header {
 .home-intro-down:focus-visible {
   transform: translateY(2px);
   border-color: rgba(132, 169, 255, 0.32);
-  background: rgba(255, 255, 255, 0.04);
-  color: white;
+  background: var(--hero-button-bg-hover);
+  color: var(--hero-title-color);
   box-shadow: 0 0 26px rgba(132, 169, 255, 0.14);
 }
 
@@ -333,7 +528,7 @@ body.visual-journal-expanded header {
 
 .places-section-heading h2 {
   max-width: 10ch;
-  color: #f4efeb;
+  color: var(--hero-title-color);
   font-size: clamp(3.4rem, 8vw, 7.5rem);
   font-weight: 300;
   letter-spacing: -0.08em;
@@ -769,7 +964,7 @@ body.visual-journal-expanded header {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 3;
+  z-index: 5;
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -779,6 +974,7 @@ body.visual-journal-expanded header {
   background: rgba(8, 12, 20, 0.72);
   color: white;
   cursor: pointer;
+  pointer-events: auto;
   transition:
     background 180ms ease,
     border-color 180ms ease,
@@ -793,23 +989,10 @@ body.visual-journal-expanded header {
   transform: scale(1.04);
 }
 
-.visual-journal-lightbox-close span,
-.visual-journal-lightbox-close span::before {
-  content: "";
-  position: absolute;
-  width: 1.05rem;
-  height: 2px;
-  border-radius: 9999px;
-  background: currentColor;
-}
-
 .visual-journal-lightbox-close span {
-  transform: rotate(45deg);
-}
-
-.visual-journal-lightbox-close span::before {
-  left: 0;
-  transform: rotate(90deg);
+  font-size: 1.5rem;
+  line-height: 1;
+  transform: translateY(-1px);
 }
 
 .visual-journal-lightbox-caption {
@@ -1007,10 +1190,7 @@ body.visual-journal-expanded header {
   z-index: 1;
   pointer-events: none;
   opacity: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0, 120, 255, 0.12), transparent 35%),
-    radial-gradient(circle at 80% 40%, rgba(255, 0, 140, 0.12), transparent 35%),
-    radial-gradient(circle at 50% 90%, rgba(0, 255, 200, 0.1), transparent 35%);
+  background: var(--stage-gradient);
   filter: blur(120px);
 }
 
@@ -1034,7 +1214,7 @@ body.visual-journal-expanded header {
 
 .gd-eyebrow {
   margin-bottom: 1.5rem;
-  color: rgba(255, 255, 255, 0.42);
+  color: var(--hero-overline-color);
   font-size: 0.74rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1042,7 +1222,7 @@ body.visual-journal-expanded header {
 
 .gd-hero h1 {
   max-width: 10ch;
-  color: white;
+  color: var(--hero-title-color);
   font-size: clamp(4rem, 10vw, 9rem);
   font-weight: 200;
   letter-spacing: -0.08em;
@@ -1052,7 +1232,7 @@ body.visual-journal-expanded header {
 .gd-hero p {
   margin-top: 1.9rem;
   max-width: 650px;
-  color: rgba(255, 255, 255, 0.68);
+  color: var(--hero-copy-color);
   font-size: 1.05rem;
   line-height: 1.7;
 }
@@ -1099,13 +1279,13 @@ body.visual-journal-expanded header {
 
 .gd-content-gallery {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   align-items: stretch;
 }
 
 .gd-content-gallery-right {
-  grid-template-columns: minmax(22rem, 0.92fr) minmax(0, 1.08fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .gd-content-gallery-feature-left {
@@ -1114,11 +1294,11 @@ body.visual-journal-expanded header {
 }
 
 .gd-card {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--gd-card-border);
   border-radius: 32px;
   padding: clamp(28px, 4vw, 40px);
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.04);
+  background: var(--gd-card-bg);
+  box-shadow: var(--gd-card-shadow);
   backdrop-filter: blur(18px);
 }
 
@@ -1147,9 +1327,9 @@ body.visual-journal-expanded header {
   min-height: 3.4rem;
   width: fit-content;
   margin-bottom: 1.15rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--gd-logo-border);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--gd-logo-bg);
   padding: 0.65rem 0.9rem;
 }
 
@@ -1180,7 +1360,7 @@ body.visual-journal-expanded header {
 
 .gd-card h2 {
   margin-bottom: 18px;
-  color: white;
+  color: var(--gd-card-title);
   font-size: clamp(2rem, 3vw, 3.25rem);
   font-weight: 400;
   letter-spacing: -0.06em;
@@ -1200,7 +1380,7 @@ body.visual-journal-expanded header {
   position: absolute;
   inset: 0;
   display: inline-block;
-  color: rgba(255, 255, 255, 0.96);
+  color: var(--gd-card-title);
   white-space: pre-wrap;
 }
 
@@ -1210,20 +1390,20 @@ body.visual-journal-expanded header {
   height: 0.82em;
   margin-left: 0.06em;
   vertical-align: -0.08em;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+  background: var(--hero-caret-color);
+  box-shadow: var(--hero-caret-shadow);
   animation: gdCaretBlink 1s steps(1, end) infinite;
 }
 
 .gd-card p {
-  color: rgba(255, 255, 255, 0.68);
+  color: var(--gd-card-copy);
   line-height: 1.8;
 }
 
 .gd-card a {
   display: inline-block;
   margin-top: 1.35rem;
-  color: rgba(255, 255, 255, 0.86);
+  color: var(--gd-card-link);
   text-decoration: underline;
   text-underline-offset: 5px;
 }
@@ -1232,9 +1412,9 @@ body.visual-journal-expanded header {
   appearance: none;
   width: 100%;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--gd-card-border);
   border-radius: 28px;
-  background: #050505;
+  background: var(--gd-image-bg);
   padding: 0;
   cursor: zoom-in;
 }
@@ -1269,7 +1449,7 @@ body.visual-journal-expanded header {
 .gd-image-gallery .gd-image-wrap.feature img {
   min-height: 380px;
   object-fit: contain;
-  background: #08111d;
+  background: var(--gd-image-feature-bg);
 }
 
 .gd-feature-split {
@@ -1297,12 +1477,37 @@ body.visual-journal-expanded header {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
+.gd-feature-split-card-first .gd-feature-top,
+.gd-feature-split-card-first .gd-feature-bottom {
+  grid-auto-flow: column;
+}
+
+.gd-feature-split-visual-first .gd-feature-top,
+.gd-feature-split-visual-first .gd-feature-bottom {
+  grid-auto-flow: column;
+}
+
 .gd-row-feature-full .gd-card {
   height: 100%;
 }
 
 .gd-image-gallery-secondary {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gd-visual-placeholder {
+  min-height: clamp(24rem, 42vw, 34rem);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 24% 24%, rgba(132, 169, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 78% 72%, rgba(143, 224, 208, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01)),
+    rgba(255, 255, 255, 0.02);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 40px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(18px);
 }
 
 .gd-image-wrap-feature-panel {
@@ -1355,7 +1560,7 @@ body.visual-journal-expanded header {
   width: min(92vw, 72rem);
   margin: 0;
   text-align: center;
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--gd-end-name-color);
   font-size: clamp(4.5rem, 12vw, 10rem);
   font-weight: 300;
   line-height: 0.9;
@@ -1370,19 +1575,28 @@ body.visual-journal-expanded header {
   margin-bottom: 0.25rem;
 }
 
-.gd-end-contact-shortcut {
-  flex-basis: 100%;
+.gd-end-theme {
   display: inline-flex;
-  width: fit-content;
+  justify-content: center;
+}
+
+.gd-end-contact-shortcut {
+  display: inline-flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  align-self: center;
   min-height: 2.85rem;
   align-items: center;
   justify-content: center;
   margin-bottom: 0.15rem;
   padding: 0.7rem 1.2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--icon-button-border);
   border-radius: 9999px;
-  color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.025);
+  color: var(--icon-button-color);
+  background: var(--icon-button-bg);
   backdrop-filter: blur(12px);
   text-decoration: none;
   font-size: 0.92rem;
@@ -1402,8 +1616,8 @@ body.visual-journal-expanded header {
 .gd-end-contact-shortcut:hover,
 .gd-end-contact-shortcut:focus-visible {
   border-color: rgba(255, 255, 255, 0.24);
-  color: white;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--icon-button-hover-color);
+  background: var(--icon-button-hover-bg);
   transform: translate3d(0, -2px, 0);
   box-shadow:
     0 0 0 1px rgba(132, 169, 255, 0.18),
@@ -1420,11 +1634,11 @@ body.visual-journal-expanded header {
   min-height: 52px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--gd-end-button-border);
   border-radius: 999px;
   padding: 0 24px;
-  color: rgba(255, 255, 255, 0.88);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.035));
+  color: var(--gd-end-button-color);
+  background: var(--gd-end-button-bg);
   box-shadow:
     0 0 34px rgba(255, 255, 255, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
@@ -1456,8 +1670,8 @@ body.visual-journal-expanded header {
 .gd-end-button:focus-visible {
   transform: translateY(-3px);
   border-color: rgba(255, 255, 255, 0.36);
-  color: white;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  color: var(--text);
+  background: var(--gd-end-button-hover-bg);
 }
 
 .gd-end-button:hover::before,
@@ -1489,18 +1703,18 @@ button {
   height: 3rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--icon-button-border);
   border-radius: 1rem;
-  color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.025);
+  color: var(--icon-button-color);
+  background: var(--icon-button-bg);
   backdrop-filter: blur(12px);
 }
 
 .contact-icon-row a:hover,
 .contact-icon-row a:focus-visible {
   border-color: rgba(255, 255, 255, 0.24);
-  color: white;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--icon-button-hover-color);
+  background: var(--icon-button-hover-bg);
   transform: translate3d(0, -2px, 0);
   box-shadow:
     0 0 0 1px rgba(132, 169, 255, 0.18),
@@ -1572,34 +1786,29 @@ h4 {
 }
 
 .panel {
-  background: linear-gradient(180deg, rgba(19, 25, 33, 0.92), rgba(9, 11, 16, 0.96));
+  background: var(--panel-bg);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
 }
 
 .panel-soft {
-  background: linear-gradient(180deg, rgba(16, 20, 28, 0.7), rgba(8, 10, 15, 0.92));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel-soft-bg);
+  border: 1px solid var(--gd-card-border);
   box-shadow: var(--shadow);
   backdrop-filter: blur(16px);
 }
 
 .footer-panel {
-  background: linear-gradient(180deg, rgba(19, 25, 33, 0.66), rgba(9, 11, 16, 0.76));
+  background: var(--footer-panel-bg);
 }
 
 .project-glass-panel {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(210, 230, 255, 0.14);
-  background:
-    linear-gradient(180deg, rgba(20, 27, 36, 0.32), rgba(5, 8, 13, 0.2)),
-    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.08), transparent 30%),
-    rgba(4, 7, 12, 0.16);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 20px 70px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--project-glass-border);
+  background: var(--project-glass-bg);
+  box-shadow: var(--project-glass-shadow);
   backdrop-filter: blur(22px) saturate(135%);
 }
 
@@ -1608,9 +1817,7 @@ h4 {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 28%, transparent 70%, rgba(255, 255, 255, 0.03)),
-    radial-gradient(circle at 86% 28%, rgba(132, 169, 255, 0.06), transparent 24%);
+  background: var(--project-glass-highlight);
   opacity: 0.62;
 }
 
@@ -1936,6 +2143,32 @@ h4 {
   font-size: 0.82rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.featured-case-study-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.featured-case-study-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.featured-case-study-meta .project-feed-tag {
+  min-height: 1.45rem;
+  padding: 0 0.5rem;
+  font-size: 0.64rem;
+}
+
+.featured-case-study-meta time {
+  flex: 0 0 auto;
+  color: rgba(244, 239, 235, 0.42);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
 }
 
 .project-feed-meta time {
@@ -2347,13 +2580,9 @@ h4 {
 .liquid-glass {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(147, 179, 255, 0.18);
-  background:
-    linear-gradient(180deg, rgba(16, 23, 37, 0.74), rgba(8, 11, 18, 0.58)),
-    radial-gradient(circle at 12% -10%, rgba(170, 193, 255, 0.22), transparent 35%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 20px 55px rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--liquid-glass-border);
+  background: var(--liquid-glass-bg);
+  box-shadow: var(--liquid-glass-shadow);
   backdrop-filter: blur(20px) saturate(155%);
   transition:
     width 360ms ease,
@@ -2368,9 +2597,7 @@ h4 {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 30%, transparent 68%, rgba(255, 255, 255, 0.08)),
-    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.12), transparent 28%);
+  background: var(--liquid-glass-highlight);
   opacity: 0.8;
 }
 
@@ -2381,7 +2608,7 @@ h4 {
   height: 8rem;
   pointer-events: none;
   border-radius: 9999px;
-  background: rgba(144, 186, 255, 0.16);
+  background: var(--liquid-glass-glow);
   filter: blur(42px);
   opacity: 0.65;
   transition: transform 420ms ease, opacity 420ms ease;
@@ -2395,13 +2622,9 @@ h4 {
 .liquid-glass-scrolled {
   border-radius: 9999px;
   transform: translate3d(0, 0, 0) scale(0.965);
-  background:
-    linear-gradient(180deg, rgba(8, 13, 23, 0.88), rgba(5, 8, 14, 0.78)),
-    radial-gradient(circle at 18% 0%, rgba(170, 193, 255, 0.24), transparent 34%);
-  border-color: rgba(190, 207, 255, 0.24);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 22px 70px rgba(0, 0, 0, 0.36);
+  background: var(--liquid-glass-bg-scrolled);
+  border-color: var(--liquid-glass-border-strong);
+  box-shadow: var(--liquid-glass-shadow-scrolled);
 }
 
 .liquid-glass-scrolled::after {
@@ -2417,9 +2640,9 @@ h4 {
 
 .tag {
   @apply inline-flex items-center rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em];
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--tag-border);
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--tag-bg);
 }
 
 .terminal-line {
@@ -2720,10 +2943,7 @@ h4 {
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(210, 230, 255, 0.055), transparent 35%),
-    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.035), transparent 35%),
-    radial-gradient(circle at 50% 90%, rgba(210, 255, 245, 0.04), transparent 35%);
+  background: var(--bg-field-gradient);
 }
 
 .gradient-descent-bg canvas {
@@ -2731,20 +2951,17 @@ h4 {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.32;
-  filter: grayscale(0.85) saturate(0.55) contrast(1.05);
-  mix-blend-mode: screen;
+  opacity: var(--bg-field-canvas-opacity);
+  filter: var(--bg-field-canvas-filter);
+  mix-blend-mode: var(--bg-field-canvas-blend);
 }
 
 .gradient-descent-glow {
   position: absolute;
   inset: -12%;
-  background:
-    radial-gradient(circle at 24% 24%, rgba(210, 230, 255, 0.055), transparent 34%),
-    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.035), transparent 36%),
-    radial-gradient(circle at 50% 90%, rgba(210, 255, 245, 0.04), transparent 38%);
+  background: var(--bg-field-glow);
   filter: blur(90px);
-  opacity: 0.68;
+  opacity: var(--bg-field-glow-opacity);
 }
 
 .home-work-section {
@@ -3512,6 +3729,14 @@ h4 {
   .featured-case-study-collage {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto;
+  }
+
+  .featured-case-study-meta {
+    align-items: flex-start;
+  }
+
+  .featured-case-study-meta-left {
+    flex-wrap: wrap;
   }
 
   .featured-case-study-collage-item-1 {
