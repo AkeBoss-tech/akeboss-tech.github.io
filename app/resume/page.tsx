@@ -3,11 +3,11 @@ import { buildResumeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Resume',
+  title: 'Akash Dubey Resume',
   description:
     'Resume and recruiter-facing experience summary for Akash Dubey, focused on software engineering, AI systems, research, and product work.',
   path: '/resume',
-  image: '/images/face.jpg',
+  image: '/resume/opengraph-image',
 })
 
 export default function ResumePage() {
@@ -20,7 +20,7 @@ export default function ResumePage() {
           <p className="eyebrow">Resume</p>
           <h1 className="mt-4 text-5xl text-text sm:text-7xl">The recruiter-facing version.</h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-text-muted">
-            A shorter record for internships, software engineering, research, and product roles. Clean summary up front, PDF right beside it.
+            A shorter version for internships, software engineering, research, and product roles.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="/files/resume.pdf" target="_blank" rel="noreferrer" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
@@ -39,11 +39,11 @@ export default function ResumePage() {
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <p className="eyebrow">Focus</p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">Software engineering, AI systems, research, robotics, and product work.</p>
+              <p className="mt-3 text-sm leading-7 text-text-muted">Software engineering, AI systems, research, and product work.</p>
             </div>
             <div>
               <p className="eyebrow">Education</p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">Computer Science and Mathematics at Rutgers, with research and student-building work running in parallel.</p>
+              <p className="mt-3 text-sm leading-7 text-text-muted">Computer Science and Mathematics at Rutgers, alongside research and startup work.</p>
             </div>
           </div>
         </div>

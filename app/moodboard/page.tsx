@@ -6,7 +6,7 @@ export const metadata = buildPageMetadata({
   title: 'Moodboard',
   description: 'Internal visual reference board for the Akash Dubey portfolio.',
   path: '/moodboard',
-  image: '/images/portfolio/grokipedia-api/hero.png',
+  image: '/moodboard/opengraph-image',
   noIndex: true,
 })
 

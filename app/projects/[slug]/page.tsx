@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { Markdown } from '@/components/markdown'
 import { getProject, getProjects } from '@/lib/content'
 import { buildProjectLlmMarkdown } from '@/lib/llm'
-import { absoluteUrl, buildPageMetadata, siteName } from '@/lib/seo'
+import { absoluteUrl, buildBreadcrumbList, buildPageMetadata, siteName } from '@/lib/seo'
 
 export function generateStaticParams() {
   return getProjects().map((project) => ({ slug: project.slug }))
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: project.title,
     description: project.excerpt || project.lead,
     path: `/projects/${project.slug}`,
-    image: project.image,
+    image: `/projects/${project.slug}/opengraph-image`,
   })
 }
 
@@ -40,18 +40,28 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const scarletSyncVideo = project.slug === 'scarlet-sync' ? '/videos/scarlet-sync-demo.mp4' : null
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    headline: project.title,
-    name: project.title,
-    description: project.excerpt || project.lead,
-    url: absoluteUrl(`/projects/${project.slug}`),
-    image: project.image ? [absoluteUrl(project.image)] : undefined,
-    author: {
-      '@type': 'Person',
-      name: siteName,
-    },
-    datePublished: project.date,
-    keywords: project.tags.join(', '),
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        headline: project.title,
+        name: project.title,
+        description: project.excerpt || project.lead,
+        url: absoluteUrl(`/projects/${project.slug}`),
+        image: project.image ? [absoluteUrl(project.image)] : undefined,
+        author: {
+          '@type': 'Person',
+          name: siteName,
+        },
+        datePublished: project.date,
+        keywords: project.tags.join(', '),
+        inLanguage: 'en-US',
+      },
+      buildBreadcrumbList([
+        { name: 'Home', path: '/' },
+        { name: 'Projects', path: '/projects' },
+        { name: project.title, path: `/projects/${project.slug}` },
+      ]),
+    ],
   }
 
   return (
@@ -89,7 +99,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         </div>
 
-        <div className="panel-soft aspect-video overflow-hidden rounded-[32px] bg-black lg:mt-56">
+        <div className="panel-soft aspect-video overflow-hidden rounded-[32px] bg-black">
           {scarletSyncVideo ? (
             <video
               src={scarletSyncVideo}

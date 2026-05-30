@@ -5,11 +5,11 @@ import { storyTimeline } from '@/lib/site-data'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Story',
+  title: 'Story of Akash Dubey',
   description:
     'A timeline of Akash Dubey’s projects, ideas, research, robotics work, and product experiments.',
   path: '/story',
-  image: '/hero-nyc.png',
+  image: '/story/opengraph-image',
 })
 
 export default function StoryPage() {
@@ -21,7 +21,7 @@ export default function StoryPage() {
         <p className="eyebrow">Story</p>
         <h1 className="mt-4 text-5xl text-text sm:text-7xl">A timeline of projects, ideas, and experiments.</h1>
         <p className="mt-6 max-w-3xl text-lg leading-8 text-text-muted">
-          The portfolio makes more sense when read as a progression instead of a stack. Code, math, robotics, research, and product work kept feeding each other until they became one archive.
+          The portfolio makes more sense as a progression: code, math, research, robotics, and product work feeding each other over time.
         </p>
       </section>
 

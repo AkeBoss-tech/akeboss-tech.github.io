@@ -6,11 +6,11 @@ import { getWritingGroups } from '@/lib/site-data'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Writing',
+  title: 'Writing by Akash Dubey',
   description:
     'Writing by Akash Dubey on robotics, programming, school, reflection, and the thinking behind the projects.',
   path: '/writing',
-  image: '/images/posts/doing-things-hero.png',
+  image: '/writing/opengraph-image',
 })
 
 export default function WritingPage() {
@@ -23,7 +23,7 @@ export default function WritingPage() {
       <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <h1 className="text-5xl text-text sm:text-7xl">Writing.</h1>
-        <p className="mt-3 max-w-2xl text-text-soft">More coming soon!</p>
+        <p className="mt-3 max-w-2xl text-text-soft">Notes on building, research, and how the work comes together.</p>
       </section>
 
       <div className="mt-12 space-y-12">

@@ -5,11 +5,11 @@ import { buildProjectsLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Projects',
+  title: 'Projects by Akash Dubey',
   description:
     'Selected projects by Akash Dubey across AI, data, robotics, research, startups, and full-stack product work.',
   path: '/projects',
-  image: '/images/portfolio/home.png',
+  image: '/projects/opengraph-image',
 })
 
 function sortNewestFirst(a: { date: string; rank: number }, b: { date: string; rank: number }) {

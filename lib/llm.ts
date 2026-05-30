@@ -240,3 +240,32 @@ export function buildContactLlmMarkdown() {
     ]),
   ].join('\n')
 }
+
+export function getMarkdownForPath(pathname: string) {
+  const normalized = pathname.replace(/\/+$/, '') || '/'
+
+  if (normalized === '/') {
+    return buildHomeLlmMarkdown(getProjects())
+  }
+
+  if (normalized === '/about') return buildAboutLlmMarkdown()
+  if (normalized === '/projects') return buildProjectsLlmMarkdown(getProjects())
+  if (normalized === '/writing') return buildWritingLlmMarkdown(getPosts())
+  if (normalized === '/story') return buildStoryLlmMarkdown()
+  if (normalized === '/resume') return buildResumeLlmMarkdown()
+  if (normalized === '/contact') return buildContactLlmMarkdown()
+
+  if (normalized.startsWith('/projects/')) {
+    const slug = normalized.replace('/projects/', '')
+    const project = getProjects().find((entry) => entry.slug === slug)
+    return project ? [`# ${project.title}`, '', project.content].join('\n') : null
+  }
+
+  if (normalized.startsWith('/writing/')) {
+    const slug = normalized.replace('/writing/', '')
+    const post = getPosts().find((entry) => entry.slug === slug)
+    return post ? [`# ${post.title}`, '', post.content].join('\n') : null
+  }
+
+  return null
+}

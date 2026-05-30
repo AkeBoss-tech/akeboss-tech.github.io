@@ -4,6 +4,17 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
+function fallbackImageAlt(src?: string) {
+  if (!src) return 'Content image'
+
+  const rawName = src.split('/').pop()?.split('?')[0]?.split('#')[0] ?? 'content-image'
+  const withoutExtension = rawName.replace(/\.[a-z0-9]+$/i, '')
+  const cleaned = withoutExtension.replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim()
+
+  if (!cleaned) return 'Content image'
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1)
+}
+
 export function Markdown({ content, className }: { content: string; className?: string }) {
   return (
     <div className={`prose prose-neutral max-w-none ${className ?? ''}`.trim()}>
@@ -16,7 +27,7 @@ export function Markdown({ content, className }: { content: string; className?: 
         ]}
         components={{
           iframe: (props) => <div className="media-frame my-8 aspect-video"><iframe {...(props as any)} className="h-full w-full" /></div>,
-          img: (props) => <img {...props} alt={props.alt ?? ''} className="my-8 h-auto w-full" />,
+          img: (props) => <img {...props} alt={props.alt?.trim() || fallbackImageAlt(typeof props.src === 'string' ? props.src : undefined)} className="my-8 h-auto w-full" loading="lazy" decoding="async" />,
           a: (props) => <a {...props} target={String(props.href).startsWith('http') ? '_blank' : undefined} rel="noreferrer" />,
           h2: (props) => <h2 {...props} className="group scroll-mt-28" />,
           h3: (props) => <h3 {...props} className="group scroll-mt-28" />,

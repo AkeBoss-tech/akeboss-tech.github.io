@@ -4,7 +4,7 @@ export const siteName = 'Akash Dubey'
 export const siteUrl = 'https://akashdubey.me'
 export const defaultDescription =
   'Portfolio of Akash Dubey: software engineering, AI systems, robotics, math, research, and product work.'
-export const defaultOgImage = '/hero-nyc.png'
+export const defaultOgImage = '/opengraph-image'
 
 function trimDescription(value: string, maxLength = 160) {
   const normalized = value.replace(/\s+/g, ' ').trim()
@@ -14,6 +14,19 @@ function trimDescription(value: string, maxLength = 160) {
 
 export function absoluteUrl(path = '/') {
   return new URL(path, siteUrl).toString()
+}
+
+export function buildBreadcrumbList(items: Array<{ name: string; path: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  }
 }
 
 type PageMetadataInput = {

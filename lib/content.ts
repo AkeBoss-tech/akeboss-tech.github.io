@@ -13,6 +13,7 @@ export type Project = {
   excerpt: string
   date: string
   image?: string
+  mediaImages: string[]
   tags: string[]
   rank: number
   favorite: boolean
@@ -30,6 +31,7 @@ export type Post = {
   excerpt: string
   date: string
   image?: string
+  mediaImages: string[]
   tags: string[]
   content: string
   lead: string
@@ -130,6 +132,25 @@ function extractLinks(content: string) {
   }).slice(0, 4)
 }
 
+function extractImages(content: string, coverImage?: string) {
+  const matches = [...content.matchAll(/<img[^>]+src=['"]([^'"]+)['"][^>]*>/gi)]
+  const seen = new Set<string>()
+  const images: string[] = []
+
+  for (const match of matches) {
+    const src = match[1]?.trim()
+    if (!src || seen.has(src)) continue
+    seen.add(src)
+    images.push(src)
+  }
+
+  if (coverImage && !seen.has(coverImage)) {
+    images.unshift(coverImage)
+  }
+
+  return images
+}
+
 export function getProjects(): Project[] {
   return fs.readdirSync(portfolioDir).filter((file) => file.endsWith('.md')).map((file) => {
     const filePath = path.join(portfolioDir, file)
@@ -137,12 +158,14 @@ export function getProjects(): Project[] {
     const { data, content } = matter(raw)
     const featured = data.featured === true || data.featured === 'true'
     const favorite = data.favorite === true || data.favorite === 'true' || featured
+    const image = stripQuotes(data.image)
     return {
       slug: file.replace(/\.md$/, ''),
       title: stripQuotes(data.title),
       excerpt: stripQuotes(data.excerpt),
       date: stripQuotes(data.date, fs.statSync(filePath).mtime.toISOString()),
-      image: stripQuotes(data.image),
+      image,
+      mediaImages: extractImages(content, image),
       tags: parseTags(data.tags),
       rank: Number(data.rank || 999),
       favorite,
@@ -170,6 +193,7 @@ export function getPosts(): Post[] {
       excerpt: stripQuotes(data.excerpt || ''),
       date: stripQuotes(data.date),
       image: stripQuotes(data.image),
+      mediaImages: extractImages(content, stripQuotes(data.image)),
       tags: parseTags(data.tags),
       content,
       lead: extractLead(content),

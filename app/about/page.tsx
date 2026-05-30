@@ -4,11 +4,11 @@ import { buildAboutLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'About',
+  title: 'About Akash Dubey',
   description:
     'About Akash Dubey: builder, researcher, and operator working across software engineering, AI, product, and quantitative research.',
   path: '/about',
-  image: '/images/face.jpg',
+  image: '/about/opengraph-image',
 })
 
 export default function AboutPage() {
@@ -36,10 +36,10 @@ export default function AboutPage() {
           <p className="eyebrow">About</p>
           <h1 className="mt-4 text-5xl text-text sm:text-7xl">Builder, researcher, operator.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-text-muted">
-            I like turning messy systems into things people can actually use. Even when the domains change, the pattern stays the same: hard constraints, noisy inputs, and a chance to shape complexity into something sharper.
+            I like turning messy systems into tools people can actually use.
           </p>
           <p className="mt-5 max-w-3xl text-base leading-8 text-text-muted">
-            I study Computer Science and Mathematics at Rutgers, and most of my work sits somewhere between engineering, research, and product.
+            I study Computer Science and Mathematics at Rutgers, and most of my work sits between engineering, research, and product.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/story" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">

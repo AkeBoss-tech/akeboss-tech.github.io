@@ -7,3 +7,4 @@ design-shots
 .playwright-mcp/
 .env.local
 .env*.local
+*.tsbuildinfo

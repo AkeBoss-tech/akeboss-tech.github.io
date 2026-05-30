@@ -76,6 +76,35 @@
   --project-glass-highlight:
     linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 28%, transparent 70%, rgba(255, 255, 255, 0.03)),
     radial-gradient(circle at 86% 28%, rgba(132, 169, 255, 0.06), transparent 24%);
+  --project-surface-bg:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018)),
+    rgba(5, 8, 13, 0.78);
+  --project-surface-bg-strong:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.024)),
+    rgba(7, 11, 18, 0.82);
+  --project-surface-border: rgba(255, 255, 255, 0.12);
+  --project-surface-border-soft: rgba(255, 255, 255, 0.08);
+  --project-surface-divider: rgba(255, 255, 255, 0.08);
+  --project-surface-title: #f4efeb;
+  --project-surface-text: rgba(244, 239, 235, 0.72);
+  --project-surface-text-muted: rgba(244, 239, 235, 0.62);
+  --project-surface-text-soft: rgba(244, 239, 235, 0.46);
+  --project-pill-bg: rgba(255, 255, 255, 0.028);
+  --project-pill-tag-bg: rgba(255, 255, 255, 0.035);
+  --project-pill-tag-text: rgba(244, 239, 235, 0.68);
+  --project-surface-media-bg: rgba(5, 8, 13, 0.72);
+  --project-link: #8fc5ff;
+  --project-link-hover: #ffffff;
+  --project-view-hover-border: rgba(246, 193, 119, 0.32);
+  --project-view-hover-bg:
+    linear-gradient(135deg, rgba(246, 193, 119, 0.16), rgba(255, 255, 255, 0.05)),
+    rgba(9, 12, 20, 0.76);
+  --project-view-hover-text: var(--project-surface-title);
+  --cv-rutgers-logo-bg: rgba(52, 20, 23, 0.88);
+  --cv-rutgers-logo-border: rgba(204, 0, 51, 0.35);
+  --cv-research-role: #8be9fd;
+  --cv-newspaper-logo-bg: rgba(64, 120, 255, 0.2);
+  --cv-newspaper-logo-border: rgba(96, 156, 255, 0.4);
   --body-gradient:
     radial-gradient(circle at top left, rgba(132, 169, 255, 0.12), transparent 26%),
     radial-gradient(circle at 80% 12%, rgba(191, 175, 175, 0.09), transparent 22%),
@@ -186,20 +215,44 @@
   --project-glass-highlight:
     linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 28%, transparent 70%, rgba(116, 167, 241, 0.04)),
     radial-gradient(circle at 86% 28%, rgba(116, 167, 241, 0.08), transparent 24%);
+  --project-surface-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(244, 248, 252, 0.96));
+  --project-surface-bg-strong:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(241, 246, 251, 0.98));
+  --project-surface-border: rgba(17, 32, 48, 0.08);
+  --project-surface-border-soft: rgba(17, 32, 48, 0.06);
+  --project-surface-divider: rgba(17, 32, 48, 0.08);
+  --project-surface-title: rgba(17, 32, 48, 0.96);
+  --project-surface-text: rgba(34, 51, 68, 0.8);
+  --project-surface-text-muted: rgba(52, 69, 86, 0.72);
+  --project-surface-text-soft: rgba(88, 106, 124, 0.62);
+  --project-pill-bg: rgba(255, 255, 255, 0.72);
+  --project-pill-tag-bg: rgba(255, 255, 255, 0.82);
+  --project-pill-tag-text: rgba(32, 49, 66, 0.74);
+  --project-surface-media-bg: rgba(248, 251, 255, 0.96);
+  --project-link: #1b69c9;
+  --project-link-hover: #0f1720;
+  --project-view-hover-border: rgba(132, 169, 255, 0.2);
+  --project-view-hover-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 251, 255, 0.96));
+  --project-view-hover-text: #356fb8;
+  --cv-rutgers-logo-bg: rgba(255, 255, 255, 0.96);
+  --cv-rutgers-logo-border: rgba(255, 255, 255, 0.72);
+  --cv-research-role: #2f7f9a;
+  --cv-newspaper-logo-bg: rgba(34, 82, 170, 0.92);
+  --cv-newspaper-logo-border: rgba(72, 118, 208, 0.46);
   --body-gradient:
-    radial-gradient(circle at top left, rgba(114, 172, 255, 0.18), transparent 24%),
-    radial-gradient(circle at 82% 10%, rgba(255, 168, 201, 0.16), transparent 24%),
-    linear-gradient(180deg, #fffdf8 0%, #f7f4ec 32%, #eef4f9 100%);
+    linear-gradient(180deg, #fffefb 0%, #faf8f2 34%, #f4f6f9 100%);
   --body-stars:
-    radial-gradient(circle at 12% 22%, rgba(132, 169, 255, 0.28) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 76% 16%, rgba(255, 164, 200, 0.26) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 44% 12%, rgba(98, 175, 255, 0.24) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 18% 72%, rgba(120, 180, 160, 0.2) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 68% 58%, rgba(230, 182, 118, 0.2) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 84% 78%, rgba(125, 165, 215, 0.22) 0 1px, transparent 1.5px);
+    radial-gradient(circle at 12% 22%, rgba(17, 32, 48, 0.05) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 16%, rgba(17, 32, 48, 0.04) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 44% 12%, rgba(17, 32, 48, 0.035) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 18% 72%, rgba(17, 32, 48, 0.03) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 58%, rgba(17, 32, 48, 0.03) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 84% 78%, rgba(17, 32, 48, 0.04) 0 1px, transparent 1.5px);
   --body-grid:
-    linear-gradient(rgba(65, 96, 132, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(65, 96, 132, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(17, 32, 48, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 32, 48, 0.035) 1px, transparent 1px);
   --home-shell-bg: linear-gradient(180deg, #ffffff 0%, #f6faff 42%, #eef5fb 100%);
   --home-intro-overlay:
     linear-gradient(90deg, rgba(255, 255, 255, 0.42), transparent 70%),
@@ -211,16 +264,12 @@
     radial-gradient(circle at 82% 38%, rgba(70, 146, 48, 0.42), transparent 34%),
     radial-gradient(circle at 50% 88%, rgba(173, 121, 57, 0.24), transparent 34%);
   --bg-field-gradient:
-    radial-gradient(circle at 20% 20%, rgba(166, 42, 52, 0.48), transparent 36%),
-    radial-gradient(circle at 80% 38%, rgba(68, 142, 45, 0.44), transparent 36%),
-    radial-gradient(circle at 50% 90%, rgba(174, 123, 58, 0.3), transparent 36%),
-    linear-gradient(180deg, rgba(255, 252, 245, 0.98), rgba(243, 237, 223, 0.96));
+    linear-gradient(180deg, rgba(255, 254, 251, 0.99), rgba(247, 245, 239, 0.98));
   --bg-field-glow:
-    radial-gradient(circle at 24% 24%, rgba(166, 42, 52, 0.4), transparent 36%),
-    radial-gradient(circle at 80% 40%, rgba(68, 142, 45, 0.38), transparent 38%),
-    radial-gradient(circle at 50% 90%, rgba(174, 123, 58, 0.26), transparent 40%);
-  --bg-field-canvas-filter: grayscale(0.01) saturate(1.16) brightness(0.97) contrast(1.08);
-  --bg-field-canvas-opacity: 0.9;
+    radial-gradient(circle at 22% 18%, rgba(17, 32, 48, 0.035), transparent 34%),
+    radial-gradient(circle at 76% 42%, rgba(17, 32, 48, 0.028), transparent 38%);
+  --bg-field-canvas-filter: grayscale(0.08) saturate(0.4) brightness(0.95) contrast(1.18);
+  --bg-field-canvas-opacity: 0.5;
   --bg-field-glow-opacity: 1;
   --bg-field-canvas-blend: normal;
 }
@@ -1844,13 +1893,11 @@ h4 {
 .project-search-input {
   width: 100%;
   min-height: 3.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--project-surface-border);
   border-radius: 1.15rem;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
-    rgba(5, 8, 13, 0.74);
+  background: var(--project-surface-bg-strong);
   padding: 0 1.1rem;
-  color: #f4efeb;
+  color: var(--project-surface-title);
   font-size: 1rem;
   outline: none;
   transition:
@@ -1860,15 +1907,13 @@ h4 {
 }
 
 .project-search-input::placeholder {
-  color: rgba(244, 239, 235, 0.42);
+  color: var(--project-surface-text-soft);
 }
 
 .project-search-input:hover,
 .project-search-input:focus-visible {
   border-color: rgba(132, 169, 255, 0.3);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.024)),
-    rgba(7, 11, 18, 0.82);
+  background: var(--project-surface-bg-strong);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 0 0 1px rgba(132, 169, 255, 0.08),
@@ -1893,12 +1938,10 @@ h4 {
   justify-content: center;
   min-height: 2.5rem;
   padding: 0 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--project-surface-border);
   border-radius: 999px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
-    rgba(5, 8, 13, 0.6);
-  color: rgba(244, 239, 235, 0.68);
+  background: var(--project-surface-bg);
+  color: var(--project-surface-text-muted);
   font-size: 0.76rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1914,11 +1957,9 @@ h4 {
 .project-view-pill:focus-visible,
 .project-view-pill-active {
   transform: translateY(-1px);
-  border-color: rgba(246, 193, 119, 0.32);
-  background:
-    linear-gradient(135deg, rgba(246, 193, 119, 0.16), rgba(255, 255, 255, 0.05)),
-    rgba(9, 12, 20, 0.76);
-  color: #fff6ea;
+  border-color: var(--project-view-hover-border);
+  background: var(--project-view-hover-bg);
+  color: var(--project-view-hover-text);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 12px 28px rgba(0, 0, 0, 0.18),
@@ -1927,7 +1968,7 @@ h4 {
 
 .project-active-view-copy {
   max-width: 42rem;
-  color: rgba(244, 239, 235, 0.62);
+  color: var(--project-surface-text-muted);
   font-size: 0.98rem;
   line-height: 1.65;
 }
@@ -1938,10 +1979,10 @@ h4 {
   justify-content: center;
   min-height: 2rem;
   padding: 0 0.82rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--project-surface-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.028);
-  color: rgba(244, 239, 235, 0.68);
+  background: var(--project-pill-bg);
+  color: var(--project-surface-text);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1957,22 +1998,20 @@ h4 {
 .project-search-tag-active {
   border-color: rgba(132, 169, 255, 0.3);
   background: rgba(132, 169, 255, 0.1);
-  color: #f4efeb;
+  color: var(--project-surface-title);
   box-shadow: 0 0 22px rgba(132, 169, 255, 0.08);
 }
 
 .project-feed-empty {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--project-surface-border);
   border-radius: 1.5rem;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
-    rgba(5, 8, 13, 0.74);
+  background: var(--project-surface-bg);
   padding: 1.35rem 1.4rem;
 }
 
 .project-feed-empty p:last-child {
   margin-top: 0.85rem;
-  color: rgba(244, 239, 235, 0.62);
+  color: var(--project-surface-text-muted);
 }
 
 .project-tier-section {
@@ -1987,7 +2026,7 @@ h4 {
 }
 
 .project-tier-heading p:last-child {
-  color: rgba(244, 239, 235, 0.62);
+  color: var(--project-surface-text-muted);
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -2005,11 +2044,9 @@ h4 {
   align-items: stretch;
   overflow: hidden;
   min-height: clamp(28rem, 70vh, 44rem);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--project-surface-border);
   border-radius: clamp(1.5rem, 2.8vw, 2.25rem);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018)),
-    rgba(5, 8, 13, 0.78);
+  background: var(--project-surface-bg);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 30px 90px rgba(0, 0, 0, 0.24);
@@ -2036,10 +2073,8 @@ h4 {
 .featured-case-study:hover,
 .featured-case-study:focus-within {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.22);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.024)),
-    rgba(7, 11, 18, 0.82);
+  border-color: rgba(132, 169, 255, 0.22);
+  background: var(--project-surface-bg-strong);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 28px 90px rgba(0, 0, 0, 0.28),
@@ -2053,16 +2088,16 @@ h4 {
   gap: 0.95rem;
   align-content: start;
   padding: 1rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.035);
+  border-right: 1px solid var(--project-surface-divider);
+  background: var(--project-pill-tag-bg);
 }
 
 .featured-case-study-media-top {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--project-surface-border-soft);
   border-radius: 1.5rem;
-  background: rgba(5, 8, 13, 0.72);
+  background: var(--project-surface-media-bg);
 }
 
 .featured-case-study-media-top img {
@@ -2086,9 +2121,9 @@ h4 {
 
 .featured-case-study-collage-item {
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--project-surface-border-soft);
   border-radius: 1.2rem;
-  background: rgba(5, 8, 13, 0.72);
+  background: var(--project-surface-media-bg);
 }
 
 .featured-case-study-collage-item-1 {
@@ -2139,7 +2174,7 @@ h4 {
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.25rem;
-  color: rgba(244, 239, 235, 0.5);
+  color: var(--project-surface-text-soft);
   font-size: 0.82rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -2166,7 +2201,7 @@ h4 {
 
 .featured-case-study-meta time {
   flex: 0 0 auto;
-  color: rgba(244, 239, 235, 0.42);
+  color: var(--project-surface-text-soft);
   font-size: 0.78rem;
   letter-spacing: 0.08em;
 }
@@ -2174,7 +2209,7 @@ h4 {
 .project-feed-meta time {
   flex: 0 0 auto;
   padding-top: 0.18rem;
-  color: rgba(244, 239, 235, 0.42);
+  color: var(--project-surface-text-soft);
   font-size: 0.78rem;
   letter-spacing: 0.08em;
 }
@@ -2185,17 +2220,17 @@ h4 {
   justify-content: center;
   min-height: 1.7rem;
   padding: 0 0.72rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--project-surface-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(244, 239, 235, 0.68);
+  background: var(--project-pill-tag-bg);
+  color: var(--project-pill-tag-text);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .featured-case-study-copy h2 {
-  color: #f4efeb;
+  color: var(--project-surface-title);
   margin-top: 1rem;
   font-size: clamp(2.5rem, 5vw, 4.7rem);
   font-weight: 400;
@@ -2206,7 +2241,7 @@ h4 {
 .featured-case-study-excerpt {
   margin-top: 1rem;
   max-width: 34rem;
-  color: rgba(244, 239, 235, 0.72);
+  color: var(--project-surface-text);
   font-size: clamp(1.02rem, 1.35vw, 1.18rem);
   line-height: 1.75;
 }
@@ -2222,7 +2257,7 @@ h4 {
 .featured-case-study-points li {
   position: relative;
   padding-left: 1.25rem;
-  color: rgba(244, 239, 235, 0.67);
+  color: var(--project-surface-text-muted);
   font-size: 0.98rem;
   line-height: 1.72;
 }
@@ -2264,7 +2299,7 @@ h4 {
 .project-feed-link {
   width: fit-content;
   margin-top: 1.35rem;
-  color: #8fc5ff;
+  color: var(--project-link);
   font-size: 0.95rem;
   font-weight: 600;
   transition:
@@ -2274,7 +2309,7 @@ h4 {
 
 .project-feed-link:hover,
 .project-feed-link:focus-visible {
-  color: white;
+  color: var(--project-link-hover);
   transform: translateX(3px);
 }
 
@@ -2286,11 +2321,9 @@ h4 {
 
 .selected-work-card {
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--project-surface-border);
   border-radius: 1.75rem;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(5, 8, 13, 0.76);
+  background: var(--project-surface-bg);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 22px 70px rgba(0, 0, 0, 0.18);
@@ -2300,7 +2333,7 @@ h4 {
   display: block;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--project-surface-divider);
 }
 
 .selected-work-media img {
@@ -2323,7 +2356,7 @@ h4 {
 
 .selected-work-body h3,
 .archive-project-tile-body h3 {
-  color: #f4efeb;
+  color: var(--project-surface-title);
   font-size: clamp(1.35rem, 2vw, 1.7rem);
   font-weight: 400;
   letter-spacing: -0.03em;
@@ -2334,7 +2367,7 @@ h4 {
 .selected-work-drawer p,
 .archive-project-tile-body p {
   margin-top: 0.8rem;
-  color: rgba(244, 239, 235, 0.62);
+  color: var(--project-surface-text-muted);
   line-height: 1.68;
 }
 
@@ -2383,9 +2416,9 @@ h4 {
 .selected-work-drawer-grid > div {
   min-width: 0;
   padding: 1rem 1.05rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--project-surface-border-soft);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.026);
+  background: var(--project-pill-bg);
 }
 
 .archive-project-grid {
@@ -2399,11 +2432,9 @@ h4 {
   flex-direction: column;
   overflow: hidden;
   min-height: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--project-surface-border);
   border-radius: 1.35rem;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
-    rgba(5, 8, 13, 0.7);
+  background: var(--project-surface-bg);
   transition:
     border-color 180ms ease,
     transform 180ms ease,
@@ -2413,14 +2444,14 @@ h4 {
 .archive-project-tile:hover,
 .archive-project-tile:focus-visible {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(132, 169, 255, 0.22);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
 }
 
 .archive-project-tile-media {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--project-surface-divider);
 }
 
 .archive-project-tile-media img {
@@ -2441,7 +2472,7 @@ h4 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 0.7rem;
-  color: rgba(244, 239, 235, 0.46);
+  color: var(--project-surface-text-soft);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2452,14 +2483,11 @@ h4 {
   display: grid;
   gap: 0.95rem;
   padding: clamp(1rem, 2vw, 1.4rem);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--project-surface-border);
   border-radius: 1.75rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
-    radial-gradient(circle at 14% 0%, rgba(246, 193, 119, 0.08), transparent 28%),
-    rgba(7, 10, 15, 0.62);
+  background: var(--project-surface-bg);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
     0 24px 70px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(16px);
 }
@@ -2471,7 +2499,7 @@ h4 {
   bottom: 1.35rem;
   left: calc(clamp(1rem, 2vw, 1.4rem) + 0.88rem);
   width: 1px;
-  background: linear-gradient(180deg, rgba(246, 193, 119, 0.7), rgba(132, 169, 255, 0.18));
+  background: linear-gradient(180deg, rgba(246, 193, 119, 0.48), rgba(132, 169, 255, 0.22));
   opacity: 0.9;
   pointer-events: none;
 }
@@ -2483,7 +2511,7 @@ h4 {
   gap: 1rem 1.1rem;
   align-items: start;
   padding: 0.25rem 0 1.1rem 2.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--project-surface-divider);
 }
 
 .project-timeline-row:first-child {
@@ -2522,7 +2550,7 @@ h4 {
   position: sticky;
   top: 5.5rem;
   align-self: start;
-  color: rgba(244, 239, 235, 0.54);
+  color: var(--project-surface-text-soft);
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -2543,10 +2571,10 @@ h4 {
   max-width: 100%;
   min-height: 2.4rem;
   padding: 0.45rem 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--project-surface-border-soft);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(244, 239, 235, 0.86);
+  background: var(--project-pill-tag-bg);
+  color: var(--project-surface-title);
   font-size: 0.98rem;
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -2560,7 +2588,7 @@ h4 {
 
 .project-timeline-links a:hover,
 .project-timeline-links a:focus-visible {
-  color: #8fc5ff;
+  color: var(--project-link);
   border-color: rgba(143, 197, 255, 0.22);
   background: rgba(143, 197, 255, 0.06);
   transform: translateY(-1px);
@@ -2668,7 +2696,7 @@ h4 {
 .project-prose h3,
 .project-prose p,
 .project-prose li {
-  text-align: center;
+  text-align: left;
 }
 
 .project-prose {
@@ -2678,8 +2706,22 @@ h4 {
 
 .project-prose ul,
 .project-prose ol {
-  padding-left: 0;
-  list-style-position: inside;
+  padding-left: 1.35rem;
+  list-style-position: outside;
+}
+
+.project-prose li + li {
+  margin-top: 0.45rem;
+}
+
+.project-prose img,
+.project-prose .media-frame {
+  margin-inline: 0;
+}
+
+.project-prose img {
+  max-width: 100%;
+  height: auto;
 }
 
 .writing-prose {

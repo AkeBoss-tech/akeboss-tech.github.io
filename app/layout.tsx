@@ -9,11 +9,15 @@ const inconsolata = Inconsolata({ subsets: ['latin'], variable: '--font-inconsol
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: siteName,
   title: {
     default: siteName,
     template: `%s | ${siteName}`,
   },
   description: defaultDescription,
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: siteName,
   alternates: {
     canonical: '/',
   },

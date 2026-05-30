@@ -257,6 +257,11 @@ function ProjectSection({
   )
 }
 
+function getFeaturedDateLabel(project: Project) {
+  if (project.slug === 'scarlet-sync') return 'JAN 2025 - PRESENT'
+  return formatDate(project.date)
+}
+
 function FeaturedCaseStudy({ project, index }: { project: Project; index: number }) {
   const highlights = getFeatureHighlights(project)
   const mediaImages = project.mediaImages.length > 0 ? project.mediaImages : [project.image || '/images/portfolio/home.png']
@@ -284,16 +289,17 @@ function FeaturedCaseStudy({ project, index }: { project: Project; index: number
 
       <div className="featured-case-study-copy">
         <div className="featured-case-study-meta">
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          <time dateTime={project.date}>{formatDate(project.date)}</time>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span key={tag} className="project-feed-tag">
-              {tag}
-            </span>
-          ))}
+          <div className="featured-case-study-meta-left">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div className="featured-case-study-meta-tags">
+              {project.tags.map((tag) => (
+                <span key={tag} className="project-feed-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <time dateTime={project.date}>{getFeaturedDateLabel(project)}</time>
         </div>
 
         <h2>{project.title}</h2>

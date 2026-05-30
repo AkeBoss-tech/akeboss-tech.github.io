@@ -19,8 +19,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }))
 
+  const markdownEntries = staticPages.map((path) => ({
+    url: absoluteUrl(path === '/' ? '/markdown' : `/markdown${path}`),
+    lastModified: new Date(),
+  }))
+
   const projectEntries = getProjects().map((project) => ({
     url: absoluteUrl(`/projects/${project.slug}`),
+    lastModified: new Date(project.date),
+  }))
+
+  const projectMarkdownEntries = getProjects().map((project) => ({
+    url: absoluteUrl(`/markdown/projects/${project.slug}`),
     lastModified: new Date(project.date),
   }))
 
@@ -29,5 +39,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.date),
   }))
 
-  return [...staticEntries, ...projectEntries, ...postEntries]
+  const postMarkdownEntries = getPosts().map((post) => ({
+    url: absoluteUrl(`/markdown/writing/${post.slug}`),
+    lastModified: new Date(post.date),
+  }))
+
+  return [
+    ...staticEntries,
+    ...markdownEntries,
+    ...projectEntries,
+    ...projectMarkdownEntries,
+    ...postEntries,
+    ...postMarkdownEntries,
+  ]
 }

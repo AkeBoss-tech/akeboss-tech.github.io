@@ -7,7 +7,7 @@ import { PostCard } from '@/components/post-card'
 import { getPost, getPosts } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 import { buildPostLlmMarkdown } from '@/lib/llm'
-import { absoluteUrl, buildPageMetadata, siteName } from '@/lib/seo'
+import { absoluteUrl, buildBreadcrumbList, buildPageMetadata, siteName } from '@/lib/seo'
 
 export function generateStaticParams() {
   return getPosts().map((post) => ({ slug: post.slug }))
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: post.title,
     description: post.excerpt || post.lead,
     path: `/writing/${post.slug}`,
-    image: post.image,
+    image: `/writing/${post.slug}/opengraph-image`,
     type: 'article',
   })
 }
@@ -53,17 +53,27 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     .map(({ post }) => post)
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: articleDescription,
-    url: absoluteUrl(`/writing/${post.slug}`),
-    image: post.image ? [absoluteUrl(post.image)] : undefined,
-    author: {
-      '@type': 'Person',
-      name: siteName,
-    },
-    datePublished: post.date,
-    keywords: post.tags.join(', '),
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: post.title,
+        description: articleDescription,
+        url: absoluteUrl(`/writing/${post.slug}`),
+        image: post.image ? [absoluteUrl(post.image)] : undefined,
+        author: {
+          '@type': 'Person',
+          name: siteName,
+        },
+        datePublished: post.date,
+        keywords: post.tags.join(', '),
+        inLanguage: 'en-US',
+      },
+      buildBreadcrumbList([
+        { name: 'Home', path: '/' },
+        { name: 'Writing', path: '/writing' },
+        { name: post.title, path: `/writing/${post.slug}` },
+      ]),
+    ],
   }
 
   return (

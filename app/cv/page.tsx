@@ -2,11 +2,11 @@ import { ContactIconLinks } from '@/components/contact-icon-links'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'CV',
+  title: 'Akash Dubey CV',
   description:
     'Academic and research CV for Akash Dubey, including education, research roles, experience, leadership, and awards.',
   path: '/cv',
-  image: '/images/face.jpg',
+  image: '/cv/opengraph-image',
 })
 
 const topStats = [
@@ -128,8 +128,8 @@ const research = [
     href: 'https://cs.rutgers.edu/',
     logo: '/school-logos/rutgers-block-r.svg',
     logoTileStyle: {
-      backgroundColor: 'rgba(52, 20, 23, 0.88)',
-      borderColor: 'rgba(204, 0, 51, 0.35)',
+      backgroundColor: 'var(--cv-rutgers-logo-bg)',
+      borderColor: 'var(--cv-rutgers-logo-border)',
     },
     role: 'Research Assistant',
     dates: 'Jan 2026 - Present',
@@ -143,8 +143,8 @@ const research = [
     href: 'https://arc-lab-robotics.github.io/',
     logo: '/school-logos/rutgers-block-r.svg',
     logoTileStyle: {
-      backgroundColor: 'rgba(52, 20, 23, 0.88)',
-      borderColor: 'rgba(204, 0, 51, 0.35)',
+      backgroundColor: 'var(--cv-rutgers-logo-bg)',
+      borderColor: 'var(--cv-rutgers-logo-border)',
     },
     role: 'Research Assistant',
     dates: 'Jan 2026 - Present',
@@ -158,8 +158,8 @@ const research = [
     href: 'https://sites.rutgers.edu/kwan-lab/',
     logo: '/school-logos/rutgers-block-r.svg',
     logoTileStyle: {
-      backgroundColor: 'rgba(52, 20, 23, 0.88)',
-      borderColor: 'rgba(204, 0, 51, 0.35)',
+      backgroundColor: 'var(--cv-rutgers-logo-bg)',
+      borderColor: 'var(--cv-rutgers-logo-border)',
     },
     role: 'Computational Biology Research Assistant',
     dates: 'Jan 2026 - Present',
@@ -186,8 +186,8 @@ const leadership = [
     title: 'Newspaper Club Layout Editor',
     logo: '/activity-logos/newspaper-club.png',
     logoTileStyle: {
-      backgroundColor: 'rgba(64, 120, 255, 0.2)',
-      borderColor: 'rgba(96, 156, 255, 0.4)',
+      backgroundColor: 'var(--cv-newspaper-logo-bg)',
+      borderColor: 'var(--cv-newspaper-logo-border)',
     },
     dates: 'Sep 2023 - Jun 2024',
     body: 'Led the programming and migration work for the club website and taught editors markdown workflows.',
@@ -319,15 +319,17 @@ const skills = [
 function Section({
   title,
   accentClass = 'text-text',
+  titleClassName = '',
   children,
 }: {
   title: string
   accentClass?: string
+  titleClassName?: string
   children: React.ReactNode
 }) {
   return (
     <section className="panel-soft rounded-[28px] p-6 sm:p-7">
-      <p className={`eyebrow ${accentClass}`}>{title}</p>
+      <p className={`eyebrow ${accentClass} ${titleClassName}`.trim()}>{title}</p>
       <div className="mt-4">{children}</div>
     </section>
   )
@@ -446,7 +448,7 @@ export default function CVPage() {
                       <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
                         {item.title}
                       </a>
-                      <p className="mt-1 text-sm text-[#8be9fd]">{item.role}</p>
+                      <p className="mt-1 text-sm text-[var(--cv-research-role)]">{item.role}</p>
                     </div>
                   </div>
                   <p className="text-sm text-text-soft">{item.dates}</p>
@@ -587,7 +589,7 @@ export default function CVPage() {
             </div>
           </Section>
 
-          <Section title="Visual Collage" accentClass="text-[#d8b4fe]">
+          <Section title="Visual Collage" accentClass="text-[#d8b4fe]" titleClassName="text-center">
             <div className="grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[11rem] sm:grid-cols-4">
               {cvCollageImages.map((image) => (
                 <figure

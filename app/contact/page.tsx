@@ -4,11 +4,11 @@ import { buildContactLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Contact',
+  title: 'Contact Akash Dubey',
   description:
     'Contact Akash Dubey for internships, research, software engineering, product collaborations, and project work.',
   path: '/contact',
-  image: '/images/face.jpg',
+  image: '/contact/opengraph-image',
 })
 
 export default function ContactPage() {
