@@ -1,9 +1,13 @@
 import { notFound } from 'next/navigation'
 import { formatDate } from '@/lib/format'
-import { getPost } from '@/lib/content'
+import { getPost, getPosts } from '@/lib/content'
 import { renderOgCard } from '@/lib/og'
 
 export const dynamic = 'force-static'
+
+export function generateStaticParams() {
+  return getPosts().map((p) => ({ slug: p.slug }))
+}
 
 export const alt = 'Writing preview'
 export const size = {

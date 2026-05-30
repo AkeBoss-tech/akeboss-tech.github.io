@@ -1,8 +1,12 @@
 import { notFound } from 'next/navigation'
-import { getProject } from '@/lib/content'
+import { getProject, getProjects } from '@/lib/content'
 import { renderOgCard } from '@/lib/og'
 
 export const dynamic = 'force-static'
+
+export function generateStaticParams() {
+  return getProjects().map((p) => ({ slug: p.slug }))
+}
 
 export const alt = 'Project preview'
 export const size = {
