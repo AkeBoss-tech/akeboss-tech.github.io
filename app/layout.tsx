@@ -75,7 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
       </head>
-      <body className={`${inconsolata.variable}`}>
+      <body className={`${inconsolata.variable} font-sans`}>
         <PostHogProvider>
           <ThemeProvider>
             <PostHogPageView />

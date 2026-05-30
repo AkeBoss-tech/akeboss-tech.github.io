@@ -3,12 +3,10 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Reveal } from '@/components/reveal'
-import { GradientDescentBackground } from '@/components/gradient-descent-background'
 
 export default function NotFound() {
   return (
     <div className="relative flex min-h-[80vh] flex-col items-center justify-center p-6 text-center">
-      <GradientDescentBackground />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(132,169,255,0.08),transparent_70%)]" />
       
       <Reveal y={30}>

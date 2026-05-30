@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import { Reveal } from '@/components/reveal'
-import { GradientDescentBackground } from '@/components/gradient-descent-background'
 
 export default function Error({
   error,
@@ -17,7 +16,6 @@ export default function Error({
 
   return (
     <div className="relative flex min-h-[80vh] flex-col items-center justify-center p-6 text-center">
-      <GradientDescentBackground />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,100,100,0.06),transparent_70%)]" />
 
       <Reveal y={30}>
