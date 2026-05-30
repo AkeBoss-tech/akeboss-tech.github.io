@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
+    "pdf-sync": "node scripts/generate-pdf.mjs",
     "start": "next start",
     "lint": "next lint"
   },

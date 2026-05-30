@@ -35,8 +35,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
       - name: Build static site
         run: npm run build
+
+      - name: Generate Resume PDF
+        run: npm run pdf-sync
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
