@@ -35,14 +35,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+      - name: Setup Tectonic
+        uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build static site
         run: npm run build
 
-      - name: Generate Resume PDF
-        run: npm run pdf-sync
+      - name: Compile LaTeX resume
+        run: |
+          mkdir -p public/files out/files
+          tectonic files/resume.tex -o public/files/
+          cp public/files/resume.pdf out/files/resume.pdf
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
