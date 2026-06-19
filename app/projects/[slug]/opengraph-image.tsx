@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getProject, getProjects } from '@/lib/content'
+import { formatDate } from '@/lib/format'
 import { renderOgCard } from '@/lib/og'
 
 export const dynamic = 'force-static'
@@ -27,7 +28,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     variant: 'showcase',
     imagePath: project.image,
     tags: project.tags,
-    dateLabel: project.date,
+    dateLabel: formatDate(project.date),
   })
 }
-

@@ -1,6 +1,7 @@
 export const contactLinks = [
   { label: 'Email', href: 'mailto:akash.dubey@rutgers.edu', icon: 'email' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/akash---dubey/', icon: 'linkedin' },
+  { label: 'X', href: 'https://x.com/acachemoney', icon: 'x' },
   { label: 'GitHub', href: 'https://github.com/AkeBoss-tech', icon: 'github' },
   { label: 'YouTube', href: 'https://www.youtube.com/@akashdubey7056', icon: 'youtube' },
   { label: 'Khan Academy', href: 'https://www.khanacademy.org/profile/Akashdube', icon: 'khan' },
@@ -32,6 +33,15 @@ function ContactIcon({ icon }: { icon: ContactIcon }) {
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
           <path d="M2 9h4v12H2z" />
           <circle cx="4" cy="4" r="2" />
+        </svg>
+      )
+    case 'x':
+      return (
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" {...shared}>
+          <path d="M4 4l16 16" />
+          <path d="M20 4L9.5 15.5" />
+          <path d="M14.5 4H20" />
+          <path d="M4 20h5.5" />
         </svg>
       )
     case 'github':

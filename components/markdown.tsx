@@ -1,6 +1,8 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 import rehypeRaw from 'rehype-raw'
+import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { ResponsiveImage } from '@/components/responsive-image'
@@ -20,9 +22,10 @@ export function Markdown({ content, className }: { content: string; className?: 
   return (
     <div className={`prose prose-neutral max-w-none ${className ?? ''}`.trim()}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[
           rehypeRaw,
+          rehypeKatex,
           rehypeSlug,
           [rehypeAutolinkHeadings, { behavior: 'append' }],
         ]}
