@@ -5,8 +5,6 @@ import { Inconsolata } from 'next/font/google'
 import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { SiteShell } from '@/components/site-shell'
-import { PostHogProvider } from '@/components/posthog-provider'
-import PostHogPageView from './posthog-pageview'
 import { defaultDescription, defaultOgImage, siteName, siteUrl } from '@/lib/seo'
 
 const inconsolata = Inconsolata({ subsets: ['latin'], variable: '--font-inconsolata' })
@@ -63,9 +61,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google Analytics */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -77,12 +75,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       </head>
       <body className={`${inconsolata.variable} font-sans`}>
-        <PostHogProvider>
-          <ThemeProvider>
-            <PostHogPageView />
-            <SiteShell>{children}</SiteShell>
-          </ThemeProvider>
-        </PostHogProvider>
+        <ThemeProvider>
+          <SiteShell>{children}</SiteShell>
+        </ThemeProvider>
       </body>
     </html>
   )

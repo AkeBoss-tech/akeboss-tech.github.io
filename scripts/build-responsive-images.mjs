@@ -107,6 +107,15 @@ async function getVariantWidths(sourcePath) {
   return [...new Set(widths)].sort((left, right) => left - right)
 }
 
+async function getSourceDimensions(sourcePath) {
+  const metadata = await sharp(sourcePath).metadata()
+
+  return {
+    width: metadata.width ?? defaultWidths[defaultWidths.length - 1],
+    height: metadata.height ?? defaultWidths[defaultWidths.length - 1],
+  }
+}
+
 async function ensureFreshVariant(sourcePath, outputPath, width, format, options) {
   const sourceStats = await fs.stat(sourcePath)
 
@@ -135,8 +144,9 @@ const discoveredImages = await discoverReferencedImages()
 for (const src of discoveredImages) {
   const sourcePath = await resolveSourcePath(src)
   const widths = await getVariantWidths(sourcePath)
+  const dimensions = await getSourceDimensions(sourcePath)
   const outputBase = toGeneratedBasePath(src)
-  assets.push({ src, widths })
+  assets.push({ src, widths, ...dimensions })
 
   for (const width of widths) {
     for (const format of formats) {

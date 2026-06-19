@@ -4,14 +4,18 @@
       "src": "/activity-logos/newspaper-club.png",
       "widths": [
         150
-      ]
+      ],
+      "width": 150,
+      "height": 150
     },
     {
       "src": "/activity-logos/rutgers-qfc.png",
       "widths": [
         160,
         170
-      ]
+      ],
+      "width": 170,
+      "height": 170
     },
     {
       "src": "/activity-logos/team-1257.png",
@@ -21,7 +25,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1500,
+      "height": 1500
     },
     {
       "src": "/activity-logos/ucvts.png",
@@ -31,7 +37,9 @@
         640,
         960,
         1000
-      ]
+      ],
+      "width": 1000,
+      "height": 1007
     },
     {
       "src": "/company-logos/rutgers-economics-labs.jpg",
@@ -39,7 +47,9 @@
         160,
         320,
         500
-      ]
+      ],
+      "width": 500,
+      "height": 500
     },
     {
       "src": "/company-logos/samaritan-scout.png",
@@ -47,14 +57,18 @@
         160,
         320,
         500
-      ]
+      ],
+      "width": 500,
+      "height": 500
     },
     {
       "src": "/company-logos/scarlet-sync.png",
       "widths": [
         160,
         180
-      ]
+      ],
+      "width": 180,
+      "height": 180
     },
     {
       "src": "/hero-nyc.png",
@@ -64,14 +78,18 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1920,
+      "height": 1080
     },
     {
       "src": "/icons/apple-icon.png",
       "widths": [
         160,
         192
-      ]
+      ],
+      "width": 192,
+      "height": 192
     },
     {
       "src": "/images/face.jpg",
@@ -81,7 +99,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3725,
+      "height": 3023
     },
     {
       "src": "/images/homepage/2026-05-10/img_1596.png",
@@ -91,7 +111,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-10/img_2465.png",
@@ -101,7 +123,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-10/img_4350.png",
@@ -111,7 +135,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-10/img_6293.png",
@@ -121,7 +147,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-10/img_7075.png",
@@ -131,7 +159,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-10/img_7197.png",
@@ -141,7 +171,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/1073.png",
@@ -151,7 +183,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/allin1.png",
@@ -161,7 +195,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-24/beach1.png",
@@ -171,7 +207,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-24/beach_bloom.png",
@@ -181,7 +219,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-24/chicago.png",
@@ -191,7 +231,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/cool-building.png",
@@ -201,7 +243,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/dc.png",
@@ -211,7 +255,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/glum.png",
@@ -221,7 +267,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 5712,
+      "height": 4284
     },
     {
       "src": "/images/homepage/2026-05-24/kali.png",
@@ -231,7 +279,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/lakeb.png",
@@ -241,7 +291,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/nvidia.png",
@@ -251,7 +303,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4283,
+      "height": 5711
     },
     {
       "src": "/images/homepage/2026-05-24/plane.png",
@@ -261,7 +315,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4148,
+      "height": 5712
     },
     {
       "src": "/images/homepage/2026-05-24/postru.png",
@@ -271,7 +327,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/rando.png",
@@ -281,7 +339,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/ruroad.png",
@@ -291,7 +351,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-24/vecsky.png",
@@ -301,7 +363,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 4032,
+      "height": 3024
     },
     {
       "src": "/images/homepage/2026-05-29/better-akash-enhanced.png",
@@ -311,7 +375,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1392,
+      "height": 1130
     },
     {
       "src": "/images/homepage/2026-05-29/nyl.avif",
@@ -321,7 +387,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2000,
+      "height": 857
     },
     {
       "src": "/images/portfolio/2024-upscaled.png",
@@ -331,7 +399,9 @@
         640,
         960,
         1236
-      ]
+      ],
+      "width": 1236,
+      "height": 1100
     },
     {
       "src": "/images/portfolio/2024.png",
@@ -339,7 +409,9 @@
         160,
         320,
         618
-      ]
+      ],
+      "width": 618,
+      "height": 550
     },
     {
       "src": "/images/portfolio/android/title.png",
@@ -349,7 +421,9 @@
         640,
         960,
         1103
-      ]
+      ],
+      "width": 1103,
+      "height": 621
     },
     {
       "src": "/images/portfolio/bus/bus-data.png",
@@ -358,7 +432,9 @@
         320,
         640,
         867
-      ]
+      ],
+      "width": 867,
+      "height": 761
     },
     {
       "src": "/images/portfolio/bus/image-1.png",
@@ -368,7 +444,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1489,
+      "height": 989
     },
     {
       "src": "/images/portfolio/bus/image-3.png",
@@ -376,7 +454,9 @@
         160,
         320,
         578
-      ]
+      ],
+      "width": 578,
+      "height": 509
     },
     {
       "src": "/images/portfolio/bus/image-4.png",
@@ -384,7 +464,9 @@
         160,
         320,
         579
-      ]
+      ],
+      "width": 579,
+      "height": 507
     },
     {
       "src": "/images/portfolio/bus/image-5.png",
@@ -392,7 +474,9 @@
         160,
         320,
         574
-      ]
+      ],
+      "width": 574,
+      "height": 495
     },
     {
       "src": "/images/portfolio/bus/image-7.png",
@@ -402,7 +486,9 @@
         640,
         960,
         996
-      ]
+      ],
+      "width": 996,
+      "height": 547
     },
     {
       "src": "/images/portfolio/bus/image-8.png",
@@ -411,7 +497,9 @@
         320,
         640,
         841
-      ]
+      ],
+      "width": 841,
+      "height": 678
     },
     {
       "src": "/images/portfolio/clean-your-data/analysis.png",
@@ -421,7 +509,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3024,
+      "height": 1720
     },
     {
       "src": "/images/portfolio/clean-your-data/graph.png",
@@ -431,7 +521,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3024,
+      "height": 1722
     },
     {
       "src": "/images/portfolio/clean-your-data/hero.png",
@@ -441,14 +533,18 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3018,
+      "height": 1718
     },
     {
       "src": "/images/portfolio/derivative.png",
       "widths": [
         160,
         300
-      ]
+      ],
+      "width": 300,
+      "height": 582
     },
     {
       "src": "/images/portfolio/drawn_environment.png",
@@ -458,7 +554,9 @@
         640,
         960,
         1126
-      ]
+      ],
+      "width": 1126,
+      "height": 781
     },
     {
       "src": "/images/portfolio/drp.png",
@@ -468,7 +566,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2444,
+      "height": 1370
     },
     {
       "src": "/images/portfolio/environment_settings.png",
@@ -477,7 +577,9 @@
         320,
         640,
         850
-      ]
+      ],
+      "width": 850,
+      "height": 383
     },
     {
       "src": "/images/portfolio/esl/home.png",
@@ -487,7 +589,9 @@
         640,
         960,
         1216
-      ]
+      ],
+      "width": 1216,
+      "height": 810
     },
     {
       "src": "/images/portfolio/fbla/908.png",
@@ -495,7 +599,9 @@
         160,
         320,
         615
-      ]
+      ],
+      "width": 615,
+      "height": 511
     },
     {
       "src": "/images/portfolio/fbla/comments.png",
@@ -503,7 +609,9 @@
         160,
         320,
         597
-      ]
+      ],
+      "width": 597,
+      "height": 363
     },
     {
       "src": "/images/portfolio/fbla/form.png",
@@ -511,7 +619,9 @@
         160,
         320,
         405
-      ]
+      ],
+      "width": 405,
+      "height": 540
     },
     {
       "src": "/images/portfolio/fbla/main.png",
@@ -519,7 +629,9 @@
         160,
         320,
         636
-      ]
+      ],
+      "width": 636,
+      "height": 587
     },
     {
       "src": "/images/portfolio/fbla/prez.png",
@@ -528,7 +640,9 @@
         320,
         640,
         868
-      ]
+      ],
+      "width": 868,
+      "height": 496
     },
     {
       "src": "/images/portfolio/fbla/search.png",
@@ -537,7 +651,9 @@
         320,
         640,
         798
-      ]
+      ],
+      "width": 798,
+      "height": 559
     },
     {
       "src": "/images/portfolio/flamingo/image.png",
@@ -547,7 +663,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2546,
+      "height": 1434
     },
     {
       "src": "/images/portfolio/grokipedia-api/hero.png",
@@ -557,7 +675,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1794,
+      "height": 1012
     },
     {
       "src": "/images/portfolio/hic-tad/deletion-celltype.png",
@@ -567,7 +687,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3567,
+      "height": 2362
     },
     {
       "src": "/images/portfolio/hic-tad/deletion-scan.png",
@@ -577,7 +699,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2334,
+      "height": 2214
     },
     {
       "src": "/images/portfolio/hic-tad/hero.png",
@@ -587,7 +711,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1612,
+      "height": 1768
     },
     {
       "src": "/images/portfolio/hic-tad/multiscale-insulation.png",
@@ -597,7 +723,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1446,
+      "height": 730
     },
     {
       "src": "/images/portfolio/hic-tad/polymer-3d.png",
@@ -607,7 +735,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1981,
+      "height": 1011
     },
     {
       "src": "/images/portfolio/hic-tad/tad-triangles.png",
@@ -617,7 +747,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2634,
+      "height": 2312
     },
     {
       "src": "/images/portfolio/home.png",
@@ -626,14 +758,18 @@
         320,
         640,
         725
-      ]
+      ],
+      "width": 725,
+      "height": 695
     },
     {
       "src": "/images/portfolio/integral.png",
       "widths": [
         160,
         255
-      ]
+      ],
+      "width": 255,
+      "height": 750
     },
     {
       "src": "/images/portfolio/llm-research/image.png",
@@ -643,7 +779,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2318,
+      "height": 1632
     },
     {
       "src": "/images/portfolio/lykke/discover.png",
@@ -653,7 +791,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1944,
+      "height": 1768
     },
     {
       "src": "/images/portfolio/lykke/hero.png",
@@ -663,7 +803,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3008,
+      "height": 1714
     },
     {
       "src": "/images/portfolio/lykke/infographic.png",
@@ -673,7 +815,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3022,
+      "height": 1722
     },
     {
       "src": "/images/portfolio/lykke/study.png",
@@ -683,7 +827,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3024,
+      "height": 1724
     },
     {
       "src": "/images/portfolio/newspaper/article_page.png",
@@ -693,7 +839,9 @@
         640,
         960,
         1067
-      ]
+      ],
+      "width": 1067,
+      "height": 884
     },
     {
       "src": "/images/portfolio/newspaper/author_page.png",
@@ -703,7 +851,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1330,
+      "height": 878
     },
     {
       "src": "/images/portfolio/newspaper/front_page.png",
@@ -713,7 +863,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1319,
+      "height": 897
     },
     {
       "src": "/images/portfolio/newspaper/science_page.png",
@@ -723,7 +875,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1397,
+      "height": 832
     },
     {
       "src": "/images/portfolio/nostradamus/data-layers.png",
@@ -733,7 +887,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1512,
+      "height": 982
     },
     {
       "src": "/images/portfolio/nostradamus/flood-zones.png",
@@ -743,7 +899,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1512,
+      "height": 982
     },
     {
       "src": "/images/portfolio/nostradamus/hero.png",
@@ -753,7 +911,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1512,
+      "height": 982
     },
     {
       "src": "/images/portfolio/nostradamus/nightvision.png",
@@ -763,7 +923,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1512,
+      "height": 982
     },
     {
       "src": "/images/portfolio/personal-assistant/finance.png",
@@ -773,7 +935,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3024,
+      "height": 1964
     },
     {
       "src": "/images/portfolio/personal-assistant/hero.png",
@@ -783,7 +947,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3024,
+      "height": 1964
     },
     {
       "src": "/images/portfolio/puerto-rico/image.png",
@@ -793,7 +959,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1882,
+      "height": 926
     },
     {
       "src": "/images/portfolio/racing/grand.png",
@@ -803,7 +971,9 @@
         640,
         960,
         1207
-      ]
+      ],
+      "width": 1207,
+      "height": 880
     },
     {
       "src": "/images/portfolio/racing/title.png",
@@ -812,7 +982,9 @@
         320,
         640,
         932
-      ]
+      ],
+      "width": 932,
+      "height": 881
     },
     {
       "src": "/images/portfolio/racing/two.png",
@@ -821,7 +993,9 @@
         320,
         640,
         934
-      ]
+      ],
+      "width": 934,
+      "height": 878
     },
     {
       "src": "/images/portfolio/random_environment.png",
@@ -831,7 +1005,9 @@
         640,
         960,
         1127
-      ]
+      ],
+      "width": 1127,
+      "height": 789
     },
     {
       "src": "/images/portfolio/revolve.png",
@@ -840,7 +1016,9 @@
         320,
         640,
         820
-      ]
+      ],
+      "width": 820,
+      "height": 687
     },
     {
       "src": "/images/portfolio/scarlet-sync/home.png",
@@ -850,7 +1028,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 3024,
+      "height": 1964
     },
     {
       "src": "/images/portfolio/stereo/boxplot.png",
@@ -858,7 +1038,9 @@
         160,
         320,
         558
-      ]
+      ],
+      "width": 558,
+      "height": 451
     },
     {
       "src": "/images/portfolio/stereo/poster.png",
@@ -868,7 +1050,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 2500,
+      "height": 1666
     },
     {
       "src": "/images/portfolio/stereo/results.png",
@@ -878,7 +1062,9 @@
         640,
         960,
         999
-      ]
+      ],
+      "width": 999,
+      "height": 543
     },
     {
       "src": "/images/portfolio/stereo/right_image.jpg",
@@ -888,7 +1074,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1920,
+      "height": 1080
     },
     {
       "src": "/images/portfolio/stereo/stereo_disparity_map.png",
@@ -898,7 +1086,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1920,
+      "height": 1080
     },
     {
       "src": "/images/portfolio/top-coder/hero.png",
@@ -908,7 +1098,9 @@
         640,
         960,
         1200
-      ]
+      ],
+      "width": 1200,
+      "height": 600
     },
     {
       "src": "/images/portfolio/vis/economic-plotter.png",
@@ -918,7 +1110,9 @@
         640,
         960,
         1168
-      ]
+      ],
+      "width": 1168,
+      "height": 837
     },
     {
       "src": "/images/posts/december-journal-hero.png",
@@ -928,7 +1122,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/doing-things-hero.png",
@@ -938,7 +1134,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/first-post-hero.png",
@@ -948,7 +1146,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/frc24/black.png",
@@ -958,7 +1158,9 @@
         640,
         960,
         1058
-      ]
+      ],
+      "width": 1058,
+      "height": 711
     },
     {
       "src": "/images/posts/frc24/bot_prog.png",
@@ -967,7 +1169,9 @@
         320,
         640,
         756
-      ]
+      ],
+      "width": 756,
+      "height": 1008
     },
     {
       "src": "/images/posts/frc24/comms.png",
@@ -977,7 +1181,9 @@
         640,
         960,
         999
-      ]
+      ],
+      "width": 999,
+      "height": 117
     },
     {
       "src": "/images/posts/frc24/comp/image5.jpg",
@@ -986,7 +1192,9 @@
         320,
         640,
         799
-      ]
+      ],
+      "width": 799,
+      "height": 533
     },
     {
       "src": "/images/posts/frc24/comp/image8.jpg",
@@ -996,7 +1204,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1999,
+      "height": 1333
     },
     {
       "src": "/images/posts/frc24/configure.png",
@@ -1004,7 +1214,9 @@
         160,
         320,
         428
-      ]
+      ],
+      "width": 428,
+      "height": 561
     },
     {
       "src": "/images/posts/frc24/controller_commands.png",
@@ -1013,7 +1225,9 @@
         320,
         640,
         648
-      ]
+      ],
+      "width": 648,
+      "height": 297
     },
     {
       "src": "/images/posts/frc24/dcmp/image2.png",
@@ -1023,7 +1237,9 @@
         640,
         960,
         981
-      ]
+      ],
+      "width": 981,
+      "height": 87
     },
     {
       "src": "/images/posts/frc24/gittmerged.png",
@@ -1032,7 +1248,9 @@
         320,
         640,
         794
-      ]
+      ],
+      "width": 794,
+      "height": 258
     },
     {
       "src": "/images/posts/frc24/gittt.png",
@@ -1042,7 +1260,9 @@
         640,
         960,
         982
-      ]
+      ],
+      "width": 982,
+      "height": 532
     },
     {
       "src": "/images/posts/frc24/images/image2.png",
@@ -1052,7 +1272,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1562,
+      "height": 868
     },
     {
       "src": "/images/posts/frc24/images/image3.jpg",
@@ -1062,7 +1284,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1500,
+      "height": 1999
     },
     {
       "src": "/images/posts/frc24/images/image4.png",
@@ -1072,7 +1296,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1920,
+      "height": 1080
     },
     {
       "src": "/images/posts/frc24/images/image5.png",
@@ -1082,7 +1308,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1919,
+      "height": 1022
     },
     {
       "src": "/images/posts/frc24/images/image6.png",
@@ -1091,7 +1319,9 @@
         320,
         640,
         853
-      ]
+      ],
+      "width": 853,
+      "height": 552
     },
     {
       "src": "/images/posts/frc24/shooter.png",
@@ -1100,7 +1330,9 @@
         320,
         640,
         681
-      ]
+      ],
+      "width": 681,
+      "height": 526
     },
     {
       "src": "/images/posts/frc24/sim.png",
@@ -1108,7 +1340,9 @@
         160,
         320,
         380
-      ]
+      ],
+      "width": 380,
+      "height": 286
     },
     {
       "src": "/images/posts/frc24/speaker_aim.png",
@@ -1116,7 +1350,9 @@
         160,
         320,
         639
-      ]
+      ],
+      "width": 639,
+      "height": 262
     },
     {
       "src": "/images/posts/freshmen-reflection-hero.png",
@@ -1126,7 +1362,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/junior-reflection-hero.png",
@@ -1136,7 +1374,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/mountain-man.png",
@@ -1146,7 +1386,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1280,
+      "height": 960
     },
     {
       "src": "/images/posts/october-journal-hero.png",
@@ -1156,7 +1398,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/robotics-journal-hero.png",
@@ -1166,7 +1410,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/robotics-programming-hero.png",
@@ -1176,7 +1422,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/images/posts/robotics/image1.png",
@@ -1186,7 +1434,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1915,
+      "height": 940
     },
     {
       "src": "/images/posts/robotics/image11.png",
@@ -1196,7 +1446,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1280,
+      "height": 784
     },
     {
       "src": "/images/posts/robotics/image12.png",
@@ -1205,7 +1457,9 @@
         320,
         640,
         716
-      ]
+      ],
+      "width": 716,
+      "height": 441
     },
     {
       "src": "/images/posts/robotics/image13.png",
@@ -1215,14 +1469,18 @@
         640,
         960,
         1010
-      ]
+      ],
+      "width": 1010,
+      "height": 732
     },
     {
       "src": "/images/posts/robotics/image2.png",
       "widths": [
         160,
         299
-      ]
+      ],
+      "width": 299,
+      "height": 481
     },
     {
       "src": "/images/posts/robotics/image3.png",
@@ -1232,7 +1490,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1589,
+      "height": 936
     },
     {
       "src": "/images/posts/robotics/image6.png",
@@ -1242,7 +1502,9 @@
         640,
         960,
         1140
-      ]
+      ],
+      "width": 1140,
+      "height": 1092
     },
     {
       "src": "/images/posts/robotics/image8.png",
@@ -1252,7 +1514,9 @@
         640,
         960,
         1280
-      ]
+      ],
+      "width": 1999,
+      "height": 1500
     },
     {
       "src": "/images/posts/robotics/image9.png",
@@ -1261,7 +1525,9 @@
         320,
         640,
         827
-      ]
+      ],
+      "width": 827,
+      "height": 681
     },
     {
       "src": "/images/posts/sophomore-reflection-hero.png",
@@ -1271,7 +1537,9 @@
         640,
         960,
         1024
-      ]
+      ],
+      "width": 1024,
+      "height": 1024
     },
     {
       "src": "/school-logos/ait-logo.png",
@@ -1279,7 +1547,9 @@
         160,
         320,
         512
-      ]
+      ],
+      "width": 512,
+      "height": 419
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { getResponsiveImageSources } from '@/lib/responsive-images'
+import { getResponsiveImageAsset, getResponsiveImageSources } from '@/lib/responsive-images'
 
 type ResponsiveImageProps = {
   src: string
@@ -20,6 +20,7 @@ export function ResponsiveImage({
   fetchPriority,
 }: ResponsiveImageProps) {
   const responsiveSources = getResponsiveImageSources(src)
+  const asset = getResponsiveImageAsset(src)
 
   if (!responsiveSources) {
     return (
@@ -27,10 +28,11 @@ export function ResponsiveImage({
         src={src}
         alt={alt}
         className={className}
-        sizes={sizes}
         loading={loading}
         decoding={decoding}
         fetchPriority={fetchPriority}
+        width={asset?.width}
+        height={asset?.height}
       />
     )
   }
@@ -46,6 +48,8 @@ export function ResponsiveImage({
         loading={loading}
         decoding={decoding}
         fetchPriority={fetchPriority}
+        width={asset?.width}
+        height={asset?.height}
       />
     </picture>
   )

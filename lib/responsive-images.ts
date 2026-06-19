@@ -3,6 +3,8 @@ import responsiveImages from '@/lib/generated-responsive-images.json'
 type ResponsiveImageAsset = {
   src: string
   widths: number[]
+  width: number
+  height: number
 }
 
 const assets = responsiveImages.assets as ResponsiveImageAsset[]
