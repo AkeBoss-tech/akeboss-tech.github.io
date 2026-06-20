@@ -15,7 +15,7 @@ export const projectCategories = [
     accent: 'text-[#84a9ff]',
     glow: 'shadow-[0_0_32px_rgba(132,169,255,0.14)]',
     description: 'Tools and systems shaped by research questions, language models, and technical depth.',
-    slugs: ['hic-tad-analysis', 'llm-research', 'asa-fall-data', 'economic-grapher'],
+    slugs: ['hic-tad-analysis', 'rutgers-agentic-intelligence-labs', 'tamp-research', 'knowledge', 'llm-research', 'asa-fall-data'],
   },
   {
     title: 'Data Science & Math',
@@ -36,7 +36,7 @@ export const projectCategories = [
     accent: 'text-[#f6c177]',
     glow: 'shadow-[0_0_32px_rgba(246,193,119,0.14)]',
     description: 'Projects where software meets hardware, simulation, and the reality of moving things through space.',
-    slugs: ['path-finder', 'robot-code', 'depth-estimation', 'fbla-mobile-app'],
+    slugs: ['tamp-research', 'path-finder', 'robot-code', 'depth-estimation', 'fbla-mobile-app'],
   },
   {
     title: 'Early Builds',

@@ -962,7 +962,6 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       gallery: [
         { src: scarletSync?.image || '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync interface' },
         { src: '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync planner view' },
-        { src: '/images/portfolio/clean-your-data/hero.png', alt: 'Scheduling workflow interface detail' },
       ],
     },
     {
@@ -982,14 +981,14 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
     },
     {
       eyebrow: 'Research',
-      title: 'ARC Lab',
+      title: 'Algorithmic Robotics & Control Lab',
       body: 'Working on motion-planning optimization and vision-language-action directions for robotics at Rutgers.',
       href: pathFinder ? `/projects/${pathFinder.slug}` : 'https://arc-lab-robotics.github.io/',
       gallerySide: 'right',
       gallery: [
-        { src: '/images/posts/frc24/images/image3.jpg', alt: 'FRC robot navigating a practice field' },
-        { src: '/images/portfolio/random_environment.png', alt: 'Path planning environment visualization' },
-        { src: '/images/portfolio/2024-upscaled.png', alt: 'FRC robot systems work' },
+        { src: '/images/homepage/arc-lab/dipn-manipulation.png', alt: 'Robot manipulation pipeline from ARC-L DIPN research' },
+        { src: '/images/homepage/arc-lab/tabletop-rearrangement.png', alt: 'Tabletop object rearrangement planning from ARC-L research' },
+        { src: '/images/homepage/arc-lab/path-planning.png', alt: 'Multi-robot path planning visualization from ARC-L research' },
       ],
     },
     {

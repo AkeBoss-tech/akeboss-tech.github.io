@@ -3966,26 +3966,32 @@ h4 {
 
   .places-section {
     min-height: auto;
-    padding-block: 6.5rem 7rem;
+    padding-block: 3.5rem 4rem;
   }
 
   .visual-journal {
-    width: min(92vw, 38rem);
+    width: min(92vw, 34rem);
   }
 
   .visual-journal-grid {
     column-count: 2;
-    column-gap: 0.75rem;
+    column-gap: 0.55rem;
   }
 
   .visual-journal-card {
-    margin-bottom: 0.75rem;
-    border-radius: 1rem;
+    height: clamp(9.5rem, 32vw, 14rem);
+    margin-bottom: 0.55rem;
+    border-radius: 0.8rem;
+  }
+
+  .visual-journal-card img {
+    height: 100%;
+    object-fit: cover;
   }
 
   .visual-journal-card-caption {
-    padding: 0.8rem;
-    font-size: 0.78rem;
+    padding: 0.55rem;
+    font-size: 0.7rem;
   }
 
   .visual-journal-lightbox {
@@ -4107,6 +4113,7 @@ h4 {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    align-items: stretch;
   }
 
   .gd-feature-split-card-first .gd-feature-top {
@@ -4119,6 +4126,7 @@ h4 {
 
   .gd-image-wrap-feature-panel {
     width: 100%;
+    height: auto;
   }
 
   .gd-image-wrap-feature-panel img {
@@ -4127,9 +4135,19 @@ h4 {
     object-fit: contain;
   }
 
+  .gd-row-feature-full .gd-card {
+    height: auto;
+  }
+
   .gd-card {
     padding: 24px;
     width: 100%;
+  }
+
+  .gd-card h2 {
+    font-size: clamp(1.85rem, 8vw, 2.5rem);
+    letter-spacing: 0;
+    line-height: 1.06;
   }
 
   .gd-image-gallery .gd-image-wrap.feature {
@@ -4295,6 +4313,41 @@ h4 {
 
   .featured-case-study-collage-item img {
     min-height: 10rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .places-section {
+    padding-block: 2.5rem 3rem;
+  }
+
+  .visual-journal {
+    width: min(94vw, 28rem);
+  }
+
+  .visual-journal-grid {
+    column-gap: 0.45rem;
+  }
+
+  .visual-journal-card {
+    height: clamp(7.25rem, 28vw, 9.25rem);
+    margin-bottom: 0.45rem;
+    border-radius: 0.7rem;
+  }
+
+  .visual-journal-card-caption {
+    padding: 0.45rem;
+    font-size: 0.63rem;
+  }
+
+  .visual-journal-actions {
+    margin-top: 1rem;
+  }
+
+  .visual-journal-more,
+  .visual-journal-less {
+    padding: 0.7rem 1rem;
+    font-size: 0.78rem;
   }
 }
 

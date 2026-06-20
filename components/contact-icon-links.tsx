@@ -37,11 +37,8 @@ function ContactIcon({ icon }: { icon: ContactIcon }) {
       )
     case 'x':
       return (
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" {...shared}>
-          <path d="M4 4l16 16" />
-          <path d="M20 4L9.5 15.5" />
-          <path d="M14.5 4H20" />
-          <path d="M4 20h5.5" />
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+          <path d="M13.86 10.47 21.15 2h-1.73l-6.33 7.35L8.04 2H2.21l7.64 11.12L2.21 22h1.73l6.68-7.76L15.96 22h5.83l-7.93-11.53Zm-2.37 2.75-.77-1.11L4.56 3.3h2.65l4.97 7.11.77 1.11 6.47 9.27h-2.65l-5.28-7.57Z" />
         </svg>
       )
     case 'github':
@@ -52,9 +49,8 @@ function ContactIcon({ icon }: { icon: ContactIcon }) {
       )
     case 'youtube':
       return (
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" {...shared}>
-          <path d="M22 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C18.3 5 12 5 12 5s-6.3 0-7.8.5a2.5 2.5 0 0 0-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C5.7 19 12 19 12 19s6.3 0 7.8-.5a2.5 2.5 0 0 0 1.8-1.8c.4-1.5.4-4.7.4-4.7Z" />
-          <path d="M10 15l5-3-5-3z" />
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+          <path d="M23.5 6.19a3 3 0 0 0-2.12-2.12C19.51 3.56 12 3.56 12 3.56s-7.51 0-9.38.51A3 3 0 0 0 .5 6.19C0 8.06 0 12 0 12s0 3.94.5 5.81a3 3 0 0 0 2.12 2.12c1.87.51 9.38.51 9.38.51s7.51 0 9.38-.51a3 3 0 0 0 2.12-2.12C24 15.94 24 12 24 12s0-3.94-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z" />
         </svg>
       )
     case 'khan':

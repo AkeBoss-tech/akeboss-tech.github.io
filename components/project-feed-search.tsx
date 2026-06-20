@@ -15,12 +15,13 @@ const semanticAliases: Record<string, string[]> = {
   economics: ['econ', 'economic', 'finance', 'forecasting', 'econometrics', 'market'],
   finance: ['economics', 'quant', 'quantitative', 'econometrics', 'market'],
   health: ['healthtech', 'healthcare', 'medical', 'wellness', 'biomedical'],
-  robotics: ['robot', 'autonomous', 'motion planning', 'control', 'vision', 'frc'],
+  robotics: ['robot', 'autonomous', 'motion planning', 'control', 'vision', 'frc', 'tamp', 'dual arm'],
   biology: ['bio', 'genome', 'genomics', 'hic', 'chromatin', 'computational biology'],
   research: ['paper', 'study', 'experiment', 'analysis', 'benchmark'],
   web: ['frontend', 'full stack', 'website', 'browser', 'react', 'next'],
   data: ['analysis', 'analytics', 'dataset', 'scraping', 'pipeline', 'visualization'],
-  scheduling: ['planner', 'planning', 'course', 'timetable', 'calendar'],
+  scheduling: ['planner', 'planning', 'course', 'timetable', 'calendar', 'scheduler', 'cp sat'],
+  infrastructure: ['runtime', 'mcp', 'knowledge', 'provenance', 'workflow', 'agent tools', 'control plane', 'integrity'],
 }
 
 const selectedWorkSlugs = [
@@ -74,7 +75,7 @@ const curatedViews = [
     label: 'Math + Algorithms',
     description: 'Optimization, proofs, algorithm demos, and quantitative reasoning.',
     matches: (project: Project) =>
-      ['drp-spring-2025', 'path-finder', 'calculus-generator', 'top-coder-challenge', 'llm-research'].includes(project.slug) ||
+      ['drp-spring-2025', 'path-finder', 'calculus-generator', 'top-coder-challenge', 'llm-research', 'tamp-research'].includes(project.slug) ||
       project.tags.some((tag) => ['math', 'algorithms'].includes(tag.toLowerCase())),
   },
   {

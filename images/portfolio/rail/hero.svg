@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">RAIL research command center architecture</title>
+  <desc id="desc">A diagram showing repository-native research plans, hydration pipelines, ontology schemas, agent surfaces, command center UI, and integrity checks.</desc>
+  <rect width="1200" height="675" fill="#0b1120"/>
+  <text x="72" y="88" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800">RAIL</text>
+  <text x="72" y="132" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="22">repo-native, agent-assisted research infrastructure</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <g stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)" fill="none" opacity=".85">
+    <path d="M285 300 H430"/>
+    <path d="M650 300 H790"/>
+    <path d="M540 360 V465"/>
+    <path d="M700 465 C820 445 900 385 930 325"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif">
+    <g transform="translate(70 235)">
+      <rect width="245" height="130" rx="18" fill="#172554" stroke="#60a5fa" stroke-width="3"/>
+      <text x="28" y="54" fill="#eff6ff" font-size="27" font-weight="700">research repo</text>
+      <text x="28" y="88" fill="#bfdbfe" font-size="16">plans, tasks, sources</text>
+    </g>
+    <g transform="translate(430 235)">
+      <rect width="245" height="130" rx="18" fill="#064e3b" stroke="#34d399" stroke-width="3"/>
+      <text x="28" y="54" fill="#ecfdf5" font-size="27" font-weight="700">hydration engine</text>
+      <text x="28" y="88" fill="#bbf7d0" font-size="16">connectors + ontology</text>
+    </g>
+    <g transform="translate(790 235)">
+      <rect width="275" height="130" rx="18" fill="#312e81" stroke="#a78bfa" stroke-width="3"/>
+      <text x="28" y="54" fill="#faf5ff" font-size="27" font-weight="700">operator UI</text>
+      <text x="28" y="88" fill="#ddd6fe" font-size="16">runs, artifacts, review</text>
+    </g>
+    <g transform="translate(385 465)">
+      <rect width="300" height="115" rx="18" fill="#422006" stroke="#fbbf24" stroke-width="3"/>
+      <text x="28" y="50" fill="#fffbeb" font-size="26" font-weight="700">agent surfaces</text>
+      <text x="28" y="82" fill="#fde68a" font-size="16">CLI, SDK, MCP, FastAPI</text>
+    </g>
+    <g transform="translate(770 455)">
+      <rect width="270" height="115" rx="18" fill="#4c0519" stroke="#fb7185" stroke-width="3"/>
+      <text x="28" y="50" fill="#fff1f2" font-size="26" font-weight="700">integrity layer</text>
+      <text x="28" y="82" fill="#fecdd3" font-size="16">claims, reruns, verification</text>
+    </g>
+  </g>
+</svg>

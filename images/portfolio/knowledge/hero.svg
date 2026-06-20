@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">KRAIL knowledge runtime</title>
+  <desc id="desc">A diagram showing captures, graph memory, evidence search, think envelopes, workflows, and agent tools connected in a local-first knowledge runtime.</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <text x="76" y="90" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800">KRAIL</text>
+  <text x="76" y="132" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="22">local-first knowledge runtime for auditable agent work</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <g stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)" fill="none" opacity=".8">
+    <path d="M290 310 H435"/>
+    <path d="M655 310 H800"/>
+    <path d="M545 375 V480"/>
+    <path d="M545 245 V205"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif">
+    <g transform="translate(80 245)">
+      <rect width="230" height="130" rx="18" fill="#172554" stroke="#60a5fa" stroke-width="3"/>
+      <text x="30" y="55" fill="#eff6ff" font-size="28" font-weight="700">capture</text>
+      <text x="30" y="88" fill="#bfdbfe" font-size="16">notes, files, URLs, stdin</text>
+    </g>
+    <g transform="translate(435 245)">
+      <rect width="240" height="130" rx="18" fill="#064e3b" stroke="#34d399" stroke-width="3"/>
+      <text x="30" y="55" fill="#ecfdf5" font-size="28" font-weight="700">knowledge</text>
+      <text x="30" y="88" fill="#bbf7d0" font-size="16">markdown graph + vectors</text>
+    </g>
+    <g transform="translate(800 245)">
+      <rect width="270" height="130" rx="18" fill="#312e81" stroke="#a78bfa" stroke-width="3"/>
+      <text x="30" y="55" fill="#faf5ff" font-size="28" font-weight="700">think</text>
+      <text x="30" y="88" fill="#ddd6fe" font-size="16">evidence, gaps, next actions</text>
+    </g>
+    <g transform="translate(395 480)">
+      <rect width="300" height="110" rx="18" fill="#422006" stroke="#fbbf24" stroke-width="3"/>
+      <text x="30" y="48" fill="#fffbeb" font-size="26" font-weight="700">workflows + MCP</text>
+      <text x="30" y="78" fill="#fde68a" font-size="16">tasks, integrity, agent tools</text>
+    </g>
+    <g transform="translate(410 150)">
+      <rect width="270" height="80" rx="16" fill="#4c0519" stroke="#fb7185" stroke-width="3"/>
+      <text x="30" y="50" fill="#fff1f2" font-size="24" font-weight="700">repo-backed provenance</text>
+    </g>
+  </g>
+</svg>

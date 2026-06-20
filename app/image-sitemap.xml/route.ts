@@ -1,3 +1,5 @@
+import { readdirSync, statSync } from 'fs'
+import path from 'path'
 import { getPosts, getProjects } from '@/lib/content'
 import { absoluteUrl } from '@/lib/seo'
 
@@ -16,9 +18,60 @@ function unique<T>(values: T[]) {
   return [...new Set(values)]
 }
 
+const searchableImageExtensions = new Set(['.avif', '.gif', '.jpg', '.jpeg', '.png', '.svg', '.webp'])
+
+function filenameToTitle(value: string) {
+  return path
+    .basename(value, path.extname(value))
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function walkImages(directory: string, urlPrefix: string, ignoreDirectories = new Set<string>()) {
+  const images: string[] = []
+
+  function walk(currentDirectory: string, currentPrefix: string) {
+    let entries: string[] = []
+
+    try {
+      entries = readdirSync(currentDirectory)
+    } catch {
+      return
+    }
+
+    entries.forEach((entry) => {
+      if (ignoreDirectories.has(entry)) return
+
+      const fullPath = path.join(currentDirectory, entry)
+      const stats = statSync(fullPath)
+
+      if (stats.isDirectory()) {
+        walk(fullPath, `${currentPrefix}/${entry}`)
+        return
+      }
+
+      if (!stats.isFile() || !searchableImageExtensions.has(path.extname(entry).toLowerCase())) return
+      images.push(`${currentPrefix}/${entry}`.replace(/\\/g, '/'))
+    })
+  }
+
+  walk(directory, urlPrefix.replace(/\/$/, ''))
+  return images
+}
+
+function getPublicImagePaths() {
+  const root = process.cwd()
+  const rootImages = walkImages(path.join(root, 'images'), '/images')
+  const publicImages = walkImages(path.join(root, 'public'), '', new Set(['generated-images', 'images']))
+
+  return unique([...rootImages, ...publicImages])
+}
+
 export function GET() {
+  const allPublicImagePaths = getPublicImagePaths()
   const pageImageEntries = [
-    { url: absoluteUrl('/'), images: ['/images/face.jpg'] },
+    { url: absoluteUrl('/'), images: allPublicImagePaths },
     { url: absoluteUrl('/about'), images: ['/images/face.jpg'] },
     { url: absoluteUrl('/contact'), images: ['/images/face.jpg'] },
     { url: absoluteUrl('/story'), images: ['/hero-nyc.png'] },
@@ -51,7 +104,7 @@ ${entries
   .map(
     (entry) => `  <url>
     <loc>${xmlEscape(entry.url)}</loc>
-${entry.images.map((image) => `    <image:image><image:loc>${xmlEscape(image)}</image:loc></image:image>`).join('\n')}
+${entry.images.map((image) => `    <image:image><image:loc>${xmlEscape(image)}</image:loc><image:title>${xmlEscape(filenameToTitle(image))}</image:title></image:image>`).join('\n')}
   </url>`,
   )
   .join('\n')}
@@ -63,4 +116,3 @@ ${entry.images.map((image) => `    <image:image><image:loc>${xmlEscape(image)}</
     },
   })
 }
-
