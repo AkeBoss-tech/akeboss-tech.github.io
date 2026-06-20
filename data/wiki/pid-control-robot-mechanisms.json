@@ -1,0 +1,61 @@
+{
+  "slug": "pid-control-robot-mechanisms",
+  "title": "PID Control for Robot Mechanisms",
+  "subtitle": "PID control pushes a mechanism toward a setpoint by reacting to present, accumulated, and changing error.",
+  "domain": "Controls",
+  "difficulty": "Intermediate",
+  "summary": "The robotics season used PID-style control for pivot, shooter, intake, and other mechanisms.",
+  "tags": ["PID", "Controls", "FRC", "Feedback"],
+  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md", "_posts/2023-3-23-robotics-journal.md"],
+  "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
+  "externalSources": [
+    { "label": "WPILib: Introduction to PID", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html" },
+    { "label": "WPILib: PIDController", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html" }
+  ],
+  "artifact": {
+    "type": "pid-controller",
+    "title": "A mechanism response curve",
+    "description": "Tune proportional gain and derivative damping to see how overshoot and settling change."
+  },
+  "sections": [
+    {
+      "heading": "The Feedback Loop",
+      "body": [
+        "A controller compares the desired setpoint with the measured state. The difference is error.",
+        "The proportional term reacts to current error, the integral term reacts to accumulated error, and the derivative term reacts to how fast error is changing."
+      ],
+      "callout": "A useful controller is not the most aggressive one. It is the one that reaches the target quickly without unstable motion."
+    },
+    {
+      "heading": "Robot Examples",
+      "body": [
+        "A pivot can use position PID to reach an angle. A shooter can use velocity PID to hold RPM. An intake can use sensor feedback to stop after capturing a game piece.",
+        "The same feedback pattern applies, but the measurement, setpoint, and acceptable error all change."
+      ],
+      "table": {
+        "columns": ["Mechanism", "Setpoint", "Measurement"],
+        "rows": [
+          ["Pivot", "Target angle", "Encoder angle"],
+          ["Shooter", "Target RPM", "Wheel velocity"],
+          ["Elevator", "Target height", "Encoder position"],
+          ["Drivetrain heading", "Target angle", "Gyro yaw"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Raising P until the mechanism oscillates and calling it tuned.",
+    "Adding integral control before understanding steady-state error.",
+    "Ignoring sensor noise in the derivative term.",
+    "Testing with no load and expecting the same behavior during a match."
+  ],
+  "quiz": [
+    {
+      "question": "Which PID term reacts to the current error?",
+      "options": ["P", "I", "D", "None of them"],
+      "answer": 0,
+      "explanation": "The proportional term scales the current error."
+    }
+  ],
+  "related": ["swerve-drive-basics-frc", "velocity-pid-intake-shooter-wheels"]
+}

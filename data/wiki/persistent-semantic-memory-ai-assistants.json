@@ -1,0 +1,20 @@
+{
+  "slug": "persistent-semantic-memory-ai-assistants",
+  "title": "Persistent Semantic Memory for AI Assistants",
+  "subtitle": "Semantic memory lets an assistant retrieve relevant past context instead of treating every conversation as isolated.",
+  "domain": "AI agents",
+  "difficulty": "Intermediate",
+  "summary": "The personal assistant project uses embeddings and ChromaDB-style retrieval for preferences, files, and past conversations.",
+  "tags": ["AI agents", "Memory", "Embeddings", "Semantic search"],
+  "sourceFiles": ["_portfolio/personal-assistant.md"],
+  "sourceLinks": [{ "label": "AI assistant project", "href": "/projects/personal-assistant" }],
+  "externalSources": [{ "label": "Pinecone: rerankers and retrieval", "href": "https://www.pinecone.io/learn/series/rag/rerankers/" }],
+  "artifact": { "type": "rag-retrieval", "title": "Memory retrieval as ranked context", "description": "A memory system retrieves the past facts most relevant to the current request." },
+  "sections": [
+    { "heading": "Memory as Retrieval", "body": ["The assistant should not dump all past history into every prompt. It should retrieve a small set of relevant memory records.", "That makes memory closer to search than to a giant transcript."] },
+    { "heading": "What Gets Stored", "body": ["Useful records include durable preferences, facts the user explicitly wants remembered, summaries of projects, and indexed documents. Temporary chatter should usually expire or remain unpromoted."] }
+  ],
+  "pitfalls": ["Saving everything forever.", "Retrieving memories without timestamps or source context.", "Letting stale preferences override newer user intent."],
+  "quiz": [{ "question": "Why rank memories before using them?", "options": ["To keep only relevant context in the prompt", "To delete all old context", "To avoid user consent", "To make responses random"], "answer": 0, "explanation": "Ranked retrieval keeps the active context focused." }],
+  "related": ["rag-pipeline-student-documents", "specialist-agent-orchestration"]
+}

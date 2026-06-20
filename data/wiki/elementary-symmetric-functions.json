@@ -1,0 +1,28 @@
+{
+  "slug": "elementary-symmetric-functions",
+  "title": "Elementary Symmetric Functions",
+  "subtitle": "Elementary symmetric functions package every square-free product of a fixed degree into one invariant polynomial.",
+  "domain": "Math",
+  "difficulty": "Advanced",
+  "summary": "The DRP project uses elementary symmetric functions as the bridge from symmetric polynomials to the q-binomial theorem.",
+  "tags": ["Symmetric functions", "Combinatorics", "q-binomial", "Generating functions"],
+  "sourceFiles": ["_portfolio/drp-spring-2025.md"],
+  "sourceLinks": [{ "label": "DRP q-binomial project", "href": "/projects/drp-spring-2025" }],
+  "externalSources": [
+    { "label": "MathWorld: q-Binomial Coefficient", "href": "https://mathworld.wolfram.com/q-BinomialCoefficient.html" }
+  ],
+  "artifact": { "type": "q-binomial", "title": "Generating functions turn products into coefficients", "description": "The q-integer demo previews the weighted-counting idea that appears after substituting powers of q into elementary symmetric functions." },
+  "contentBlocks": [
+    { "type": "latex", "content": "For variables $x_1,\\ldots,x_n$, the elementary symmetric function $e_k$ is\n\n$$e_k(x_1,\\ldots,x_n)=\\sum_{1\\le i_1<\\cdots<i_k\\le n}x_{i_1}\\cdots x_{i_k}$$\n\nExamples:\n\n$$e_1=x_1+x_2+x_3$$\n$$e_2=x_1x_2+x_1x_3+x_2x_3$$\n$$e_3=x_1x_2x_3$$" },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Symmetric</strong>Swapping variables does not change the value.</div><div><strong>Elementary</strong>Each term uses distinct variables.</div><div><strong>Degree k</strong>Every term multiplies exactly k variables.</div><div><strong>Generating function</strong>All e_k appear as coefficients of one product.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "The Generating Function", "body": ["The compact identity is E(t)=product(1+x_i t). When expanded, choosing the t term from exactly k factors creates a degree-k square-free product, so the coefficient of t^k is e_k.", "This is the clean combinatorial mechanism behind the later q-binomial connection."] },
+    { "heading": "Why They Matter", "body": ["Elementary symmetric functions are building blocks for symmetric polynomials. If a polynomial is unchanged by permuting variables, it can be expressed in terms of elementary symmetric functions.", "For the DRP project, substituting x_i=q^{i-1} turns the generating function into a product whose coefficients are Gaussian binomial coefficients up to a q power."], "table": { "columns": ["Object", "Meaning"], "rows": [["e1", "Sum of variables"], ["e2", "Sum of pairwise products"], ["ek", "Sum of all k-variable products"], ["E(t)", "Generating function containing all ek"]] } }
+  ],
+  "pitfalls": ["Including powers like x1 squared inside elementary terms.", "Forgetting the strict index order prevents duplicate products.", "Confusing elementary symmetric functions with complete homogeneous symmetric functions.", "Expanding without tracking the coefficient of t."],
+  "quiz": [
+    { "question": "What is e2(x1,x2,x3)?", "options": ["x1+x2+x3", "x1x2+x1x3+x2x3", "x1^2+x2^2+x3^2", "x1x2x3"], "answer": 1, "explanation": "e2 sums all square-free products of exactly two variables." }
+  ],
+  "related": ["q-binomial-theorem", "q-integers-meaning-q-analogues"]
+}

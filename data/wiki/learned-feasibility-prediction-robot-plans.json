@@ -1,0 +1,20 @@
+{
+  "slug": "learned-feasibility-prediction-robot-plans",
+  "title": "Learned Feasibility Prediction for Robot Plans",
+  "subtitle": "A feasibility predictor estimates which symbolic actions are likely to survive expensive motion checks.",
+  "domain": "Robotics planning",
+  "difficulty": "Advanced",
+  "summary": "The TAMP project trains feasibility guidance from successful and failed traces while keeping motion checking as the verifier.",
+  "tags": ["TAMP", "Learning", "Feasibility", "Robotics"],
+  "sourceFiles": ["_portfolio/tamp-research.md"],
+  "sourceLinks": [{ "label": "TAMP research project", "href": "/projects/tamp-research" }],
+  "externalSources": [{ "label": "PDDLStream", "href": "https://github.com/caelan/pddlstream" }],
+  "artifact": { "type": "tamp-pipeline", "title": "Guidance before verification", "description": "The predictor ranks or prunes plans before IK, collision, and trajectory checks spend real compute." },
+  "sections": [
+    { "heading": "The Supervision Signal", "body": ["Every failed IK call and collision check is useful data. A trace tells the learner what kind of partial plan was plausible symbolically but bad geometrically."] },
+    { "heading": "What It Should Not Do", "body": ["The predictor should not declare a plan safe. It should only help decide what to try first or what to avoid trying too often."] }
+  ],
+  "pitfalls": ["Training only on successful traces.", "Letting the predictor replace collision checking.", "Optimizing median planning time while ignoring rare catastrophic failures."],
+  "quiz": [{ "question": "What is the final verifier in this architecture?", "options": ["The learned predictor", "IK, collision, trajectory, and execution checks", "A CSS animation", "The task name"], "answer": 1, "explanation": "Learned guidance helps search, but geometric and execution checks verify feasibility." }],
+  "related": ["dual-arm-tamp-pipeline", "planner-guidance-final-motion-verification"]
+}

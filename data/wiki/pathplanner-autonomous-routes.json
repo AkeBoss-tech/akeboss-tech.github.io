@@ -1,0 +1,30 @@
+{
+  "slug": "pathplanner-autonomous-routes",
+  "title": "PathPlanner Autonomous Routes",
+  "subtitle": "Autonomous routing combines preplanned paths, event markers, robot constraints, and live pathfinding.",
+  "domain": "Robotics",
+  "difficulty": "Intermediate",
+  "summary": "The robotics season used PathPlanner for swerve autonomous paths, hard-coded routes, on-the-fly generation, and pathfinding.",
+  "tags": ["PathPlanner", "FRC", "Autonomous", "Pathfinding"],
+  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md", "_portfolio/robot-code.md"],
+  "sourceLinks": [
+    { "label": "Robotics development post", "href": "/writing/robotics-development" },
+    { "label": "Robot code project", "href": "/projects/robot-code" }
+  ],
+  "externalSources": [
+    { "label": "PathPlanner pathfinding docs", "href": "https://pathplanner.dev/pplib-pathfinding.html" },
+    { "label": "WPILib path planning docs", "href": "https://docs.wpilib.org/en/stable/docs/software/pathplanning/index.html" }
+  ],
+  "artifact": { "type": "astar-grid", "title": "Preplanned paths and live pathfinding share a core idea", "description": "The grid visualizer shows the search side; real FRC paths add robot dynamics, field coordinates, and event timing." },
+  "contentBlocks": [
+    { "type": "paragraph", "text": "A good autonomous route is not just a line. It is a timed plan that respects drivetrain limits, field obstacles, mechanism actions, game-piece locations, and fallback behavior when the robot starts slightly off pose." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Path file</strong>Preplanned motion in field coordinates.</div><div><strong>Constraints</strong>Velocity, acceleration, rotation, and module limits.</div><div><strong>Events</strong>Commands triggered at path markers.</div><div><strong>Pathfinding</strong>Live route generation around obstacles or dynamic starts.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Preplanned vs On-the-Fly", "body": ["Preplanned paths are predictable and easy to rehearse. They work well for known starting positions and known scoring sequences.", "On-the-fly generation and pathfinding help when the robot needs to move from a live pose to a target while avoiding obstacles. They are more flexible but require more runtime trust."] },
+    { "heading": "Events and Mechanisms", "body": ["Autonomous success depends on coordinating drivetrain motion with intake, shooter, arm, and sensor states. Event markers let the route trigger commands at specific parts of the path.", "The hard part is timing under uncertainty: battery voltage, defense, wheel slip, and pose error can shift when the robot reaches each point."], "table": { "columns": ["Route component", "Failure mode"], "rows": [["Initial pose", "Path starts from the wrong place"], ["Constraints", "Robot cannot physically follow the path"], ["Event marker", "Mechanism fires too early or too late"], ["Vision update", "Pose correction arrives with latency"], ["Obstacle map", "Pathfinder drives through a blocked area if map is wrong"]] } }
+  ],
+  "pitfalls": ["Assuming simulation timing matches match timing.", "Creating paths that exceed drivetrain acceleration.", "Ignoring initial pose error.", "Triggering mechanisms without checking readiness.", "Confusing path generation with obstacle-aware pathfinding."],
+  "quiz": [{ "question": "What do event markers usually coordinate?", "options": ["Mechanism commands during a path", "CSS styles", "API rate limits", "Database migrations"], "answer": 0, "explanation": "Event markers trigger robot commands at points along autonomous paths." }],
+  "related": ["localadstar-pathfinding-frc", "swerve-drive-basics-frc"]
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "slurm-training-jobs-hpc-clusters",
+  "title": "SLURM Training Jobs on HPC Clusters",
+  "subtitle": "An HPC training run is a resource request, a batch script, an environment, and a reproducibility contract.",
+  "domain": "AI infrastructure",
+  "difficulty": "Intermediate",
+  "summary": "The SLM research project used Rutgers Amarel HPC and SLURM batch scripts to distribute training and evaluation jobs.",
+  "tags": ["SLURM", "HPC", "Training", "AI research"],
+  "sourceFiles": ["_portfolio/llm-research.md"],
+  "sourceLinks": [{ "label": "SLM research project", "href": "/projects/llm-research" }],
+  "externalSources": [
+    { "label": "Slurm sbatch manual", "href": "https://slurm.schedmd.com/sbatch.html" },
+    { "label": "Slurm documentation", "href": "https://slurm.schedmd.com/documentation.html" }
+  ],
+  "artifact": { "type": "hpc-queue", "title": "Job eligibility under resource constraints", "description": "Change GPUs and wall time to see which jobs can fit a scheduler request." },
+  "contentBlocks": [
+    { "type": "markdown", "content": "A minimal `sbatch` script has three layers:\n\n```bash\n#!/bin/bash\n#SBATCH --job-name=slm-sft\n#SBATCH --gres=gpu:2\n#SBATCH --time=04:00:00\n#SBATCH --mem=64G\n\nmodule load cuda\npython train.py --config configs/gsm8k-sft.yml\n```\n\nThe scheduler reads the directives, queues the job, and runs it when resources are available." }
+  ],
+  "sections": [
+    { "heading": "What the Scheduler Decides", "body": ["SLURM does not just run code. It decides when a job can run based on requested resources, partitions, limits, priority, and cluster availability.", "A request for too much time or too many GPUs can sit in the queue longer. A request for too little can fail mid-training."] },
+    { "heading": "Reproducibility for Training", "body": ["A good training job records code commit, config file, dataset version, environment, seed, hardware, and output checkpoint path.", "Without those details, a result like 'GSM8k improved' is not reproducible. The cluster job becomes a one-off event rather than a scientific artifact."], "table": { "columns": ["Record", "Why it matters"], "rows": [["Git commit", "Recreates code state"], ["Config", "Captures hyperparameters"], ["Dataset version", "Prevents silent data drift"], ["Environment", "Explains library and CUDA behavior"], ["Job ID", "Links logs and scheduler metadata"]] } }
+  ],
+  "pitfalls": ["Requesting resources without measuring actual usage.", "Training from a dirty or unrecorded code state.", "Writing checkpoints to temporary storage accidentally.", "Ignoring failed or preempted jobs in results."],
+  "quiz": [{ "question": "What does sbatch do?", "options": ["Submits a batch script to Slurm", "Plots a loss curve", "Creates a vector embedding", "Builds a web page"], "answer": 0, "explanation": "The Slurm sbatch command submits batch scripts to the scheduler." }],
+  "related": ["model-size-speed-accuracy-tradeoffs", "small-language-model-post-training"]
+}

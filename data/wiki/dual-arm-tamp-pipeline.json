@@ -1,0 +1,52 @@
+{
+  "slug": "dual-arm-tamp-pipeline",
+  "title": "Dual-Arm Task and Motion Planning Pipeline",
+  "subtitle": "TAMP connects symbolic task choices to geometric motion checks so a robot plan is both logical and physically executable.",
+  "domain": "Robotics planning",
+  "difficulty": "Advanced",
+  "summary": "The TAMP research project uses traces to train feasibility, scheduling, and duration guidance while preserving final motion verification.",
+  "tags": ["TAMP", "Robotics", "Planning", "Verification"],
+  "sourceFiles": ["_portfolio/tamp-research.md"],
+  "sourceLinks": [{ "label": "TAMP research project", "href": "/projects/tamp-research" }],
+  "externalSources": [
+    { "label": "PDDLStream project", "href": "https://github.com/caelan/pddlstream" },
+    { "label": "OR-Tools CP-SAT guide", "href": "https://developers.google.com/optimization/cp/cp_solver" }
+  ],
+  "artifact": {
+    "type": "tamp-pipeline",
+    "title": "From skeleton to verified trajectory",
+    "description": "Step through the pipeline from symbolic action skeleton to trace log."
+  },
+  "sections": [
+    {
+      "heading": "Why Task Planning Is Not Enough",
+      "body": [
+        "A symbolic plan can say pick, move, hand off, and place. That plan may still fail because the arm cannot reach, the path collides, or two arms need the same space at the same time.",
+        "Task and motion planning keeps the symbolic structure while asking geometric questions before execution."
+      ]
+    },
+    {
+      "heading": "Trace Supervision",
+      "body": [
+        "The project logs successful and failed planning attempts as traces. Those traces become training data for predictors that estimate feasibility, duration, or scheduling quality.",
+        "The learned model guides search, but IK, collision checking, trajectory optimization, and execution validation remain the final gate."
+      ],
+      "callout": "Learning guides planning; motion checking verifies reality."
+    }
+  ],
+  "pitfalls": [
+    "Letting a learned model replace geometric verification.",
+    "Training only on easy scenes and expecting robust planning.",
+    "Ignoring failed traces even though they contain the strongest supervision.",
+    "Optimizing average planning time while missing tail failures."
+  ],
+  "quiz": [
+    {
+      "question": "What role should the learned feasibility model play?",
+      "options": ["Final safety authority", "Guidance for ranking or pruning candidate plans", "Replacement for collision checking", "Camera calibration"],
+      "answer": 1,
+      "explanation": "The project principle is that learned guidance helps planning, while motion checks verify feasibility."
+    }
+  ],
+  "related": ["learned-feasibility-prediction-robot-plans", "dual-arm-scheduling-cp-sat"]
+}

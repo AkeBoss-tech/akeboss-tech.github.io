@@ -1,0 +1,31 @@
+{
+  "slug": "mcp-tools-agent-workflows",
+  "title": "MCP Tools for Agent Workflows",
+  "subtitle": "MCP standardizes how AI clients connect to tools, data sources, prompts, and workflows.",
+  "domain": "AI infrastructure",
+  "difficulty": "Intermediate",
+  "summary": "KRAIL, RAIL, and Grokipedia API all expose search, hydration, API, or knowledge functions for agent workflows.",
+  "tags": ["MCP", "Tools", "Agents", "Infrastructure"],
+  "sourceFiles": ["_portfolio/knowledge.md", "_portfolio/rutgers-agentic-intelligence-labs.md", "_portfolio/grokipedia-api.md"],
+  "sourceLinks": [
+    { "label": "KRAIL project", "href": "/projects/knowledge" },
+    { "label": "RAIL project", "href": "/projects/rutgers-agentic-intelligence-labs" },
+    { "label": "Grokipedia API project", "href": "/projects/grokipedia-api" }
+  ],
+  "externalSources": [
+    { "label": "Model Context Protocol intro", "href": "https://modelcontextprotocol.io/docs/getting-started/intro" },
+    { "label": "MCP specification", "href": "https://modelcontextprotocol.io/specification/2025-06-18" }
+  ],
+  "artifact": { "type": "agent-graph", "title": "Tools become callable graph nodes", "description": "MCP lets an AI client discover and call external capabilities through a standard protocol surface." },
+  "contentBlocks": [
+    { "type": "paragraph", "text": "Without a standard protocol, every AI application has to integrate every tool in its own way. MCP reduces that integration mess by defining a common client-server shape for tools, resources, prompts, and workflows." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Host</strong>The app the user interacts with.</div><div><strong>Client</strong>The protocol component inside the host.</div><div><strong>Server</strong>The external system exposing tools or resources.</div><div><strong>Tool call</strong>A structured request with parameters and returned data.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Why It Matters for Repo-Native Research", "body": ["A research agent needs more than chat. It needs to inspect files, query sources, hydrate data, run checks, and record artifacts. MCP gives those actions a protocol boundary.", "For KRAIL and RAIL-style systems, that boundary is valuable because tools can be audited, permissioned, and reused across clients."] },
+    { "heading": "Security and Trust", "body": ["Tool access is power. An MCP server that can read files, run queries, or execute commands must be scoped carefully. The protocol standardizes connection shape, but application design still has to handle authorization, sandboxing, prompt injection, and audit trails.", "The safest pattern is narrow tools with explicit schemas, clear descriptions, and logs of inputs and outputs."], "table": { "columns": ["Surface", "Risk", "Guardrail"], "rows": [["Resources", "Leaking sensitive context", "Scope and redact"], ["Tools", "Unsafe action execution", "Require schemas and permissions"], ["Prompts", "Instruction injection", "Separate trusted instructions from retrieved text"], ["Long workflows", "Hidden side effects", "Write audit records"]] } }
+  ],
+  "pitfalls": ["Treating protocol support as a complete security model.", "Exposing broad shell or filesystem access as one giant tool.", "Skipping tool-call logs.", "Letting untrusted retrieved text become tool instructions."],
+  "quiz": [{ "question": "What problem does MCP primarily address?", "options": ["Standardizing connections between AI apps and external tools/data", "Replacing all databases", "Training language models", "Rendering CSS"], "answer": 0, "explanation": "MCP defines a common way for AI applications to connect to tools, data, prompts, and workflows." }],
+  "related": ["langgraph-multi-agent-study-backend", "repo-system-of-record-research"]
+}

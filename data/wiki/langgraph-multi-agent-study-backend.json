@@ -1,0 +1,27 @@
+{
+  "slug": "langgraph-multi-agent-study-backend",
+  "title": "LangGraph Multi-Agent Study Backend",
+  "subtitle": "A multi-agent backend is a graph of roles, tools, state, and handoffs, not just a pile of prompts.",
+  "domain": "AI agents",
+  "difficulty": "Advanced",
+  "summary": "Lykke describes chat, study, weekly-plan, and orchestrator agents for routing course tasks across tools and LMS context.",
+  "tags": ["LangGraph", "Agents", "Orchestration", "Lykke"],
+  "sourceFiles": ["_portfolio/lykke.md"],
+  "sourceLinks": [{ "label": "Lykke project", "href": "/projects/lykke" }],
+  "externalSources": [
+    { "label": "LangChain multi-agent docs", "href": "https://docs.langchain.com/oss/python/langchain/multi-agent" },
+    { "label": "LangGraph graph API docs", "href": "https://docs.langchain.com/oss/python/langgraph/graph-api" }
+  ],
+  "artifact": { "type": "agent-graph", "title": "Routing and handoff as graph structure", "description": "Toggle between a tool-routing architecture and an agent-handoff architecture." },
+  "contentBlocks": [
+    { "type": "paragraph", "text": "A study backend has multiple kinds of work: answer from documents, generate quizzes, plan the week, inspect due dates, calculate formulas, and decide when web search is allowed. A graph architecture makes those roles explicit." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>State</strong>The shared record of user request, retrieved evidence, intermediate decisions, and final output.</div><div><strong>Node</strong>A function, agent, tool call, or model step.</div><div><strong>Edge</strong>The routing rule that decides what runs next.</div><div><strong>Guardrail</strong>A constraint on sources, tools, cost, or allowed actions.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "When Multi-Agent Helps", "body": ["Multi-agent design helps when different subtasks need different context, tools, or evaluation criteria. A quiz generator, calendar planner, and document-grounded tutor should not all carry the same prompt and memory.", "It does not help when a single well-tooled agent can do the job. Extra agents add latency, debugging surface, and routing failure modes."] },
+    { "heading": "Study Workflow Example", "body": ["A user asks, 'What should I study before Friday?' The orchestrator retrieves Canvas deadlines, asks a study agent to identify relevant topics, asks a planning agent to allocate time blocks, and returns a source-linked plan.", "The output should expose what evidence was used: due dates, lecture titles, assignment rubrics, and weak spots from previous quizzes."], "table": { "columns": ["Agent", "Responsibility"], "rows": [["Chat agent", "Answer source-grounded questions"], ["Study agent", "Create flashcards, quizzes, and review guides"], ["Weekly plan agent", "Map due dates to study sessions"], ["Orchestrator", "Route requests and enforce tool policy"], ["Verifier", "Check citations, freshness, and missing evidence"]] } }
+  ],
+  "pitfalls": ["Adding agents before the workflow actually needs them.", "Letting agents pass unstructured prose instead of typed state.", "Forgetting source-grounding when handing work between agents.", "Hiding routing decisions from debugging views."],
+  "quiz": [{ "question": "What is the main advantage of graph-based agent design?", "options": ["Explicit state and routing", "No need for tools", "Guaranteed correctness", "No latency"], "answer": 0, "explanation": "Graphs make the workflow structure, state transitions, and routing rules visible." }],
+  "related": ["source-grounded-ai-wikis", "mcp-tools-agent-workflows"]
+}

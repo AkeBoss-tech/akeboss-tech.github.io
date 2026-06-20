@@ -1,0 +1,26 @@
+{
+  "slug": "repo-system-of-record-research",
+  "title": "Repo as System of Record for Research",
+  "subtitle": "A research repo can store plans, sources, assumptions, data definitions, artifacts, and verification records in one reviewable history.",
+  "domain": "Research infrastructure",
+  "difficulty": "Advanced",
+  "summary": "RAIL makes the repository the contract for research plans, source definitions, ontology schemas, hydration pipelines, artifacts, and agent handoffs.",
+  "tags": ["RAIL", "Research", "Git", "Auditability"],
+  "sourceFiles": ["_portfolio/rutgers-agentic-intelligence-labs.md"],
+  "sourceLinks": [{ "label": "RAIL project", "href": "/projects/rutgers-agentic-intelligence-labs" }],
+  "externalSources": [
+    { "label": "Model Context Protocol intro", "href": "https://modelcontextprotocol.io/docs/getting-started/intro" }
+  ],
+  "artifact": { "type": "agent-graph", "title": "Research state as connected artifacts", "description": "Plans, sources, assumptions, tasks, and outputs become connected nodes rather than scattered files." },
+  "contentBlocks": [
+    { "type": "paragraph", "text": "Research fragments easily: notebooks, dashboards, chats, local CSVs, screenshots, API calls, and half-remembered assumptions. A repo-native system treats those pieces as versioned artifacts with explicit relationships." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Plan</strong>What question is being answered?</div><div><strong>Sources</strong>Which data and documents are allowed?</div><div><strong>Artifacts</strong>What outputs were produced?</div><div><strong>Verification</strong>What checks make the output trustworthy?</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Why Git Helps", "body": ["Git records changes over time. For research, that means assumptions, source definitions, transformations, and results can be reviewed as a history rather than remembered as vibes.", "The repo also gives agents a durable workspace: they can resume from files, not from a fading chat transcript."] },
+    { "heading": "What Belongs in the Repo", "body": ["Not everything belongs as raw data. Large or sensitive datasets may stay external, but the repo should store definitions, access notes, schemas, checksums, query descriptions, and reproducible scripts.", "The goal is not to turn Git into a warehouse. The goal is to make the research contract inspectable."], "table": { "columns": ["Artifact", "Repo role"], "rows": [["Research plan", "Defines question and scope"], ["Source note", "Explains data provenance and limits"], ["Ontology schema", "Defines concepts and relationships"], ["Hydration pipeline", "Recreates local analysis tables"], ["Verification record", "Documents checks and confidence"]] } }
+  ],
+  "pitfalls": ["Committing sensitive raw data by accident.", "Tracking outputs without tracking assumptions.", "Letting notebooks become undocumented black boxes.", "Using agents without durable handoff records."],
+  "quiz": [{ "question": "What does 'repo as system of record' mean?", "options": ["The repository stores the reviewable research contract and artifacts", "Every dataset must be committed raw", "Git replaces statistical validation", "No documentation is needed"], "answer": 0, "explanation": "The repo preserves plans, sources, assumptions, artifacts, and verification context." }],
+  "related": ["ontology-backed-research-workspaces", "research-integrity-records"]
+}

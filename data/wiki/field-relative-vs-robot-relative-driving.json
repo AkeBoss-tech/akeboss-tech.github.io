@@ -1,0 +1,20 @@
+{
+  "slug": "field-relative-vs-robot-relative-driving",
+  "title": "Field-Relative vs Robot-Relative Driving",
+  "subtitle": "The same joystick push means different things depending on whether commands are interpreted from the field or the robot.",
+  "domain": "Robotics",
+  "difficulty": "Intermediate",
+  "summary": "The robotics writing describes gyro-dependent swerve behavior and why orientation sensing matters.",
+  "tags": ["FRC", "Swerve", "Gyro", "Coordinates"],
+  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md"],
+  "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
+  "externalSources": [{ "label": "WPILib: Coordinate System", "href": "https://docs.wpilib.org/en/stable/docs/software/basic-programming/coordinate-system.html" }],
+  "artifact": { "type": "swerve-vectors", "title": "Command frame changes module vectors", "description": "A swerve command combines translation and rotation, but the frame of reference decides what forward means." },
+  "sections": [
+    { "heading": "Robot-Relative", "body": ["Forward means the direction the robot is currently facing. If the robot turns, the same joystick input moves in a new field direction."] },
+    { "heading": "Field-Relative", "body": ["Forward means the field's forward direction. The robot uses its gyro heading to rotate the driver command into robot coordinates."], "callout": "Field-relative driving feels natural to drivers, but it depends on trustworthy heading estimation." }
+  ],
+  "pitfalls": ["Using the wrong coordinate convention in kinematics.", "Not resetting gyro heading before a match.", "Failing gracefully when the gyro disconnects."],
+  "quiz": [{ "question": "What sensor is usually essential for field-relative driving?", "options": ["Gyro", "Break beam", "LED controller", "Bumper switch"], "answer": 0, "explanation": "The robot needs heading to rotate field commands into robot-relative commands." }],
+  "related": ["swerve-drive-basics-frc", "gyro-failures-swerve-instability"]
+}

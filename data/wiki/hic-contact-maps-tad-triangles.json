@@ -1,0 +1,67 @@
+{
+  "slug": "hic-contact-maps-tad-triangles",
+  "title": "Hi-C Contact Maps and TAD Triangles",
+  "subtitle": "A Hi-C map turns 3D genome folding into a heatmap of contact frequency along a chromosome.",
+  "domain": "Computational biology",
+  "difficulty": "Advanced",
+  "summary": "The HiC-TAD project visualizes chromatin contacts, TAD architecture, boundaries, polymer models, and deletion effects.",
+  "tags": ["Hi-C", "TADs", "Genomics", "Heatmaps"],
+  "sourceFiles": ["_portfolio/hic-tad-analysis.md", "app/cv/page.tsx"],
+  "sourceLinks": [{ "label": "HiC-TAD project", "href": "/projects/hic-tad-analysis" }],
+  "externalSources": [
+    { "label": "Nature Communications: TAD boundary deletions", "href": "https://www.nature.com/articles/s42003-023-04819-w" },
+    { "label": "PMC: TAD boundaries and regulatory territories", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10119121/" }
+  ],
+  "artifact": {
+    "type": "hic-heatmap",
+    "title": "Contact intensity around a movable boundary",
+    "description": "Shift the boundary and watch contact intensity reorganize into two domains."
+  },
+  "sections": [
+    {
+      "heading": "What the Matrix Means",
+      "body": [
+        "A Hi-C contact map is a square matrix. Each row and column represents a genomic bin, and each cell records how often two bins were observed near each other in 3D space.",
+        "The diagonal is strong because nearby genomic positions often contact each other. Off-diagonal blocks reveal longer-range folding structure."
+      ]
+    },
+    {
+      "heading": "Why TADs Look Like Triangles",
+      "body": [
+        "A topologically associating domain is a region whose internal loci interact more frequently with each other than with neighboring regions.",
+        "When plotted as an upper triangle, the high-contact square block becomes a triangle. Boundaries show up where the triangle pattern changes."
+      ],
+      "table": {
+        "columns": ["Visual feature", "Biological interpretation"],
+        "rows": [
+          ["Bright diagonal", "Nearby genomic bins contact often"],
+          ["Bright block", "A domain with enriched internal contacts"],
+          ["Boundary line", "A transition between interaction neighborhoods"],
+          ["Changed block after deletion", "Possible structural disruption"]
+        ]
+      }
+    },
+    {
+      "heading": "Connection to Deletion Analysis",
+      "body": [
+        "The project uses wild-type and deletion predictions to ask whether removing a boundary or enhancer-like sequence changes the contact map.",
+        "That makes the heatmap more than a visualization: it becomes a structural hypothesis about gene regulation."
+      ]
+    }
+  ],
+  "pitfalls": [
+    "Reading every bright cell as a direct physical contact between two fixed points.",
+    "Ignoring resolution; a 5 kb map and a 100 kb map reveal different structures.",
+    "Comparing heatmaps without normalization.",
+    "Treating TAD boundaries as perfectly sharp walls."
+  ],
+  "quiz": [
+    {
+      "question": "What does a bright off-diagonal block usually suggest?",
+      "options": ["No contacts exist", "Bins in that region contact more often than expected", "The chromosome is deleted", "The bins are always adjacent in sequence"],
+      "answer": 1,
+      "explanation": "Brightness represents contact enrichment between two genomic regions or within a domain."
+    }
+  ],
+  "related": ["multi-scale-tad-boundary-detection", "from-contact-matrix-to-3d-polymer-model"]
+}

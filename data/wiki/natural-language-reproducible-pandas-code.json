@@ -1,0 +1,31 @@
+{
+  "slug": "natural-language-reproducible-pandas-code",
+  "title": "Natural Language to Reproducible Pandas Code",
+  "subtitle": "A data agent is useful only if its natural-language answer leaves behind executable, inspectable code.",
+  "domain": "Data agents",
+  "difficulty": "Intermediate",
+  "summary": "The Data Cleaning Assistant turns plain-English CSV cleaning requests into reproducible pandas scripts and cleaned outputs.",
+  "tags": ["Pandas", "Data cleaning", "Agents", "Reproducibility"],
+  "sourceFiles": ["_portfolio/clean-your-data.md"],
+  "sourceLinks": [{ "label": "Data Cleaning Assistant project", "href": "/projects/clean-your-data" }],
+  "externalSources": [
+    { "label": "pandas user guide", "href": "https://pandas.pydata.org/docs/user_guide/index.html" },
+    { "label": "pandas missing data guide", "href": "https://pandas.pydata.org/docs/user_guide/missing_data.html" },
+    { "label": "pandas GroupBy guide", "href": "https://pandas.pydata.org/docs/user_guide/groupby.html" }
+  ],
+  "artifact": { "type": "feature-engineering", "title": "From request to transformations", "description": "Toggle common transformations to see how raw columns become model-ready features or cleaned fields." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "The Translation Problem" },
+    { "type": "paragraph", "text": "A user says, 'make hired a boolean, remove bad rows, and graph followers against following.' The agent has to infer columns, data types, missing-value rules, output expectations, and whether a change should mutate the file or create a derived column." },
+    { "type": "markdown", "content": "A robust data-cleaning agent should produce three things:\n\n1. **A cleaned dataset** the user can download.\n2. **A script** that can reproduce the transformation.\n3. **A short audit trail** explaining assumptions and rows affected." }
+  ],
+  "sections": [
+    { "heading": "Reproducibility as the Product", "body": ["The script is not a side effect; it is the trust object. A cleaned CSV without code is hard to audit and hard to reuse when the source file changes.", "Generated code should be small, dependency-light, and deterministic. It should avoid hidden state, random mutation, and ambiguous column guessing when the schema is unclear."] },
+    { "heading": "Execution Safety", "body": ["Running generated code needs guardrails: whitelisted imports, file sandboxing, timeouts, memory limits, and clear separation between code generation and execution.", "The user should be able to inspect the code before trusting the output, and the system should show shape changes, null counts, and modified columns after execution."], "table": { "columns": ["Risk", "Guardrail"], "rows": [["Bad column assumption", "Preview schema and ask or infer conservatively"], ["Destructive mutation", "Work on a copy and keep original available"], ["Unsafe code", "Whitelist imports and block arbitrary system calls"], ["Silent row loss", "Report before/after row counts"], ["Non-reproducibility", "Export the exact script"]] } }
+  ],
+  "pitfalls": ["Returning a verbal answer without code.", "Silently dropping rows.", "Using inplace mutations that make debugging harder.", "Conflating data cleaning with statistical modeling.", "Letting generated code access the network or filesystem broadly."],
+  "quiz": [
+    { "question": "Why should the agent export the pandas script?", "options": ["So the transformation can be audited and rerun", "To make the UI slower", "To avoid cleaning the data", "To hide assumptions"], "answer": 0, "explanation": "The script is the reproducible record of the cleaning operation." }
+  ],
+  "related": ["sandboxed-code-execution-data-agents", "data-exploration-agents-csv-profiling"]
+}

@@ -1,0 +1,74 @@
+{
+  "slug": "rag-pipeline-student-documents",
+  "title": "RAG Pipeline for Student Documents",
+  "subtitle": "Retrieval-augmented generation turns messy course files into ranked evidence before an AI tutor answers.",
+  "domain": "AI education",
+  "difficulty": "Intermediate",
+  "summary": "Lykke describes document ingestion, embeddings, hybrid search, reranking, and Canvas-connected study workflows.",
+  "tags": ["RAG", "Embeddings", "Hybrid search", "Lykke"],
+  "sourceFiles": ["_portfolio/lykke.md", "app/cv/page.tsx"],
+  "sourceLinks": [{ "label": "Lykke project", "href": "/projects/lykke" }],
+  "externalSources": [
+    { "label": "Google Cloud: hybrid search overview", "href": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search/about-hybrid-search" },
+    { "label": "Pinecone: rerankers and two-stage retrieval", "href": "https://www.pinecone.io/learn/series/rag/rerankers/" }
+  ],
+  "artifact": {
+    "type": "rag-retrieval",
+    "title": "Ranked evidence before generation",
+    "description": "Move from a student question to candidate chunks, hybrid scores, and the evidence that should enter the answer context."
+  },
+  "sections": [
+    {
+      "heading": "What RAG Adds",
+      "body": [
+        "A language model by itself answers from parameters. A RAG system first retrieves source material, then asks the model to answer with that material in context.",
+        "For course tools, the source material is unusually fragmented: syllabi, lecture notes, Canvas pages, assignment text, PDFs, calendar events, and sometimes handwritten study notes."
+      ],
+      "callout": "The retrieval step is the difference between an AI tutor that sounds plausible and one that can point back to the class material."
+    },
+    {
+      "heading": "The Working Pipeline",
+      "body": [
+        "The document is parsed into chunks, each chunk is embedded, and metadata such as course, week, file name, and assignment date is attached.",
+        "At question time, keyword search catches exact terms while vector search catches semantic matches. A reranker can then reorder the mixed candidate set before the model sees it."
+      ],
+      "table": {
+        "columns": ["Stage", "Job", "Failure if skipped"],
+        "rows": [
+          ["Chunking", "Split source material into retrievable units", "The model gets either too little context or a huge noisy passage"],
+          ["Embedding", "Represent meaning as vectors", "Semantic questions miss relevant notes"],
+          ["Keyword search", "Preserve exact names, formulas, and course terms", "Acronyms and proper nouns disappear"],
+          ["Reranking", "Put the best evidence first", "The answer uses convenient but weak context"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "A query like 'what should I study before the vector search quiz?' should retrieve the quiz date, the relevant lecture, and the study guide. Those chunks probably live in different files.",
+        "A strong answer should synthesize them without hiding the evidence chain: quiz timing from Canvas, core terms from lecture notes, and practice prompts from the study guide."
+      ]
+    }
+  ],
+  "pitfalls": [
+    "Treating embedding search as enough when exact course terms matter.",
+    "Chunking by arbitrary character count instead of document structure.",
+    "Letting retrieved chunks into the prompt without source labels.",
+    "Using old course files after Canvas content changes."
+  ],
+  "quiz": [
+    {
+      "question": "Why combine keyword and vector search?",
+      "options": ["To make retrieval slower", "To balance exact term matching with semantic matching", "To avoid storing metadata", "To replace reranking entirely"],
+      "answer": 1,
+      "explanation": "Keyword search preserves exact terms; vector search captures meaning. Hybrid retrieval uses both signals."
+    },
+    {
+      "question": "What should a reranker do?",
+      "options": ["Generate the final answer", "Delete all low-frequency words", "Reorder candidate chunks by relevance", "Parse PDFs into text"],
+      "answer": 2,
+      "explanation": "A reranker scores candidate passages after first-stage retrieval and improves the final context set."
+    }
+  ],
+  "related": ["source-grounded-ai-wikis", "course-materials-queryable-knowledge-base", "persistent-semantic-memory-ai-assistants"]
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "course-materials-queryable-knowledge-base",
+  "title": "Course Materials to Queryable Knowledge Base",
+  "subtitle": "A course knowledge base turns files, assignments, and notes into searchable objects with source context.",
+  "domain": "AI education",
+  "difficulty": "Foundational",
+  "summary": "Lykke ingests Canvas materials and turns them into AI-generated wikis, flashcards, quizzes, and study workflows.",
+  "tags": ["Lykke", "Knowledge base", "Canvas", "AI education"],
+  "sourceFiles": ["_portfolio/lykke.md"],
+  "sourceLinks": [{ "label": "Lykke project", "href": "/projects/lykke" }],
+  "externalSources": [{ "label": "Google Cloud: hybrid search overview", "href": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search/about-hybrid-search" }],
+  "artifact": { "type": "rag-retrieval", "title": "Queryable course context", "description": "The same retrieval mechanics can power chat, flashcards, wikis, quizzes, and weekly plans." },
+  "sections": [
+    { "heading": "From File Pile to Knowledge Layer", "body": ["A course usually stores knowledge in inconvenient places: PDFs, Canvas pages, assignments, announcements, slides, and calendar events.", "The knowledge base normalizes those pieces into records that can be retrieved, cited, and regenerated into study artifacts."] },
+    { "heading": "Metadata Is Not Optional", "body": ["Course, week, unit, due date, source file, and content type all help retrieval. Without metadata, the system cannot tell whether a chunk is a policy, a definition, or an assignment deadline."] }
+  ],
+  "pitfalls": ["Treating all course files as one undifferentiated text blob.", "Losing source filenames during ingestion.", "Failing to re-index when Canvas content changes."],
+  "quiz": [{ "question": "Why keep metadata with chunks?", "options": ["To improve retrieval and source context", "To make JSON longer", "To avoid embeddings", "To prevent search"], "answer": 0, "explanation": "Metadata helps filter, rank, cite, and update retrieved material." }],
+  "related": ["rag-pipeline-student-documents", "source-grounded-ai-wikis"]
+}

@@ -1,0 +1,97 @@
+{
+  "slug": "astar-search-open-closed-fscore",
+  "title": "A* Search: Open Set, Closed Set, and f-score",
+  "subtitle": "A* finds paths by balancing the cost already paid with a heuristic estimate of what remains.",
+  "domain": "Algorithms",
+  "difficulty": "Foundational",
+  "summary": "The path finder project visualizes A* through grid cells, obstacles, heuristics, and the final path.",
+  "tags": ["A*", "Pathfinding", "Heuristics", "Algorithms"],
+  "sourceFiles": ["_portfolio/path-finder.md"],
+  "sourceLinks": [{ "label": "A* path finder project", "href": "/projects/path-finder" }],
+  "externalSources": [
+    { "label": "Hart, Nilsson, Raphael A* paper", "href": "https://ieeexplore.ieee.org/document/4082128/" },
+    { "label": "Wikipedia overview of A* search", "href": "https://en.wikipedia.org/wiki/A*_search_algorithm" }
+  ],
+  "artifact": {
+    "type": "astar-grid",
+    "title": "Frontier expansion on a grid",
+    "description": "Switch heuristics to see how the explored cells and final path differ."
+  },
+  "contentBlocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The Mental Model"
+    },
+    {
+      "type": "paragraph",
+      "text": "A* behaves like a careful explorer with a map estimate. It keeps a frontier of possible next cells, scores each candidate, and always expands the candidate that looks cheapest after combining what it already paid with what it still expects to pay."
+    },
+    {
+      "type": "latex",
+      "content": "$$f(n)=g(n)+h(n)$$\n\n- $g(n)$ is the real cost from the start to node $n$.\n- $h(n)$ is the heuristic estimate from node $n$ to the goal.\n- $f(n)$ is the priority score used to choose what to expand next."
+    },
+    {
+      "type": "html",
+      "content": "<div class=\"concept-ladder\"><div><strong>1. Discover</strong>Put neighboring cells into the open set with tentative scores.</div><div><strong>2. Prioritize</strong>Pick the open cell with the lowest f-score.</div><div><strong>3. Commit</strong>Move that cell to the closed set after considering its neighbors.</div><div><strong>4. Reconstruct</strong>When the goal is reached, follow parent pointers backward.</div></div>"
+    },
+    {
+      "type": "callout",
+      "title": "Why the heuristic condition matters",
+      "body": "If the heuristic never overestimates the true remaining cost, A* keeps its shortest-path guarantee. If it overestimates, it may become faster but no longer reliably optimal."
+    },
+    {
+      "type": "table",
+      "table": {
+        "columns": ["Choice", "Effect"],
+        "rows": [
+          ["Manhattan distance", "Fits four-direction grid movement and produces rectilinear search pressure"],
+          ["Euclidean distance", "Fits continuous geometry or diagonal movement better"],
+          ["Zero heuristic", "Degenerates toward Dijkstra's algorithm"],
+          ["Overconfident heuristic", "Can be fast but may skip the optimal path"]
+        ]
+      }
+    }
+  ],
+  "sections": [
+    {
+      "heading": "The Score That Drives the Search",
+      "body": [
+        "A* gives each candidate node an f-score: f(n) = g(n) + h(n).",
+        "g(n) is the known cost from the start to the node. h(n) is the estimated cost from the node to the goal. The algorithm repeatedly expands the node with the smallest f-score."
+      ],
+      "callout": "A* is powerful because h(n) gives the search a sense of direction without discarding the actual path cost."
+    },
+    {
+      "heading": "Open and Closed Sets",
+      "body": [
+        "The open set stores frontier nodes that might still lead to the best path. The closed set stores nodes already expanded.",
+        "Walls or obstacles are never expanded. The final path appears when the goal is reached and parent pointers are traced backward."
+      ],
+      "table": {
+        "columns": ["Set", "Meaning"],
+        "rows": [
+          ["Open", "Candidates discovered but not fully expanded"],
+          ["Closed", "Nodes whose neighbors have already been considered"],
+          ["Path", "Parent chain from goal back to start"],
+          ["Wall", "Blocked cell that cannot be traversed"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Using a heuristic that overestimates and breaks shortest-path guarantees.",
+    "Forgetting to update a node when a cheaper route is found.",
+    "Confusing visited cells with the final path.",
+    "Using Euclidean distance on a grid where only four-direction movement is allowed without thinking through the movement model."
+  ],
+  "quiz": [
+    {
+      "question": "What does f(n) combine?",
+      "options": ["Only distance from start", "Known cost plus estimated remaining cost", "Only wall density", "Random tie-breaking"],
+      "answer": 1,
+      "explanation": "A* uses f(n) = g(n) + h(n)."
+    }
+  ],
+  "related": ["heuristics-manhattan-vs-euclidean", "random-obstacle-density-path-solvability"]
+}

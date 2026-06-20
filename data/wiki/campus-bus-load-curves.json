@@ -1,0 +1,59 @@
+{
+  "slug": "campus-bus-load-curves",
+  "title": "Campus Bus Load Curves by Time of Day",
+  "subtitle": "Transit demand becomes legible when bus pings and load observations are aggregated into daily route curves.",
+  "domain": "Transit analytics",
+  "difficulty": "Foundational",
+  "summary": "The Rutgers Bus Analysis project collected PassioGO data and analyzed route load, speed, loop time, and capacity patterns.",
+  "tags": ["Transit", "Data visualization", "Rutgers", "Time series"],
+  "sourceFiles": ["_portfolio/rutgers-bus-analysis.md"],
+  "sourceLinks": [{ "label": "Rutgers Bus Analysis project", "href": "/projects/rutgers-bus-analysis" }],
+  "externalSources": [
+    { "label": "PassioGo project reference", "href": "https://github.com/athuler/PassioGo" }
+  ],
+  "artifact": {
+    "type": "transit-load",
+    "title": "Route demand pulses",
+    "description": "Move through the day and watch route loads peak at different times."
+  },
+  "sections": [
+    {
+      "heading": "From Pings to Curves",
+      "body": [
+        "A real-time bus feed produces many small observations: bus identity, route, position, timestamp, and sometimes load.",
+        "A load curve groups those observations by route and time bucket so patterns become visible."
+      ]
+    },
+    {
+      "heading": "Why Time of Day Matters",
+      "body": [
+        "Campus transit is shaped by synchronized class schedules. Ten minutes before and after class changes can look very different from the middle of a lecture block.",
+        "A route can be efficient on average while still failing during narrow peaks."
+      ],
+      "table": {
+        "columns": ["Metric", "Question it answers"],
+        "rows": [
+          ["Average load", "How crowded is the route?"],
+          ["Loop time", "How long does a bus take to return?"],
+          ["Speed", "Where does the route slow down?"],
+          ["Active buses", "Is supply matching demand?"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Averaging across the full day and hiding class-change spikes.",
+    "Treating GPS pings as evenly spaced when polling or connectivity can vary.",
+    "Comparing routes without considering route length.",
+    "Ignoring missing data during outages or low-signal periods."
+  ],
+  "quiz": [
+    {
+      "question": "Why bucket bus observations by time?",
+      "options": ["To remove all uncertainty", "To reveal daily demand patterns", "To hide route differences", "To avoid plotting data"],
+      "answer": 1,
+      "explanation": "Time buckets turn noisy pings into route-level curves that can be compared."
+    }
+  ],
+  "related": ["real-time-transit-data-collection-loops", "route-loop-time-estimation"]
+}

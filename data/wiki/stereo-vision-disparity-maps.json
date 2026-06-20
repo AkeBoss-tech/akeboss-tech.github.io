@@ -1,0 +1,59 @@
+{
+  "slug": "stereo-vision-disparity-maps",
+  "title": "Stereo Vision and Disparity Maps",
+  "subtitle": "Stereo vision estimates depth by comparing where the same scene point appears in two camera views.",
+  "domain": "Computer vision",
+  "difficulty": "Intermediate",
+  "summary": "The depth estimation project compared stereo vision, SGBM, and machine learning depth models against measured distances.",
+  "tags": ["Stereo vision", "Depth", "OpenCV", "Disparity"],
+  "sourceFiles": ["_portfolio/depth-estimation.md"],
+  "sourceLinks": [{ "label": "Depth estimation project", "href": "/projects/depth-estimation" }],
+  "externalSources": [
+    { "label": "OpenCV stereo matching docs", "href": "https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" }
+  ],
+  "artifact": {
+    "type": "stereo-disparity",
+    "title": "Disparity as a depth cue",
+    "description": "Increase pixel disparity and the estimated depth drops because close objects shift more between camera views."
+  },
+  "sections": [
+    {
+      "heading": "Two Views, One Point",
+      "body": [
+        "A stereo camera setup observes the same scene from two positions separated by a baseline.",
+        "A point close to the cameras appears at noticeably different horizontal positions. A far point shifts less."
+      ]
+    },
+    {
+      "heading": "From Disparity to Depth",
+      "body": [
+        "Disparity is the pixel difference between matching points in the left and right images. With calibration, focal length, and baseline, disparity can be converted into depth.",
+        "Block-matching methods such as SGBM estimate disparity by searching for similar image patches across the two views."
+      ],
+      "table": {
+        "columns": ["Quantity", "Meaning"],
+        "rows": [
+          ["Baseline", "Distance between the two cameras"],
+          ["Focal length", "Camera projection scale"],
+          ["Disparity", "Pixel shift between matching points"],
+          ["Depth", "Estimated distance from the camera rig"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Skipping camera calibration.",
+    "Expecting textureless surfaces to match well.",
+    "Comparing raw depth maps without understanding their scale.",
+    "Assuming smoother ML depth maps are automatically more accurate."
+  ],
+  "quiz": [
+    {
+      "question": "If disparity increases while calibration stays fixed, what usually happens to estimated depth?",
+      "options": ["It increases", "It decreases", "It becomes unrelated", "It always becomes zero"],
+      "answer": 1,
+      "explanation": "Nearer objects have larger disparity, so depth is inversely related to disparity."
+    }
+  ],
+  "related": ["semi-global-block-matching", "camera-calibration-robot-vision"]
+}

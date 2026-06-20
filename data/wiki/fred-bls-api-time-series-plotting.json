@@ -1,0 +1,32 @@
+{
+  "slug": "fred-bls-api-time-series-plotting",
+  "title": "FRED and BLS API Time-Series Plotting",
+  "subtitle": "Economic plotting is mostly a data-contract problem: series IDs, frequencies, units, revisions, and comparable scales.",
+  "domain": "Economics",
+  "difficulty": "Intermediate",
+  "summary": "The Economic Series Plotter fetches FRED and BLS data and turns it into consistently formatted charts for FED Challenge analysis.",
+  "tags": ["FRED", "BLS", "Economics", "Time series"],
+  "sourceFiles": ["_portfolio/economic-grapher.md"],
+  "sourceLinks": [{ "label": "Economic Series Plotter project", "href": "/projects/economic-grapher" }],
+  "externalSources": [
+    { "label": "FRED API documentation", "href": "https://fred.stlouisfed.org/docs/api/fred/" },
+    { "label": "BLS Public Data API features", "href": "https://www.bls.gov/bls/api_features.htm" },
+    { "label": "BLS API getting started", "href": "https://www.bls.gov/developers/home.htm" }
+  ],
+  "artifact": { "type": "economic-series", "title": "Raw scale vs indexed comparison", "description": "Toggle indexed and raw scale views to see why economic series often need normalization before comparison." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "The Plot Is the Last Step" },
+    { "type": "paragraph", "text": "A clean economic chart starts before Matplotlib or Seaborn. The important choices are what series means, how often it is sampled, what units it uses, whether values are seasonally adjusted, and whether the latest observation is preliminary or revised." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Series ID</strong>Choose the exact FRED or BLS identifier.</div><div><strong>Frequency</strong>Monthly, quarterly, weekly, or annual values should not be mixed casually.</div><div><strong>Units</strong>Level, percent, index, change, and annualized rate encode different claims.</div><div><strong>Transform</strong>Indexing, percent change, or rolling averages make comparisons readable.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "FRED vs BLS", "body": ["FRED is a broad economic database that aggregates many sources and exposes series through a web API. BLS publishes labor, price, productivity, wage, and employment data through its own public API.", "A plotting tool that supports both needs an internal normalized shape: date, value, source, series ID, units, title, frequency, and notes."] },
+    { "heading": "The Comparison Trap", "body": ["Putting CPI, unemployment, and an interest rate on one y-axis is usually not meaningful. Indexing each series to a base date can reveal relative movement, while separate axes or panels preserve units.", "For policy analysis, the transformation must be explicit because a visual slope can change depending on whether the chart uses levels, percentage changes, or indexed values."], "table": { "columns": ["Transformation", "Use when"], "rows": [["Raw level", "Units are directly meaningful"], ["Indexed to 100", "Comparing relative movement across unlike units"], ["Percent change", "Studying growth rates or inflation"], ["Rolling average", "Reducing high-frequency noise"], ["Year-over-year change", "Handling seasonality in monthly data"]] } }
+  ],
+  "pitfalls": ["Mixing seasonally adjusted and non-adjusted series.", "Plotting unlike units on one axis without indexing.", "Ignoring revisions or vintage data.", "Treating missing months as zero.", "Using chart style consistency to hide incompatible definitions."],
+  "quiz": [
+    { "question": "Why index two economic series to 100?", "options": ["To compare relative movement despite unlike units", "To delete all missing values", "To make API keys unnecessary", "To turn monthly data into annual data"], "answer": 0, "explanation": "Indexing makes relative change comparable when raw units differ." },
+    { "question": "What should every fetched economic series retain?", "options": ["Only the color used in the chart", "Source metadata such as units, frequency, and series ID", "A random category", "The browser width"], "answer": 1, "explanation": "Metadata is needed to interpret and audit the chart." }
+  ],
+  "related": ["economic-data-normalization-graphing", "comparing-economic-indicators-shared-axes"]
+}

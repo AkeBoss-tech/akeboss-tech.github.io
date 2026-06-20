@@ -1,0 +1,28 @@
+{
+  "slug": "vector-search-vs-keyword-search",
+  "title": "Vector Search vs Keyword Search in Study Tools",
+  "subtitle": "Keyword search finds exact words; vector search finds nearby meaning. Strong study systems usually need both.",
+  "domain": "AI education",
+  "difficulty": "Intermediate",
+  "summary": "Lykke uses document embeddings, hybrid search, and reranking to retrieve course evidence before generating study artifacts.",
+  "tags": ["Vector search", "Keyword search", "RAG", "Hybrid retrieval"],
+  "sourceFiles": ["_portfolio/lykke.md"],
+  "sourceLinks": [{ "label": "Lykke project", "href": "/projects/lykke" }],
+  "externalSources": [
+    { "label": "SQLite FTS5 documentation", "href": "https://sqlite.org/fts5.html" },
+    { "label": "Google Cloud hybrid search overview", "href": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search/about-hybrid-search" }
+  ],
+  "artifact": { "type": "rag-retrieval", "title": "Two signals, one ranked evidence set", "description": "The ranked evidence demo shows why exact keyword matches and vector similarity should both influence retrieval." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "Two Kinds of Relevance" },
+    { "type": "paragraph", "text": "Keyword search is lexical. It cares whether the same tokens appear. Vector search is semantic. It cares whether two chunks mean similar things under an embedding model." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Keyword wins</strong>Course codes, theorem names, exact acronyms, dates, formulas.</div><div><strong>Vector wins</strong>Paraphrases, conceptual questions, vague student language.</div><div><strong>Hybrid wins</strong>Most real study questions, because students mix exact terms and fuzzy intent.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Why Exact Matching Still Matters", "body": ["A vector model may understand that 'midterm review' and 'exam prep' are related, but it can blur exact names. If a student asks for 'CS 111 Project 2 rubric,' lexical matching should strongly preserve those terms.", "Full-text indexes such as SQLite FTS5 are designed to efficiently find documents containing specific terms. That is still a basic superpower."] },
+    { "heading": "Why Semantic Search Matters", "body": ["Students rarely ask in the same words used by a slide deck. A lecture may say 'gradient-based optimization' while the student asks 'how does the model learn from error?' Embeddings can connect those meanings.", "The best pipeline retrieves both lexical and semantic candidates, merges them, reranks them, and keeps source labels attached."], "table": { "columns": ["Query type", "Best first signal"], "rows": [["Exact assignment name", "Keyword"], ["Vague conceptual question", "Vector"], ["Formula with notation", "Keyword plus metadata"], ["Study-plan request", "Vector plus calendar metadata"], ["Acronym or abbreviation", "Keyword"]] } }
+  ],
+  "pitfalls": ["Using only vector search and missing exact course identifiers.", "Using only keyword search and missing paraphrases.", "Merging rankings without deduplication.", "Letting semantically similar but stale course content outrank the current assignment."],
+  "quiz": [{ "question": "Why is hybrid search useful in course tools?", "options": ["It combines exact terms with semantic similarity", "It avoids all indexing", "It removes source metadata", "It only works for images"], "answer": 0, "explanation": "Course questions often contain both exact identifiers and fuzzy intent." }],
+  "related": ["rag-pipeline-student-documents", "course-materials-queryable-knowledge-base"]
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "advantagekit-logging-simulation-separation",
+  "title": "AdvantageKit Logging and Simulation Separation",
+  "subtitle": "Robot logs are most useful when code separates real inputs, simulated inputs, and outputs cleanly enough to replay behavior.",
+  "domain": "Robotics software",
+  "difficulty": "Advanced",
+  "summary": "The FRC robot code used AdvantageKit, AdvantageScope, simulation separation, and log analysis to debug drivetrain and mechanism behavior.",
+  "tags": ["AdvantageKit", "FRC", "Logging", "Simulation"],
+  "sourceFiles": ["_portfolio/robot-code.md", "_posts/2024-4-3-robotics-chief.md"],
+  "sourceLinks": [
+    { "label": "Robot code project", "href": "/projects/robot-code" },
+    { "label": "Robotics development post", "href": "/writing/robotics-development" }
+  ],
+  "externalSources": [
+    { "label": "AdvantageKit docs", "href": "https://docs.advantagekit.org/" },
+    { "label": "What is AdvantageKit?", "href": "https://docs.advantagekit.org/getting-started/what-is-advantagekit/" },
+    { "label": "AdvantageScope log files", "href": "https://docs.advantagescope.org/overview/log-files/" }
+  ],
+  "artifact": { "type": "logging-replay", "title": "Replay a moment in robot state", "description": "Move through a synthetic replay timestamp and watch input, output, and derived signals change." },
+  "contentBlocks": [
+    { "type": "paragraph", "text": "A robot match is too chaotic to debug only by memory. Logging turns sensor readings, commands, estimated poses, setpoints, and mechanism states into a timeline that can be inspected after the robot leaves the field." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Inputs</strong>Sensor readings and driver commands.</div><div><strong>Robot code</strong>The deterministic logic that turns inputs into outputs.</div><div><strong>Outputs</strong>Motor commands, setpoints, and calculated states.</div><div><strong>Replay</strong>Run code again against recorded inputs to inspect behavior.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "The IO Boundary", "body": ["The clean architecture is to isolate hardware interaction behind IO interfaces. Real code reads actual devices; sim code produces simulated measurements; replay uses logged inputs.", "That boundary makes the robot code easier to test because the control logic does not have to know where the input came from."] },
+    { "heading": "Debugging with Replay", "body": ["If a gyro disconnects, a module jitters, or a shooter misses its setpoint, logs let the team compare what the robot believed with what it commanded.", "Replay is especially powerful because it can show whether a bug lives in decision logic or in live hardware input."], "table": { "columns": ["Logged signal", "Debug question"], "rows": [["Gyro yaw", "Did heading jump or disconnect?"], ["Module angle", "Did swerve modules track setpoints?"], ["Pose estimate", "Did odometry drift?"], ["Shooter RPM", "Did velocity settle before firing?"], ["Command state", "Which behavior was active?"]] } }
+  ],
+  "pitfalls": ["Logging outputs but not inputs.", "Mixing hardware calls into high-level logic.", "Forgetting timestamps and units.", "Treating replay as perfect when unlogged inputs still affect code."],
+  "quiz": [{ "question": "Why separate IO from robot logic?", "options": ["So real, simulated, and replayed inputs can share the same control code", "To remove all sensors", "To avoid logging", "To make code slower"], "answer": 0, "explanation": "The IO boundary lets the same logic run with real hardware, simulation, or replayed logs." }],
+  "related": ["reading-robot-logs-debug-hardware-problems", "swerve-drive-basics-frc"]
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "async-api-rate-limits-backoff",
+  "title": "Async API Clients with Rate Limits and Backoff",
+  "subtitle": "Reliable API clients treat failure as a flow-control signal, not just an exception to retry immediately.",
+  "domain": "API engineering",
+  "difficulty": "Intermediate",
+  "summary": "The Grokipedia API project includes async support, retries, exponential backoff, caching, and rate-limit handling.",
+  "tags": ["APIs", "Backoff", "Rate limits", "Async"],
+  "sourceFiles": ["_portfolio/grokipedia-api.md"],
+  "sourceLinks": [{ "label": "Grokipedia API project", "href": "/projects/grokipedia-api" }],
+  "externalSources": [
+    { "label": "Google Cloud: Retry strategy", "href": "https://docs.cloud.google.com/storage/docs/retry-strategy" },
+    { "label": "Google Drive API usage limits", "href": "https://developers.google.com/workspace/drive/labels/limits" }
+  ],
+  "artifact": { "type": "api-backoff", "title": "Retry spacing with jitter", "description": "Change failed attempts and jitter to see why clients should spread retries instead of stampeding a struggling service." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "The Contract of a Polite Client" },
+    { "type": "paragraph", "text": "An async client is powerful because it can keep many requests in flight. That same power can become rude or dangerous if every failed request retries instantly. A good client needs concurrency limits, request timeouts, response classification, retries with backoff, cache hits where possible, and a way to resume long jobs." },
+    { "type": "latex", "content": "$$delay_i = \\min(maxDelay, base \\cdot 2^i) + jitter_i$$\n\nBackoff grows the delay after each failed attempt. Jitter randomizes it so many clients do not retry at the same instant." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>429</strong>Slow down; respect the server's rate policy.</div><div><strong>500/503</strong>Retry only if the operation is safe or idempotent.</div><div><strong>Timeout</strong>Retry with a bounded budget, then surface uncertainty.</div><div><strong>Cache hit</strong>Avoid the request entirely when freshness allows.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Response Classification", "body": ["Not every error deserves a retry. A malformed request should fail fast; a transient service outage can be retried; a rate-limit response should slow the client down.", "The client should distinguish network exceptions, timeout errors, HTTP 429, 5xx responses, and permanent 4xx responses. Otherwise retry logic becomes a machine for repeating bad requests."] },
+    { "heading": "Concurrency and Backpressure", "body": ["Async code needs a worker pool or semaphore so the client controls pressure. Without a cap, pagination or discovery jobs can create thousands of simultaneous requests.", "Backpressure means later work waits when the system is saturated. That protects the API, your process, and the final data quality."], "table": { "columns": ["Mechanism", "Purpose"], "rows": [["Semaphore", "Limit concurrent in-flight requests"], ["Exponential backoff", "Increase wait time after transient failures"], ["Jitter", "Prevent synchronized retry storms"], ["Cache", "Avoid repeated identical calls"], ["Checkpoint", "Resume long crawls without starting over"]] } }
+  ],
+  "pitfalls": ["Retrying non-idempotent writes without safeguards.", "Treating every 4xx response as temporary.", "Using exponential backoff without a maximum retry budget.", "Running async discovery without concurrency limits.", "Caching without recording freshness or invalidation rules."],
+  "quiz": [
+    { "question": "Why add jitter to exponential backoff?", "options": ["To make logs shorter", "To keep many clients from retrying at the same instant", "To disable rate limits", "To convert JSON to XML"], "answer": 1, "explanation": "Jitter spreads retries across time, reducing retry storms." },
+    { "question": "Which response usually means the client should slow down?", "options": ["200", "301", "429", "404 for a known missing resource"], "answer": 2, "explanation": "HTTP 429 indicates too many requests or rate limiting." }
+  ],
+  "related": ["cross-language-sdk-feature-parity", "course-materials-queryable-knowledge-base"]
+}

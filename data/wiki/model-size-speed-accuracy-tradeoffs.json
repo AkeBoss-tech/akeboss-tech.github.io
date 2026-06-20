@@ -1,0 +1,29 @@
+{
+  "slug": "model-size-speed-accuracy-tradeoffs",
+  "title": "Model Size, Speed, and Accuracy Trade-Offs",
+  "subtitle": "Small language model work is the art of buying enough reasoning quality with far less latency, memory, and infrastructure.",
+  "domain": "AI research",
+  "difficulty": "Advanced",
+  "summary": "The SLM research project studies small-model optimization, post-training, quantization, pruning, and HPC execution for math reasoning.",
+  "tags": ["SLMs", "Optimization", "Quantization", "Post-training"],
+  "sourceFiles": ["_portfolio/llm-research.md"],
+  "sourceLinks": [{ "label": "SLM research project", "href": "/projects/llm-research" }],
+  "externalSources": [
+    { "label": "scikit-learn preprocessing reference", "href": "https://scikit-learn.org/stable/modules/preprocessing.html" }
+  ],
+  "artifact": { "type": "model-tradeoff", "title": "Accuracy is not the only axis", "description": "Move the model-size slider to see how quality, latency, and memory pull against each other." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "Why Smaller Can Be Better" },
+    { "type": "paragraph", "text": "A large model may win on peak benchmark accuracy, but a smaller model can win the product if it is fast enough to run interactively, cheap enough to call often, and controllable enough to fine-tune or deploy near the data." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Post-training</strong>Improve behavior after pretraining with supervised examples or preference signals.</div><div><strong>Quantization</strong>Store weights in fewer bits to reduce memory and improve throughput.</div><div><strong>Pruning</strong>Remove less useful structure to shrink compute.</div><div><strong>Distillation</strong>Train a smaller model to imitate a stronger teacher.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "The Deployment Equation", "body": ["A model is not just a score. It is a bundle of memory footprint, context length, latency, batch throughput, hardware availability, calibration, and failure modes.", "For math reasoning, the key question is not only whether the model can solve hard problems, but whether post-training improves systematic reasoning rather than memorized answer patterns."] },
+    { "heading": "Optimization Stack", "body": ["Quantization changes numeric representation. Pruning changes model structure. Fine-tuning changes behavior. Evaluation decides whether any of those changes helped.", "The dangerous part is that each optimization can improve one metric while damaging another. A smaller model can become faster but less calibrated; a fine-tuned model can improve one benchmark while narrowing its generality."], "table": { "columns": ["Technique", "Primary gain", "Main risk"], "rows": [["Quantization", "Lower memory and faster inference", "Quality loss if precision is too low"], ["Pruning", "Less compute", "Removing useful capacity"], ["SFT", "Task behavior improves", "Overfitting to format"], ["Distillation", "Smaller model imitates larger one", "Teacher errors get copied"], ["Batching", "Higher throughput", "Worse single-user latency"]] } }
+  ],
+  "pitfalls": ["Reporting only accuracy without latency or memory.", "Evaluating on the same distribution used for fine-tuning.", "Assuming quantization is free.", "Optimizing average latency while ignoring tail latency.", "Confusing benchmark gains with robust reasoning gains."],
+  "quiz": [
+    { "question": "Why might a smaller model be preferable despite lower peak accuracy?", "options": ["It may be faster, cheaper, and easier to deploy", "It never makes mistakes", "It does not need evaluation", "It removes all infrastructure"], "answer": 0, "explanation": "Real systems balance quality with latency, cost, memory, and deployment constraints." }
+  ],
+  "related": ["small-language-model-post-training", "quantization-pruning-inference-throughput"]
+}

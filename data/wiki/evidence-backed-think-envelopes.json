@@ -1,0 +1,25 @@
+{
+  "slug": "evidence-backed-think-envelopes",
+  "title": "Evidence-Backed Think Envelopes",
+  "subtitle": "A think envelope turns an agent answer into a reviewable object with citations, gaps, conflicts, and next actions.",
+  "domain": "AI infrastructure",
+  "difficulty": "Intermediate",
+  "summary": "KRAIL describes think envelopes with citations, gaps, conflicts, next actions, task records, and integrity artifacts.",
+  "tags": ["Evidence", "Agents", "Citations", "Integrity"],
+  "sourceFiles": ["_portfolio/knowledge.md"],
+  "sourceLinks": [{ "label": "KRAIL project", "href": "/projects/knowledge" }],
+  "externalSources": [
+    { "label": "MCP intro for external context and tools", "href": "https://modelcontextprotocol.io/docs/getting-started/intro" }
+  ],
+  "artifact": { "type": "agent-graph", "title": "Answer state as a review pipeline", "description": "The graph illustrates how evidence, conflicts, and next actions can pass through a structured answer envelope." },
+  "contentBlocks": [
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Answer</strong>The concise result.</div><div><strong>Evidence</strong>Sources and snippets that support it.</div><div><strong>Gaps</strong>What is unknown or unverified.</div><div><strong>Next actions</strong>What should happen if more confidence is needed.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "The Problem", "body": ["Agent outputs often sound complete even when they rest on partial evidence. A think envelope makes uncertainty visible without dumping hidden reasoning.", "The user does not need a private chain of thought. They need an inspectable result: what was used, what was not checked, what conflicts exist, and what to do next."] },
+    { "heading": "Envelope Fields", "body": ["A practical envelope can include answer, evidence list, assumptions, conflicts, confidence, open questions, verification steps, and next actions.", "For research workflows, the envelope can be stored in the repository next to the source notes and artifacts, making later review possible."], "table": { "columns": ["Field", "Purpose"], "rows": [["Evidence", "Support claims with traceable sources"], ["Assumptions", "Expose unstated defaults"], ["Conflicts", "Highlight disagreement across sources"], ["Gaps", "Show missing or stale information"], ["Next actions", "Convert uncertainty into work"]] } }
+  ],
+  "pitfalls": ["Pretending confidence is binary.", "Citing sources that were not actually used.", "Mixing hidden reasoning with user-facing evidence.", "Failing to update envelopes when sources change."],
+  "quiz": [{ "question": "What is the point of a think envelope?", "options": ["Make an answer reviewable without exposing hidden reasoning", "Make every answer longer", "Avoid citations", "Replace source material"], "answer": 0, "explanation": "The envelope surfaces evidence, assumptions, conflicts, and gaps." }],
+  "related": ["markdown-frontmatter-knowledge-graphs", "research-integrity-records"]
+}

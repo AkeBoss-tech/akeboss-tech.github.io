@@ -11,6 +11,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 
 const nav = [
   { href: '/projects', label: 'Projects' },
+  { href: '/wiki', label: 'Wiki' },
   { href: '/writing', label: 'Writing' },
   { href: '/files/resume.pdf', label: 'Resume', external: true },
   { href: '/cv', label: 'CV' },

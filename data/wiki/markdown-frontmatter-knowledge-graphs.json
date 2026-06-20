@@ -1,0 +1,25 @@
+{
+  "slug": "markdown-frontmatter-knowledge-graphs",
+  "title": "Markdown Frontmatter Knowledge Graphs",
+  "subtitle": "Markdown can become a lightweight knowledge graph when every note carries typed metadata and explicit links.",
+  "domain": "AI infrastructure",
+  "difficulty": "Intermediate",
+  "summary": "KRAIL builds markdown-frontmatter entities, edges, topic documents, search, think envelopes, and integrity artifacts.",
+  "tags": ["Markdown", "Knowledge graph", "Frontmatter", "Local-first"],
+  "sourceFiles": ["_portfolio/knowledge.md"],
+  "sourceLinks": [{ "label": "KRAIL project", "href": "/projects/knowledge" }],
+  "externalSources": [
+    { "label": "SQLite FTS5 documentation", "href": "https://sqlite.org/fts5.html" }
+  ],
+  "artifact": { "type": "agent-graph", "title": "Files become typed nodes and edges", "description": "The graph demo maps nicely to markdown entities connected by source, task, topic, and evidence relationships." },
+  "contentBlocks": [
+    { "type": "markdown", "content": "A markdown note can carry structured frontmatter:\n\n```yaml\ntype: source-note\ntopic: transit-analysis\nproject: rutgers-bus-analysis\nstatus: reviewed\nlinks:\n  - route-loop-time-estimation\n  - campus-bus-load-curves\n```\n\nThe prose remains readable, but the metadata lets software query and connect it." }
+  ],
+  "sections": [
+    { "heading": "Why Frontmatter Works", "body": ["Frontmatter gives plain files just enough structure. You can keep the benefits of Git, grep, and human-readable notes while adding machine-readable type, status, source, and relationship fields.", "This is useful for agent work because the agent can search, cite, update, and validate context without needing a heavyweight database for every task."] },
+    { "heading": "Graph Edges", "body": ["Edges can be explicit links, shared tags, source references, task dependencies, or generated backlinks. The important part is that relationships should have meaning, not just visual beauty.", "A graph is useful when it answers questions: which claims depend on this source, which tasks are blocked, which topics have stale evidence, and which outputs were verified."], "table": { "columns": ["Node type", "Example"], "rows": [["Source", "API docs, paper, dataset note"], ["Topic", "A concept or research area"], ["Task", "A work order or investigation"], ["Claim", "An evidence-backed statement"], ["Artifact", "Report, chart, code output, wiki page"]] } }
+  ],
+  "pitfalls": ["Using tags as decoration instead of queryable structure.", "Creating graph edges without semantics.", "Letting metadata drift from the prose.", "Depending on generated backlinks without validating them."],
+  "quiz": [{ "question": "Why use frontmatter in markdown notes?", "options": ["To make notes queryable while preserving readable files", "To prevent Git from tracking files", "To hide all text", "To replace every database forever"], "answer": 0, "explanation": "Frontmatter adds structure without giving up plain-text workflows." }],
+  "related": ["evidence-backed-think-envelopes", "repo-system-of-record-research"]
+}

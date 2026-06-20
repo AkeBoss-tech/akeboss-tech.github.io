@@ -1,0 +1,20 @@
+{
+  "slug": "multi-scale-tad-boundary-detection",
+  "title": "Multi-Scale TAD Boundary Detection",
+  "subtitle": "A robust chromatin boundary should remain visible across more than one analysis window.",
+  "domain": "Computational biology",
+  "difficulty": "Advanced",
+  "summary": "The HiC-TAD project sweeps window sizes to separate robust boundaries from noisy local patterns.",
+  "tags": ["Hi-C", "TADs", "Boundary detection", "Genomics"],
+  "sourceFiles": ["_portfolio/hic-tad-analysis.md"],
+  "sourceLinks": [{ "label": "HiC-TAD project", "href": "/projects/hic-tad-analysis" }],
+  "externalSources": [{ "label": "PMC: TAD boundaries and regulatory territories", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10119121/" }],
+  "artifact": { "type": "hic-heatmap", "title": "Boundary signal across scales", "description": "Move the boundary and read the heatmap as domain structure rather than a single fixed line." },
+  "sections": [
+    { "heading": "Why Scale Matters", "body": ["A small window can detect local insulation changes but may be noisy. A large window smooths noise but can blur nearby domains.", "Multi-scale detection asks whether a boundary is stable enough to survive changes in window size."] },
+    { "heading": "Robustness Over One-Off Peaks", "body": ["A single peak in an insulation track is weaker evidence than a boundary that appears across resolutions or window settings."] }
+  ],
+  "pitfalls": ["Calling boundaries from one arbitrary window size.", "Comparing resolutions without normalization.", "Treating all boundary calls as equal confidence."],
+  "quiz": [{ "question": "Why sweep multiple window sizes?", "options": ["To make plots larger", "To test whether boundary calls are robust", "To delete low-contact regions", "To avoid normalization"], "answer": 1, "explanation": "Robust boundaries should not depend entirely on one analysis window." }],
+  "related": ["hic-contact-maps-tad-triangles", "insulation-score-directionality-index"]
+}

@@ -1,0 +1,29 @@
+{
+  "slug": "dual-arm-scheduling-cp-sat",
+  "title": "Dual-Arm Scheduling with CP-SAT",
+  "subtitle": "A dual-arm robot needs more than an action list; it needs a schedule that respects resources, precedence, and collision risk.",
+  "domain": "Robotics planning",
+  "difficulty": "Advanced",
+  "summary": "The TAMP project assigns actions to robot arms using greedy scheduling and OR-Tools CP-SAT before motion verification.",
+  "tags": ["CP-SAT", "Scheduling", "TAMP", "Robotics"],
+  "sourceFiles": ["_portfolio/tamp-research.md"],
+  "sourceLinks": [{ "label": "TAMP research project", "href": "/projects/tamp-research" }],
+  "externalSources": [
+    { "label": "Google OR-Tools CP-SAT solver", "href": "https://developers.google.com/optimization/cp/cp_solver" },
+    { "label": "OR-Tools constraint optimization", "href": "https://developers.google.com/optimization/cp" }
+  ],
+  "artifact": { "type": "tamp-pipeline", "title": "Scheduling between symbolic planning and motion checks", "description": "Step through the pipeline and notice where scheduling sits before geometric verification." },
+  "contentBlocks": [
+    { "type": "latex", "content": "A simplified interval model has start times $s_i$, durations $d_i$, and end times $e_i=s_i+d_i$.\n\nPrecedence constraints look like:\n\n$$e_i \\le s_j$$\n\nResource constraints prevent two actions from using the same arm or workspace at incompatible times." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Precedence</strong>Pick before place; open before insert.</div><div><strong>Arm resource</strong>One arm cannot execute two actions at once.</div><div><strong>Shared workspace</strong>Two arms may conflict even if they are different resources.</div><div><strong>Objective</strong>Minimize makespan, risk, or expected verification cost.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Why CP-SAT Fits", "body": ["CP-SAT is designed for discrete optimization over integer variables and constraints. Scheduling is full of integer decisions: which arm gets an action, when an interval starts, whether two intervals can overlap, and what objective is minimized.", "In TAMP, CP-SAT can produce a candidate schedule, but that schedule still needs IK, collision checking, and trajectory feasibility."] },
+    { "heading": "Greedy vs Solver-Based Scheduling", "body": ["A greedy scheduler is fast and simple, but early choices can block later actions. A solver can reason globally, but it costs more compute and needs a well-posed model.", "The useful research comparison is not ideological. It is empirical: when does solver overhead pay for itself by reducing downstream motion failures?"], "table": { "columns": ["Approach", "Strength", "Weakness"], "rows": [["Greedy", "Fast and easy to inspect", "Can make locally good but globally bad assignments"], ["CP-SAT", "Handles precedence and resource constraints globally", "Requires modeling work and solve time"], ["Learned guidance", "Can prioritize likely-feasible schedules", "Needs trace data and validation"]] } }
+  ],
+  "pitfalls": ["Modeling scheduling constraints while ignoring geometric collisions.", "Using real-valued durations without converting carefully for integer solvers.", "Optimizing makespan only and producing risky near-collisions.", "Forgetting uncertainty in learned duration estimates."],
+  "quiz": [
+    { "question": "What kind of problems is CP-SAT especially suited for?", "options": ["Discrete constraint optimization", "Rendering CSS", "Unstructured prose", "Camera exposure only"], "answer": 0, "explanation": "CP-SAT works over integer variables and constraints, which fits many scheduling formulations." }
+  ],
+  "related": ["dual-arm-tamp-pipeline", "learned-feasibility-prediction-robot-plans"]
+}

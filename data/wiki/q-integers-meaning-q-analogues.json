@@ -1,0 +1,23 @@
+{
+  "slug": "q-integers-meaning-q-analogues",
+  "title": "q-Integers and the Meaning of q-Analogues",
+  "subtitle": "A q-analogue preserves a classical formula while adding a parameter that records extra structure.",
+  "domain": "Math",
+  "difficulty": "Intermediate",
+  "summary": "The DRP project introduces q-integers, q-factorials, Gaussian binomial coefficients, and the q-binomial theorem.",
+  "tags": ["q-analogues", "Combinatorics", "Generating functions", "Math"],
+  "sourceFiles": ["_portfolio/drp-spring-2025.md"],
+  "sourceLinks": [{ "label": "DRP q-binomial project", "href": "/projects/drp-spring-2025" }],
+  "externalSources": [{ "label": "Encyclopedia of Mathematics: Gaussian binomial coefficient", "href": "https://encyclopediaofmath.org/wiki/Gaussian_binomial_coefficient" }],
+  "artifact": { "type": "q-binomial", "title": "Weighted counting with q", "description": "Move q to see how [n]q differs from ordinary n while returning to n at q = 1." },
+  "contentBlocks": [
+    { "type": "latex", "content": "$$[n]_q = 1+q+q^2+\\cdots+q^{n-1}=\\frac{q^n-1}{q-1}$$\n\nThe sanity check is $[n]_1=n$." }
+  ],
+  "sections": [
+    { "heading": "Why Add q?", "body": ["The extra parameter can track rank, area, inversions, dimension, or another statistic depending on the combinatorial setting.", "The original formula remains visible when q approaches 1."] },
+    { "heading": "The Habit", "body": ["A useful q-analogue should specialize back to the classical object and reveal a meaningful refinement, not just decorate a formula."] }
+  ],
+  "pitfalls": ["Forgetting the q equals 1 sanity check.", "Treating every q-formula as equally meaningful.", "Losing track of which statistic q records."],
+  "quiz": [{ "question": "What is the key sanity check for a q-analogue?", "options": ["Set q to 1 and recover the classical object", "Set q to infinity", "Delete every coefficient", "Replace q with x always"], "answer": 0, "explanation": "A q-analogue should return to the original object at q = 1." }],
+  "related": ["q-binomial-theorem", "elementary-symmetric-functions"]
+}

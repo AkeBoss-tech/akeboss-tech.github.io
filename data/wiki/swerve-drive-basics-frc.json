@@ -1,0 +1,62 @@
+{
+  "slug": "swerve-drive-basics-frc",
+  "title": "Swerve Drive Basics for FRC Robots",
+  "subtitle": "A swerve drivetrain lets a robot translate and rotate by independently steering each wheel module.",
+  "domain": "Robotics",
+  "difficulty": "Intermediate",
+  "summary": "The 2024 robotics writing describes the team's move to swerve, PathPlanner, vision, odometry, and simulation.",
+  "tags": ["FRC", "Swerve", "Kinematics", "Robotics"],
+  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md", "_portfolio/robot-code.md"],
+  "sourceLinks": [
+    { "label": "Robotics development post", "href": "/writing/robotics-development" },
+    { "label": "Robot code project", "href": "/projects/robot-code" }
+  ],
+  "externalSources": [
+    { "label": "WPILib: Swerve Drive Kinematics", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html" },
+    { "label": "WPILib: Kinematics and odometry", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/index.html" }
+  ],
+  "artifact": {
+    "type": "swerve-vectors",
+    "title": "Chassis motion becomes four module vectors",
+    "description": "Change strafe and rotation to see why each wheel receives a different command."
+  },
+  "sections": [
+    {
+      "heading": "What Makes Swerve Different",
+      "body": [
+        "A tank drive changes direction mostly by varying left and right wheel speeds. A swerve drive can point each wheel module independently.",
+        "That means the robot can move sideways, diagonally, rotate in place, or combine translation and rotation."
+      ]
+    },
+    {
+      "heading": "Kinematics",
+      "body": [
+        "The driver asks for chassis motion: x velocity, y velocity, and angular velocity. Swerve kinematics converts that chassis command into each module's speed and angle.",
+        "Odometry runs the other direction: it estimates the robot pose from gyro angle and module movement."
+      ],
+      "table": {
+        "columns": ["Input", "Output"],
+        "rows": [
+          ["Chassis speeds", "Wheel speeds and angles"],
+          ["Gyro plus module positions", "Estimated robot pose"],
+          ["Field-relative joystick command", "Robot-relative chassis command"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Mixing field-relative and robot-relative coordinates.",
+    "Trusting odometry after a gyro disconnect.",
+    "Forgetting to desaturate wheel speeds when commands exceed physical limits.",
+    "Testing only in simulation and skipping module zeroing on hardware."
+  ],
+  "quiz": [
+    {
+      "question": "What does swerve kinematics convert?",
+      "options": ["Battery voltage into code", "Chassis motion into module states", "Camera images into AprilTags", "LED colors into robot modes"],
+      "answer": 1,
+      "explanation": "Swerve kinematics maps desired chassis velocity to wheel speeds and angles."
+    }
+  ],
+  "related": ["field-relative-vs-robot-relative-driving", "pid-control-robot-mechanisms"]
+}

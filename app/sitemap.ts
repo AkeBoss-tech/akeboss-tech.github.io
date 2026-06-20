@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getPosts, getProjects } from '@/lib/content'
 import { absoluteUrl } from '@/lib/seo'
+import { getWikiPages } from '@/lib/wiki'
 
 export const dynamic = 'force-static'
 
@@ -9,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/',
     '/about',
     '/projects',
+    '/wiki',
     '/writing',
     '/story',
     '/contact',
@@ -46,6 +48,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.date),
   }))
 
+  const wikiEntries = getWikiPages().map((page) => ({
+    url: absoluteUrl(`/wiki/${page.slug}`),
+    lastModified: new Date(),
+  }))
+
   return [
     ...staticEntries,
     ...markdownEntries,
@@ -53,5 +60,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...projectMarkdownEntries,
     ...postEntries,
     ...postMarkdownEntries,
+    ...wikiEntries,
   ]
 }

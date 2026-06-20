@@ -1,0 +1,30 @@
+{
+  "slug": "conflict-free-schedule-generation",
+  "title": "Conflict-Free Schedule Generation",
+  "subtitle": "Course scheduling is a constraint problem disguised as a registration chore.",
+  "domain": "Product algorithms",
+  "difficulty": "Intermediate",
+  "summary": "Scarlet Sync generates Rutgers schedules around desired courses, unavailable times, campus constraints, and degree requirements.",
+  "tags": ["Scheduling", "Constraints", "Scarlet Sync", "Product"],
+  "sourceFiles": ["_portfolio/scarlet-sync.md", "app/cv/page.tsx"],
+  "sourceLinks": [{ "label": "Scarlet Sync project", "href": "/projects/scarlet-sync" }],
+  "externalSources": [
+    { "label": "Canvas OAuth docs for LMS-style integrations", "href": "https://developerdocs.instructure.com/services/canvas/oauth2/file.oauth" },
+    { "label": "OR-Tools scheduling examples", "href": "https://developers.google.com/optimization/cp" }
+  ],
+  "artifact": { "type": "schedule-grid", "title": "A constraint grid for semester planning", "description": "Adjust campus travel and gap avoidance to see how preferences reshape the feasible schedule space." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "What Counts as a Conflict?" },
+    { "type": "paragraph", "text": "The obvious conflict is two sections at the same time. The less obvious conflicts are back-to-back sections on different campuses, labs that require a paired lecture, sections that reserve seats, degree requirements that need a specific course number, and personal blocks for work or commuting." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Hard constraints</strong>No overlapping meetings, valid sections, required linked components.</div><div><strong>Soft constraints</strong>Campus preference, professor rating, compact day, friend overlap.</div><div><strong>Objective</strong>Rank valid schedules by how well they match the student's life.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "Generate Then Rank", "body": ["One practical approach is to enumerate combinations of sections, reject invalid combinations, and score the survivors. For large course sets, pruning must happen early because combinations grow quickly.", "A more formal approach models each section as a variable assignment and each rule as a constraint. The best schedule is then the feasible assignment with the best objective score."] },
+    { "heading": "User Trust", "body": ["Students need to see why a schedule was produced. A black-box generator is less useful than a system that explains which constraints were binding and what tradeoff created the recommendation.", "Good scheduling UI should expose the reason for rejection: time overlap, campus travel, unavailable block, missing prerequisite, or no open sections."], "table": { "columns": ["Constraint", "Hard or soft", "Explanation shown to user"], "rows": [["No time overlap", "Hard", "Sections meet at the same time"], ["Campus travel", "Usually soft", "Back-to-back travel may be too tight"], ["Unavailable block", "Hard", "User blocked this time"], ["Professor preference", "Soft", "Lower score, but still feasible"], ["Degree progress", "Hard or soft", "Depends on graduation requirement urgency"]] } }
+  ],
+  "pitfalls": ["Treating every preference as a hard rule and finding no schedules.", "Hiding why a schedule failed.", "Ignoring linked recitations, labs, or cross-listed sections.", "Optimizing compactness while creating impossible campus transitions."],
+  "quiz": [
+    { "question": "What is the difference between a hard and soft constraint?", "options": ["Hard constraints must be satisfied; soft constraints affect ranking", "Soft constraints are always ignored", "Hard constraints are visual only", "They are the same thing"], "answer": 0, "explanation": "Hard rules define feasibility; soft rules define preference quality." }
+  ],
+  "related": ["ai-assisted-course-degree-requirement-extraction", "course-materials-queryable-knowledge-base"]
+}

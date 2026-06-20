@@ -1,0 +1,24 @@
+{
+  "slug": "heuristics-manhattan-vs-euclidean",
+  "title": "Heuristics: Manhattan vs Euclidean Distance",
+  "subtitle": "A heuristic is a guess about remaining cost; the right guess depends on how movement is allowed.",
+  "domain": "Algorithms",
+  "difficulty": "Foundational",
+  "summary": "The path finder project supports taxicab and Euclidean heuristics, making this a natural comparison page.",
+  "tags": ["A*", "Heuristics", "Geometry", "Pathfinding"],
+  "sourceFiles": ["_portfolio/path-finder.md"],
+  "sourceLinks": [{ "label": "A* path finder project", "href": "/projects/path-finder" }],
+  "externalSources": [{ "label": "Wikipedia: A* search algorithm", "href": "https://en.wikipedia.org/wiki/A*_search_algorithm" }],
+  "artifact": { "type": "astar-grid", "title": "Heuristic pressure changes the frontier", "description": "Toggle the demo and watch how the path frontier changes when the estimated distance changes." },
+  "contentBlocks": [
+    { "type": "latex", "content": "$$h_{manhattan}=|x_1-x_2|+|y_1-y_2|$$\n\n$$h_{euclidean}=\\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}$$" },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Grid streets</strong>Manhattan distance matches movement where diagonal steps are not legal.</div><div><strong>Open plane</strong>Euclidean distance matches straight-line movement.</div><div><strong>Guarantee</strong>The heuristic should not overestimate if shortest-path optimality matters.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "What the Heuristic Is Doing", "body": ["The heuristic does not move the agent. It ranks candidates by giving the algorithm a directional estimate.", "A weak heuristic expands too much. An overconfident heuristic can become greedy and wrong."] },
+    { "heading": "Choosing the Distance", "body": ["Manhattan distance is right for four-neighbor grids. Euclidean distance is natural when diagonal or continuous movement is allowed."], "table": { "columns": ["Movement model", "Better heuristic"], "rows": [["Four-direction grid", "Manhattan"], ["Eight-direction grid", "Diagonal or octile distance"], ["Continuous space", "Euclidean"], ["Unknown cost terrain", "Domain-specific estimate"]] } }
+  ],
+  "pitfalls": ["Using Euclidean distance on a four-direction grid without checking admissibility.", "Assuming a more complex heuristic is automatically better.", "Forgetting that terrain costs can make geometric distance misleading."],
+  "quiz": [{ "question": "Which heuristic fits four-direction grid movement best?", "options": ["Manhattan", "Euclidean", "Random", "No heuristic can work"], "answer": 0, "explanation": "Manhattan distance counts horizontal and vertical steps, matching four-direction movement." }],
+  "related": ["astar-search-open-closed-fscore", "random-obstacle-density-path-solvability"]
+}

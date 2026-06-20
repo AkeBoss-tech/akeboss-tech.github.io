@@ -1,0 +1,59 @@
+{
+  "slug": "q-binomial-theorem",
+  "title": "The q-Binomial Theorem",
+  "subtitle": "The q-binomial theorem is a weighted version of binomial counting that records extra combinatorial structure with q.",
+  "domain": "Math",
+  "difficulty": "Advanced",
+  "summary": "The DRP project connects symmetric functions, q-analogues, Gaussian binomial coefficients, and the q-binomial theorem.",
+  "tags": ["q-binomial", "Symmetric functions", "Combinatorics", "Generating functions"],
+  "sourceFiles": ["_portfolio/drp-spring-2025.md"],
+  "sourceLinks": [{ "label": "DRP q-binomial project", "href": "/projects/drp-spring-2025" }],
+  "externalSources": [
+    { "label": "Encyclopedia of Mathematics: Gaussian binomial coefficient", "href": "https://encyclopediaofmath.org/wiki/Gaussian_binomial_coefficient" }
+  ],
+  "artifact": {
+    "type": "q-binomial",
+    "title": "q-integers as weighted counts",
+    "description": "Move q and watch q-integers grow away from their ordinary integer values."
+  },
+  "sections": [
+    {
+      "heading": "From Integers to q-Integers",
+      "body": [
+        "A q-integer replaces n with the polynomial [n]q = 1 + q + q^2 + ... + q^(n-1).",
+        "When q approaches 1, the q-integer approaches n, so q-analogues preserve the classical case while adding a grading."
+      ]
+    },
+    {
+      "heading": "Connection to Symmetric Functions",
+      "body": [
+        "The elementary symmetric function generating function is E(t) = product(1 + x_i t).",
+        "Setting variables to powers of q turns coefficients into q-binomial coefficients multiplied by a power of q."
+      ],
+      "table": {
+        "columns": ["Object", "Role"],
+        "rows": [
+          ["q-integer", "Weighted version of n"],
+          ["q-factorial", "Product of q-integers"],
+          ["Gaussian binomial coefficient", "q-analogue of n choose k"],
+          ["Generating function", "Packages all coefficients into one identity"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Treating q as just another number instead of a bookkeeping parameter.",
+    "Forgetting the q -> 1 check.",
+    "Losing the extra q power in the theorem statement.",
+    "Confusing ordinary binomial coefficients with Gaussian binomial coefficients."
+  ],
+  "quiz": [
+    {
+      "question": "What happens to [n]q when q approaches 1?",
+      "options": ["It approaches n", "It approaches 0 for every n", "It becomes undefined forever", "It becomes n squared"],
+      "answer": 0,
+      "explanation": "The polynomial 1 + q + ... + q^(n-1) evaluates to n at q = 1."
+    }
+  ],
+  "related": ["elementary-symmetric-functions", "q-integers-meaning-q-analogues"]
+}

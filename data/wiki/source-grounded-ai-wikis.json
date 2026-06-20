@@ -1,0 +1,61 @@
+{
+  "slug": "source-grounded-ai-wikis",
+  "title": "Source-Grounded AI Wikis",
+  "subtitle": "An AI wiki is useful when every explanation remains tied to the material that produced it.",
+  "domain": "AI education",
+  "difficulty": "Foundational",
+  "summary": "Lykke turns Canvas course content into generated wiki pages, flashcards, quizzes, and study artifacts.",
+  "tags": ["AI wikis", "Education", "Citations", "Versioning"],
+  "sourceFiles": ["_portfolio/lykke.md"],
+  "sourceLinks": [{ "label": "Lykke project", "href": "/projects/lykke" }],
+  "externalSources": [
+    { "label": "Next.js dynamic segments", "href": "https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes" }
+  ],
+  "artifact": {
+    "type": "source-wiki",
+    "title": "A page that regenerates with its sources",
+    "description": "A source-grounded wiki has definition blocks, examples, pitfalls, and study aids that can be regenerated when the course material changes."
+  },
+  "sections": [
+    {
+      "heading": "The Core Object",
+      "body": [
+        "A source-grounded AI wiki page is not just a generated essay. It is a structured teaching object built from specific source blocks.",
+        "The useful unit is the claim: a definition, theorem, step, example, warning, or formula that can be traced back to a source."
+      ],
+      "callout": "The wiki should make the student smarter without asking them to trust unsupported generated prose."
+    },
+    {
+      "heading": "Page Anatomy",
+      "body": [
+        "A strong page starts with the concept, then gives mechanics, examples, variations, common mistakes, and a study check.",
+        "Interactive or visual moments matter because many technical ideas are spatial, procedural, or comparative."
+      ],
+      "table": {
+        "columns": ["Block", "Purpose"],
+        "rows": [
+          ["Definition", "Name the concept precisely"],
+          ["Mechanics", "Show how it works step by step"],
+          ["Worked example", "Move from abstract rule to concrete use"],
+          ["Pitfalls", "Show how learners usually get it wrong"],
+          ["Quiz", "Test transfer, not memorization"]
+        ]
+      }
+    }
+  ],
+  "pitfalls": [
+    "Writing generic study-wrapper prose instead of directly teaching the topic.",
+    "Generating citations that do not exist.",
+    "Making diagrams decorative instead of explanatory.",
+    "Not versioning regenerated pages when source material changes."
+  ],
+  "quiz": [
+    {
+      "question": "What makes an AI wiki source-grounded?",
+      "options": ["It is long", "It has every claim tied to source material", "It uses a dark theme", "It avoids diagrams"],
+      "answer": 1,
+      "explanation": "Grounding comes from traceable source support, not from length or style."
+    }
+  ],
+  "related": ["rag-pipeline-student-documents", "ai-generated-infographics-from-textbooks"]
+}

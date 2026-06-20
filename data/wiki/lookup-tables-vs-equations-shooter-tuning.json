@@ -1,0 +1,29 @@
+{
+  "slug": "lookup-tables-vs-equations-shooter-tuning",
+  "title": "Lookup Tables vs Equations for Shooter Tuning",
+  "subtitle": "When robot physics is messy, a measured lookup table can beat a beautiful but incomplete equation.",
+  "domain": "Robotics",
+  "difficulty": "Intermediate",
+  "summary": "The robotics writing explains choosing lookup tables for shooter angle and RPM because real-world behavior was nonlinear and tunable.",
+  "tags": ["FRC", "Shooter", "Lookup table", "Calibration"],
+  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md"],
+  "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
+  "externalSources": [
+    { "label": "WPILib trajectory generation", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/trajectory-generation.html" }
+  ],
+  "artifact": { "type": "pid-controller", "title": "Tuning curve response", "description": "The PID curve stands in for the closed-loop side; the page explains how lookup values choose the setpoint." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "The Equation Is Not the Robot" },
+    { "type": "paragraph", "text": "A projectile equation can estimate launch angle and speed, but an FRC shooter includes wheel compression, battery sag, spin, changing carpet interaction, mechanism flex, measurement noise, and game-piece variation. A lookup table records what the robot actually did." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Measure</strong>Test shots at known distances.</div><div><strong>Store</strong>Record angle and RPM that scored reliably.</div><div><strong>Interpolate</strong>Blend between nearby distances.</div><div><strong>Retune</strong>Update values after mechanical changes.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "What the Table Stores", "body": ["A shooter table usually maps distance to mechanism setpoints: pivot angle, flywheel RPM, hood position, or spin differential. The drivetrain estimates distance; the table returns setpoints.", "Interpolation is the bridge between measured distances. If 2.5 m and 3.0 m are measured, a 2.7 m shot can blend between them."] },
+    { "heading": "When Equations Still Help", "body": ["Equations are still useful for initial guesses, simulation, sanity checks, and extrapolation warnings. The best system often combines physics intuition with measured calibration.", "A table without physics can become dangerous outside its tested range; an equation without measurement can miss the robot's real behavior."], "table": { "columns": ["Method", "Best use", "Risk"], "rows": [["Equation", "Initial estimate and sanity check", "Ignores messy robot-specific effects"], ["Lookup table", "Reliable match-tuned setpoints", "Poor extrapolation"], ["Hybrid", "Equation seeded, table corrected", "More implementation complexity"]] } }
+  ],
+  "pitfalls": ["Extrapolating far beyond tested distances.", "Forgetting to retune after changing wheels or compression.", "Interpolating angles without checking actual shot arcs.", "Blaming PID when the table setpoint is wrong."],
+  "quiz": [
+    { "question": "Why might a lookup table outperform a projectile equation on a real robot?", "options": ["It captures measured robot-specific behavior", "It violates physics", "It removes sensors", "It guarantees every shot"], "answer": 0, "explanation": "Measured tables include real effects that simple equations often omit." }
+  ],
+  "related": ["velocity-pid-intake-shooter-wheels", "shooting-while-moving-predicting-future-robot-pose"]
+}

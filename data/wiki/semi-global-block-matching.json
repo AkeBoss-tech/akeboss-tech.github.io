@@ -1,0 +1,20 @@
+{
+  "slug": "semi-global-block-matching",
+  "title": "Semi-Global Block Matching",
+  "subtitle": "SGBM estimates stereo disparity by matching local image patches while smoothing the result across paths.",
+  "domain": "Computer vision",
+  "difficulty": "Advanced",
+  "summary": "The depth estimation project used OpenCV and SGBM to build stereo disparity maps.",
+  "tags": ["Stereo vision", "SGBM", "OpenCV", "Depth"],
+  "sourceFiles": ["_portfolio/depth-estimation.md"],
+  "sourceLinks": [{ "label": "Depth estimation project", "href": "/projects/depth-estimation" }],
+  "externalSources": [{ "label": "OpenCV: Depth Map from Stereo Images", "href": "https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" }],
+  "artifact": { "type": "stereo-disparity", "title": "Disparity changes with correspondence", "description": "The demo compresses the core idea: matched points shift more when the object is closer." },
+  "sections": [
+    { "heading": "Block Matching", "body": ["The algorithm searches for similar patches between the left and right camera images. The horizontal offset between a matching pair becomes disparity."] },
+    { "heading": "Semi-Global Smoothing", "body": ["Pure local matching is noisy. SGBM adds penalties so neighboring disparities prefer to vary smoothly unless image evidence says otherwise."] }
+  ],
+  "pitfalls": ["Expecting good matches on blank walls.", "Using unrectified camera images.", "Over-smoothing real depth discontinuities."],
+  "quiz": [{ "question": "What does stereo block matching try to find?", "options": ["Similar patches across left and right images", "The fastest CPU core", "A language token", "Only the image center"], "answer": 0, "explanation": "Disparity comes from matching corresponding visual patches." }],
+  "related": ["stereo-vision-disparity-maps", "camera-calibration-robot-vision"]
+}

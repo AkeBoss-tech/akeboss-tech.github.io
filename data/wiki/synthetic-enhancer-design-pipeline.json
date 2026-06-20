@@ -1,0 +1,31 @@
+{
+  "slug": "synthetic-enhancer-design-pipeline",
+  "title": "Synthetic Enhancer Design Pipeline",
+  "subtitle": "Enhancer design links sequence edits, regulatory-track prediction, cell-type specificity, and experimental caution.",
+  "domain": "Computational biology",
+  "difficulty": "Advanced",
+  "summary": "The HiC-TAD project sketches a pipeline using AlphaGenome predictions, CNN training, motif insertion, and validation loops.",
+  "tags": ["Enhancers", "AlphaGenome", "Genomics", "Design"],
+  "sourceFiles": ["_portfolio/hic-tad-analysis.md"],
+  "sourceLinks": [{ "label": "HiC-TAD project", "href": "/projects/hic-tad-analysis" }],
+  "externalSources": [
+    { "label": "Nature: AlphaGenome", "href": "https://www.nature.com/articles/s41586-025-10014-0" },
+    { "label": "Google DeepMind AlphaGenome blog", "href": "https://deepmind.google/blog/alphagenome-ai-for-better-understanding-the-genome/" },
+    { "label": "Google DeepMind AlphaGenome GitHub", "href": "https://github.com/google-deepmind/alphagenome" }
+  ],
+  "artifact": { "type": "alphagenome", "title": "Predicted regulatory-track response", "description": "Change the deletion size index to see how regulatory tracks might remain stable or become disrupted." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "Design Is a Loop, Not a Single Prediction" },
+    { "type": "paragraph", "text": "A synthetic enhancer pipeline proposes sequence changes, predicts regulatory effects, checks cell-type specificity, filters for safety and off-target structure, then returns to sequence design. The model is a guide; biology still gets the final vote." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Nominate locus</strong>Choose a region from chromatin structure, expression, or variant evidence.</div><div><strong>Propose sequence</strong>Add, remove, or optimize motifs.</div><div><strong>Predict tracks</strong>Compare CTCF, ATAC, histone marks, and expression effects.</div><div><strong>Validate</strong>Prioritize experiments rather than replacing them.</div></div>" }
+  ],
+  "sections": [
+    { "heading": "What AlphaGenome Adds", "body": ["AlphaGenome-style models predict many regulatory outputs from long DNA sequence context. That matters because an enhancer's effect is not just local motif grammar; it depends on surrounding sequence and cell type.", "For design, the useful object is the delta: what changed between the original and edited sequence across regulatory tracks."] },
+    { "heading": "Why Structure Matters", "body": ["An enhancer that raises a desired signal may still be wrong if it disrupts chromatin boundaries or activates in the wrong cell type.", "That is why this project connects enhancer design with Hi-C/TAD analysis: sequence function and 3D genome organization are entangled."], "table": { "columns": ["Signal", "Question"], "rows": [["ATAC", "Did accessibility increase?"], ["H3K27ac", "Does the sequence look enhancer-active?"], ["CTCF", "Did boundary-associated binding change?"], ["RNA", "Could expression change downstream?"], ["Contact map", "Did 3D organization shift?"]] } }
+  ],
+  "pitfalls": ["Treating predicted enhancer strength as experimental truth.", "Ignoring cell-type specificity.", "Optimizing one track while damaging another.", "Forgetting that non-coding edits can affect chromatin structure.", "Skipping negative controls."],
+  "quiz": [
+    { "question": "What is the main use of model predictions in enhancer design?", "options": ["Prioritizing and filtering candidates before experiments", "Proving biology is solved", "Avoiding controls", "Removing cell-type context"], "answer": 0, "explanation": "Predictions guide candidate selection; experiments remain necessary for validation." }
+  ],
+  "related": ["hic-contact-maps-tad-triangles", "multi-scale-tad-boundary-detection"]
+}
