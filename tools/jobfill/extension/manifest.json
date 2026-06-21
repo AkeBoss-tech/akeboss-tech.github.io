@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "JobFill (personal)",
+  "version": "0.1.0",
+  "description": "Deterministic job-application autofill with an LLM (claude/codex) fallback and a human-review checklist. Never auto-submits.",
+  "permissions": ["storage", "activeTab", "scripting", "sidePanel", "nativeMessaging"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "background": { "service_worker": "src/background.js", "type": "module" },
+  "side_panel": { "default_path": "sidepanel.html" },
+  "action": { "default_title": "JobFill" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://boards.greenhouse.io/*",
+        "https://job-boards.greenhouse.io/*",
+        "https://*.greenhouse.io/*",
+        "https://jobs.lever.co/*",
+        "https://jobs.ashbyhq.com/*",
+        "https://*.myworkdayjobs.com/*",
+        "https://*.icims.com/*"
+      ],
+      "js": ["src/fieldmap.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# Real profile holds PII — never commit it.
+profile.json
+native-host/com.*.json

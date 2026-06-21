@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "owner": "Akash Dubey",
+    "schema_version": 1,
+    "note": "Single source of truth for autofill. PII — gitignored. Edit freely."
+  },
+  "identity": {
+    "first_name": "Akash",
+    "last_name": "Dubey",
+    "full_name": "Akash Dubey",
+    "email": "you@example.com",
+    "phone": "(555) 555-5555",
+    "address": { "line1": "", "city": "New Brunswick", "state": "NJ", "zip": "", "country": "United States" },
+    "pronouns": ""
+  },
+  "links": {
+    "website": "https://akashdubey.me",
+    "github": "https://github.com/AkeBoss-tech",
+    "linkedin": "https://www.linkedin.com/in/akash-dubey-06"
+  },
+  "eligibility": {
+    "citizenship": "U.S. Citizen",
+    "work_authorized_us": true,
+    "needs_sponsorship": false,
+    "requires_visa": false,
+    "willing_to_relocate": true,
+    "open_to_remote": true,
+    "preferred_locations": ["New York, NY", "New Brunswick, NJ", "Remote"]
+  },
+  "education": [
+    {
+      "school": "Rutgers University Honors College, School of Arts and Sciences",
+      "degree": "Bachelor of Science",
+      "field": "Computer Science and Mathematics",
+      "location": "New Brunswick, NJ",
+      "gpa": "3.95",
+      "gpa_scale": "4.0",
+      "sat": "1580",
+      "start_date": "2023-09",
+      "end_date": "2027-05",
+      "graduation_date": "2027-05",
+      "expected": true,
+      "coursework": ["Tensor Networks", "Systems Programming", "Stochastic Processes", "Computer Architecture", "Algorithms", "Data Structures", "Honors Calculus III & IV", "Math Theory of Probability"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "New York Life Insurance",
+      "title": "Software Engineer Intern, TDAV Team",
+      "location": "New York, NY",
+      "start_date": "2026-05",
+      "end_date": "2026-08",
+      "current": false,
+      "bullets": [
+        "Built an AI text and voice agent processing insurance claims for clients and 12,000 customer-service reps on AWS.",
+        "Assembled a 13,000-document company knowledge base from SharePoint, Confluence, Jira, and the intranet.",
+        "Worked on multi-agent systems for AEM, Pega, Tungsten document processing, and mainframe modernization."
+      ]
+    },
+    {
+      "company": "Lykke",
+      "title": "Founding Software Engineer",
+      "location": "San Francisco, CA",
+      "start_date": "2025-09",
+      "end_date": null,
+      "current": true,
+      "bullets": [
+        "Built core AI workflows ingesting Canvas LMS content into class-scoped knowledge bases for chat and study generation.",
+        "Engineered adaptive RAG pipelines across MongoDB, Zilliz/Milvus, S3, Gemini Files API, and SSE streaming with citations and token-budgeting.",
+        "Built a distributed course-wiki engine with tenant-isolated background builds via SQS, MongoDB leases, Redis rate limiting, and AWS ECS."
+      ]
+    },
+    {
+      "company": "Scarlet Sync",
+      "title": "Founder",
+      "location": "New Brunswick, NJ",
+      "start_date": "2025-01",
+      "end_date": null,
+      "current": true,
+      "bullets": [
+        "Built a Rutgers academic-planning platform with thousands of users for degree, schedule, and class planning.",
+        "Architected a Python+LLM ingestion pipeline indexing 2,500+ classes and 500+ degree programs for real-time querying.",
+        "Shipped a production AI assistant with streaming tool-calling and grounded retrieval across Web, ChatGPT, Claude, and iOS."
+      ]
+    },
+    {
+      "company": "Samaritan Scout",
+      "title": "Full Stack Engineer Intern",
+      "location": "Cranford, NJ",
+      "start_date": "2023-05",
+      "end_date": "2025-08",
+      "current": false,
+      "bullets": [
+        "Built an agentic scraping system with OpenAI/Gemini structured outputs across 100,000+ nonprofit sites, cutting manual entry 90%.",
+        "Built a React/TypeScript/PostgreSQL search engine indexing 35,000+ volunteer opportunities with semantic search + hallucination filters."
+      ]
+    }
+  ],
+  "research": [
+    { "lab": "Rutgers Economics Labs", "title": "President", "start_date": "2024-10", "current": true },
+    { "lab": "Algorithmic Robotics and Control Lab (Prof. Jingjin Yu)", "title": "Research Assistant", "start_date": "2026-01", "current": true },
+    { "lab": "Kwan Lab, Rutgers Cancer Institute", "title": "Computational Biology Research Assistant", "start_date": "2026-01", "current": true }
+  ],
+  "skills": {
+    "languages": ["Python", "C++", "CUDA", "Java", "SQL", "TypeScript", "R", "Bash", "Git"],
+    "technologies": ["PyTorch", "Transformers", "Generative AI", "AI Agents", "RAG", "AWS", "Pandas", "Scikit-learn", "HPC Clusters"]
+  },
+  "awards": ["8090 AI Top Coder (5th)", "Rutgers Shark Tank (2nd and 3rd)", "ASA Fall Data Challenge (Top 3)", "NSF I-Corps"],
+  "resume_variants": {
+    "default": "../../files/resume.pdf",
+    "ai-ml": "../../files/resume-ai-ml-engineer.pdf",
+    "ai-infra": "../../files/resume-ai-infra-platform.pdf",
+    "founding": "../../files/resume-founding-engineer.pdf",
+    "quant": "../../files/resume-quant-dev.pdf",
+    "comp-bio": "../../files/resume-comp-bio.pdf",
+    "research": "../../files/resume-research-engineer.pdf",
+    "finance": "../../files/resume-finance-ai-automation.pdf",
+    "consulting": "../../files/resume-consulting-ai.pdf",
+    "enterprise": "../../files/resume-enterprise-ai-automation.pdf"
+  },
+  "defaults": {
+    "how_did_you_hear": "Company careers page",
+    "earliest_start_date": "2026-06",
+    "salary_expectation": "Open / flexible — targeting market rate for the role",
+    "notice_period": "Available per offer terms (current commitments are flexible)",
+    "desired_employment_type": "Internship / New Grad",
+    "veteran_status": "Decline to self-identify",
+    "willing_to_complete_assessment": true
+  },
+  "eeo": {
+    "gender": null,
+    "race_ethnicity": null,
+    "hispanic_latino": null,
+    "veteran_status": "I am not a protected veteran",
+    "disability_status": null,
+    "_note": "Left null on purpose. EEO is optional and self-reported — never auto-fill; route to manual review."
+  },
+  "question_bank": [
+    { "id": "why_interested", "pattern": "why (are|do) you (want|interested)|why (this|our|the) (role|company|position)|why do you want to work", "generate": true, "generator": "cover_letter_short", "answer": null },
+    { "id": "cover_letter", "pattern": "cover letter|additional information|tell us (more|about)|anything else|why should we", "generate": true, "generator": "cover_letter", "answer": null },
+    { "id": "salary", "pattern": "salary|compensation|pay (expectation|range)|desired (salary|pay)", "review": "verify", "answer": "Open / flexible — targeting market rate for the role" },
+    { "id": "start_date", "pattern": "start date|when can you (start|begin)|availability|available to start", "review": "verify", "answer": "2026-06" },
+    { "id": "work_auth", "pattern": "authorized to work|work authorization|legally authorized|eligible to work", "answer": "Yes — U.S. Citizen" },
+    { "id": "sponsorship", "pattern": "require sponsorship|need sponsorship|visa sponsorship|require .* visa", "answer": "No" },
+    { "id": "relocate", "pattern": "willing to relocate|able to relocate|open to relocation", "answer": "Yes" },
+    { "id": "gpa", "pattern": "\\bgpa\\b|grade point", "answer": "3.95" },
+    { "id": "grad_date", "pattern": "graduation|expected (grad|completion)|degree date", "answer": "May 2027" },
+    { "id": "biggest_project", "pattern": "proudest|most (challenging|significant|impactful) (project|work)|biggest (project|achievement)|describe a project", "generate": true, "generator": "answer", "answer": null }
+  ]
+}

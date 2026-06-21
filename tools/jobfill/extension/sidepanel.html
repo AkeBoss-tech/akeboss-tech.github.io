@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  body { font: 13px/1.4 -apple-system, system-ui, sans-serif; margin: 0; padding: 12px; color: #111; }
+  h1 { font-size: 15px; margin: 0 0 8px; }
+  button { font: inherit; padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; cursor: pointer; }
+  button.primary { background: #111; color: #fff; border-color: #111; }
+  .row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .counts { display: flex; gap: 8px; margin: 8px 0; font-size: 12px; }
+  .pill { padding: 2px 8px; border-radius: 999px; color: #fff; }
+  .auto { background: #16a34a; } .verify { background: #d97706; } .drafted { background: #2563eb; }
+  .you { background: #dc2626; } .blocker { background: #6b7280; }
+  .item { border: 1px solid #eee; border-radius: 6px; padding: 8px; margin-bottom: 6px; }
+  .item .tag { font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+  .item .label { font-weight: 600; margin: 2px 0; }
+  .item .val { color: #555; font-size: 12px; word-break: break-word; }
+  .item .acts { margin-top: 6px; display: flex; gap: 6px; }
+  textarea { width: 100%; box-sizing: border-box; height: 70px; }
+  #gate { margin-top: 10px; padding: 8px; border: 1px dashed #d97706; border-radius: 6px; font-size: 12px; }
+  small { color: #777; }
+</style>
+</head>
+<body>
+  <h1>JobFill — review &amp; fill</h1>
+  <div class="row">
+    <input type="file" id="profileFile" accept="application/json" />
+    <button id="fill" class="primary">Detect &amp; fill</button>
+  </div>
+  <small id="status">Import your profile.json, then open an application page and click “Detect &amp; fill”.</small>
+  <div class="counts" id="counts"></div>
+  <div id="list"></div>
+  <div id="gate" hidden></div>
+  <script src="src/sidepanel.js"></script>
+</body>
+</html>
