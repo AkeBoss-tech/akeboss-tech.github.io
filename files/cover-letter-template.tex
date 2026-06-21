@@ -1,0 +1,112 @@
+%-------------------------
+% Cover Letter Template — Akash Dubey
+% GENERIC "killer cover letter" template. An AI (or you) fills the
+% [[BRACKETED]] placeholders to target a single company.
+%
+% HOW TO USE (instructions for the AI making this company-specific):
+%   1. Replace every [[PLACEHOLDER]] with company-specific text. Do not
+%      leave any brackets in the final letter.
+%   2. Keep it 250-400 words. Three moves: HOOK -> PROOF -> FIT/WHY-NOW.
+%   3. The HOOK must state THE COMPANY'S core bet/problem in one sentence,
+%      then assert the match. NEVER open with "I am excited to apply".
+%   4. PROOF = one real story in Problem -> Solution -> Impact form, with a
+%      concrete METRIC. Extend the resume, do not restate it.
+%   5. Keep the fixed pitch in paragraph 3 (AI-tool fluency, fast
+%      adaptation, helping the firm expand) — only personalize the bracketed
+%      company fact.
+%   6. Sound like a person. Cut "proven track record", "detail-oriented",
+%      "I am writing to express".
+%------------------------
+\documentclass[letterpaper,11pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% pdfTeX-only ATS helpers; guarded so XeTeX/tectonic also compiles cleanly.
+\ifdefined\pdfgentounicode\input{glyphtounicode}\fi
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% Margins (match the resume look)
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\urlstyle{same}
+\raggedright
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
+%-------------------------------------------
+\begin{document}
+
+%----------HEADER (matches resume)----------
+\begin{center}
+    \textbf{\Huge \scshape Akash Dubey} \\ \vspace{2pt}
+    \small (212)-814-3681 $|$ \href{mailto:akashdub06@gmail.com}{\underline{akashdub06@gmail.com}} $|$
+    \href{https://akashdubey.me/}{\underline{akashdubey.me}} $|$
+    \href{https://github.com/AkeBoss-tech}{\underline{github.com/AkeBoss-tech}} $|$
+    \small U.S. Citizen
+\end{center}
+\vspace{4pt}
+\hrule
+\vspace{10pt}
+
+%----------DATE & ADDRESS----------
+[[MONTH DAY, YEAR]]
+
+\vspace{2pt}
+Hiring Team, [[COMPANY]] --- [[TEAM / DEPARTMENT, e.g. Applied AI]] --- [[CITY, STATE or ``Remote'']]
+
+\vspace{6pt}
+Dear [[HIRING MANAGER NAME, or ``Hiring Team'']],
+
+%----------PARAGRAPH 1: HOOK (fit + their problem)----------
+% One sentence on the company's core bet/problem, then the match. 2-3 sentences.
+[[COMPANY]] is [[ONE-SENTENCE STATEMENT OF THE COMPANY'S CORE BET OR PROBLEM
+SPACE --- e.g. ``betting that customer-facing AI agents have to be reliable
+enough to act, not just chat'']]. That is the exact problem I have spent the
+last year building in, and it is why I am applying for the [[ROLE]] role.
+[[ONE SENTENCE TYING YOUR SINGLE STRONGEST RELEVANT EXPERIENCE TO THAT
+PROBLEM.]]
+
+%----------PARAGRAPH 2: PROOF (problem -> solution -> impact, with a metric)----------
+% Pick ONE story. Extend the resume; do not summarize it. Include a number.
+[[PROOF STORY --- state the PROBLEM you faced, the METHOD you used, and a
+MEASURABLE RESULT. e.g. ``At New York Life, 12,000 customer-service reps were
+buried in claims data fragmented across SharePoint, Confluence, Jira, and
+mainframe systems. I built an AI voice-and-text agent grounded in 13,000
+internal documents so reps had one trustworthy place to act --- and stood up
+the knowledge base that made it possible.'']] [[OPTIONAL SECOND PROOF LINE WITH
+ANOTHER METRIC, e.g. a RAG pipeline shipped at Lykke, or a 90\% manual-work
+reduction at Samaritan Scout --- only if it stays under the word budget.]]
+
+%----------PARAGRAPH 3: FIT / WHY-NOW (fixed pitch + company fact)----------
+% KEEP this pitch; personalize only the bracketed company fact.
+Beyond any single project, my real edge is how I work. I am fast and fluent
+with modern AI tools and use them to ship production systems rather than demos,
+and I pick up unfamiliar stacks and domains quickly --- this year alone I moved
+from enterprise insurance automation to RAG infrastructure to CUDA robot motion
+planning without losing momentum. As [[COMPANY]] grows, that is exactly the kind
+of leverage I bring: I can help the team move faster today and expand into new
+problems tomorrow, because building with AI is my default mode, not a skill I am
+still learning. [[ONE SPECIFIC, RECENT FACT ABOUT THE COMPANY --- a launch,
+funding round, customer, or roadmap direction --- AND ONE HONEST SENTENCE ON WHY
+IT MAKES THIS THE RIGHT TIME FOR YOU TO JOIN.]]
+
+%----------CLOSING----------
+I would love to help [[COMPANY]] [[BUILD / SHIP / EXPAND --- the specific thing
+the team is working on]]. Thank you for your time and consideration --- I would
+welcome the chance to talk.
+
+\vspace{6pt}
+Sincerely, \\
+\textbf{Akash Dubey}
+
+\end{document}
