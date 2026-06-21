@@ -59,6 +59,19 @@ checks.push(["serialize: degree dropdown exposes options", Array.isArray(degree?
 checks.push(["serialize: work_auth dropdown exposes Yes/No", Array.isArray(auth?.options) && auth.options.includes("Yes") && auth.options.includes("No")]);
 checks.push(["serialize: select type tagged", degree?.type === "select"]);
 
+// Value coercion for typed inputs (the SpaceX date-field bug).
+const cv = window.JobFill.coerceValue;
+console.log("\nValue coercion (typed inputs):");
+console.log(`  date  "May 2027" -> ${cv({ type: "date" }, "May 2027")}`);
+console.log(`  month "2026-06"  -> ${cv({ type: "month" }, "2026-06")}`);
+console.log(`  number "3.95"    -> ${cv({ type: "number" }, "3.95")}`);
+console.log(`  date  "garbage"  -> ${cv({ type: "date" }, "garbage")}`);
+checks.push(["coerce date 'May 2027' -> 2027-05-01", cv({ type: "date" }, "May 2027") === "2027-05-01"]);
+checks.push(["coerce month '2026-06' -> 2026-06", cv({ type: "month" }, "2026-06") === "2026-06"]);
+checks.push(["coerce number '3.95' -> 3.95", cv({ type: "number" }, "3.95") === "3.95"]);
+checks.push(["coerce unparseable date -> null (skip, no throw)", cv({ type: "date" }, "garbage") === null]);
+checks.push(["coerce passes text through", cv({ type: "text" }, "hello") === "hello"]);
+
 console.log("\nChecks:");
 let pass = 0;
 for (const [name, ok] of checks) { console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}`); if (ok) pass++; }

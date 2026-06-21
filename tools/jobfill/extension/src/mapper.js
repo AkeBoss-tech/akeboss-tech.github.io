@@ -81,6 +81,28 @@
     });
   }
 
-  win_global().JobFill = Object.assign(win_global().JobFill || {}, { signature, planFill, serializeFields });
+  // Coerce a human value to whatever a typed <input> expects, so date/month/
+  // number fields don't throw "cannot be parsed". Returns null if not fillable.
+  const pad = (n) => String(n).padStart(2, "0");
+  const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+  function parseDateish(s) {
+    s = String(s).trim().toLowerCase(); let m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return { y: +m[1], m: +m[2], d: +m[3] };
+    if ((m = s.match(/^(\d{4})-(\d{1,2})$/))) return { y: +m[1], m: +m[2] };
+    if ((m = s.match(/^(\d{1,2})\/(\d{4})$/))) return { y: +m[2], m: +m[1] };
+    if ((m = s.match(/([a-z]{3,9})\.?\s+(\d{4})/))) { const mon = MONTHS[m[1].slice(0, 3)]; if (mon) return { y: +m[2], m: mon }; }
+    if ((m = s.match(/^(\d{4})$/))) return { y: +m[1] };
+    return null;
+  }
+  function coerceValue(el, value) {
+    const t = (el.type || "").toLowerCase(); const s = String(value).trim();
+    if (t === "date")  { const d = parseDateish(s); return d ? `${d.y}-${pad(d.m || 1)}-${pad(d.d || 1)}` : null; }
+    if (t === "month") { const d = parseDateish(s); return d ? `${d.y}-${pad(d.m || 1)}` : null; }
+    if (t === "week" || t === "time" || t === "datetime-local") return null; // not enough info
+    if (t === "number" || t === "range") { const n = parseFloat(s.replace(/[^0-9.\-]/g, "")); return Number.isFinite(n) ? String(n) : null; }
+    return s;
+  }
+
+  win_global().JobFill = Object.assign(win_global().JobFill || {}, { signature, planFill, serializeFields, coerceValue, parseDateish });
   function win_global() { return typeof window !== "undefined" ? window : globalThis; }
 })();

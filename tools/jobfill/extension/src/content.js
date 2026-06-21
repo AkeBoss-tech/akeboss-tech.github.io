@@ -7,12 +7,22 @@ window.__jobfillContentLoaded = true;
 
 // React/Vue controlled inputs ignore plain .value assignment; use the native
 // setter then dispatch input+change so the framework's state updates.
+// Coerces to the input's type (date/month/number) and never throws — returns
+// true if the value was set, false if it couldn't be (caller flags for review).
 function setNativeValue(el, value) {
-  const proto = el.tagName === "TEXTAREA" ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
-  const setter = Object.getOwnPropertyDescriptor(proto, "value").set;
-  setter.call(el, value);
-  el.dispatchEvent(new Event("input", { bubbles: true }));
-  el.dispatchEvent(new Event("change", { bubbles: true }));
+  const v = window.JobFill.coerceValue(el, value);
+  if (v == null) return false;
+  try {
+    const proto = el.tagName === "TEXTAREA" ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    const setter = Object.getOwnPropertyDescriptor(proto, "value").set;
+    setter.call(el, v);
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    return true;
+  } catch (e) {
+    console.warn("[JobFill] could not set", el.name || el.id, "->", value, e.message);
+    return false;
+  }
 }
 
 function fillSelect(el, value) {
@@ -31,8 +41,8 @@ function run(profile) {
     if (p.el && p.value != null && p.tag !== "you") {
       if (p.el.tagName === "SELECT") status = fillSelect(p.el, p.value) ? "filled" : "needs-you";
       else if (p.el.type === "checkbox" || p.el.type === "radio") status = "needs-you"; // yes/no + EEO -> review
-      else { setNativeValue(p.el, p.value); status = "filled"; }
-      p.el.style.outline = p.tag === "auto" ? "2px solid #16a34a" : "2px solid #d97706";
+      else status = setNativeValue(p.el, p.value) ? "filled" : "needs-you";
+      if (status === "filled") p.el.style.outline = p.tag === "auto" ? "2px solid #16a34a" : "2px solid #d97706";
     }
     results.push({ el: p.el, label: p.label, key: p.key, tag: p.tag, value: p.value, status });
   }
@@ -66,7 +76,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       const r = items[m.i];
       if (!r || !r.el || m.skip || m.value == null || m.value === "") continue;
       if (r.el.tagName === "SELECT") { if (!fillSelect(r.el, m.value)) continue; }
-      else setNativeValue(r.el, m.value);
+      else if (!setNativeValue(r.el, m.value)) continue;
       r.el.style.outline = "2px solid #2563eb"; // blue = AI-filled
       r.tag = "drafted"; r.value = m.value; r.status = "ai-filled";
       filled++;
