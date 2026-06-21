@@ -34,6 +34,7 @@ function buildGenerateAllPrompt({ fields = [], context = {} }) {
   const about = safeRead("about.md", JOBFILL);
   const fieldLines = fields.map(f => {
     const empty = !f.current ? " (EMPTY)" : "";
+    if (f.searchable) return `#${f.i} [search] "${f.label}" — provide the exact value to type (e.g. a country, university, degree, or city name)${empty}`;
     if (f.type === "select" && f.options) return `#${f.i} [dropdown] "${f.label}" — choose EXACTLY one of: ${JSON.stringify(f.options)}${empty}`;
     if (f.type === "textarea") return `#${f.i} [long text] "${f.label}"${empty}`;
     return `#${f.i} [${f.type}] "${f.label}"${empty}`;
@@ -45,10 +46,13 @@ function buildGenerateAllPrompt({ fields = [], context = {} }) {
     "=== EXTRA NOTES ===", about || "(none)",
     `=== TARGET ROLE ===\n${context.company} — ${context.role}\nJD:\n${(context.jd || "").slice(0, 3000)}`,
     "=== FORM FIELDS ===", fieldLines, "",
-    "Return ONLY a JSON array, one object per field you can answer: {\"i\": <number>, \"value\": \"<text>\"}.",
+    "Answer as MANY fields as you truthfully can — aim to fill every non-EEO field, not just a few.",
+    "Return ONLY a JSON array, one object per field: {\"i\": <number>, \"value\": \"<text>\"}.",
+    "- [search] provide the exact real-world value (e.g. \"United States\", \"Rutgers University\", \"Bachelor of Science\", \"Computer Science\").",
     "- [dropdown] value MUST be copied EXACTLY from that field's options; if none fits, omit it.",
     "- [long text] essays: specific, concrete, with a metric, 80-160 words. " + PRINCIPLES,
-    "- SKIP EEO/demographic/voluntary self-id fields, file uploads, and anything you can't answer truthfully.",
+    "- For short text/date fields, fill them from the resume/profile (name, school, dates, GPA, links, work auth).",
+    "- SKIP only: EEO/demographic/voluntary self-id fields, file uploads, and anything genuinely unknown.",
     "- NEVER invent facts (employers, dates, GPA, work authorization). Output the JSON array only.",
   ].join("\n");
 }

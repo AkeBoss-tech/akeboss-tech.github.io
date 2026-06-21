@@ -6,9 +6,24 @@
     return (typeof CSS !== "undefined" && CSS.escape) ? CSS.escape(s) : String(s).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
   }
 
-  // Lowercased "signature" of everything that hints at a field's meaning.
+  // A clean, human-readable label for a field (what we show the agent).
+  // Prefers the actual <label>/legend text over noisy name/id/class fragments.
+  function humanLabel(el) {
+    if (!el) return "";
+    const doc = el.ownerDocument || (typeof document !== "undefined" ? document : null);
+    let t = "";
+    if (doc && el.id) { const l = doc.querySelector(`label[for="${cssEscape(el.id)}"]`); if (l) t = l.textContent; }
+    if (!t) { const w = el.closest && el.closest("label"); if (w) t = w.textContent; }
+    if (!t) { const fs = el.closest && el.closest("fieldset"); const lg = fs && fs.querySelector("legend"); if (lg) t = lg.textContent; }
+    if (!t) { const b = el.closest && el.closest(".field, [class*='question'], [class*='Field'], [class*='form-group'], [class*='form-field']"); if (b) { const lab = b.querySelector("label, legend"); if (lab) t = lab.textContent; } }
+    if (!t) t = (el.getAttribute && (el.getAttribute("aria-label") || el.placeholder)) || "";
+    if (!t) t = (el.name || el.id || "").replace(/[-_]+\d*/g, " ").replace(/[-_]+/g, " ");
+    return t.replace(/\s+/g, " ").replace(/\*/g, "").trim().slice(0, 70);
+  }
+
+  // Lowercased "signature" of everything that hints at a field's meaning (for rule matching).
   function signature(el, doc) {
-    const bits = [el.name, el.id, el.placeholder, el.getAttribute && el.getAttribute("aria-label"), el.autocomplete];
+    const bits = [el.name, el.id, el.placeholder, el.getAttribute && el.getAttribute("aria-label")];
     if (el.id) { const l = doc.querySelector(`label[for="${cssEscape(el.id)}"]`); if (l) bits.push(l.textContent); }
     const wrap = el.closest && el.closest("label"); if (wrap) bits.push(wrap.textContent);
     const block = el.closest && el.closest(".field, .application-question, [class*='question'], [class*='Field']");
@@ -77,7 +92,7 @@
         } else { current = el.value || ""; }
         const ml = Number(el.maxLength); if (ml > 0) maxLength = ml;
       }
-      return { i, label: p.label, key: p.key, tag: p.tag, type, options, maxLength, current, suggested: p.value ?? null };
+      return { i, label: humanLabel(el) || p.label, key: p.key, tag: p.tag, type, options, maxLength, current, suggested: p.value ?? null };
     });
   }
 
@@ -103,6 +118,6 @@
     return s;
   }
 
-  win_global().JobFill = Object.assign(win_global().JobFill || {}, { signature, planFill, serializeFields, coerceValue, parseDateish });
+  win_global().JobFill = Object.assign(win_global().JobFill || {}, { signature, humanLabel, planFill, serializeFields, coerceValue, parseDateish });
   function win_global() { return typeof window !== "undefined" ? window : globalThis; }
 })();

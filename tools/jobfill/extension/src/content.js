@@ -134,8 +134,10 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
           if (options.length) {
             f.type = "select"; f.custom = true;
             // Search/typeahead widgets (country, school, location) expose huge
-            // lists — don't ship hundreds of options; cap and mark searchable.
-            if (options.length > 25) { f.searchable = true; f.options = options.slice(0, 25); }
+            // lists. Don't ship a truncated list (it may not even contain the
+            // right answer) — mark searchable and let the agent supply a value
+            // to type; content.js types it and picks the match.
+            if (options.length > 25) { f.searchable = true; /* no options sent */ }
             else f.options = options;
           }
         }
