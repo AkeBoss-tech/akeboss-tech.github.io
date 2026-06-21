@@ -47,13 +47,17 @@ function isCustomCombobox(el) {
 function comboControl(el) { return (el.closest && el.closest("[class*='control']")) || el; }
 function readOpenOptions() {
   let opts = [...document.querySelectorAll("[role='option']")];
-  if (!opts.length) opts = [...document.querySelectorAll("[id*='option']")];
+  if (!opts.length) opts = [...document.querySelectorAll("[data-automation-id='promptOption'], [data-automation-id='promptLeafNode'], [data-automation-label]")]; // Workday
+  if (!opts.length) opts = [...document.querySelectorAll("[id*='option'], ul[role='listbox'] li, [role='listbox'] li")];
   return opts;
 }
 async function openCombobox(el) {
-  comboControl(el).dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+  const ctrl = comboControl(el);
+  ctrl.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+  ctrl.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+  if (ctrl.click) ctrl.click(); // Workday buttons need a real click
   if (el.focus) el.focus();
-  await sleep(140); // let the menu render
+  await sleep(200); // let the portal menu render
   return readOpenOptions();
 }
 function closeCombobox(el) { el.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true })); }
@@ -75,15 +79,20 @@ async function fillCustomSelect(el, value) {
   let opts = await openCombobox(el);
   let match = matchOption(opts, want);
   if (!match) {
-    // Typeahead: type the value into the combobox input to filter the list.
-    try {
-      const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
-      setter.call(el, value);
-      el.dispatchEvent(new Event("input", { bubbles: true }));
-    } catch {}
-    await sleep(350);
-    opts = readOpenOptions();
-    match = matchOption(opts, want);
+    // Typeahead: type into the combobox input, or a search box in the popup
+    // (Workday renders a search field inside the open listbox).
+    const search = document.querySelector("input[data-automation-id='searchBox'], [role='listbox'] input, [class*='listbox'] input")
+      || (el.tagName === "INPUT" ? el : null);
+    if (search) {
+      try {
+        const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+        setter.call(search, value);
+        search.dispatchEvent(new Event("input", { bubbles: true }));
+      } catch {}
+      await sleep(450);
+      opts = readOpenOptions();
+      match = matchOption(opts, want);
+    }
   }
   if (match) { match.dispatchEvent(new MouseEvent("mousedown", { bubbles: true })); if (match.click) match.click(); await sleep(60); return true; }
   closeCombobox(el);

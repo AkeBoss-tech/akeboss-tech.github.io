@@ -16,7 +16,9 @@
     if (!t) { const w = el.closest && el.closest("label"); if (w) t = w.textContent; }
     if (!t) { const fs = el.closest && el.closest("fieldset"); const lg = fs && fs.querySelector("legend"); if (lg) t = lg.textContent; }
     if (!t) { const b = el.closest && el.closest(".field, [class*='question'], [class*='Field'], [class*='form-group'], [class*='form-field']"); if (b) { const lab = b.querySelector("label, legend"); if (lab) t = lab.textContent; } }
+    if (!t && doc) { const lb = el.getAttribute && el.getAttribute("aria-labelledby"); if (lb) t = lb.split(/\s+/).map(id => { const n = doc.getElementById(id); return n ? n.textContent : ""; }).join(" ").trim(); }
     if (!t) t = (el.getAttribute && (el.getAttribute("aria-label") || el.placeholder)) || "";
+    if (!t) { const da = el.getAttribute && el.getAttribute("data-automation-id"); if (da && !/^(input|button|select)$/i.test(da)) t = da.replace(/^.*[_-]/, "").replace(/([a-z])([A-Z])/g, "$1 $2"); }
     if (!t) t = (el.name || el.id || "").replace(/[-_]+\d*/g, " ").replace(/[-_]+/g, " ");
     return t.replace(/\s+/g, " ").replace(/\*/g, "").trim().slice(0, 70);
   }
@@ -54,8 +56,11 @@
       }
     }
 
-    // 2) Generic synonym-rule pass
-    const fields = doc.querySelectorAll("input:not([type=hidden]):not([type=file]):not([type=submit]), select, textarea");
+    // 2) Generic synonym-rule pass. Also include button-style dropdowns
+    // (Workday/ARIA comboboxes) which aren't input/select/textarea.
+    const fields = doc.querySelectorAll(
+      "input:not([type=hidden]):not([type=file]):not([type=submit]), select, textarea, " +
+      "button[aria-haspopup='listbox'], [role='button'][aria-haspopup='listbox'], [role='combobox']");
     for (const el of fields) {
       if (handled.has(el) || el.disabled || el.type === "password") continue;
       const sig = signature(el, doc);
@@ -71,7 +76,7 @@
     }
 
     // 3) Blockers
-    if (platform === "workday") plan.push({ el: null, key: "flow", tag: "blocker", value: null, label: "Workday multi-step / account", status: "manual" });
+    if (platform === "workday") plan.push({ el: null, key: "flow", tag: "blocker", value: null, label: "Workday is multi-step — fill this step, click Next, then run again per step", status: "manual" });
     for (const f of doc.querySelectorAll("input[type=file]"))
       plan.push({ el: f, key: "resume", tag: "you", value: null, label: "Resume / file upload — attach the right variant", status: "manual" });
 

@@ -101,7 +101,16 @@ const ATS = {
     { selector: "input[name*='name' i]",  key: "full_name", res: R.fullName, tag: "verify" },
     { selector: "input[type='email']",    key: "email",     res: R.email,    tag: "auto" },
   ],
-  workday: [],  // multi-step + account creation — handled as blockers in content.js
+  // Workday uses stable data-automation-id selectors. Text fields fill directly;
+  // dropdowns are <button aria-haspopup=listbox> handled by the combobox logic.
+  workday: [
+    { selector: "input[data-automation-id='legalNameSection_firstName'], input[data-automation-id*='firstName']", key: "first_name", res: R.firstName, tag: "auto" },
+    { selector: "input[data-automation-id='legalNameSection_lastName'], input[data-automation-id*='lastName']", key: "last_name", res: R.lastName, tag: "auto" },
+    { selector: "input[data-automation-id='email'], input[data-automation-id*='email']", key: "email", res: R.email, tag: "auto" },
+    { selector: "input[data-automation-id='phone-number'], input[data-automation-id*='phoneNumber']", key: "phone", res: R.phone, tag: "auto" },
+    { selector: "input[data-automation-id='addressSection_city'], input[data-automation-id*='city']", key: "city", res: R.city, tag: "verify" },
+    { selector: "input[data-automation-id='source-prompt'] ~ input, input[data-automation-id*='linkedin']", key: "linkedin", res: R.linkedin, tag: "verify" },
+  ],
   icims: [],
 };
 
