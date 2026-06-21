@@ -5,12 +5,16 @@
 <style>
   body { font: 13px/1.4 -apple-system, system-ui, sans-serif; margin: 0; padding: 12px; color: #111; }
   h1 { font-size: 15px; margin: 0 0 4px; }
-  #page { font-size: 11px; color: #2563eb; background: #eff6ff; border-radius: 5px; padding: 4px 8px; margin-bottom: 8px; word-break: break-all; }
+  #page { font-size: 11px; color: #2563eb; background: #eff6ff; border-radius: 5px; padding: 4px 8px; margin-bottom: 10px; word-break: break-all; }
   button { font: inherit; padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; cursor: pointer; }
   button.primary { background: #111; color: #fff; border-color: #111; }
-  .row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
-  .counts { display: flex; gap: 8px; margin: 8px 0; font-size: 12px; }
-  .pill { padding: 2px 8px; border-radius: 999px; color: #fff; }
+  button.big { flex: 1; font-weight: 600; padding: 9px; }
+  select { font: inherit; padding: 5px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+  .row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; flex-wrap: wrap; }
+  .lbl { font-size: 11px; color: #666; min-width: 52px; }
+  #status { display: block; color: #555; margin: 6px 0; min-height: 16px; }
+  .counts { display: flex; gap: 6px; margin: 6px 0; font-size: 11px; flex-wrap: wrap; }
+  .pill { padding: 2px 7px; border-radius: 999px; color: #fff; }
   .auto { background: #16a34a; } .verify { background: #d97706; } .drafted { background: #2563eb; }
   .you { background: #dc2626; } .blocker { background: #6b7280; }
   .item { border: 1px solid #eee; border-radius: 6px; padding: 8px; margin-bottom: 6px; }
@@ -20,55 +24,75 @@
   .item .acts { margin-top: 6px; display: flex; gap: 6px; }
   textarea { width: 100%; box-sizing: border-box; height: 70px; }
   #gate { margin-top: 10px; padding: 8px; border: 1px dashed #d97706; border-radius: 6px; font-size: 12px; }
-  small { color: #777; }
-  #preview { width: 100%; height: 360px; border: 1px solid #ccc; border-radius: 6px; margin-top: 8px; }
-  #log { background: #0b1021; color: #c8d3f5; font: 11px/1.45 ui-monospace, Menlo, monospace; padding: 8px; border-radius: 6px; max-height: 280px; overflow: auto; white-space: pre-wrap; word-break: break-word; margin-top: 8px; }
+  #preview { width: 100%; height: 340px; border: 1px solid #ccc; border-radius: 6px; margin-top: 8px; }
+  details { margin-top: 10px; border-top: 1px solid #eee; padding-top: 8px; }
+  summary { cursor: pointer; color: #444; font-weight: 600; font-size: 12px; }
+  details .body { margin-top: 8px; }
+  input[type=file] { font-size: 11px; max-width: 150px; }
+  #log { background: #0b1021; color: #c8d3f5; font: 11px/1.45 ui-monospace, Menlo, monospace; padding: 8px; border-radius: 6px; max-height: 240px; overflow: auto; white-space: pre-wrap; word-break: break-word; margin-top: 8px; }
+  small.hint { color: #999; }
 </style>
 </head>
 <body>
-  <h1>JobFill — review &amp; fill</h1>
+  <h1>JobFill</h1>
   <div id="page" title="Each page keeps its own context">— no page —</div>
+
+  <!-- primary actions -->
   <div class="row">
-    <input type="file" id="profileFile" accept="application/json" />
-    <button id="fill" class="primary">Detect &amp; fill</button>
-    <button id="genall" title="Deterministic fill, then the agent finishes the rest (essays, dropdowns)">✨ Generate all</button>
-    <select id="runner" title="Which model runs the agent">
-      <option value="claude">Claude Haiku</option>
-      <option value="codex">codex</option>
-    </select>
+    <button id="genall" class="primary big" title="Deterministic fill, then the agent finishes the rest">✨ Generate all</button>
+    <button id="fill" title="Deterministic fill only (no AI)">Detect &amp; fill</button>
   </div>
+
+  <!-- resume -->
   <div class="row">
-    <select id="resumeVariant" title="Which tailored resume to attach">
-      <option value="auto">🤖 Auto-pick (agent)</option>
-      <option value="default">resume (default)</option>
-      <option value="ai-ml">AI/ML engineer</option>
-      <option value="ai-infra">AI infra/platform</option>
-      <option value="founding">founding engineer</option>
-      <option value="quant">quant dev</option>
+    <span class="lbl">Resume</span>
+    <select id="resumeVariant" title="Which resume to attach">
+      <option value="auto">🤖 Auto-pick</option>
+      <option value="default">default</option>
+      <option value="ai-ml">AI/ML</option>
+      <option value="ai-infra">AI infra</option>
+      <option value="founding">founding</option>
+      <option value="quant">quant</option>
       <option value="comp-bio">comp bio</option>
-      <option value="research">research engineer</option>
-      <option value="finance">finance AI</option>
-      <option value="consulting">consulting AI</option>
-      <option value="enterprise">enterprise AI</option>
+      <option value="research">research</option>
+      <option value="finance">finance</option>
+      <option value="consulting">consulting</option>
+      <option value="enterprise">enterprise</option>
     </select>
-    <button id="attachResume" title="Attach the chosen resume PDF to the page's file input">📎 Attach</button>
-    <button id="previewResume" title="Preview the resume PDF in this panel">👁 Preview</button>
+    <button id="attachResume">📎 Attach</button>
+    <button id="previewResume">👁 Preview</button>
   </div>
-  <div class="row">
-    <input type="file" id="localFile" accept="application/pdf,.pdf" title="Upload a PDF from your machine" />
-    <button id="attachLocal" title="Attach the chosen local PDF to the page">📎 Attach this file</button>
-  </div>
+
+  <small id="status">Import your profile in ⚙ Settings, then Generate all.</small>
   <iframe id="preview" hidden></iframe>
-  <small id="status">Import your profile.json, then open an application page and click “Detect &amp; fill”.</small>
+
   <div class="counts" id="counts"></div>
   <div id="list"></div>
   <div id="gate" hidden></div>
-  <div class="row" style="margin-top:8px">
-    <button id="toggleLog">Show debug log</button>
-    <button id="copyLog">Copy log</button>
-    <button id="clearLog">Clear</button>
-  </div>
-  <pre id="log" hidden></pre>
+
+  <!-- setup, tucked away -->
+  <details id="settings">
+    <summary>⚙ Settings</summary>
+    <div class="body">
+      <div class="row"><span class="lbl">Profile</span><input type="file" id="profileFile" accept="application/json" /><span id="profileName" class="hint"></span></div>
+      <div class="row"><span class="lbl">Runner</span>
+        <select id="runner" title="Which model runs the agent">
+          <option value="claude">Claude Haiku</option>
+          <option value="codex">codex</option>
+        </select>
+      </div>
+      <div class="row"><span class="lbl">Local PDF</span><input type="file" id="localFile" accept="application/pdf,.pdf" /><button id="attachLocal">📎 Attach this file</button></div>
+    </div>
+  </details>
+
+  <details id="debug">
+    <summary>Debug log</summary>
+    <div class="body">
+      <div class="row"><button id="copyLog">Copy</button><button id="clearLog">Clear</button></div>
+      <pre id="log"></pre>
+    </div>
+  </details>
+
   <script src="src/sidepanel.js"></script>
 </body>
 </html>

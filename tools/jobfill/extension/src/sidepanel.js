@@ -26,11 +26,10 @@ function log(msg, obj) {
   const t = new Date().toISOString().slice(11, 23);
   let extra = "";
   if (obj !== undefined) { try { extra = " " + (typeof obj === "string" ? obj : JSON.stringify(obj)); } catch { extra = " " + String(obj); } }
-  const el = $("#log"); if (el) { el.hidden = false; $("#toggleLog").textContent = "Hide debug log"; el.textContent += `[${t}] ${msg}${extra}\n`; el.scrollTop = el.scrollHeight; }
+  const el = $("#log"); if (el) { el.textContent += `[${t}] ${msg}${extra}\n`; el.scrollTop = el.scrollHeight; }
   console.log("[JobFill]", msg, obj ?? "");
 }
 document.addEventListener("DOMContentLoaded", () => {
-  $("#toggleLog").onclick = () => { const el = $("#log"); el.hidden = !el.hidden; $("#toggleLog").textContent = el.hidden ? "Show debug log" : "Hide debug log"; };
   $("#copyLog").onclick = () => navigator.clipboard.writeText($("#log").textContent || "");
   $("#clearLog").onclick = () => { $("#log").textContent = ""; };
 });
@@ -108,7 +107,13 @@ $("#profileFile").addEventListener("change", async (e) => {
   const file = e.target.files[0]; if (!file) return;
   const profile = JSON.parse(await file.text());
   await chrome.storage.local.set({ profile });
+  $("#profileName").textContent = "✓ " + profile.identity.full_name;
   $("#status").textContent = `Profile loaded for ${profile.identity.full_name}.`;
+});
+// Show whether a profile is already loaded.
+document.addEventListener("DOMContentLoaded", async () => {
+  const { profile } = await chrome.storage.local.get("profile");
+  if (profile) $("#profileName").textContent = "✓ " + profile.identity.full_name;
 });
 
 // Ensure the content script is live on this tab; inject on demand if it isn't.
