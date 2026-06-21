@@ -11,7 +11,17 @@ import { fileURLToPath } from "node:url";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const mode = process.argv[2] || "ping";
 
-const msg = mode === "gen"
+// 'big' = large payload (90 fields, several 50-option dropdowns) via the no-token
+// echo action — reproduces the SpaceX form size to test message framing.
+const bigFields = Array.from({ length: 90 }, (_, i) => ({
+  i, label: "field " + i, type: i % 3 === 0 ? "select" : "text",
+  options: i % 3 === 0 ? Array.from({ length: 50 }, (_, k) => "Option " + k + " ".repeat(3)) : undefined,
+  current: "",
+}));
+
+const msg = mode === "big"
+  ? { action: "echo", fields: bigFields, context: { company: "X", role: "Y", jd: "z".repeat(4000) } }
+  : mode === "gen"
   ? { action: "generate_all",
       context: { company: "Test Co", role: "SWE Intern", jd: "Build AI features." },
       fields: [

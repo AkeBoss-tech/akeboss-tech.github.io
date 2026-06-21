@@ -65,12 +65,26 @@ async function harvestComboOptions(el) {
   closeCombobox(el);
   return texts;
 }
-// Open -> click the option whose text matches `value`.
+const matchOption = (opts, want) =>
+  opts.find(o => o.textContent.toLowerCase().trim() === want)
+  || opts.find(o => o.textContent.toLowerCase().includes(want));
+
+// Open -> (for search widgets, type to filter) -> click the matching option.
 async function fillCustomSelect(el, value) {
   const want = String(value).toLowerCase().trim();
-  const opts = await openCombobox(el);
-  const match = opts.find(o => o.textContent.toLowerCase().trim() === want)
-    || opts.find(o => o.textContent.toLowerCase().includes(want));
+  let opts = await openCombobox(el);
+  let match = matchOption(opts, want);
+  if (!match) {
+    // Typeahead: type the value into the combobox input to filter the list.
+    try {
+      const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+      setter.call(el, value);
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    } catch {}
+    await sleep(350);
+    opts = readOpenOptions();
+    match = matchOption(opts, want);
+  }
   if (match) { match.dispatchEvent(new MouseEvent("mousedown", { bubbles: true })); if (match.click) match.click(); await sleep(60); return true; }
   closeCombobox(el);
   return false;
@@ -117,7 +131,13 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         const r = items[f.i];
         if (r && r.el && isCustomCombobox(r.el)) {
           const options = await harvestComboOptions(r.el);
-          if (options.length) { f.type = "select"; f.options = options; f.custom = true; }
+          if (options.length) {
+            f.type = "select"; f.custom = true;
+            // Search/typeahead widgets (country, school, location) expose huge
+            // lists — don't ship hundreds of options; cap and mark searchable.
+            if (options.length > 50) { f.searchable = true; f.options = options.slice(0, 50); }
+            else f.options = options;
+          }
         }
       }
       sendResponse({ fields });

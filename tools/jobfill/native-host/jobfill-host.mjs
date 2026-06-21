@@ -45,15 +45,21 @@ function extractJsonArray(s) {
 }
 
 // ---- native messaging framing ----
+// Accumulate chunks: a large message (big forms with long dropdowns) arrives
+// across multiple stdin reads, so we must buffer until we have 4+len bytes.
 function readMessage() {
-  return new Promise((resolve) => {
-    let len = null, chunks = [];
-    process.stdin.on("readable", () => {
-      let b;
-      if (len === null && (b = process.stdin.read(4))) len = b.readUInt32LE(0);
-      if (len !== null && (b = process.stdin.read(len))) resolve(JSON.parse(b.toString("utf8")));
+  return new Promise((resolve, reject) => {
+    const chunks = []; let len = null;
+    process.stdin.on("data", (d) => {
+      chunks.push(d);
+      const buf = Buffer.concat(chunks);
+      if (len === null) { if (buf.length < 4) return; len = buf.readUInt32LE(0); }
+      if (buf.length >= 4 + len) {
+        try { resolve(JSON.parse(buf.slice(4, 4 + len).toString("utf8"))); }
+        catch (e) { reject(e); }
+      }
     });
-    process.stdin.on("end", () => resolve(null));
+    process.stdin.on("end", () => { if (!chunks.length) resolve(null); });
   });
 }
 function writeMessage(obj) {
@@ -151,7 +157,11 @@ async function generateAll(msg) {
   const msg = await readMessage();
   if (!msg) return;
   try {
-    if (msg.action === "ping") {
+    if (msg.action === "echo") {
+      // Diagnostic: confirms the host received a (possibly large) message intact.
+      writeMessage({ ok: true, fieldsReceived: (msg.fields || []).length, bytes: JSON.stringify(msg).length });
+    }
+    else if (msg.action === "ping") {
       writeMessage({ ok: true, node: process.execPath, claude: CLAUDE_BIN, claudeFound: existsSync(CLAUDE_BIN),
         codex: CODEX_BIN, codexFound: existsSync(CODEX_BIN), repo: REPO });
     }
