@@ -143,13 +143,21 @@ $("#genall").addEventListener("click", async () => {
     log("serialized fields", { total: ser.fields.length, dropdowns: dropdowns.length, drafted: ser.fields.filter(f => f.tag === "drafted").length });
     if (dropdowns.length) log("dropdown options", dropdowns.slice(0, 8).map(f => ({ i: f.i, label: f.label.slice(0, 24), n: f.options.length })));
 
+    // Only send the agent fields that still need it (empty, or a dropdown) —
+    // the auto/verify fields are already filled deterministically. Keeps the
+    // native message small enough for Chrome's sendNativeMessage.
+    const need = ser.fields.filter(f => !f.current || f.options || f.tag === "drafted" || f.tag === "you");
+    const payloadBytes = JSON.stringify(need).length;
+    log("agent payload", { of: ser.fields.length, sending: need.length, bytes: payloadBytes });
+
     // 3) ask Haiku
     const ctx = await context();
-    log("page context", { company: (ctx.company || "").slice(0, 50), role: (ctx.role || "").slice(0, 50), jdChars: (ctx.jd || "").length });
-    $("#status").textContent = `3/4 Asking Haiku to complete ${ser.fields.length} fields… (10–60s)`;
-    log("→ sending to native host (claude haiku)…", { fields: ser.fields.length });
+    ctx.jd = (ctx.jd || "").slice(0, 2500);
+    log("page context", { company: (ctx.company || "").slice(0, 50), role: (ctx.role || "").slice(0, 50), jdChars: ctx.jd.length });
+    $("#status").textContent = `3/4 Asking Haiku to complete ${need.length} fields… (10–60s)`;
+    log("→ sending to native host (claude haiku)…", { fields: need.length });
     const t0 = performance.now();
-    const gen = await nativeSend({ action: "generate_all", fields: ser.fields, context: ctx, model: "claude-haiku-4-5-20251001" });
+    const gen = await nativeSend({ action: "generate_all", fields: need, context: ctx, model: "claude-haiku-4-5-20251001" });
     const ms = Math.round(performance.now() - t0);
     if (!gen || gen.error) { log("host error", { ms, error: gen?.error }); $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — check the debug log."; render(runResp, tabId); return; }
     log("← host replied", { ms, hostMs: gen.ms, count: gen.count, fieldsReceived: gen.fieldsReceived });

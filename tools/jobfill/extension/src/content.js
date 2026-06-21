@@ -135,7 +135,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
             f.type = "select"; f.custom = true;
             // Search/typeahead widgets (country, school, location) expose huge
             // lists — don't ship hundreds of options; cap and mark searchable.
-            if (options.length > 50) { f.searchable = true; f.options = options.slice(0, 50); }
+            if (options.length > 25) { f.searchable = true; f.options = options.slice(0, 25); }
             else f.options = options;
           }
         }

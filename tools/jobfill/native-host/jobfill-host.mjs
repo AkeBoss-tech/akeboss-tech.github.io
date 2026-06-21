@@ -153,8 +153,14 @@ async function generateAll(msg) {
     raw: (stdout || stderr || "").slice(0, 1500) };
 }
 
+// Never die silently — Chrome reports a bare "Native host has exited" otherwise.
+process.on("uncaughtException", (e) => { try { writeMessage({ error: "uncaughtException: " + (e.stack || e.message || e) }); } catch {} process.exit(0); });
+process.on("unhandledRejection", (e) => { try { writeMessage({ error: "unhandledRejection: " + (e && (e.stack || e.message) || e) }); } catch {} process.exit(0); });
+
 (async () => {
-  const msg = await readMessage();
+  let msg;
+  try { msg = await readMessage(); }
+  catch (e) { writeMessage({ error: "readMessage failed: " + (e.message || e) }); return; }
   if (!msg) return;
   try {
     if (msg.action === "echo") {
