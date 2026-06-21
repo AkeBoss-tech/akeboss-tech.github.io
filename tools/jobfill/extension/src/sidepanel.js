@@ -146,6 +146,32 @@ $("#fill").addEventListener("click", async () => {
   sendRun(tabId);
 });
 
+// Fetch the chosen resume PDF from the connector and attach it to the page's
+// file input (best-effort; standard <input type=file> only).
+function abToB64(buf) {
+  let s = ""; const b = new Uint8Array(buf), chunk = 0x8000;
+  for (let i = 0; i < b.length; i += chunk) s += String.fromCharCode.apply(null, b.subarray(i, i + chunk));
+  return btoa(s);
+}
+$("#attachResume").addEventListener("click", async () => {
+  const tabId = await activeTabId();
+  const v = $("#resumeVariant").value;
+  $("#status").textContent = "Fetching resume PDF…";
+  let b64;
+  try {
+    const r = await fetch(SERVER + "/resume?v=" + encodeURIComponent(v));
+    if (!r.ok) { $("#status").textContent = `Resume fetch failed (${r.status}).`; return; }
+    b64 = abToB64(await r.arrayBuffer());
+  } catch (e) { $("#status").textContent = "Connector offline — can't fetch resume."; return; }
+  await ensureInjected(tabId);
+  const resp = await tabSend(tabId, { type: "JOBFILL_ATTACH_RESUME", b64, filename: "Akash_Dubey_Resume.pdf" });
+  log("attach resume", { variant: v, attached: resp?.attached, error: resp?.error });
+  if (resp?.error) { $("#status").textContent = resp.error; return; }
+  $("#status").textContent = resp.attached > 0
+    ? `📎 Attached resume to ${resp.attached} file input(s) — verify it shows before submitting.`
+    : "No standard file input found — this site likely uses a custom uploader; drag the PDF in manually.";
+});
+
 $("#genall").addEventListener("click", async () => {
   try {
     const tabId = await activeTabId();

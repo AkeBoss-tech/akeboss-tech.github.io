@@ -32,6 +32,21 @@
     <button id="fill" class="primary">Detect &amp; fill</button>
     <button id="genall" title="Deterministic fill, then Claude Haiku finishes the rest (essays, dropdowns)">✨ Generate all (Haiku)</button>
   </div>
+  <div class="row">
+    <select id="resumeVariant" title="Which tailored resume to attach">
+      <option value="default">resume (default)</option>
+      <option value="ai-ml">AI/ML engineer</option>
+      <option value="ai-infra">AI infra/platform</option>
+      <option value="founding">founding engineer</option>
+      <option value="quant">quant dev</option>
+      <option value="comp-bio">comp bio</option>
+      <option value="research">research engineer</option>
+      <option value="finance">finance AI</option>
+      <option value="consulting">consulting AI</option>
+      <option value="enterprise">enterprise AI</option>
+    </select>
+    <button id="attachResume" title="Attach the chosen resume PDF to the page's file input">📎 Attach resume</button>
+  </div>
   <small id="status">Import your profile.json, then open an application page and click “Detect &amp; fill”.</small>
   <div class="counts" id="counts"></div>
   <div id="list"></div>

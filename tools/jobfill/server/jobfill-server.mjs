@@ -22,6 +22,12 @@ const REPO = path.resolve(HERE, "..", "..", "..");  // repo root
 const PORT = Number(process.env.JOBFILL_PORT || 9291);
 
 const safeRead = (rel, base = REPO) => { try { return readFileSync(path.join(base, rel), "utf8"); } catch { return ""; } };
+const RESUMES = {
+  default: "files/resume.pdf", "ai-ml": "files/resume-ai-ml-engineer.pdf", "ai-infra": "files/resume-ai-infra-platform.pdf",
+  founding: "files/resume-founding-engineer.pdf", quant: "files/resume-quant-dev.pdf", "comp-bio": "files/resume-comp-bio.pdf",
+  research: "files/resume-research-engineer.pdf", finance: "files/resume-finance-ai-automation.pdf",
+  consulting: "files/resume-consulting-ai.pdf", enterprise: "files/resume-enterprise-ai-automation.pdf",
+};
 const which = (n) => { try { return execFileSync("which", [n]).toString().trim(); } catch { return null; } };
 const log = (...a) => console.log("\x1b[90m" + new Date().toISOString().slice(11, 19) + "\x1b[0m", ...a);
 function extractJsonArray(s) { const a = s.indexOf("["), b = s.lastIndexOf("]"); if (a < 0 || b < 0 || b < a) return []; try { return JSON.parse(s.slice(a, b + 1)); } catch { return []; } }
@@ -81,7 +87,17 @@ const server = http.createServer(async (req, res) => {
   if (req.method === "OPTIONS") { cors(res); res.writeHead(204); res.end(); return; }
   try {
     if (req.method === "GET" && req.url === "/ping") {
-      return send(res, 200, { ok: true, claude: which("claude"), codex: which("codex"), repo: REPO });
+      return send(res, 200, { ok: true, claude: which("claude"), codex: which("codex"), repo: REPO, variants: Object.keys(RESUMES) });
+    }
+    if (req.method === "GET" && req.url.startsWith("/resume")) {
+      const v = new URL(req.url, "http://x").searchParams.get("v") || "default";
+      const rel = RESUMES[v] || RESUMES.default;
+      try {
+        const buf = readFileSync(path.join(REPO, rel));
+        log(`resume served: ${v} (${buf.length} bytes)`);
+        cors(res); res.writeHead(200, { "Content-Type": "application/pdf" }); res.end(buf);
+      } catch (e) { send(res, 404, { error: "resume not found: " + rel }); }
+      return;
     }
     if (req.method === "POST" && req.url === "/generate_all") {
       const b = await body(req);

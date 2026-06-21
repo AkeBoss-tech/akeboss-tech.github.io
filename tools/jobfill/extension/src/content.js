@@ -204,6 +204,30 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     })();
     return true; // async
   }
+  if (msg.type === "JOBFILL_ATTACH_RESUME") {
+    try {
+      const bin = atob(msg.b64); const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      const file = new File([arr], msg.filename || "resume.pdf", { type: "application/pdf" });
+      const idText = (el) => ((el.name || "") + " " + (el.id || "") + " " + (window.JobFill.humanLabel ? window.JobFill.humanLabel(el) : "")).toLowerCase();
+      const inputs = [...document.querySelectorAll('input[type="file"]')]
+        .filter(el => !/cover|letter|transcript|photo|portfolio/.test(idText(el)));   // resume input, not cover/transcript
+      inputs.sort((a, b) => (/resume|cv|curriculum/.test(idText(b)) ? 1 : 0) - (/resume|cv|curriculum/.test(idText(a)) ? 1 : 0));
+      let attached = 0;
+      for (const inp of inputs) {
+        try {
+          const dt = new DataTransfer(); dt.items.add(file);
+          inp.files = dt.files;
+          inp.dispatchEvent(new Event("input", { bubbles: true }));
+          inp.dispatchEvent(new Event("change", { bubbles: true }));
+          inp.style.outline = "2px solid #16a34a"; inp.title = "JobFill: resume attached";
+          attached++; break; // attach to the single best resume input
+        } catch (e) { /* this input rejected programmatic files */ }
+      }
+      sendResponse({ attached });
+    } catch (e) { sendResponse({ error: "attach failed: " + (e.message || e) }); }
+    return;
+  }
   if (msg.type === "JOBFILL_INSERT_DRAFT") {
     const r = (window.__jobfill || [])[msg.i];
     if (r && r.el) { setNativeValue(r.el, msg.text); r.el.style.outline = "2px solid #2563eb"; r.status = "drafted-inserted"; sendResponse({ ok: true }); }
