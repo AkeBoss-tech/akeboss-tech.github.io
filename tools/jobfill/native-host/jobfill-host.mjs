@@ -107,6 +107,7 @@ async function tailorResume(msg) {
 // Whole-form fill. The agent gets the resume + profile + notes and the full
 // field list. Dropdowns include their allowed options and MUST be matched exactly.
 async function generateAll(msg) {
+  const t0 = Date.now();
   const c = msg.context || {};
   const resume = safeRead("career/cv.md") || safeRead("files/resume.tex");
   const profile = safeRead("profile.json", JOBFILL);
@@ -141,8 +142,9 @@ async function generateAll(msg) {
   const { stdout, stderr } = await exec(CLAUDE_BIN, ["-p", prompt, "--model", model, "--output-format", "text"],
     { cwd: REPO, maxBuffer: 4 * 1024 * 1024 });
   const map = extractJsonArray(stdout);
-  // Return raw output too so the UI can explain a zero-fill result.
-  return { map, count: map.length, raw: (stdout || stderr || "").slice(0, 1000) };
+  // Return raw output + timing so the UI can explain a zero-fill result.
+  return { map, count: map.length, ms: Date.now() - t0, model, fieldsReceived: (msg.fields || []).length,
+    raw: (stdout || stderr || "").slice(0, 1500) };
 }
 
 (async () => {

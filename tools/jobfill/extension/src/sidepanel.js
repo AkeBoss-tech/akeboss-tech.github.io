@@ -4,15 +4,33 @@ const $ = (s) => document.querySelector(s);
 const TAGS = ["auto", "verify", "drafted", "you", "blocker"];
 const HOST = "com.akash.jobfill";
 
+// ---- debug log (visible in the panel + console) ----
+function log(msg, obj) {
+  const t = new Date().toISOString().slice(11, 23);
+  let extra = "";
+  if (obj !== undefined) { try { extra = " " + (typeof obj === "string" ? obj : JSON.stringify(obj)); } catch { extra = " " + String(obj); } }
+  const el = $("#log"); if (el) { el.hidden = false; $("#toggleLog").textContent = "Hide debug log"; el.textContent += `[${t}] ${msg}${extra}\n`; el.scrollTop = el.scrollHeight; }
+  console.log("[JobFill]", msg, obj ?? "");
+}
+document.addEventListener("DOMContentLoaded", () => {
+  $("#toggleLog").onclick = () => { const el = $("#log"); el.hidden = !el.hidden; $("#toggleLog").textContent = el.hidden ? "Show debug log" : "Hide debug log"; };
+  $("#copyLog").onclick = () => navigator.clipboard.writeText($("#log").textContent || "");
+  $("#clearLog").onclick = () => { $("#log").textContent = ""; };
+});
+
 // Call the native host directly from the panel (a live page) instead of routing
 // through the background service worker, which MV3 may suspend during a long
-// claude call. Returns the host's reply or { error }.
-function nativeSend(msg) {
+// claude call. Times out so a hung host surfaces instead of hanging forever.
+function nativeSend(msg, timeoutMs = 150000) {
   return new Promise((res) => {
+    let done = false;
+    const t = setTimeout(() => { if (!done) { done = true; res({ error: `native host timeout after ${timeoutMs / 1000}s (host installed? Chrome restarted?)` }); } }, timeoutMs);
     try {
-      chrome.runtime.sendNativeMessage(HOST, msg, (r) =>
-        res(chrome.runtime.lastError ? { error: chrome.runtime.lastError.message } : r));
-    } catch (e) { res({ error: String(e.message || e) }); }
+      chrome.runtime.sendNativeMessage(HOST, msg, (r) => {
+        if (done) return; done = true; clearTimeout(t);
+        res(chrome.runtime.lastError ? { error: chrome.runtime.lastError.message } : r);
+      });
+    } catch (e) { if (!done) { done = true; clearTimeout(t); res({ error: String(e.message || e) }); } }
   });
 }
 
@@ -106,39 +124,51 @@ $("#fill").addEventListener("click", async () => {
 });
 
 $("#genall").addEventListener("click", async () => {
-  const tabId = await activeTabId();
-  try { await ensureInjected(tabId); }
-  catch (e) { $("#status").textContent = "Can't run here: " + e.message; return; }
+  try {
+    const tabId = await activeTabId();
+    log("=== Generate all ===", { url: CURRENT.url });
+    try { await ensureInjected(tabId); } catch (e) { log("inject failed", String(e.message)); $("#status").textContent = "Can't run here: " + e.message; return; }
 
-  // 1) deterministic fill first (fast, free, accurate)
-  $("#status").textContent = "1/3 Filling known fields…";
-  const runResp = await tabSend(tabId, { type: "JOBFILL_RUN" });
-  if (runResp.error) { $("#status").textContent = runResp.error; return; }
+    // 1) deterministic fill
+    $("#status").textContent = "1/4 Filling known fields…";
+    const runResp = await tabSend(tabId, { type: "JOBFILL_RUN" });
+    if (!runResp || runResp.error) { log("JOBFILL_RUN failed", runResp); $("#status").textContent = runResp?.error || "scan failed"; return; }
+    log("deterministic scan ok", { platform: runResp.platform, fields: runResp.results.length });
 
-  // 2) serialize the whole form (incl. dropdown options) and ask Haiku for the rest
-  const ser = await tabSend(tabId, { type: "JOBFILL_SERIALIZE" });
-  if (ser.error) { $("#status").textContent = ser.error; return; }
-  $("#status").textContent = `2/3 Asking Haiku to complete ${ser.fields.length} fields… (can take 10–40s)`;
-  const ctx = await context();
-  const gen = await nativeSend({ action: "generate_all", fields: ser.fields, context: ctx, model: "claude-haiku-4-5-20251001" });
-  console.log("[JobFill] generate_all reply:", gen);
-  if (!gen || gen.error) {
-    $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — host installed + Chrome restarted? See chrome://extensions → service worker console. Deterministic fill still applied.";
-    render(runResp, tabId); return;
+    // 2) serialize (opens dropdowns to read options)
+    $("#status").textContent = "2/4 Reading the form (incl. dropdowns)…";
+    const ser = await tabSend(tabId, { type: "JOBFILL_SERIALIZE" });
+    if (!ser || ser.error || !ser.fields) { log("JOBFILL_SERIALIZE failed", ser); $("#status").textContent = "Serialize failed: " + (ser?.error || "no response"); return; }
+    const dropdowns = ser.fields.filter(f => f.options);
+    log("serialized fields", { total: ser.fields.length, dropdowns: dropdowns.length, drafted: ser.fields.filter(f => f.tag === "drafted").length });
+    if (dropdowns.length) log("dropdown options", dropdowns.slice(0, 8).map(f => ({ i: f.i, label: f.label.slice(0, 24), n: f.options.length })));
+
+    // 3) ask Haiku
+    const ctx = await context();
+    log("page context", { company: (ctx.company || "").slice(0, 50), role: (ctx.role || "").slice(0, 50), jdChars: (ctx.jd || "").length });
+    $("#status").textContent = `3/4 Asking Haiku to complete ${ser.fields.length} fields… (10–60s)`;
+    log("→ sending to native host (claude haiku)…", { fields: ser.fields.length });
+    const t0 = performance.now();
+    const gen = await nativeSend({ action: "generate_all", fields: ser.fields, context: ctx, model: "claude-haiku-4-5-20251001" });
+    const ms = Math.round(performance.now() - t0);
+    if (!gen || gen.error) { log("host error", { ms, error: gen?.error }); $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — check the debug log."; render(runResp, tabId); return; }
+    log("← host replied", { ms, hostMs: gen.ms, count: gen.count, fieldsReceived: gen.fieldsReceived });
+    log("raw model output (truncated)", (gen.raw || "(empty)").slice(0, 600));
+    if (!gen.map || !gen.map.length) { $("#status").textContent = `Haiku returned 0 answers (see debug log).`; render(runResp, tabId); return; }
+
+    // 4) apply
+    log("applying answers…", gen.map.slice(0, 10).map(m => ({ i: m.i, v: String(m.value).slice(0, 30) })));
+    const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map });
+    if (!applied || applied.error) { log("apply failed", applied); $("#status").textContent = "Apply failed: " + (applied?.error || "no response"); return; }
+    log("done", { returned: gen.map.length, filled: applied.filled });
+    const final = { platform: runResp.platform, results: applied.results };
+    $("#status").textContent = `Done: Haiku returned ${gen.map.length}, filled ${applied.filled} in ${ms}ms. Review highlighted items, then submit manually.`;
+    render(final, tabId);
+    persist(final);
+  } catch (e) {
+    log("EXCEPTION", String(e && (e.stack || e.message) || e));
+    $("#status").textContent = "Error (see debug log): " + (e.message || e);
   }
-  if (!gen.map || !gen.map.length) {
-    $("#status").textContent = `Haiku returned no fillable answers (got ${gen.count ?? 0}). Raw: ${(gen.raw || "").slice(0, 120)}`;
-    console.log("[JobFill] raw model output:", gen.raw);
-    render(runResp, tabId); return;
-  }
-
-  // 3) apply the agent's answers
-  const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map });
-  if (applied.error) { $("#status").textContent = applied.error; return; }
-  const final = { platform: runResp.platform, results: applied.results };
-  $("#status").textContent = `3/3 Haiku returned ${gen.map.length}, filled ${applied.filled}. Review highlighted items, then submit manually.`;
-  render(final, tabId);
-  persist(final);
 });
 
 function render({ platform, results }, tabId) {

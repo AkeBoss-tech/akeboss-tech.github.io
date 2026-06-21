@@ -21,6 +21,7 @@
   textarea { width: 100%; box-sizing: border-box; height: 70px; }
   #gate { margin-top: 10px; padding: 8px; border: 1px dashed #d97706; border-radius: 6px; font-size: 12px; }
   small { color: #777; }
+  #log { background: #0b1021; color: #c8d3f5; font: 11px/1.45 ui-monospace, Menlo, monospace; padding: 8px; border-radius: 6px; max-height: 280px; overflow: auto; white-space: pre-wrap; word-break: break-word; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -35,6 +36,12 @@
   <div class="counts" id="counts"></div>
   <div id="list"></div>
   <div id="gate" hidden></div>
+  <div class="row" style="margin-top:8px">
+    <button id="toggleLog">Show debug log</button>
+    <button id="copyLog">Copy log</button>
+    <button id="clearLog">Clear</button>
+  </div>
+  <pre id="log" hidden></pre>
   <script src="src/sidepanel.js"></script>
 </body>
 </html>
