@@ -21,6 +21,47 @@ async function activeTabId() {
   return t.id;
 }
 
+// ---- per-page context ----
+// Each application page keeps its own scan results / answers, keyed by URL and
+// stored in session storage (cleared when the browser closes — no PII on disk).
+let CURRENT = { tabId: null, url: "" };
+const pageKey = (url) => "page:" + (url || "").split("#")[0];
+
+async function getActiveTab() {
+  const [t] = await chrome.tabs.query({ active: true, currentWindow: true });
+  return t;
+}
+function setHeader(tab) {
+  const el = $("#page");
+  try { const u = new URL(tab.url); el.textContent = u.hostname + u.pathname; }
+  catch { el.textContent = (tab && tab.title) || "— no page —"; }
+}
+async function persist(resp) {
+  if (!CURRENT.url) return;
+  await chrome.storage.session.set({ [pageKey(CURRENT.url)]: { resp, status: $("#status").textContent, ts: Date.now() } });
+}
+// Switch the panel to whatever page is active now (restore or clear).
+async function refreshContext() {
+  const tab = await getActiveTab();
+  if (!tab) return;
+  CURRENT = { tabId: tab.id, url: tab.url || "" };
+  setHeader(tab);
+  const k = pageKey(CURRENT.url);
+  const saved = (await chrome.storage.session.get(k))[k];
+  if (saved && saved.resp) {
+    render(saved.resp, tab.id);
+    $("#status").textContent = "Restored this page's saved context — re-scan to re-enable Jump/Insert.";
+  } else {
+    $("#list").innerHTML = ""; $("#counts").innerHTML = ""; $("#gate").hidden = true;
+    $("#status").textContent = "New page. Import profile (once), then Detect & fill or Generate all.";
+  }
+}
+chrome.tabs.onActivated.addListener(refreshContext);
+chrome.tabs.onUpdated.addListener((tabId, info) => {
+  if (tabId === CURRENT.tabId && (info.status === "complete" || info.url)) refreshContext();
+});
+document.addEventListener("DOMContentLoaded", refreshContext);
+
 // Import profile.json into extension storage
 $("#profileFile").addEventListener("change", async (e) => {
   const file = e.target.files[0]; if (!file) return;
@@ -43,6 +84,7 @@ function sendRun(tabId) {
     if (!resp) { $("#status").textContent = "No response from the page."; return; }
     if (resp.error) { $("#status").textContent = resp.error; return; }
     render(resp, tabId);
+    persist(resp);
   });
 }
 
@@ -93,8 +135,10 @@ $("#genall").addEventListener("click", async () => {
   // 3) apply the agent's answers
   const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map });
   if (applied.error) { $("#status").textContent = applied.error; return; }
+  const final = { platform: runResp.platform, results: applied.results };
   $("#status").textContent = `3/3 Haiku returned ${gen.map.length}, filled ${applied.filled}. Review highlighted items, then submit manually.`;
-  render({ platform: runResp.platform, results: applied.results }, tabId);
+  render(final, tabId);
+  persist(final);
 });
 
 function render({ platform, results }, tabId) {

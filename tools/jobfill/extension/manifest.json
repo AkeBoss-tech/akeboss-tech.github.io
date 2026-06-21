@@ -3,7 +3,7 @@
   "name": "JobFill (personal)",
   "version": "0.1.0",
   "description": "Deterministic job-application autofill with an LLM (claude/codex) fallback and a human-review checklist. Never auto-submits.",
-  "permissions": ["storage", "activeTab", "scripting", "sidePanel", "nativeMessaging"],
+  "permissions": ["storage", "activeTab", "scripting", "sidePanel", "nativeMessaging", "tabs"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "background": { "service_worker": "src/background.js", "type": "module" },
   "side_panel": { "default_path": "sidepanel.html" },

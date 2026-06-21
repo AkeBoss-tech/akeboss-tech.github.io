@@ -4,7 +4,8 @@
 <meta charset="utf-8" />
 <style>
   body { font: 13px/1.4 -apple-system, system-ui, sans-serif; margin: 0; padding: 12px; color: #111; }
-  h1 { font-size: 15px; margin: 0 0 8px; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  #page { font-size: 11px; color: #2563eb; background: #eff6ff; border-radius: 5px; padding: 4px 8px; margin-bottom: 8px; word-break: break-all; }
   button { font: inherit; padding: 6px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; cursor: pointer; }
   button.primary { background: #111; color: #fff; border-color: #111; }
   .row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
@@ -24,6 +25,7 @@
 </head>
 <body>
   <h1>JobFill — review &amp; fill</h1>
+  <div id="page" title="Each page keeps its own context">— no page —</div>
   <div class="row">
     <input type="file" id="profileFile" accept="application/json" />
     <button id="fill" class="primary">Detect &amp; fill</button>
