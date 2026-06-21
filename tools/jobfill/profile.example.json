@@ -128,12 +128,14 @@
     "willing_to_complete_assessment": true
   },
   "eeo": {
-    "gender": null,
-    "race_ethnicity": null,
-    "hispanic_latino": null,
+    "_note": "YOUR self-identification. The agent matches each to the form's actual option wording; it never invents these. Edit to your real choices, or keep 'prefer not to answer'. Set fill_eeo=false to skip the whole section.",
+    "fill_eeo": true,
+    "gender": "Decline to self-identify",
+    "race_ethnicity": "Decline to self-identify",
+    "hispanic_latino": "Decline to self-identify",
     "veteran_status": "I am not a protected veteran",
-    "disability_status": null,
-    "_note": "Left null on purpose. EEO is optional and self-reported — never auto-fill; route to manual review."
+    "disability_status": "I do not wish to answer",
+    "can_perform_essential_functions": "Yes"
   },
   "question_bank": [
     { "id": "why_interested", "pattern": "why (are|do) you (want|interested)|why (this|our|the) (role|company|position)|why do you want to work", "generate": true, "generator": "cover_letter_short", "answer": null },

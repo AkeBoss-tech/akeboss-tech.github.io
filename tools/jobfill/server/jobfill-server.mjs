@@ -52,8 +52,9 @@ function buildGenerateAllPrompt({ fields = [], context = {} }) {
     "- [dropdown] value MUST be copied EXACTLY from that field's options; if none fits, omit it.",
     "- [long text] essays: specific, concrete, with a metric, 80-160 words. " + PRINCIPLES,
     "- For short text/date fields, fill them from the resume/profile (name, school, dates, GPA, links, work auth).",
-    "- SKIP only: EEO/demographic/voluntary self-id fields, file uploads, and anything genuinely unknown.",
-    "- NEVER invent facts (employers, dates, GPA, work authorization). Output the JSON array only.",
+    "- EEO / voluntary self-identification fields (gender, race, Hispanic/Latino, veteran status, disability status) and the 'can you perform essential functions' question: fill these ONLY from the profile's \"eeo\" object (if eeo.fill_eeo is false, omit them). Match the form's closest option wording — e.g. the profile's 'Decline to self-identify' maps to whatever decline/'I don't wish to answer'/'I prefer not to answer' option the field offers. NEVER infer or invent demographic data; use only the profile eeo values.",
+    "- SKIP: file uploads, and anything you genuinely cannot answer from the resume/profile.",
+    "- NEVER invent facts (employers, dates, GPA, work authorization, demographics). Output the JSON array only.",
   ].join("\n");
 }
 
