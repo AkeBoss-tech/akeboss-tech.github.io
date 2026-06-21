@@ -21,7 +21,7 @@ async function ensureInjected(tabId) {
   const pong = await new Promise((res) =>
     chrome.tabs.sendMessage(tabId, { type: "JOBFILL_PING" }, (r) => res(chrome.runtime.lastError ? null : r)));
   if (pong && pong.ok) return;
-  await chrome.scripting.executeScript({ target: { tabId }, files: ["src/fieldmap.js", "src/content.js"] });
+  await chrome.scripting.executeScript({ target: { tabId }, files: ["src/fieldmap.js", "src/mapper.js", "src/content.js"] });
 }
 
 function sendRun(tabId) {

@@ -1,0 +1,36 @@
+<!doctype html>
+<!-- Representative Greenhouse-style application form (mirrors real #first_name etc.) -->
+<html><head><title>Five Rings — Software Engineer Intern</title></head>
+<body>
+<h1>Software Engineer Intern (2026)</h1>
+<form id="application_form">
+  <div class="field"><label for="first_name">First Name *</label><input id="first_name" name="job_application[first_name]" type="text"></div>
+  <div class="field"><label for="last_name">Last Name *</label><input id="last_name" name="job_application[last_name]" type="text"></div>
+  <div class="field"><label for="email">Email *</label><input id="email" name="job_application[email]" type="email"></div>
+  <div class="field"><label for="phone">Phone</label><input id="phone" name="job_application[phone]" type="tel"></div>
+  <div class="field"><label for="q_school">School</label><input id="q_school" name="answers[1]" type="text"></div>
+  <div class="field"><label for="q_degree">Degree</label>
+    <select id="q_degree" name="answers[2]"><option value="">--</option><option>Associate</option><option>Bachelor of Science</option><option>Master</option></select></div>
+  <div class="field"><label for="q_disc">Discipline / Major</label><input id="q_disc" name="answers[3]" type="text"></div>
+  <div class="field"><label for="q_grad">Expected Graduation Date</label><input id="q_grad" name="answers[4]" type="text"></div>
+  <div class="field"><label for="q_gpa">GPA</label><input id="q_gpa" name="answers[5]" type="text"></div>
+  <div class="field"><label for="q_li">LinkedIn Profile</label><input id="q_li" name="answers[6]" type="url"></div>
+  <div class="field"><label for="q_gh">GitHub URL</label><input id="q_gh" name="answers[7]" type="url"></div>
+  <div class="field"><label for="q_site">Website / Portfolio</label><input id="q_site" name="answers[8]" type="url"></div>
+  <div class="field"><label for="q_auth">Are you legally authorized to work in the US?</label>
+    <select id="q_auth" name="answers[9]"><option value="">--</option><option>Yes</option><option>No</option></select></div>
+  <div class="field"><label for="q_sponsor">Will you now or in the future require visa sponsorship?</label>
+    <select id="q_sponsor" name="answers[10]"><option value="">--</option><option>Yes</option><option>No</option></select></div>
+  <div class="field"><label for="q_start">When are you available to start?</label><input id="q_start" name="answers[11]" type="text"></div>
+  <div class="field"><label for="q_heard">How did you hear about this role?</label><input id="q_heard" name="answers[12]" type="text"></div>
+  <div class="field"><label for="q_why">Why are you interested in working at Five Rings?</label><textarea id="q_why" name="answers[13]"></textarea></div>
+  <div class="field"><label for="q_project">Describe the most challenging technical project you've built.</label><textarea id="q_project" name="answers[14]"></textarea></div>
+  <div class="field application-question"><label for="resume">Resume / CV *</label><input id="resume" name="job_application[resume]" type="file"></div>
+  <div class="field"><label for="q_gender">Gender (voluntary self-identification)</label>
+    <select id="q_gender" name="eeo[gender]"><option value="">Decline</option><option>Male</option><option>Female</option></select></div>
+  <div class="field"><label for="q_veteran">Veteran status</label>
+    <select id="q_veteran" name="eeo[veteran]"><option value="">Decline</option><option>I am a veteran</option><option>I am not a veteran</option></select></div>
+  <div class="field"><label for="q_secret">Internal referral code (leave blank)</label><input id="q_secret" name="answers[99]" type="text"></div>
+  <button type="submit">Submit Application</button>
+</form>
+</body></html>

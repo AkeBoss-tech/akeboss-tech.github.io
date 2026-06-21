@@ -19,7 +19,7 @@
         "https://*.myworkdayjobs.com/*",
         "https://*.icims.com/*"
       ],
-      "js": ["src/fieldmap.js", "src/content.js"],
+      "js": ["src/fieldmap.js", "src/mapper.js", "src/content.js"],
       "run_at": "document_idle"
     }
   ]

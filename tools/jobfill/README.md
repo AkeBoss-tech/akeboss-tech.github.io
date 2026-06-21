@@ -63,6 +63,17 @@ Rules live in `extension/src/fieldmap.js` (`RULES` = synonym regexes,
   logic (map company → category via `files/job-targets.csv`) is a TODO.
 - 🚧 Learned-mapping cache (persist LLM field classifications per domain) — TODO.
 
+## Test the mapper (headless)
+
+The deterministic engine is unit-tested against a sample Greenhouse form using
+the real `fieldmap.js` + `mapper.js` (no browser needed):
+```bash
+npm i jsdom --no-save        # one-time, from repo root
+cd tools/jobfill && node test/run-sample.mjs
+```
+Prints the fill plan + tags and asserts 10 behaviors (auto-fills identity, maps
+work-auth/GPA, routes essays to the LLM, refuses EEO/unknown/file fields).
+
 ## Reuse / prior art studied
 
 - **Open source to fork ideas from:** [berellevy/job_app_filler](https://github.com/berellevy/job_app_filler)
