@@ -12,10 +12,18 @@
  */
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, appendFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+// Disk log — survives even if Chrome kills the process, so we can see how far
+// it got under Chrome's launch environment.
+const LOGF = "/tmp/jobfill-host.log";
+function hlog(s) { try { appendFileSync(LOGF, `[${new Date().toISOString()}] ${s}\n`); } catch {} }
+hlog(`=== host start  pid=${process.pid}  cwd=${process.cwd()}  node=${process.execPath}`);
+process.on("exit", (c) => hlog(`process exit code=${c}`));
+process.on("SIGTERM", () => { hlog("SIGTERM received"); process.exit(0); });
 
 const exec = promisify(execFile);
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -145,8 +153,10 @@ async function generateAll(msg) {
   ].join("\n");
 
   const model = msg.model || "claude-haiku-4-5-20251001";
+  hlog(`spawning claude: ${CLAUDE_BIN} --model ${model}  (prompt ${prompt.length} chars)`);
   const { stdout, stderr } = await exec(CLAUDE_BIN, ["-p", prompt, "--model", model, "--output-format", "text"],
     { cwd: REPO, maxBuffer: 4 * 1024 * 1024 });
+  hlog(`claude returned: stdout=${stdout.length} stderr=${stderr.length}`);
   const map = extractJsonArray(stdout);
   // Return raw output + timing so the UI can explain a zero-fill result.
   return { map, count: map.length, ms: Date.now() - t0, model, fieldsReceived: (msg.fields || []).length,
@@ -154,14 +164,16 @@ async function generateAll(msg) {
 }
 
 // Never die silently — Chrome reports a bare "Native host has exited" otherwise.
-process.on("uncaughtException", (e) => { try { writeMessage({ error: "uncaughtException: " + (e.stack || e.message || e) }); } catch {} process.exit(0); });
-process.on("unhandledRejection", (e) => { try { writeMessage({ error: "unhandledRejection: " + (e && (e.stack || e.message) || e) }); } catch {} process.exit(0); });
+process.on("uncaughtException", (e) => { hlog("uncaughtException: " + (e.stack || e)); try { writeMessage({ error: "uncaughtException: " + (e.stack || e.message || e) }); } catch {} process.exit(0); });
+process.on("unhandledRejection", (e) => { hlog("unhandledRejection: " + (e && (e.stack || e.message) || e)); try { writeMessage({ error: "unhandledRejection: " + (e && (e.stack || e.message) || e) }); } catch {} process.exit(0); });
 
 (async () => {
+  hlog("waiting for message…");
   let msg;
   try { msg = await readMessage(); }
-  catch (e) { writeMessage({ error: "readMessage failed: " + (e.message || e) }); return; }
-  if (!msg) return;
+  catch (e) { hlog("readMessage failed: " + e); writeMessage({ error: "readMessage failed: " + (e.message || e) }); return; }
+  if (!msg) { hlog("no message (stdin closed empty)"); return; }
+  hlog(`message received: action=${msg.action} fields=${(msg.fields || []).length} bytes=${JSON.stringify(msg).length}`);
   try {
     if (msg.action === "echo") {
       // Diagnostic: confirms the host received a (possibly large) message intact.
@@ -175,7 +187,9 @@ process.on("unhandledRejection", (e) => { try { writeMessage({ error: "unhandled
     else if (msg.action === "generate") { writeMessage({ text: await runCLI(msg) }); }
     else if (msg.action === "tailor_resume") { writeMessage({ text: await tailorResume(msg) }); }
     else writeMessage({ text: "(unknown action)" });
+    hlog(`reply written for action=${msg.action}`);
   } catch (e) {
+    hlog("handler error: " + (e.stack || e));
     writeMessage({ error: String(e.message || e) });
   }
   process.exit(0);
