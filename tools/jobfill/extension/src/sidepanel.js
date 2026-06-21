@@ -33,6 +33,11 @@ function sendRun(tabId) {
   });
 }
 
+// promise wrapper around tabs.sendMessage
+function tabSend(tabId, msg) {
+  return new Promise((res) => chrome.tabs.sendMessage(tabId, msg, (r) => res(chrome.runtime.lastError ? { error: chrome.runtime.lastError.message } : r)));
+}
+
 $("#fill").addEventListener("click", async () => {
   const tabId = await activeTabId();
   $("#status").textContent = "Scanning form…";
@@ -43,6 +48,34 @@ $("#fill").addEventListener("click", async () => {
     return;
   }
   sendRun(tabId);
+});
+
+$("#genall").addEventListener("click", async () => {
+  const tabId = await activeTabId();
+  try { await ensureInjected(tabId); }
+  catch (e) { $("#status").textContent = "Can't run here: " + e.message; return; }
+
+  // 1) deterministic fill first (fast, free, accurate)
+  $("#status").textContent = "1/3 Filling known fields…";
+  const runResp = await tabSend(tabId, { type: "JOBFILL_RUN" });
+  if (runResp.error) { $("#status").textContent = runResp.error; return; }
+
+  // 2) serialize the whole form (incl. dropdown options) and ask Haiku for the rest
+  const ser = await tabSend(tabId, { type: "JOBFILL_SERIALIZE" });
+  if (ser.error) { $("#status").textContent = ser.error; return; }
+  $("#status").textContent = `2/3 Asking Haiku to complete ${ser.fields.length} fields…`;
+  const ctx = await context();
+  const gen = await chrome.runtime.sendMessage({ type: "JOBFILL_GENERATE_ALL", fields: ser.fields, context: ctx });
+  if (!gen || gen.error) {
+    $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — is the native host installed? (run native-host/install.sh). Deterministic fill still applied.";
+    render(runResp, tabId); return;
+  }
+
+  // 3) apply the agent's answers
+  const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map || [] });
+  if (applied.error) { $("#status").textContent = applied.error; return; }
+  $("#status").textContent = `3/3 Haiku filled ${applied.filled} more field(s). Review highlighted items, then submit manually.`;
+  render({ platform: runResp.platform, results: applied.results }, tabId);
 });
 
 function render({ platform, results }, tabId) {

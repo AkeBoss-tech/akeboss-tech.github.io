@@ -12,11 +12,22 @@
  */
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const exec = promisify(execFile);
-const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", ".."); // repo root
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const JOBFILL = path.resolve(HERE, "..");           // tools/jobfill
+const REPO = path.resolve(HERE, "..", "..", "..");  // repo root
+
+const safeRead = (rel, base = REPO) => { try { return readFileSync(path.join(base, rel), "utf8"); } catch { return ""; } };
+// Pull the first top-level JSON array out of model output (tolerates prose around it).
+function extractJsonArray(s) {
+  const a = s.indexOf("["), b = s.lastIndexOf("]");
+  if (a === -1 || b === -1 || b < a) return [];
+  try { return JSON.parse(s.slice(a, b + 1)); } catch { return []; }
+}
 
 // ---- native messaging framing ----
 function readMessage() {
@@ -78,15 +89,53 @@ async function tailorResume(msg) {
   return stdout.trim();
 }
 
+// Whole-form fill. The agent gets the resume + profile + notes and the full
+// field list. Dropdowns include their allowed options and MUST be matched exactly.
+async function generateAll(msg) {
+  const c = msg.context || {};
+  const resume = safeRead("career/cv.md") || safeRead("files/resume.tex");
+  const profile = safeRead("profile.json", JOBFILL);
+  const about = safeRead("about.md", JOBFILL);
+
+  // Render fields compactly; spell out dropdown options so the model can't guess.
+  const fieldLines = (msg.fields || []).map(f => {
+    const empty = !f.current ? " (EMPTY)" : "";
+    if (f.type === "select" && f.options) return `#${f.i} [dropdown] "${f.label}" — choose EXACTLY one of: ${JSON.stringify(f.options)}${empty}`;
+    if (f.type === "textarea") return `#${f.i} [long text] "${f.label}"${empty}`;
+    return `#${f.i} [${f.type}] "${f.label}"${empty}`;
+  }).join("\n");
+
+  const prompt = [
+    "You fill out job applications for a candidate, truthfully and in their voice.",
+    "=== RESUME ===", resume.slice(0, 6000),
+    "=== PROFILE (JSON) ===", profile,
+    "=== EXTRA NOTES ABOUT THE CANDIDATE ===", about || "(none)",
+    `=== TARGET ROLE ===\n${c.company} — ${c.role}\nJD (truncated):\n${(c.jd || "").slice(0, 3000)}`,
+    "=== FORM FIELDS ===", fieldLines,
+    "",
+    "Return ONLY a JSON array, one object per field you can answer: {\"i\": <number>, \"value\": \"<text>\"}.",
+    "RULES:",
+    "- For [dropdown] fields, value MUST be copied EXACTLY from that field's allowed options list — never invent a value, never paraphrase. If none fits, omit the field.",
+    "- For [long text] essays (why/describe/cover letter), write a specific, strong answer: lead with the company's need, one concrete proof point with a metric, no \"I am excited to apply\", 80-160 words.",
+    "- Prefer filling EMPTY fields; you may improve already-filled ones only if clearly better.",
+    "- SKIP (omit) any EEO / demographic / voluntary self-identification field, file uploads, and anything you cannot answer truthfully from the materials.",
+    "- NEVER invent facts (no fake employers, dates, GPA, work authorization). Output the JSON array and nothing else.",
+  ].join("\n");
+
+  const model = msg.model || "claude-haiku-4-5-20251001";
+  const { stdout } = await exec("claude", ["-p", prompt, "--model", model, "--output-format", "text"],
+    { cwd: REPO, maxBuffer: 4 * 1024 * 1024 });
+  return extractJsonArray(stdout);
+}
+
 (async () => {
   const msg = await readMessage();
   if (!msg) return;
   try {
-    let text;
-    if (msg.action === "generate") text = await runCLI(msg);
-    else if (msg.action === "tailor_resume") text = await tailorResume(msg);
-    else text = "(unknown action)";
-    writeMessage({ text });
+    if (msg.action === "generate_all") { writeMessage({ map: await generateAll(msg) }); }
+    else if (msg.action === "generate") { writeMessage({ text: await runCLI(msg) }); }
+    else if (msg.action === "tailor_resume") { writeMessage({ text: await tailorResume(msg) }); }
+    else writeMessage({ text: "(unknown action)" });
   } catch (e) {
     writeMessage({ error: String(e.message || e) });
   }

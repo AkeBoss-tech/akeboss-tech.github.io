@@ -63,6 +63,24 @@
     return { platform, plan };
   }
 
-  win_global().JobFill = Object.assign(win_global().JobFill || {}, { signature, planFill });
+  // Serialize a plan/results array into a JSON payload for the LLM agent.
+  // Includes each field's type, options, current value, and the deterministic
+  // suggestion so the agent can focus on what's still empty.
+  function serializeFields(items) {
+    return items.map((p, i) => {
+      const el = p.el; let type = "none", options, current = "", maxLength;
+      if (el) {
+        type = el.tagName === "SELECT" ? "select" : (el.tagName === "TEXTAREA" ? "textarea" : (el.type || "text"));
+        if (type === "select") {
+          options = [...el.options].map(o => o.textContent.trim()).filter(Boolean);
+          current = (el.options[el.selectedIndex] && el.options[el.selectedIndex].textContent.trim()) || "";
+        } else { current = el.value || ""; }
+        const ml = Number(el.maxLength); if (ml > 0) maxLength = ml;
+      }
+      return { i, label: p.label, key: p.key, tag: p.tag, type, options, maxLength, current, suggested: p.value ?? null };
+    });
+  }
+
+  win_global().JobFill = Object.assign(win_global().JobFill || {}, { signature, planFill, serializeFields });
   function win_global() { return typeof window !== "undefined" ? window : globalThis; }
 })();

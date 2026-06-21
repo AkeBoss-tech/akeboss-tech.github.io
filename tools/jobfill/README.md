@@ -23,6 +23,20 @@ machine.
  background.js ──Native Messaging──► jobfill-host.mjs ──► `claude -p` / `codex exec`
 ```
 
+## Two fill modes
+
+- **Detect & fill** — deterministic only. Fast, free, no agent. Fills the known
+  fields, flags the rest.
+- **✨ Generate all (Haiku)** — deterministic fill first, then a Claude **Haiku**
+  agent completes the rest (essays, leftover dropdowns) using your **resume
+  (`career/cv.md`), `profile.json`, and `about.md`**. It still routes EEO/uploads
+  to you and never submits. Requires the native host installed.
+  - **Dropdowns:** every `<select>`'s allowed options are serialized and sent to
+    the agent, which is required to copy one option **exactly** (no invented
+    values). This fixes the common "AI guesses a dropdown value that isn't there."
+  - Edit `about.md` (gitignored; copy from `about.example.md`) to steer answers,
+    voice, salary, locations, etc.
+
 ## The deterministic ↔ LLM boundary
 
 | Field kind | Handled by | Tag |

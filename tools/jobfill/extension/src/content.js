@@ -53,6 +53,27 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     });
     return true; // async
   }
+  if (msg.type === "JOBFILL_SERIALIZE") {
+    const items = window.__jobfill || [];
+    if (!items.length) { sendResponse({ error: "Run a scan first." }); return; }
+    sendResponse({ fields: window.JobFill.serializeFields(items) });
+    return;
+  }
+  if (msg.type === "JOBFILL_APPLY_ALL") {
+    const items = window.__jobfill || [];
+    let filled = 0;
+    for (const m of (msg.map || [])) {
+      const r = items[m.i];
+      if (!r || !r.el || m.skip || m.value == null || m.value === "") continue;
+      if (r.el.tagName === "SELECT") { if (!fillSelect(r.el, m.value)) continue; }
+      else setNativeValue(r.el, m.value);
+      r.el.style.outline = "2px solid #2563eb"; // blue = AI-filled
+      r.tag = "drafted"; r.value = m.value; r.status = "ai-filled";
+      filled++;
+    }
+    sendResponse({ filled, results: items.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status })) });
+    return;
+  }
   if (msg.type === "JOBFILL_INSERT_DRAFT") {
     const r = (window.__jobfill || [])[msg.i];
     if (r && r.el) { setNativeValue(r.el, msg.text); r.el.style.outline = "2px solid #2563eb"; r.status = "drafted-inserted"; sendResponse({ ok: true }); }

@@ -1,3 +1,5 @@
 # Real profile holds PII — never commit it.
 profile.json
+about.md
 native-host/com.*.json
+native-host/jobfill-host-launcher.sh

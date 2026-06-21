@@ -48,6 +48,17 @@ const checks = [
   ["unknown referral -> you", plan.some(p => p.key === "unknown" && /referral/.test(p.label))],
   ["resume upload -> you/manual", plan.some(p => p.key === "resume" && p.tag === "you")],
 ];
+// Serialization (what the "Generate all" agent receives) — dropdowns must carry options.
+const ser = window.JobFill.serializeFields(plan);
+const degree = ser.find(f => f.key === "degree");
+const auth = ser.find(f => f.key === "work_auth");
+console.log("\nDropdown payload the agent sees:");
+console.log(`  degree options:    ${JSON.stringify(degree?.options)}`);
+console.log(`  work_auth options: ${JSON.stringify(auth?.options)}`);
+checks.push(["serialize: degree dropdown exposes options", Array.isArray(degree?.options) && degree.options.includes("Bachelor of Science")]);
+checks.push(["serialize: work_auth dropdown exposes Yes/No", Array.isArray(auth?.options) && auth.options.includes("Yes") && auth.options.includes("No")]);
+checks.push(["serialize: select type tagged", degree?.type === "select"]);
+
 console.log("\nChecks:");
 let pass = 0;
 for (const [name, ok] of checks) { console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}`); if (ok) pass++; }
