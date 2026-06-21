@@ -13,6 +13,7 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { readFileSync, existsSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -20,6 +21,20 @@ const exec = promisify(execFile);
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const JOBFILL = path.resolve(HERE, "..");           // tools/jobfill
 const REPO = path.resolve(HERE, "..", "..", "..");  // repo root
+
+// Chrome launches native hosts with a minimal PATH (no homebrew, ~/.local/bin,
+// nvm, etc.), so CLI binaries often aren't found. Widen PATH and resolve the
+// CLI to an absolute path (overridable via env from the launcher).
+const EXTRA_PATHS = ["/opt/homebrew/bin", "/usr/local/bin", path.join(os.homedir(), ".local/bin"),
+  path.join(os.homedir(), ".bun/bin"), path.join(os.homedir(), ".npm-global/bin"), "/usr/bin", "/bin"];
+process.env.PATH = [...EXTRA_PATHS, process.env.PATH || ""].filter(Boolean).join(":");
+function resolveBin(name, envVar) {
+  if (process.env[envVar] && existsSync(process.env[envVar])) return process.env[envVar];
+  for (const d of EXTRA_PATHS) { const p = path.join(d, name); if (existsSync(p)) return p; }
+  return name; // last resort: rely on PATH
+}
+const CLAUDE_BIN = resolveBin("claude", "JOBFILL_CLAUDE_BIN");
+const CODEX_BIN = resolveBin("codex", "JOBFILL_CODEX_BIN");
 
 const safeRead = (rel, base = REPO) => { try { return readFileSync(path.join(base, rel), "utf8"); } catch { return ""; } };
 // Pull the first top-level JSON array out of model output (tolerates prose around it).
@@ -68,12 +83,12 @@ async function runCLI(msg) {
   const prompt = buildPrompt(msg);
   if (msg.runner === "codex") {
     // codex exec runs headless; read-only sandbox so it can't modify files for a generate task
-    const { stdout } = await exec("codex", ["exec", "--sandbox", "read-only", prompt],
+    const { stdout } = await exec(CODEX_BIN, ["exec", "--sandbox", "read-only", prompt],
       { cwd: REPO, maxBuffer: 1024 * 1024 });
     return stdout.trim();
   }
   // default: claude code headless. -p prints a single turn to stdout.
-  const { stdout } = await exec("claude", ["-p", prompt, "--output-format", "text"],
+  const { stdout } = await exec(CLAUDE_BIN, ["-p", prompt, "--output-format", "text"],
     { cwd: REPO, maxBuffer: 1024 * 1024 });
   return stdout.trim();
 }
@@ -84,7 +99,7 @@ async function tailorResume(msg) {
   const c = msg.context || {};
   const prompt = `Use the cover-letter skill to generate a tailored cover letter for ${c.company} — ${c.role}, ` +
     `compile it to PDF under files/cover-letters/, and reply with the output path. Do not commit.`;
-  const { stdout } = await exec("claude", ["-p", prompt, "--allowedTools", "Bash,Edit,Write,Read",
+  const { stdout } = await exec(CLAUDE_BIN, ["-p", prompt, "--allowedTools", "Bash,Edit,Write,Read",
     "--output-format", "text"], { cwd: REPO, maxBuffer: 2 * 1024 * 1024 });
   return stdout.trim();
 }
@@ -123,7 +138,7 @@ async function generateAll(msg) {
   ].join("\n");
 
   const model = msg.model || "claude-haiku-4-5-20251001";
-  const { stdout } = await exec("claude", ["-p", prompt, "--model", model, "--output-format", "text"],
+  const { stdout } = await exec(CLAUDE_BIN, ["-p", prompt, "--model", model, "--output-format", "text"],
     { cwd: REPO, maxBuffer: 4 * 1024 * 1024 });
   return extractJsonArray(stdout);
 }
@@ -132,7 +147,11 @@ async function generateAll(msg) {
   const msg = await readMessage();
   if (!msg) return;
   try {
-    if (msg.action === "generate_all") { writeMessage({ map: await generateAll(msg) }); }
+    if (msg.action === "ping") {
+      writeMessage({ ok: true, node: process.execPath, claude: CLAUDE_BIN, claudeFound: existsSync(CLAUDE_BIN),
+        codex: CODEX_BIN, codexFound: existsSync(CODEX_BIN), repo: REPO });
+    }
+    else if (msg.action === "generate_all") { writeMessage({ map: await generateAll(msg) }); }
     else if (msg.action === "generate") { writeMessage({ text: await runCLI(msg) }); }
     else if (msg.action === "tailor_resume") { writeMessage({ text: await tailorResume(msg) }); }
     else writeMessage({ text: "(unknown action)" });

@@ -88,6 +88,33 @@ cd tools/jobfill && node test/run-sample.mjs
 Prints the fill plan + tags and asserts 10 behaviors (auto-fills identity, maps
 work-auth/GPA, routes essays to the LLM, refuses EEO/unknown/file fields).
 
+## Troubleshooting "Generate all"
+
+The deterministic "Detect & fill" works with zero setup. "Generate all" needs
+the native host, which talks to your `claude` CLI. If it fails:
+
+1. **Register the host** (most common cause — it's a one-time step):
+   ```bash
+   cd tools/jobfill/native-host && ./install.sh <EXTENSION_ID>   # then restart Chrome
+   ```
+   Get `<EXTENSION_ID>` from `chrome://extensions`.
+2. **Verify the host + that `claude` resolves — no Chrome, no tokens:**
+   ```bash
+   node tools/jobfill/native-host/selftest.mjs ping
+   # -> { ok:true, claude:"/…/claude", claudeFound:true, … }
+   ```
+   If `claudeFound:false`, install the Claude CLI or set `JOBFILL_CLAUDE_BIN`.
+3. **Real end-to-end test (uses tokens):**
+   ```bash
+   node tools/jobfill/native-host/selftest.mjs gen   # -> {"map":[{"i":0,"value":"Yes"}, …]}
+   ```
+4. **See the real error in Chrome:** `chrome://extensions` → JobFill → "service
+   worker" → Console. The side panel also shows the host's error message.
+
+Note: Chrome launches the host with a minimal PATH, so the host widens PATH and
+resolves `claude` to an absolute path (homebrew, `~/.local/bin`, nvm). `install.sh`
+also bakes the absolute paths into the launcher.
+
 ## Reuse / prior art studied
 
 - **Open source to fork ideas from:** [berellevy/job_app_filler](https://github.com/berellevy/job_app_filler)
