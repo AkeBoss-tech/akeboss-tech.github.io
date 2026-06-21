@@ -191,9 +191,9 @@ $("#genall").addEventListener("click", async () => {
     log("applying answers…", gen.map.slice(0, 10).map(m => ({ i: m.i, v: String(m.value).slice(0, 30) })));
     const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map });
     if (!applied || applied.error) { log("apply failed", applied); $("#status").textContent = "Apply failed: " + (applied?.error || "no response"); return; }
-    log("done", { returned: gen.map.length, filled: applied.filled });
     const final = { platform: runResp.platform, results: applied.results };
-    $("#status").textContent = `Done: Haiku returned ${gen.map.length}, filled ${applied.filled} in ${ms}ms. Review highlighted items, then submit manually.`;
+    log("done", { returned: gen.map.length, filled: applied.filled, unfilled: applied.unfilled });
+    $("#status").textContent = `Done: filled ${applied.filled}. 🔴 ${applied.unfilled} still need you — they're outlined red on the page. Review, then submit manually.`;
     render(final, tabId);
     persist(final);
   } catch (e) {

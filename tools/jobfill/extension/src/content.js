@@ -90,6 +90,44 @@ async function fillCustomSelect(el, value) {
   return false;
 }
 
+// Does a field currently have a value?
+function isFilled(el) {
+  if (!el) return false;
+  if (el.tagName === "SELECT") return el.selectedIndex > 0 && el.value !== "";
+  if (el.type === "checkbox" || el.type === "radio") return true; // can't judge a group; don't flag
+  if (el.type === "file") return el.files && el.files.length > 0;
+  if (isCustomCombobox(el)) {
+    const txt = (comboControl(el).textContent || "").replace(/select\.\.\.|search/ig, "").trim();
+    return /\S/.test(txt) || /\S/.test(el.value || "");
+  }
+  return /\S/.test(el.value || "");
+}
+
+// After filling, mark every still-empty field red on the page so the user can
+// scan through and finish them. Returns {filled, unfilled} and updates tags.
+function flagPass() {
+  const items = window.__jobfill || [];
+  let filled = 0, unfilled = 0;
+  for (const r of items) {
+    if (!r.el) continue;
+    if (r.el.type === "checkbox" || r.el.type === "radio") continue;
+    const needsFile = r.key === "resume" || r.el.type === "file";
+    if (!needsFile && isFilled(r.el)) {
+      filled++;
+      if (!r.el.style.outline || r.el.style.outline.includes("dc2626"))
+        r.el.style.outline = r.status === "ai-filled" ? "2px solid #2563eb" : (r.tag === "auto" ? "2px solid #16a34a" : "2px solid #d97706");
+      r.el.title = "";
+    } else {
+      r.el.style.outline = "2px solid #dc2626"; // red = you still need to fill this
+      r.el.style.outlineOffset = "1px";
+      r.el.title = "JobFill: needs your input" + (needsFile ? " (attach file)" : "");
+      r.tag = "you"; r.status = "needs-you";
+      unfilled++;
+    }
+  }
+  return { filled, unfilled };
+}
+
 function run(profile) {
   const { platform, plan } = window.JobFill.planFill(profile, document, window);
   const results = [];
@@ -105,7 +143,8 @@ function run(profile) {
     results.push({ el: p.el, label: p.label, key: p.key, tag: p.tag, value: p.value, status });
   }
   window.__jobfill = results;
-  return { platform, results };
+  const fp = flagPass();
+  return { platform, results, unfilled: fp.unfilled };
 }
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
@@ -160,7 +199,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         r.tag = "drafted"; r.value = m.value; r.status = "ai-filled";
         filled++;
       }
-      sendResponse({ filled, results: items.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status })) });
+      const fp = flagPass();
+      sendResponse({ filled, unfilled: fp.unfilled, results: items.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status })) });
     })();
     return true; // async
   }
