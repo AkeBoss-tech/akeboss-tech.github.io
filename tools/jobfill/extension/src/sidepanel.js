@@ -2,6 +2,19 @@
 
 const $ = (s) => document.querySelector(s);
 const TAGS = ["auto", "verify", "drafted", "you", "blocker"];
+const HOST = "com.akash.jobfill";
+
+// Call the native host directly from the panel (a live page) instead of routing
+// through the background service worker, which MV3 may suspend during a long
+// claude call. Returns the host's reply or { error }.
+function nativeSend(msg) {
+  return new Promise((res) => {
+    try {
+      chrome.runtime.sendNativeMessage(HOST, msg, (r) =>
+        res(chrome.runtime.lastError ? { error: chrome.runtime.lastError.message } : r));
+    } catch (e) { res({ error: String(e.message || e) }); }
+  });
+}
 
 async function activeTabId() {
   const [t] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -63,18 +76,24 @@ $("#genall").addEventListener("click", async () => {
   // 2) serialize the whole form (incl. dropdown options) and ask Haiku for the rest
   const ser = await tabSend(tabId, { type: "JOBFILL_SERIALIZE" });
   if (ser.error) { $("#status").textContent = ser.error; return; }
-  $("#status").textContent = `2/3 Asking Haiku to complete ${ser.fields.length} fields…`;
+  $("#status").textContent = `2/3 Asking Haiku to complete ${ser.fields.length} fields… (can take 10–40s)`;
   const ctx = await context();
-  const gen = await chrome.runtime.sendMessage({ type: "JOBFILL_GENERATE_ALL", fields: ser.fields, context: ctx });
+  const gen = await nativeSend({ action: "generate_all", fields: ser.fields, context: ctx, model: "claude-haiku-4-5-20251001" });
+  console.log("[JobFill] generate_all reply:", gen);
   if (!gen || gen.error) {
-    $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — is the native host installed? (run native-host/install.sh). Deterministic fill still applied.";
+    $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — host installed + Chrome restarted? See chrome://extensions → service worker console. Deterministic fill still applied.";
+    render(runResp, tabId); return;
+  }
+  if (!gen.map || !gen.map.length) {
+    $("#status").textContent = `Haiku returned no fillable answers (got ${gen.count ?? 0}). Raw: ${(gen.raw || "").slice(0, 120)}`;
+    console.log("[JobFill] raw model output:", gen.raw);
     render(runResp, tabId); return;
   }
 
   // 3) apply the agent's answers
-  const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map || [] });
+  const applied = await tabSend(tabId, { type: "JOBFILL_APPLY_ALL", map: gen.map });
   if (applied.error) { $("#status").textContent = applied.error; return; }
-  $("#status").textContent = `3/3 Haiku filled ${applied.filled} more field(s). Review highlighted items, then submit manually.`;
+  $("#status").textContent = `3/3 Haiku returned ${gen.map.length}, filled ${applied.filled}. Review highlighted items, then submit manually.`;
   render({ platform: runResp.platform, results: applied.results }, tabId);
 });
 

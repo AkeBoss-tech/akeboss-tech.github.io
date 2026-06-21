@@ -138,9 +138,11 @@ async function generateAll(msg) {
   ].join("\n");
 
   const model = msg.model || "claude-haiku-4-5-20251001";
-  const { stdout } = await exec(CLAUDE_BIN, ["-p", prompt, "--model", model, "--output-format", "text"],
+  const { stdout, stderr } = await exec(CLAUDE_BIN, ["-p", prompt, "--model", model, "--output-format", "text"],
     { cwd: REPO, maxBuffer: 4 * 1024 * 1024 });
-  return extractJsonArray(stdout);
+  const map = extractJsonArray(stdout);
+  // Return raw output too so the UI can explain a zero-fill result.
+  return { map, count: map.length, raw: (stdout || stderr || "").slice(0, 1000) };
 }
 
 (async () => {
@@ -151,7 +153,7 @@ async function generateAll(msg) {
       writeMessage({ ok: true, node: process.execPath, claude: CLAUDE_BIN, claudeFound: existsSync(CLAUDE_BIN),
         codex: CODEX_BIN, codexFound: existsSync(CODEX_BIN), repo: REPO });
     }
-    else if (msg.action === "generate_all") { writeMessage({ map: await generateAll(msg) }); }
+    else if (msg.action === "generate_all") { writeMessage(await generateAll(msg)); }
     else if (msg.action === "generate") { writeMessage({ text: await runCLI(msg) }); }
     else if (msg.action === "tailor_resume") { writeMessage({ text: await tailorResume(msg) }); }
     else writeMessage({ text: "(unknown action)" });
