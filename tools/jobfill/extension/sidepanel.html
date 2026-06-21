@@ -21,6 +21,7 @@
   textarea { width: 100%; box-sizing: border-box; height: 70px; }
   #gate { margin-top: 10px; padding: 8px; border: 1px dashed #d97706; border-radius: 6px; font-size: 12px; }
   small { color: #777; }
+  #preview { width: 100%; height: 360px; border: 1px solid #ccc; border-radius: 6px; margin-top: 8px; }
   #log { background: #0b1021; color: #c8d3f5; font: 11px/1.45 ui-monospace, Menlo, monospace; padding: 8px; border-radius: 6px; max-height: 280px; overflow: auto; white-space: pre-wrap; word-break: break-word; margin-top: 8px; }
 </style>
 </head>
@@ -30,10 +31,15 @@
   <div class="row">
     <input type="file" id="profileFile" accept="application/json" />
     <button id="fill" class="primary">Detect &amp; fill</button>
-    <button id="genall" title="Deterministic fill, then Claude Haiku finishes the rest (essays, dropdowns)">✨ Generate all (Haiku)</button>
+    <button id="genall" title="Deterministic fill, then the agent finishes the rest (essays, dropdowns)">✨ Generate all</button>
+    <select id="runner" title="Which model runs the agent">
+      <option value="claude">Claude Haiku</option>
+      <option value="codex">codex</option>
+    </select>
   </div>
   <div class="row">
     <select id="resumeVariant" title="Which tailored resume to attach">
+      <option value="auto">🤖 Auto-pick (agent)</option>
       <option value="default">resume (default)</option>
       <option value="ai-ml">AI/ML engineer</option>
       <option value="ai-infra">AI infra/platform</option>
@@ -45,8 +51,14 @@
       <option value="consulting">consulting AI</option>
       <option value="enterprise">enterprise AI</option>
     </select>
-    <button id="attachResume" title="Attach the chosen resume PDF to the page's file input">📎 Attach resume</button>
+    <button id="attachResume" title="Attach the chosen resume PDF to the page's file input">📎 Attach</button>
+    <button id="previewResume" title="Preview the resume PDF in this panel">👁 Preview</button>
   </div>
+  <div class="row">
+    <input type="file" id="localFile" accept="application/pdf,.pdf" title="Upload a PDF from your machine" />
+    <button id="attachLocal" title="Attach the chosen local PDF to the page">📎 Attach this file</button>
+  </div>
+  <iframe id="preview" hidden></iframe>
   <small id="status">Import your profile.json, then open an application page and click “Detect &amp; fill”.</small>
   <div class="counts" id="counts"></div>
   <div id="list"></div>

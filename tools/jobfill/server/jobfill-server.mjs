@@ -31,6 +31,14 @@ const RESUMES = {
 const which = (n) => { try { return execFileSync("which", [n]).toString().trim(); } catch { return null; } };
 const log = (...a) => console.log("\x1b[90m" + new Date().toISOString().slice(11, 19) + "\x1b[0m", ...a);
 function extractJsonArray(s) { const a = s.indexOf("["), b = s.lastIndexOf("]"); if (a < 0 || b < 0 || b < a) return []; try { return JSON.parse(s.slice(a, b + 1)); } catch { return []; } }
+function extractJsonObject(s) { const a = s.indexOf("{"), b = s.lastIndexOf("}"); if (a < 0 || b < 0 || b < a) return {}; try { return JSON.parse(s.slice(a, b + 1)); } catch { return {}; } }
+const VARIANT_DESC = {
+  default: "general software engineering", "ai-ml": "AI/ML & applied AI engineering (RAG, agents, LLMs)",
+  "ai-infra": "AI infrastructure/platform (distributed systems, CUDA, inference)", founding: "founding engineer at a startup (0->1, full-stack, shipping)",
+  quant: "quant developer (trading firms, C++/CUDA, probability)", "comp-bio": "computational biology / bioinformatics",
+  research: "research engineer (experiments, model training, breadth)", finance: "finance AI automation (banks, insurers, workflows)",
+  consulting: "consulting / professional-services AI (client delivery)", enterprise: "enterprise AI automation (insurance/legal/healthcare docs)",
+};
 
 const PRINCIPLES = "Follow killer-cover-letter rules: business case not personal statement; lead with the company's need; one Problem->Solution->Impact proof with a metric; no 'I am excited to apply'; sound human.";
 
@@ -107,6 +115,17 @@ const server = http.createServer(async (req, res) => {
       const map = extractJsonArray(out);
       log(`  → ${map.length} answers in ${Date.now() - t0}ms`);
       return send(res, 200, { map, count: map.length, ms: Date.now() - t0, raw: out.slice(0, 1500) });
+    }
+    if (req.method === "POST" && req.url === "/pick_resume") {
+      const b = await body(req); const c = b.context || {};
+      const prompt = "Pick the single best resume variant for this job. Options:\n" +
+        Object.entries(VARIANT_DESC).map(([k, d]) => `- ${k}: ${d}`).join("\n") +
+        `\n\nJob: ${c.company} — ${c.role}\nJD:\n${(c.jd || "").slice(0, 2500)}\n\nReturn ONLY JSON: {"variant":"<one key from the list>","reason":"<one short sentence>"}.`;
+      const out = await runCLI(prompt, b);
+      const pick = extractJsonObject(out);
+      if (!VARIANT_DESC[pick.variant]) pick.variant = "default";
+      log(`pick_resume → ${pick.variant}`);
+      return send(res, 200, { variant: pick.variant, reason: pick.reason || "" });
     }
     if (req.method === "POST" && req.url === "/generate") {
       const b = await body(req); const c = b.context || {};

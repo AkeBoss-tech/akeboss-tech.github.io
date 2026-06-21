@@ -153,23 +153,57 @@ function abToB64(buf) {
   for (let i = 0; i < b.length; i += chunk) s += String.fromCharCode.apply(null, b.subarray(i, i + chunk));
   return btoa(s);
 }
-$("#attachResume").addEventListener("click", async () => {
+// Resolve the variant to attach: if "auto", ask the agent to pick from the JD.
+async function resolveVariant() {
+  let v = $("#resumeVariant").value;
+  if (v !== "auto") return v;
+  $("#status").textContent = "Asking the agent to pick the best resume…";
+  const ctx = await context();
+  const pick = await serverSend("/pick_resume", { context: ctx, runner: $("#runner").value });
+  if (pick.error || !pick.variant) { $("#status").textContent = "Auto-pick failed (" + (pick.error || "no variant") + ") — using default."; return "default"; }
+  $("#resumeVariant").value = pick.variant;
+  log("agent picked resume", pick);
+  $("#status").textContent = `Agent picked “${pick.variant}”: ${pick.reason || ""}`;
+  return pick.variant;
+}
+
+async function attachB64(b64, filename) {
   const tabId = await activeTabId();
-  const v = $("#resumeVariant").value;
-  $("#status").textContent = "Fetching resume PDF…";
+  await ensureInjected(tabId);
+  const resp = await tabSend(tabId, { type: "JOBFILL_ATTACH_RESUME", b64, filename });
+  log("attach", { filename, attached: resp?.attached, error: resp?.error });
+  if (resp?.error) { $("#status").textContent = resp.error; return; }
+  $("#status").textContent = resp.attached > 0
+    ? `📎 Attached ${filename} to ${resp.attached} input(s) — verify it shows before submitting.`
+    : "No standard file input found — this site likely uses a custom uploader; drag the PDF in manually.";
+}
+
+$("#attachResume").addEventListener("click", async () => {
+  const v = await resolveVariant();
   let b64;
   try {
     const r = await fetch(SERVER + "/resume?v=" + encodeURIComponent(v));
     if (!r.ok) { $("#status").textContent = `Resume fetch failed (${r.status}).`; return; }
     b64 = abToB64(await r.arrayBuffer());
   } catch (e) { $("#status").textContent = "Connector offline — can't fetch resume."; return; }
-  await ensureInjected(tabId);
-  const resp = await tabSend(tabId, { type: "JOBFILL_ATTACH_RESUME", b64, filename: "Akash_Dubey_Resume.pdf" });
-  log("attach resume", { variant: v, attached: resp?.attached, error: resp?.error });
-  if (resp?.error) { $("#status").textContent = resp.error; return; }
-  $("#status").textContent = resp.attached > 0
-    ? `📎 Attached resume to ${resp.attached} file input(s) — verify it shows before submitting.`
-    : "No standard file input found — this site likely uses a custom uploader; drag the PDF in manually.";
+  await attachB64(b64, "Akash_Dubey_Resume.pdf");
+});
+
+// Preview the resume PDF in-panel (local file if chosen, else the server variant).
+$("#previewResume").addEventListener("click", async () => {
+  const f = $("#preview"); const local = $("#localFile").files[0];
+  if (local) { f.src = URL.createObjectURL(local); }
+  else { const v = $("#resumeVariant").value === "auto" ? "default" : $("#resumeVariant").value; f.src = SERVER + "/resume?v=" + encodeURIComponent(v) + "#toolbar=0"; }
+  f.hidden = false;
+});
+
+// Upload a PDF from your machine and attach it.
+$("#attachLocal").addEventListener("click", async () => {
+  const file = $("#localFile").files[0];
+  if (!file) { $("#status").textContent = "Choose a PDF first (the file picker above)."; return; }
+  $("#status").textContent = "Reading " + file.name + "…";
+  const b64 = abToB64(await file.arrayBuffer());
+  await attachB64(b64, file.name);
 });
 
 $("#genall").addEventListener("click", async () => {
@@ -206,7 +240,7 @@ $("#genall").addEventListener("click", async () => {
     $("#status").textContent = `3/4 Asking Haiku to complete ${need.length} fields… (10–60s)`;
     log("→ POST /generate_all to connector…", { fields: need.length });
     const t0 = performance.now();
-    const gen = await serverSend("/generate_all", { fields: need, context: ctx, model: "claude-haiku-4-5-20251001" });
+    const gen = await serverSend("/generate_all", { fields: need, context: ctx, model: "claude-haiku-4-5-20251001", runner: $("#runner").value });
     const ms = Math.round(performance.now() - t0);
     if (!gen || gen.error) { log("connector error", { ms, error: gen?.error }); $("#status").textContent = (gen?.error || "no response") + " (see debug log)"; render(runResp, tabId); return; }
     log("← connector replied", { ms, serverMs: gen.ms, count: gen.count });
