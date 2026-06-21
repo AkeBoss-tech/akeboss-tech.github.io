@@ -3,6 +3,23 @@
 const $ = (s) => document.querySelector(s);
 const TAGS = ["auto", "verify", "drafted", "you", "blocker"];
 const HOST = "com.akash.jobfill";
+const SERVER = "http://localhost:9291";
+
+// Talk to the local connector server (run: node tools/jobfill/server/jobfill-server.mjs).
+// Far simpler/robust than Chrome Native Messaging — full PATH, no macOS TCC.
+async function serverSend(path, payload) {
+  try {
+    const r = await fetch(SERVER + path, {
+      method: payload ? "POST" : "GET",
+      headers: { "Content-Type": "application/json" },
+      body: payload ? JSON.stringify(payload) : undefined,
+    });
+    if (!r.ok) return { error: `server ${r.status}` };
+    return await r.json();
+  } catch (e) {
+    return { error: "connector not running on :9291 — start it:  node tools/jobfill/server/jobfill-server.mjs" };
+  }
+}
 
 // ---- debug log (visible in the panel + console) ----
 function log(msg, obj) {
@@ -79,6 +96,12 @@ chrome.tabs.onUpdated.addListener((tabId, info) => {
   if (tabId === CURRENT.tabId && (info.status === "complete" || info.url)) refreshContext();
 });
 document.addEventListener("DOMContentLoaded", refreshContext);
+// Surface connector status on open so a missing server is obvious.
+document.addEventListener("DOMContentLoaded", async () => {
+  const p = await serverSend("/ping");
+  if (p.error) log("connector: OFFLINE — " + p.error);
+  else log("connector: online", { claude: !!p.claude, codex: !!p.codex });
+});
 
 // Import profile.json into extension storage
 $("#profileFile").addEventListener("change", async (e) => {
@@ -155,12 +178,12 @@ $("#genall").addEventListener("click", async () => {
     ctx.jd = (ctx.jd || "").slice(0, 2500);
     log("page context", { company: (ctx.company || "").slice(0, 50), role: (ctx.role || "").slice(0, 50), jdChars: ctx.jd.length });
     $("#status").textContent = `3/4 Asking Haiku to complete ${need.length} fields… (10–60s)`;
-    log("→ sending to native host (claude haiku)…", { fields: need.length });
+    log("→ POST /generate_all to connector…", { fields: need.length });
     const t0 = performance.now();
-    const gen = await nativeSend({ action: "generate_all", fields: need, context: ctx, model: "claude-haiku-4-5-20251001" });
+    const gen = await serverSend("/generate_all", { fields: need, context: ctx, model: "claude-haiku-4-5-20251001" });
     const ms = Math.round(performance.now() - t0);
-    if (!gen || gen.error) { log("host error", { ms, error: gen?.error }); $("#status").textContent = "Haiku step failed: " + (gen?.error || "no response") + " — check the debug log."; render(runResp, tabId); return; }
-    log("← host replied", { ms, hostMs: gen.ms, count: gen.count, fieldsReceived: gen.fieldsReceived });
+    if (!gen || gen.error) { log("connector error", { ms, error: gen?.error }); $("#status").textContent = (gen?.error || "no response") + " (see debug log)"; render(runResp, tabId); return; }
+    log("← connector replied", { ms, serverMs: gen.ms, count: gen.count });
     log("raw model output (truncated)", (gen.raw || "(empty)").slice(0, 600));
     if (!gen.map || !gen.map.length) { $("#status").textContent = `Haiku returned 0 answers (see debug log).`; render(runResp, tabId); return; }
 
@@ -204,8 +227,7 @@ function render({ platform, results }, tabId) {
       const gen = btn("Generate", async () => {
         gen.textContent = "Generating…";
         const ctx = await context();
-        const resp = await chrome.runtime.sendMessage({
-          type: "JOBFILL_GENERATE",
+        const resp = await serverSend("/generate", {
           kind: /cover letter/i.test(r.label) ? "cover_letter" : "answer",
           prompt: r.label, context: { ...ctx, question: r.label },
         });

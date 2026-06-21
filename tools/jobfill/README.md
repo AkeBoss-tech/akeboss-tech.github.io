@@ -50,7 +50,32 @@ machine.
 Rules live in `extension/src/fieldmap.js` (`RULES` = synonym regexes,
 `ATS` = per-platform selectors). Add a platform by adding an adapter array.
 
-## Setup (macOS, ~10 min)
+## Setup (recommended: local connector server)
+
+The agent calls run through a tiny local HTTP server — far simpler and more
+robust than Chrome Native Messaging (no macOS TCC / hardened-runtime exec
+blocks, full PATH, and you watch the agent live in your terminal).
+
+1. **Load the extension:** `chrome://extensions` → Developer mode → Load unpacked
+   → `tools/jobfill/extension`.
+2. **Start the connector** (leave it running in a terminal):
+   ```bash
+   node tools/jobfill/server/jobfill-server.mjs       # http://localhost:9291
+   ```
+   Needs `claude` (and/or `codex`) on your PATH. Watch this terminal to see each
+   request and how long the agent took.
+3. **Use it:** open an application → side panel → import `profile.json` once →
+   "Detect & fill" or "✨ Generate all". The panel hits `localhost:9291`.
+
+The extension's debug log shows `connector: online` on open; if the server isn't
+running it says exactly how to start it. The host_permissions already include
+`http://*/*`, so no extra permission is needed.
+
+> Legacy: a Chrome Native Messaging host also exists (`native-host/`), but the
+> server is preferred. It avoids the macOS TCC issue where Chrome can't exec a
+> launcher inside `~/Documents`.
+
+## Native-messaging setup (legacy, macOS)
 
 1. **Profile:** `profile.json` already holds your data (gitignored). Edit freely.
 2. **Load the extension:** `chrome://extensions` → enable Developer mode →
