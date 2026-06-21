@@ -123,9 +123,12 @@ async function tailorResume(msg) {
 async function generateAll(msg) {
   const t0 = Date.now();
   const c = msg.context || {};
-  const resume = safeRead("career/cv.md") || safeRead("files/resume.tex");
-  const profile = safeRead("profile.json", JOBFILL);
-  const about = safeRead("about.md", JOBFILL);
+  // Prefer data sitting next to the host (the ~/.jobfill runtime, outside the
+  // TCC-protected ~/Documents); fall back to the repo when run locally.
+  const resume = safeRead("resume.md", HERE) || safeRead("career/cv.md") || safeRead("files/resume.tex");
+  const profile = safeRead("profile.json", HERE) || safeRead("profile.json", JOBFILL);
+  const about = safeRead("about.md", HERE) || safeRead("about.md", JOBFILL);
+  hlog(`data sizes: resume=${resume.length} profile=${profile.length} about=${about.length}`);
 
   // Render fields compactly; spell out dropdown options so the model can't guess.
   const fieldLines = (msg.fields || []).map(f => {
