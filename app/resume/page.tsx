@@ -1,4 +1,5 @@
 import { LlmMarkdown } from '@/components/llm-markdown'
+import { ResumeLink } from '@/components/resume-link'
 import { buildResumeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
 
@@ -24,12 +25,12 @@ export default function ResumePage() {
             This version is automatically compiled from LaTeX.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="/files/resume.pdf" target="_blank" rel="noreferrer" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
+            <ResumeLink source="resume_page" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
               Open PDF
-            </a>
-            <a href="/files/resume.pdf" download className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
+            </ResumeLink>
+            <ResumeLink source="resume_page" download className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
               Download PDF
-            </a>
+            </ResumeLink>
             <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
               LinkedIn
             </a>

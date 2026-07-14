@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
+import { ResumeLink } from '@/components/resume-link'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 const nav = [
@@ -72,15 +73,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <nav className="hidden items-center gap-2 text-sm text-text-muted md:flex">
               {nav.map((item) => (
                 item.external ? (
-                  <a
+                  <ResumeLink
                     key={item.href}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
+                    source="site_navigation"
                     className="story-link rounded-full px-4 py-2 transition-all duration-300 hover:bg-white/6"
                   >
                     {item.label}
-                  </a>
+                  </ResumeLink>
                 ) : (
                   <Link
                     key={item.href}
@@ -98,16 +97,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <div className="grid gap-1 border-t border-white/10 pb-3 pt-2">
                 {nav.map((item) => (
                   item.external ? (
-                    <a
+                    <ResumeLink
                       key={item.href}
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
+                      source="site_navigation"
                       onClick={() => setMobileNavOpen(false)}
                       className="rounded-2xl px-3 py-3 transition-all duration-300 hover:bg-white/8"
                     >
                       {item.label}
-                    </a>
+                    </ResumeLink>
                   ) : (
                     <Link
                       key={item.href}

@@ -514,7 +514,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
   const endLinksRef = useRef<HTMLElement | null>(null)
   const scrollLabelRef = useRef<HTMLDivElement | null>(null)
   const [typedHeadlineLength, setTypedHeadlineLength] = useState(0)
-  const headlineText = 'What I’m working on now.'
+  const headlineText = 'Make machines that makes things. Do actions that enable action.'
   const { resolvedTheme } = useTheme()
   const currentTheme = resolvedTheme === 'light' ? 'light' : 'dark'
 
