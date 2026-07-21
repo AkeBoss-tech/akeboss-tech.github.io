@@ -1,5 +1,43 @@
 import type { Post, Project } from '@/lib/content'
 
+export const hostedSites = [
+  {
+    title: 'Operational AI Field Index',
+    description: 'An evidence-labeled research interface for Palantir, operational AI, organizations, and an intelligence watchlist.',
+    href: 'https://akashdubey.me/palantir-operational-ai-hub/',
+    label: 'Research interface',
+    projectHref: undefined,
+  },
+  {
+    title: 'Kenny’s Racing Game',
+    description: 'A playable 3-D racing game built in Godot, with practice, versus, two-player, and Grand Prix modes.',
+    href: 'https://akeboss-tech.github.io/ASD-final-project/',
+    label: 'Playable demo',
+    projectHref: '/projects/kenny-racing',
+  },
+  {
+    title: 'Rutgers Bus Analysis',
+    description: 'An interactive map and visual analysis of Rutgers bus-system patterns, reliability, and load data.',
+    href: 'https://akeboss-tech.github.io/RutgersBusAnalysis/',
+    label: 'Data visualization',
+    projectHref: '/projects/rutgers-bus-analysis',
+  },
+  {
+    title: 'ESL Worksheet Generator',
+    description: 'A browser-based worksheet generator for vocabulary, fill-in-the-blank, and sentence-reordering practice.',
+    href: 'https://akeboss-tech.github.io/ESL-Worksheet/',
+    label: 'Learning tool',
+    projectHref: '/projects/esl-worksheet',
+  },
+  {
+    title: 'Puerto Rico Migration',
+    description: 'A public-facing data story exploring migration patterns and the forces shaping them.',
+    href: 'https://akashdubey.me/puerto-rico-migration/',
+    label: 'Data story',
+    projectHref: '/projects/puerto-rico-migration',
+  },
+] as const
+
 export const featuredProjectSlugs = ['scarlet-sync', 'lykke', 'hic-tad-analysis', 'nostradamus']
 
 export const projectCategories = [

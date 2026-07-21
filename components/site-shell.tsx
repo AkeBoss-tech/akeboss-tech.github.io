@@ -12,6 +12,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 
 const nav = [
   { href: '/projects', label: 'Projects' },
+  { href: '/sites', label: 'Sites' },
   { href: '/wiki', label: 'Wiki' },
   { href: '/writing', label: 'Writing' },
   { href: '/files/resume.pdf', label: 'Resume', external: true },
@@ -186,6 +187,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       </Link>
                       <Link href="/writing" className="story-link text-text-muted hover:text-text">
                         Writing
+                      </Link>
+                      <Link href="/sites" className="story-link text-text-muted hover:text-text">
+                        Sites
                       </Link>
                       <Link href="/resume" className="story-link text-text-muted hover:text-text">
                         Resume

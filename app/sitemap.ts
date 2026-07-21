@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/',
     '/about',
     '/projects',
+    '/sites',
     '/wiki',
     '/writing',
     '/story',
@@ -23,28 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }))
 
-  const markdownEntries = staticPages.map((path) => ({
-    url: absoluteUrl(path === '/' ? '/markdown' : `/markdown${path}`),
-    lastModified: new Date(),
-  }))
-
   const projectEntries = getProjects().map((project) => ({
     url: absoluteUrl(`/projects/${project.slug}`),
     lastModified: new Date(project.date),
   }))
 
-  const projectMarkdownEntries = getProjects().map((project) => ({
-    url: absoluteUrl(`/markdown/projects/${project.slug}`),
-    lastModified: new Date(project.date),
-  }))
-
   const postEntries = getPosts().map((post) => ({
     url: absoluteUrl(`/writing/${post.slug}`),
-    lastModified: new Date(post.date),
-  }))
-
-  const postMarkdownEntries = getPosts().map((post) => ({
-    url: absoluteUrl(`/markdown/writing/${post.slug}`),
     lastModified: new Date(post.date),
   }))
 
@@ -55,11 +41,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticEntries,
-    ...markdownEntries,
     ...projectEntries,
-    ...projectMarkdownEntries,
     ...postEntries,
-    ...postMarkdownEntries,
     ...wikiEntries,
   ]
 }

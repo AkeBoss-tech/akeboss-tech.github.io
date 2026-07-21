@@ -1,0 +1,169 @@
+%-------------------------
+% Resume in Latex
+% Author : Akash Dubey
+% Tailored for Enterprise AI Automation (Insurance / Legal / Healthcare): Document processing, claims automation, knowledge bases, enterprise integration, and auditable/compliance-grounded AI workflows
+%------------------------
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\ifdefined\pdfgentounicode\input{glyphtounicode}\fi
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+% Ensure that generate pdf is machine readable/ATS parsable
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Akash Dubey} \\ \vspace{1pt}
+    \small (212)-814-3681 $|$ \href{mailto:akashdub06@gmail.com}{\underline{akashdub06@gmail.com}} $|$
+    \href{https://akashdubey.me/}{\underline{akashdubey.me}} $|$
+    \href{https://github.com/AkeBoss-tech}{\underline{github.com/AkeBoss-tech}} $|$
+    \small U.S. Citizen
+\end{center}
+%-----------ENTERPRISE AI AUTOMATION EXPERIENCE-----------
+\section{Engineering Experience}
+  \resumeSubHeadingListStart
+  \resumeSubheading
+      {\href{https://newyorklife.com/}{New York Life Insurance}}{New York, NY}
+      {Software Engineer Intern, TDAV Team}{May -- Aug 2026}
+      \resumeItemListStart
+        \resumeItem{Built an AI text and voice agent that automates insurance claims processing for clients and 12,000 Customer Service Representatives, deployed on AWS with secure access to NYL services, business knowledge, and claim forms.}
+        \resumeItem{Constructed an enterprise knowledge base from 13,000 documents across SharePoint, the Public Site, Confluence, Jira, and the Intranet, consolidating fragmented business logic into a single retrieval layer for both AI agents and human users.}
+        \resumeItem{Delivered multi-agent systems on NYL's cloud for document-heavy workflows, including Tungsten document processing, Pega case automation, AEM website delivery, and mainframe modernization; extracted business rules from COBOL and low-code systems to support modernization analysis.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://www.samaritanscout.org/}{Samaritan Scout}}{Cranford, NJ}
+      {Full Stack Engineer Intern}{May 2023 -- Aug 2025}
+      \resumeItemListStart
+        \resumeItem{Built an agentic document and data extraction system using OpenAI and Gemini structured outputs to autonomously ingest and structure data from over 100,000 websites, reducing manual data-entry labor by over 90\%.}
+        \resumeItem{Developed a full-stack search engine using React, TypeScript, and PostgreSQL to index 35,000+ records, implementing semantic search with hallucination filters to ensure accurate, reliable matching.}
+      \resumeItemListEnd
+    \resumeSubheading
+  {\href{https://getlykke.com/}{Lykke}}{San Francisco, CA}
+  {Founding Software Engineer}{Sep 2025 -- Present}
+  \resumeItemListStart
+    \resumeItem{Built core AI document-ingestion workflows that pull uploaded documents and source material into scoped knowledge bases, with adaptive RAG across MongoDB, Zilliz/Milvus, and S3 featuring source inference, citation events, and token-budgeting for large document sets.}
+    \resumeItem{Created a distributed wiki-generation engine that crawls source material, synthesizes structured sections, embeds content for retrieval, and runs tenant-isolated background builds via SQS, MongoDB leases, Redis rate limiting, and AWS ECS.}
+  \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://scarletsync.app/}{Scarlet Sync}}{New Brunswick, NJ}
+      {Founder}{Jan 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Architected a Python/LLM data ingestion pipeline that reverse-engineers messy, unstructured data from legacy institutional services, indexing thousands of records for real-time querying with grounded, tool-calling AI retrieval; serves thousands of users.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------SELECTED TECHNICAL PROJECTS-----------
+\section{Selected Technical Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\href{https://github.com/AkeBoss-tech/knowledge}{\textbf{KRAIL: Auditable Knowledge Base \& Agent Workflow Runtime}} $|$ \emph{Compliance-Grounded AI, Data Ontology, Retrieval} }{}
+          \resumeItemListStart
+            \resumeItem{Built KRAIL (pypi), a local-first, repo-backed knowledge runtime that structures raw documents into ontology-aware topic pages, source ledgers, claim records, verification runs, and artifact lineage for evidence-grounded, auditable agent memory.}
+            \resumeItem{Implemented MCP/CLI agent infrastructure for auditable workflows (company-brain and auto-research use cases), with work-order dry runs, session logs, role checklists, workflow validation, and hybrid keyword-graph-vector retrieval for traceable, compliance-friendly automation.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Local Coworker: Native macOS Computer-Use Agent} $|$ \emph{Swift, MCP, Gemini Vision} (private code)}{}
+          \resumeItemListStart
+            \resumeItem{Built a desktop agent that automates multi-app human workflows by integrating Gemini Vision with macOS Accessibility APIs and the Model Context Protocol (MCP), orchestrating specialized sub-agents to plan and execute complex cross-application processes.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+%-----------RESEARCH-----------
+\section{Research}
+  \resumeSubHeadingListStart
+  \resumeSubheading
+      {\href{https://rutgerseconomics.org}{Rutgers Economics Labs}}{New Brunswick, NJ}
+      {President (formerly Research Director, Team Lead)}{Oct 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{Lead quantitative research for partners including NJDOL, NJDEP, Federal HUD, and the U.S. Census Bureau, applying data pipelines in Python/R to analyze large, messy datasets.}
+        \resumeItem{Architected RAIL, an AI-automated research pipeline that uses data ontologies and coding-agent workflows to collect, organize, analyze, and synthesize data into auditable insights.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Algorithmic Robotics Lab \& Kwan Lab (Rutgers Cancer Institute)}{New Brunswick, NJ}
+      {Research Assistant}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Built and validated GPU/CUDA and HPC pipelines for high-dimensional search, simulation, and ML inference, with 70+ automated tests for reproducibility across genomics and robotics workloads.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Rutgers University Honors College, School of Arts and Sciences}{New Brunswick, NJ}
+      {Bachelor of Science in Computer Science and Mathematics}{Anticipated May 2027}
+      \resumeItemListStart
+        \resumeItem{\textbf{GPA}: 3.95/4.0 $|$ Dean's List $|$ \textbf{Coursework}: Systems Programming, Computer Architecture, Algorithms, Data Structures, Stochastic Processes, Probability Theory.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------AWARDS \& SKILLS-----------
+\section{Awards \& Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Awards}{: \href{https://github.com/AkeBoss-tech/top-coder-challenge}{8090 AI Top Coder (5th)}, Rutgers Shark Tank (2nd and 3rd), \href{https://acashmoney.biz/portfolio/asa-fall-data/}{ASA Fall Data Challenge (Top 3)}, NSF I-Corps.} \\
+     \textbf{Languages}{: Python, SQL, TypeScript, Java, C++, Bash, R, Git} \\
+     \textbf{Technologies}{: Python, SQL, Java, TypeScript, COBOL (working knowledge), Jira, LLMs, RAG, AI Agents, Document Processing, Data Pipelines, AWS, PostgreSQL/MongoDB}
+    }}
+ \end{itemize}
+\end{document}

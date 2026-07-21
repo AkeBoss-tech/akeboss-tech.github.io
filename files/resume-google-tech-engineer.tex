@@ -1,0 +1,179 @@
+%-------------------------
+% Resume in Latex
+% Author : Akash Dubey
+% Tailored for AI/ML Engineer (Applied AI): Production LLM systems, RAG, vector DBs, multi-agent orchestration, evals/observability, and shipping to users at scale
+%------------------------
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\ifdefined\pdfgentounicode\input{glyphtounicode}\fi
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+% Ensure that generate pdf is machine readable/ATS parsable
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Akash Dubey} \\ \vspace{1pt}
+    \small (212)-814-3681 $|$ \href{mailto:akashdub06@gmail.com}{\underline{akashdub06@gmail.com}} $|$
+    \href{https://akashdubey.me/}{\underline{akashdubey.me}} $|$
+    \href{https://github.com/AkeBoss-tech}{\underline{github.com/AkeBoss-tech}} $|$
+    \small U.S. Citizen
+\end{center}
+%-----------AI ENGINEERING EXPERIENCE-----------
+\section{AI / ML Engineering Experience}
+  \resumeSubHeadingListStart
+  \resumeSubheading
+  {\href{https://getlykke.com/}{Lykke}}{San Francisco, CA}
+  {Founding Software Engineer}{Sep 2025 -- Present}
+  \resumeItemListStart
+    \resumeItem{Engineered adaptive RAG pipelines across MongoDB, Zilliz/Milvus, S3, Gemini Files API, and SSE streaming, including source inference, citation events, token-budgeting, and fallback paths for extracted text vs. full-file reasoning.}
+    \resumeItem{Built core AI workflows for an AI study platform used to ingest Canvas LMS courses, assignments, announcements, notes, and uploaded documents into class-scoped knowledge bases for contextual chat and study generation.}
+    \resumeItem{Created a distributed course-wiki generation engine that crawls sources, synthesizes structured sections, embeds content for retrieval, and runs tenant-isolated background builds via SQS, MongoDB leases, Redis rate limiting, and AWS ECS.}
+  \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://scarletsync.app/}{Scarlet Sync}}{New Brunswick, NJ}
+      {Founder}{Jan 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Developed a production AI assistant with streaming tool-calling and grounded retrieval over schedules, degree plans, and profile context, enabling automated schedule building across Web, ChatGPT, Claude, and iOS.}
+        \resumeItem{Architected a robust data ingestion pipeline using Python and LLMs to reverse-engineer legacy data, indexing over 2,500 classes and 500+ degree programs for real-time querying.}
+        \resumeItem{Built a modern Rutgers academic planning platform with thousands of users for degree, schedule, and class planning as well as campus discovery, utilizing AI-assisted parsing of unstructured data from legacy university services.}
+      \resumeItemListEnd
+  \resumeSubheading
+      {\href{https://newyorklife.com/}{New York Life Insurance}}{New York, NY}
+      {Software Engineer Intern, TDAV Team}{May -- Aug 2026}
+      \resumeItemListStart
+        \resumeItem{Created an AI text and voice agent for processing insurance claims for clients and 12,000 Customer Service Representatives on AWS, with access to NYL services, knowledge, and forms.}
+        \resumeItem{Built multi-agent systems hosted on NYL's Cloud to improve website development in AEM, Pega code, Tungsten document processing, and mainframe modernization; gained working experience extracting business rules from COBOL and low-code systems.}
+        \resumeItem{Constructed a company knowledge base from 13,000 documents across SharePoint, Confluence, Jira, and the Intranet, unifying business logic for AI and human users and supporting cross-functional engineering work.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://www.samaritanscout.org/}{Samaritan Scout}}{Cranford, NJ}
+      {Full Stack Engineer Intern}{May 2023 -- Aug 2025}
+      \resumeItemListStart
+        \resumeItem{Developed an agentic scraping system leveraging OpenAI and Gemini structured outputs to autonomously extract data from over 100,000 non-profit websites, reducing manual data entry time by over 90\%.}
+        \resumeItem{Built a full-stack semantic search engine (React, TypeScript, PostgreSQL) over 35,000+ volunteer opportunities with hallucination filters for accurate matching.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------EXCEPTIONAL TECHNICAL PROJECTS-----------
+\section{Selected AI Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\href{https://github.com/AkeBoss-tech/knowledge}{\textbf{Knowledge Base and AI Agent Workflow Manager}} $|$ \emph{MCP, Coding Agents, Hybrid Retrieval} }{}
+          \resumeItemListStart
+            \resumeItem{Built KRAIL (pypi), a local-first, repo-backed knowledge runtime that structures raw notes into ontology-aware topic pages, source ledgers, claim records, and verification runs for evidence-grounded agent memory.}
+            \resumeItem{Implemented MCP/CLI and agent infrastructure for auditable coding-agent workflows (software factories, auto-research, company brain), including runner dispatch, work orders, session logs, workflow validation, and hybrid keyword-graph-vector retrieval.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Local Coworker: Native macOS Computer-Use Agent} $|$ \emph{Swift, MCP, Gemini Vision} (private code)}{}
+          \resumeItemListStart
+            \resumeItem{Built a native desktop agent for autonomous computer use, integrating Gemini Vision with macOS Accessibility APIs, AppleScript, and JXA, and using MCP to orchestrate specialized sub-agents (UI Interaction, Shell, App Research) across complex multi-app workflows.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\href{https://github.com/AkeBoss-tech/llm-research}{\textbf{SLM Optimization \& Post-Training (GSM8k)}} $|$ \emph{PyTorch, HPC}}{}
+          \resumeItemListStart
+            \resumeItem{Fine-tuned small language models (SLMs) on the GSM8k math reasoning dataset on the Rutgers HPC (Amarel) cluster, using quantization and structural pruning to maximize inference throughput on constrained compute.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Rutgers University Honors College, School of Arts and Sciences}{New Brunswick, NJ}
+      {Bachelor of Science in Computer Science and Mathematics}{Anticipated May 2027}
+      \resumeItemListStart
+        \resumeItem{\textbf{GPA}: 3.95/4.0 $|$ SAT: 1580 $|$ Dean's List. \textbf{Coursework}: Systems Programming, Stochastic Processes, Computer Architecture, Algorithms, Data Structures, Math Theory of Probability, Honors Calculus III \& IV.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------RESEARCH-----------
+\section{Research}
+  \resumeSubHeadingListStart
+  \resumeSubheading
+      {\href{https://rutgerseconomics.org}{Rutgers Economics Labs}}{New Brunswick, NJ}
+      {President (formerly Research Director, Team Lead)}{Oct 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{Architected RAIL (Rutgers Agentic Intelligence Labs), an automated research pipeline to collect, organize, analyze, and synthesize economic data using data ontologies and coding-agent workflows; lead quantitative research for partners including NJDOL, NJDEP, Federal HUD, and the U.S. Census Bureau.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Rutgers CS \& Cancer Institute (Algorithmic Robotics Lab; Kwan Lab)}{New Brunswick, NJ}
+      {Research Assistant, ML Systems \& Computational Biology}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Implemented CUDA versions of pRRTC and FCIT* for high-dimensional robot motion planning; developing a graph-based search policy (GaP) that learns from planner traces to rank symbolic action skeletons.}
+        \resumeItem{Built deep-learning genomics pipelines (AlphaGenome in silico deletion screens, DeepSTARR enhancer inference) and a 3D chromatin polymer simulator, validated with 70+ automated tests on HPC.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------AWARDS \& SKILLS-----------
+\section{Awards \& Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Skills}{: RAG, Vector DBs (Zilliz/Milvus), Multi-Agent Orchestration, MCP, LLM Tool-Calling, SSE Streaming, Evals \& Hallucination Filters, Fine-Tuning, Quantization, Retrieval} \\
+     \textbf{Providers \& Frameworks}{: OpenAI, Anthropic (Claude), Gemini, PyTorch, Transformers, Generative AI} \\
+     \textbf{Languages \& Infra}{: Python, C++, CUDA, TypeScript, SQL, Java, R, Bash, COBOL (working knowledge), Git; AWS (ECS, SQS, S3), MongoDB, Redis, PostgreSQL, HPC} \\
+     \textbf{Awards}{: \href{https://github.com/AkeBoss-tech/top-coder-challenge}{8090 AI Top Coder (5th)}, Rutgers Shark Tank (2nd and 3rd), \href{https://acashmoney.biz/portfolio/asa-fall-data/}{ASA Fall Data Challenge (Top 3)}, NSF I-Corps.}
+    }}
+ \end{itemize}
+\end{document}

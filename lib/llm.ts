@@ -1,6 +1,6 @@
 import type { Post, Project } from '@/lib/content'
 import { cleanMarkdownText, getPosts, getProjects } from '@/lib/content'
-import { storyTimeline } from '@/lib/site-data'
+import { hostedSites, storyTimeline } from '@/lib/site-data'
 import { absoluteUrl, siteName, siteUrl } from '@/lib/seo'
 
 function bulletList(items: string[]) {
@@ -42,6 +42,7 @@ export function buildLlmsIndex() {
       `[Home](${absoluteUrl('/')}): Software engineering, AI systems, robotics, research, and product work.`,
       `[About](${absoluteUrl('/about')}): Background, interests, and current direction.`,
       `[Projects](${absoluteUrl('/projects')}): Portfolio projects across startups, AI, data, robotics, and software.`,
+      `[Hosted sites](${absoluteUrl('/sites')}): Standalone research interfaces, data stories, playable demos, and learning tools.`,
       `[Writing](${absoluteUrl('/writing')}): Writing on programming, robotics, school, and reflection.`,
       `[Story](${absoluteUrl('/story')}): Timeline showing how projects and interests connect over time.`,
       `[Resume](${absoluteUrl('/resume')}): Recruiter-facing summary and PDF resume.`,
@@ -53,6 +54,9 @@ export function buildLlmsIndex() {
     '',
     '## Recent writing',
     bulletList(posts.slice(0, 8).map((post) => `[${post.title}](${absoluteUrl(`/writing/${post.slug}`)}): ${summarize(post.excerpt || post.lead, 160)}`)),
+    '',
+    '## Hosted sites',
+    bulletList(hostedSites.map((site) => `[${site.title}](${site.href}): ${site.description}`)),
   ].join('\n')
 }
 
@@ -75,6 +79,7 @@ export function buildLlmsFull() {
       `[Home](${absoluteUrl('/')}): Entry point to the portfolio and featured work.`,
       `[About](${absoluteUrl('/about')}): Personal background and working style.`,
       `[Projects](${absoluteUrl('/projects')}): Full project archive.`,
+      `[Hosted sites](${absoluteUrl('/sites')}): Standalone research interfaces, data stories, playable demos, and learning tools.`,
       `[Writing](${absoluteUrl('/writing')}): Articles and reflections.`,
       `[Story](${absoluteUrl('/story')}): Narrative timeline.`,
       `[Resume](${absoluteUrl('/resume')}): Resume overview and PDF.`,
@@ -83,6 +88,15 @@ export function buildLlmsFull() {
     '',
     '## Story timeline',
     bulletList(storyTimeline.map((beat) => `${beat.year}: ${beat.title}. ${beat.body}`)),
+    '',
+    '## Hosted sites',
+    ...hostedSites.flatMap((site) => [
+      `### ${site.title}`,
+      `URL: ${site.href}`,
+      `Type: ${site.label}`,
+      `Summary: ${site.description}`,
+      '',
+    ]),
     '',
     '## Projects',
     ...projects.flatMap((project) => [
