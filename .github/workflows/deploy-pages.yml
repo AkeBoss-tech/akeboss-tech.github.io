@@ -45,7 +45,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build static site
-        run: npm run build
+        run: |
+          npm run build
+          npm run redirects:build
 
       - name: Compile LaTeX resume
         run: |

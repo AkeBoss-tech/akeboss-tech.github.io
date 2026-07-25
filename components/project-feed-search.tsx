@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
+import posthog from 'posthog-js'
 
 import { ResponsiveImage } from '@/components/responsive-image'
 import type { Project } from '@/lib/content'
@@ -497,7 +498,10 @@ export function ProjectFeedSearch({
               key={view.key}
               type="button"
               className={`project-view-pill ${activeView === view.key ? 'project-view-pill-active' : ''}`}
-              onClick={() => setActiveView(view.key)}
+              onClick={() => {
+                setActiveView(view.key)
+                posthog.capture('project_view_selected', { view: view.key })
+              }}
             >
               {view.label}
             </button>
@@ -507,7 +511,10 @@ export function ProjectFeedSearch({
           <button
             type="button"
             className={`project-search-tag ${activeTag === '' ? 'project-search-tag-active' : ''}`}
-            onClick={() => setActiveTag('')}
+            onClick={() => {
+              setActiveTag('')
+              posthog.capture('project_label_filtered', { label: 'all' })
+            }}
           >
             All labels
           </button>
@@ -518,7 +525,11 @@ export function ProjectFeedSearch({
                 key={tag}
                 type="button"
                 className={`project-search-tag ${activeTag === normalizedTag ? 'project-search-tag-active' : ''}`}
-                onClick={() => setActiveTag(activeTag === normalizedTag ? '' : normalizedTag)}
+                onClick={() => {
+                  const nextTag = activeTag === normalizedTag ? '' : normalizedTag
+                  setActiveTag(nextTag)
+                  posthog.capture('project_label_filtered', { label: nextTag || 'all' })
+                }}
               >
                 {tag}
               </button>

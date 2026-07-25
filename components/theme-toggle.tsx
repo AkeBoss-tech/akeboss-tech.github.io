@@ -2,6 +2,7 @@
 
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
+import posthog from 'posthog-js'
 import { cn } from '@/lib/utils'
 
 export function ThemeToggle({ className }: { className?: string }) {
@@ -21,7 +22,11 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       aria-label="Toggle theme"
-      onClick={() => setTheme(current === 'dark' ? 'light' : 'dark')}
+      onClick={() => {
+        const nextTheme = current === 'dark' ? 'light' : 'dark'
+        setTheme(nextTheme)
+        posthog.capture('theme_changed', { theme: nextTheme })
+      }}
       className={cn(
         "flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-bg-elevated/80 text-sm text-text-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-md transition hover:-translate-y-0.5 hover:text-text",
         className

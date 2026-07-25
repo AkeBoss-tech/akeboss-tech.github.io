@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTheme } from 'next-themes'
+import posthog from 'posthog-js'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
@@ -199,7 +200,10 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
     <button
       type="button"
       className="gd-image-wrap gd-image-wrap-feature-panel"
-      onClick={() => setExpandedImage(primaryImage)}
+      onClick={() => {
+        setExpandedImage(primaryImage)
+        posthog.capture('visual_note_expanded', { source: 'timeline', title: point.title })
+      }}
       aria-label={`Expand ${primaryImage.alt}`}
     >
       <ResponsiveImage src={primaryImage.src} alt={primaryImage.alt} sizes="(max-width: 1024px) 92vw, 38rem" />
@@ -208,7 +212,10 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
     <button
       type="button"
       className="gd-image-wrap gd-image-wrap-feature-panel"
-      onClick={() => setExpandedImage({ src: point.image!, alt: point.imageAlt || point.title })}
+      onClick={() => {
+        setExpandedImage({ src: point.image!, alt: point.imageAlt || point.title })
+        posthog.capture('visual_note_expanded', { source: 'timeline', title: point.title })
+      }}
       aria-label={`Expand ${point.imageAlt || point.title}`}
     >
       <ResponsiveImage src={point.image} alt={point.imageAlt || point.title} sizes="(max-width: 1024px) 92vw, 38rem" />
@@ -270,7 +277,10 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
                           key={image.src}
                           type="button"
                           className="gd-image-wrap"
-                          onClick={() => setExpandedImage(image)}
+                          onClick={() => {
+                            setExpandedImage(image)
+                            posthog.capture('visual_note_expanded', { source: 'timeline_gallery', title: point.title })
+                          }}
                           aria-label={`Expand ${image.alt}`}
                         >
                           <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 1024px) 44vw, 18rem" />
@@ -288,7 +298,10 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
                           key={image.src}
                           type="button"
                           className="gd-image-wrap"
-                          onClick={() => setExpandedImage(image)}
+                          onClick={() => {
+                            setExpandedImage(image)
+                            posthog.capture('visual_note_expanded', { source: 'timeline_gallery', title: point.title })
+                          }}
                           aria-label={`Expand ${image.alt}`}
                         >
                           <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 1024px) 44vw, 18rem" />
@@ -448,7 +461,10 @@ function PlacesSection() {
               key={place.image}
               type="button"
               className={`visual-journal-card visual-journal-card-${(index % 10) + 1} ${showAllPlaces && index >= visiblePlaceCount ? 'visual-journal-card-reveal' : ''}`}
-              onClick={() => setExpandedPlace(place)}
+              onClick={() => {
+                setExpandedPlace(place)
+                posthog.capture('visual_note_expanded', { source: 'visual_notes', title: place.title })
+              }}
               aria-label={`Expand ${place.title}`}
             >
               <ResponsiveImage
@@ -466,11 +482,17 @@ function PlacesSection() {
 
         <div className="visual-journal-actions">
           {!showAllPlaces ? (
-            <button type="button" className="visual-journal-more" onClick={() => setShowAllPlaces(true)}>
+            <button type="button" className="visual-journal-more" onClick={() => {
+              setShowAllPlaces(true)
+              posthog.capture('visual_notes_expanded', { state: 'expanded' })
+            }}>
               See more
             </button>
           ) : (
-            <button type="button" className="visual-journal-less" onClick={() => setShowAllPlaces(false)}>
+            <button type="button" className="visual-journal-less" onClick={() => {
+              setShowAllPlaces(false)
+              posthog.capture('visual_notes_expanded', { state: 'collapsed' })
+            }}>
               Show less
             </button>
           )}

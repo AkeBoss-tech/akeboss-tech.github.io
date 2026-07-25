@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import posthog from 'posthog-js'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
@@ -43,6 +44,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     }
   }, [pathname])
 
+  const captureNavigation = (destination: string, placement: 'brand' | 'desktop_nav' | 'mobile_nav' | 'footer') => {
+    posthog.capture('site_navigation_selected', { destination, placement })
+  }
+
   return (
     <div className={`relative min-h-screen text-text ${pathname === '/' ? 'home-clean-shell bg-bg' : 'bg-bg'}`}>
       {pathname !== '/' ? <GradientDescentBackground /> : null}
@@ -54,7 +59,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           className={`liquid-glass mx-auto w-[min(94vw,72rem)] pointer-events-auto transition-all duration-500 ${mobileNavOpen ? 'liquid-glass-mobile-open' : ''} ${scrolled ? 'liquid-glass-scrolled' : 'liquid-glass-top'}`}
         >
           <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-            <Link href="/" className="story-link text-base font-semibold tracking-[-0.04em] text-text sm:text-lg">
+            <Link href="/" onClick={() => captureNavigation('home', 'brand')} className="story-link text-base font-semibold tracking-[-0.04em] text-text sm:text-lg">
               Akash Dubey
             </Link>
             <button
@@ -62,7 +67,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               aria-expanded={mobileNavOpen}
               aria-controls="mobile-site-nav"
               aria-label={mobileNavOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              onClick={() => setMobileNavOpen((open) => !open)}
+              onClick={() => {
+                const nextOpen = !mobileNavOpen
+                setMobileNavOpen(nextOpen)
+                posthog.capture('mobile_navigation_toggled', { state: nextOpen ? 'opened' : 'closed' })
+              }}
               className="story-link flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:bg-white/10 md:hidden"
             >
               <span className="flex w-4 flex-col gap-1">
@@ -85,6 +94,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => captureNavigation(item.label.toLowerCase(), 'desktop_nav')}
                     className={`rounded-full px-4 py-2 transition-all duration-300 ${pathname === item.href ? 'bg-white/10 text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]' : 'story-link hover:bg-white/6'}`}
                   >
                     {item.label}
@@ -110,7 +120,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setMobileNavOpen(false)}
+                      onClick={() => {
+                        captureNavigation(item.label.toLowerCase(), 'mobile_nav')
+                        setMobileNavOpen(false)
+                      }}
                       className={`rounded-2xl px-3 py-3 transition-all duration-300 ${pathname === item.href ? 'bg-white/10 text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' : 'hover:bg-white/8'}`}
                     >
                       {item.label}
@@ -182,19 +195,19 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <div className="panel-soft footer-contact-card rounded-[24px] px-4 py-4 text-sm text-text-muted">
                     <div className="eyebrow">Around The Site</div>
                     <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-                      <Link href="/projects" className="story-link text-text-muted hover:text-text">
+                      <Link href="/projects" onClick={() => captureNavigation('projects', 'footer')} className="story-link text-text-muted hover:text-text">
                         Projects
                       </Link>
-                      <Link href="/writing" className="story-link text-text-muted hover:text-text">
+                      <Link href="/writing" onClick={() => captureNavigation('writing', 'footer')} className="story-link text-text-muted hover:text-text">
                         Writing
                       </Link>
-                      <Link href="/sites" className="story-link text-text-muted hover:text-text">
+                      <Link href="/sites" onClick={() => captureNavigation('sites', 'footer')} className="story-link text-text-muted hover:text-text">
                         Sites
                       </Link>
-                      <Link href="/resume" className="story-link text-text-muted hover:text-text">
+                      <Link href="/resume" onClick={() => captureNavigation('resume', 'footer')} className="story-link text-text-muted hover:text-text">
                         Resume
                       </Link>
-                      <Link href="/contact" className="story-link text-text-muted hover:text-text">
+                      <Link href="/contact" onClick={() => captureNavigation('contact', 'footer')} className="story-link text-text-muted hover:text-text">
                         Contact
                       </Link>
                     </div>

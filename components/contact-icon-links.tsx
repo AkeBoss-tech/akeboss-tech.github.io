@@ -1,3 +1,7 @@
+'use client'
+
+import posthog from 'posthog-js'
+
 export const contactLinks = [
   { label: 'Email', href: 'mailto:akash.dubey@rutgers.edu', icon: 'email' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/akash---dubey/', icon: 'linkedin' },
@@ -82,6 +86,10 @@ export function ContactIconLinks({ className = '' }: { className?: string }) {
           rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
           aria-label={link.label}
           title={link.label}
+          onClick={() => posthog.capture('contact_link_selected', {
+            destination: link.label.toLowerCase(),
+            placement: className.includes('footer') ? 'footer' : 'contact_page',
+          })}
         >
           <span className="sr-only">{link.label}</span>
           <ContactIcon icon={link.icon} />

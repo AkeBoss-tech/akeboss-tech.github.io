@@ -17,6 +17,7 @@
     "prebuild": "npm run images:build",
     "dev": "next dev --port 3001",
     "build": "next build",
+    "redirects:build": "node scripts/build-legacy-redirects.mjs",
     "images:build": "node scripts/build-responsive-images.mjs",
     "start": "next start",
     "lint": "next lint"
