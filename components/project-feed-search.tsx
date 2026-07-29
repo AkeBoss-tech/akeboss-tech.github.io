@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import Link from 'next/link'
 import posthog from 'posthog-js'
 
@@ -430,24 +430,24 @@ export function ProjectFeedSearch({
     [allProjects],
   )
 
-  function getVisibleProjects(projects: Project[]) {
+  const getVisibleProjects = useCallback((projects: Project[]) => {
     return sortProjects(
       projects.filter((project) => matchesProject(project, normalizedQuery, activeTag, activeView)),
       normalizedQuery,
     )
-  }
+  }, [activeTag, activeView, normalizedQuery])
 
   const visibleFeatured = useMemo(
     () => getVisibleProjects(featuredProjects),
-    [featuredProjects, normalizedQuery, activeTag, activeView],
+    [featuredProjects, getVisibleProjects],
   )
   const visibleSelected = useMemo(
     () => getVisibleProjects(selectedProjects),
-    [selectedProjects, normalizedQuery, activeTag, activeView],
+    [selectedProjects, getVisibleProjects],
   )
   const visibleArchive = useMemo(
     () => getVisibleProjects(archiveProjects),
-    [archiveProjects, normalizedQuery, activeTag, activeView],
+    [archiveProjects, getVisibleProjects],
   )
   const visibleTimeline = useMemo(
     () => sortProjects(
@@ -475,8 +475,6 @@ export function ProjectFeedSearch({
     visibleFeatured.length > 0 ||
     visibleSelected.length > 0 ||
     visibleArchive.length > 0
-
-  const activeViewMeta = curatedViews.find((view) => view.key === activeView) ?? curatedViews[0]
 
   return (
     <>

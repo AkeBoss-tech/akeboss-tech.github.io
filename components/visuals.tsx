@@ -199,6 +199,8 @@ export function PathPlanningVisual() {
   })
   
   const progress = useSpring(scrollYProgress, { stiffness: 40, damping: 20 })
+  const robotX = useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [20, 20, 100, 100, 180])
+  const robotY = useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [180, 140, 140, 80, 80])
   
   return (
     <ProjectVisualContainer className="bg-orange-50/10 dark:bg-orange-950/20">
@@ -239,8 +241,8 @@ export function PathPlanningVisual() {
               r={4 - i}
               className="fill-accent/40"
               style={{ 
-                cx: useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [20, 20, 100, 100, 180]),
-                cy: useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [180, 140, 140, 80, 80]),
+                cx: robotX,
+                cy: robotY,
                 opacity: 0.5 - (i * 0.1)
               }}
             />
@@ -251,8 +253,8 @@ export function PathPlanningVisual() {
             r="8"
             className="fill-accent"
             style={{ 
-              cx: useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [20, 20, 100, 100, 180]),
-              cy: useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [180, 140, 140, 80, 80]),
+              cx: robotX,
+              cy: robotY,
             }}
           />
         </svg>

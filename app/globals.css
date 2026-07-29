@@ -432,30 +432,6 @@ body.visual-journal-expanded header {
   position: relative;
 }
 
-.home-intro-title-ghost {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.home-intro-title-live {
-  position: absolute;
-  inset: 0;
-  display: inline-block;
-  color: var(--hero-title-color);
-  white-space: pre-wrap;
-}
-
-.home-intro-caret {
-  display: inline-block;
-  width: 0.08em;
-  height: 0.82em;
-  margin-left: 0.05em;
-  vertical-align: -0.08em;
-  background: var(--hero-caret-color);
-  box-shadow: var(--hero-caret-shadow);
-  animation: gdCaretBlink 1s steps(1, end) infinite;
-}
-
 .home-intro-copy p {
   margin-top: clamp(1.5rem, 3vw, 2.3rem);
   max-width: 46rem;
@@ -1269,7 +1245,7 @@ body.visual-journal-expanded header {
   text-transform: uppercase;
 }
 
-.gd-hero h1 {
+.gd-hero h2 {
   max-width: 10ch;
   color: var(--hero-title-color);
   font-size: clamp(4rem, 10vw, 9rem);
@@ -2847,6 +2823,8 @@ h4 {
   text-decoration: underline;
   text-decoration-color: rgba(132, 169, 255, 0.45);
   text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .prose img {
@@ -4092,7 +4070,7 @@ h4 {
     gap: 14vh;
   }
 
-  .gd-hero h1 {
+  .gd-hero h2 {
     font-size: 4rem;
   }
 

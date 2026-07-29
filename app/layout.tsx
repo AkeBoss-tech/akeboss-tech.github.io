@@ -1,6 +1,6 @@
 import './globals.css'
-import 'katex/dist/katex.min.css'
 import type { Metadata } from 'next'
+import type { Viewport } from 'next'
 import { Inconsolata } from 'next/font/google'
 import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -22,6 +22,25 @@ export const metadata: Metadata = {
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
   publisher: siteName,
+  category: 'technology',
+  classification: 'Portfolio',
+  keywords: [
+    'Akash Dubey',
+    'software engineer',
+    'artificial intelligence',
+    'robotics',
+    'computational biology',
+    'Rutgers University',
+  ],
+  manifest: '/icons/manifest.json',
+  icons: {
+    icon: [
+      { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: '/icons/favicon.ico',
+  },
   alternates: {
     canonical: '/',
   },
@@ -52,6 +71,14 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+}
+
+export const viewport: Viewport = {
+  colorScheme: 'dark light',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f6f8fb' },
+    { media: '(prefers-color-scheme: dark)', color: '#02070d' },
+  ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

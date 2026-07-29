@@ -20,7 +20,7 @@
     "redirects:build": "node scripts/build-legacy-redirects.mjs",
     "images:build": "node scripts/build-responsive-images.mjs",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "main": "index.js",
   "type": "module",

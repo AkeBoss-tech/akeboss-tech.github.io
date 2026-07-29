@@ -23,11 +23,7 @@ type OgCardOptions = {
 function resolveAssetPath(assetPath: string) {
   const normalized = assetPath.replace(/^\//, '')
   const publicCandidate = path.join(process.cwd(), 'public', normalized)
-  const imageCandidate = normalized.startsWith('images/')
-    ? path.join(process.cwd(), normalized)
-    : null
-  const candidates = imageCandidate ? [imageCandidate, publicCandidate] : [publicCandidate]
-  return candidates.find((candidate) => fs.existsSync(candidate))
+  return fs.existsSync(publicCandidate) ? publicCandidate : undefined
 }
 
 function assetDataUri(assetPath?: string) {
@@ -71,7 +67,7 @@ function variantAccent(variant: OgVariant) {
   }
 }
 
-function baseSurface(accent: string) {
+function baseSurface() {
   return {
     width: '100%',
     height: '100%',
@@ -143,7 +139,7 @@ export function renderOgCard({
     variant === 'home' ? (
       <div
         style={{
-          ...baseSurface(themeAccent),
+          ...baseSurface(),
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -195,7 +191,7 @@ export function renderOgCard({
         </div>
       </div>
     ) : (
-      <div style={{ ...baseSurface(themeAccent), padding: 48 }}>
+      <div style={{ ...baseSurface(), padding: 48 }}>
         {glow(themeAccent, '-140px', '-80px', 430, 0.18)}
         {glow('#ffffff', '420px', '930px', 160, 0.32)}
         <div

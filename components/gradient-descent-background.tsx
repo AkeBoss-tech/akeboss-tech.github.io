@@ -16,6 +16,10 @@ export function GradientDescentBackground({ className }: { className?: string })
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas || prefersReducedMotion()) return
+    const browserSignals = navigator as Navigator & {
+      connection?: { saveData?: boolean }
+    }
+    if (browserSignals.connection?.saveData) return
 
     let disposed = false
     let animationFrame = 0
@@ -58,7 +62,7 @@ export function GradientDescentBackground({ className }: { className?: string })
       camera.position.set(0, 27, 36)
 
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
       renderer.setSize(1, 1)
       renderer.setClearColor(0x000000, 0)
 
@@ -72,7 +76,7 @@ export function GradientDescentBackground({ className }: { className?: string })
       scene.add(world)
 
       const surfaceSize = 92
-      const surfaceSegments = 170
+      const surfaceSegments = 100
       const functionScale = 50 / surfaceSize
       const pointRadius = 0.45
       const surfaceLift = 0.08
@@ -150,7 +154,7 @@ export function GradientDescentBackground({ className }: { className?: string })
 
       const arrows = new THREE.Group()
       const fieldSize = surfaceSize * 0.38
-      const spacing = 3.2
+      const spacing = 4
 
       for (let x = -fieldSize; x <= fieldSize; x += spacing) {
         for (let z = -fieldSize; z <= fieldSize; z += spacing) {
@@ -210,6 +214,8 @@ export function GradientDescentBackground({ className }: { className?: string })
       }
 
       const cameraState = { angle: 0, radius: 36, height: 27, ready: false }
+      let renderActive = false
+      let lastTrailIndex = -1
 
       function lerpAngle(current: number, target: number, amount: number) {
         return current + Math.atan2(Math.sin(target - current), Math.cos(target - current)) * amount
@@ -229,6 +235,10 @@ export function GradientDescentBackground({ className }: { className?: string })
       cleanupCallbacks.push(() => window.removeEventListener('resize', onResize))
 
       function animate() {
+        if (!renderActive || disposed) {
+          animationFrame = 0
+          return
+        }
         animationFrame = window.requestAnimationFrame(animate)
 
         const now = performance.now()
@@ -268,12 +278,35 @@ export function GradientDescentBackground({ className }: { className?: string })
         const current = mainPath[idx]
         smoothedMainXZ.lerp(new THREE.Vector2(current.x, current.z), 0.14)
         point.position.copy(surfacePoint(smoothedMainXZ.x, smoothedMainXZ.y, pointRadius))
-        replaceTrail(mainPath, idx)
+        if (lastTrailIndex < 0 || idx < lastTrailIndex || idx - lastTrailIndex >= 3) {
+          replaceTrail(mainPath, idx)
+          lastTrailIndex = idx
+        }
 
         renderer.render(scene, camera)
       }
 
-      animate()
+      const updateRenderState = (isIntersecting: boolean) => {
+        renderActive = isIntersecting && !document.hidden
+        if (renderActive && animationFrame === 0) animate()
+        if (!renderActive && animationFrame !== 0) {
+          window.cancelAnimationFrame(animationFrame)
+          animationFrame = 0
+        }
+      }
+
+      const visibilityObserver = new IntersectionObserver(
+        ([entry]) => updateRenderState(entry.isIntersecting),
+        { rootMargin: '10% 0px' },
+      )
+      visibilityObserver.observe(canvas)
+      const onVisibilityChange = () => {
+        const bounds = canvas.getBoundingClientRect()
+        updateRenderState(bounds.bottom > 0 && bounds.top < window.innerHeight)
+      }
+      document.addEventListener('visibilitychange', onVisibilityChange)
+      cleanupCallbacks.push(() => visibilityObserver.disconnect())
+      cleanupCallbacks.push(() => document.removeEventListener('visibilitychange', onVisibilityChange))
 
       cleanupCallbacks.push(() => {
         window.cancelAnimationFrame(animationFrame)
@@ -288,10 +321,13 @@ export function GradientDescentBackground({ className }: { className?: string })
       })
     }
 
-    start()
+    const startTimer = window.setTimeout(() => {
+      void start()
+    }, 400)
 
     return () => {
       disposed = true
+      window.clearTimeout(startTimer)
       cleanupCallbacks.forEach((cleanup) => cleanup())
     }
   }, [currentTheme])

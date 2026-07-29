@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import posthog from 'posthog-js'
 
@@ -342,41 +343,11 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
 
 function IntroHero() {
   const introTitle = 'Akash Dubey'
-  const [typedIntroLength, setTypedIntroLength] = useState(0)
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTypedIntroLength(introTitle.length)
-      return
-    }
-
-    setTypedIntroLength(0)
-    let index = 0
-    const timer = window.setInterval(() => {
-      index += 1
-      setTypedIntroLength(index)
-      if (index >= introTitle.length) {
-        window.clearInterval(timer)
-      }
-    }, 85)
-
-    return () => window.clearInterval(timer)
-  }, [])
 
   return (
     <section className="home-intro-hero">
       <div className="home-intro-copy">
-        <h1 className="home-intro-title" aria-label={introTitle}>
-          <span className="home-intro-title-ghost" aria-hidden="true">{introTitle}</span>
-          <span className="home-intro-title-live">
-            {introTitle.slice(0, typedIntroLength)}
-            {typedIntroLength < introTitle.length ? (
-              <span className="home-intro-caret" aria-hidden="true" />
-            ) : null}
-          </span>
-        </h1>
+        <h1 className="home-intro-title">{introTitle}</h1>
         <p>Building product, AI systems, and research tools from Rutgers.</p>
         <a href="#visual-notes" className="home-intro-down" aria-label="Scroll to visual notes">
           <span aria-hidden="true">↓</span>
@@ -471,7 +442,7 @@ function PlacesSection() {
                 src={place.image}
                 alt={place.title}
                 sizes="(max-width: 640px) 42vw, (max-width: 1024px) 28vw, 16rem"
-                loading={index > 5 ? 'lazy' : 'eager'}
+                loading="lazy"
               />
               <span className="visual-journal-card-caption">
                 <span>{place.title}</span>
@@ -535,15 +506,38 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
   const gradientRef = useRef<HTMLDivElement | null>(null)
   const endLinksRef = useRef<HTMLElement | null>(null)
   const scrollLabelRef = useRef<HTMLDivElement | null>(null)
+  const [sceneReady, setSceneReady] = useState(false)
   const [typedHeadlineLength, setTypedHeadlineLength] = useState(0)
-  const headlineText = 'Make machines that makes things. Do actions that enable action.'
+  const headlineText = 'Make machines that make things. Take actions that enable action.'
   const { resolvedTheme } = useTheme()
   const currentTheme = resolvedTheme === 'light' ? 'light' : 'dark'
 
   useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    if (!('IntersectionObserver' in window)) {
+      setSceneReady(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        setSceneReady(true)
+        observer.disconnect()
+      },
+      { rootMargin: '100% 0px' },
+    )
+
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     const canvas = canvasRef.current
     const section = sectionRef.current
-    if (!canvas || !section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!sceneReady || !canvas || !section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const stageCanvas = canvas
     const stage = section
 
@@ -564,9 +558,9 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
             arrowBoost: 0.92,
             pointColor: '#112015',
             stageGradientOpacity: 0.82,
-            heightColor: (y: number, saturation = 0.58, lightness = 0.66) => {
+            heightColor: (y: number, saturation = 0.84, lightness = 0.54) => {
               const normalized = THREE.MathUtils.clamp((y + 6) / 12, 0, 1)
-              return new THREE.Color().setHSL(0.01 + normalized * 0.31, 0.84, 0.54 - normalized * 0.16)
+              return new THREE.Color().setHSL(0.01 + normalized * 0.31, saturation, lightness - normalized * 0.16)
             },
           }
         : {
@@ -589,7 +583,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       camera.position.set(0, 27, 36)
 
       const renderer = new THREE.WebGLRenderer({ canvas: stageCanvas, antialias: true, alpha: true })
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
       renderer.setSize(window.innerWidth, window.innerHeight)
       renderer.setClearColor(0x000000, 0)
 
@@ -603,7 +597,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       scene.add(world)
 
       const surfaceSize = 92
-      const surfaceSegments = 220
+      const surfaceSegments = 120
       const functionScale = 50 / surfaceSize
       const surfaceLift = 0.08
 
@@ -679,7 +673,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
 
       const arrows = new THREE.Group()
       const fieldSize = surfaceSize * 0.43
-      const spacing = 2.2
+      const spacing = 3.5
 
       for (let x = -fieldSize; x <= fieldSize; x += spacing) {
         for (let z = -fieldSize; z <= fieldSize; z += spacing) {
@@ -693,26 +687,6 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
 
       world.add(arrows)
 
-      function createPath(startX: number, startZ: number) {
-        let px = startX
-        let pz = startZ
-        const path: Array<{ x: number; z: number }> = []
-        const bounds = surfaceSize * 0.43
-
-        for (let i = 0; i < 900; i += 1) {
-          const g = gradientAt(px, pz)
-          const detourStrength = 1 - THREE.MathUtils.smoothstep(i, 460, 850)
-          px -= g.dx * 0.65 + Math.sin(i * 0.022) * 0.05 * detourStrength
-          pz -= g.dz * 0.65 + Math.cos(i * 0.019) * 0.05 * detourStrength
-          px = THREE.MathUtils.clamp(px, -bounds, bounds)
-          pz = THREE.MathUtils.clamp(pz, -bounds, bounds)
-          path.push({ x: px, z: pz })
-        }
-
-        return path
-      }
-
-      const mainPath = createPath(27, -25)
       const pageLoadTime = performance.now()
       let lastScrollTime = pageLoadTime
       let endOrbitStart = 0
@@ -720,7 +694,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       let wasEndMode = false
       let endOrbitBlend = 0
       let cameraStateReady = false
-      let previousFrameTime = pageLoadTime
+      let renderActive = false
 
       const cameraState = {
         angle: 0,
@@ -760,11 +734,13 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       cleanupCallbacks.push(() => window.removeEventListener('resize', onResize))
 
       function animate() {
+        if (!renderActive || disposed) {
+          animationFrame = 0
+          return
+        }
         animationFrame = window.requestAnimationFrame(animate)
 
         const now = performance.now()
-        const deltaSeconds = Math.min((now - previousFrameTime) / 1000, 0.033)
-        previousFrameTime = now
         const p = progress()
         const sectionRect = stage.getBoundingClientRect()
         const sectionEntry = window.innerHeight - sectionRect.top
@@ -831,9 +807,11 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
 
         const bottomNavProgress = THREE.MathUtils.smoothstep(endOrbitBlend, 0.22, 0.86)
         if (endLinksRef.current) {
+          const navHidden = bottomNavProgress <= 0.35
           endLinksRef.current.classList.toggle('is-visible', bottomNavProgress > 0.35)
           endLinksRef.current.style.setProperty('--end-progress', String(bottomNavProgress))
-          endLinksRef.current.setAttribute('aria-hidden', String(bottomNavProgress <= 0.35))
+          endLinksRef.current.setAttribute('aria-hidden', String(navHidden))
+          endLinksRef.current.inert = navHidden
           endLinksRef.current.querySelectorAll('a, button').forEach((button) => {
             ;(button as HTMLElement).tabIndex = bottomNavProgress > 0.88 ? 0 : -1
           })
@@ -845,7 +823,29 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         renderer.render(scene, camera)
       }
 
-      animate()
+      const updateRenderState = (isIntersecting: boolean) => {
+        renderActive = isIntersecting && !document.hidden
+        if (renderActive && animationFrame === 0) {
+          animate()
+        }
+        if (!renderActive && animationFrame !== 0) {
+          window.cancelAnimationFrame(animationFrame)
+          animationFrame = 0
+        }
+      }
+
+      const visibilityObserver = new IntersectionObserver(
+        ([entry]) => updateRenderState(entry.isIntersecting),
+        { rootMargin: '10% 0px' },
+      )
+      visibilityObserver.observe(stage)
+      const onVisibilityChange = () => {
+        const bounds = stage.getBoundingClientRect()
+        updateRenderState(bounds.bottom > 0 && bounds.top < window.innerHeight)
+      }
+      document.addEventListener('visibilitychange', onVisibilityChange)
+      cleanupCallbacks.push(() => visibilityObserver.disconnect())
+      cleanupCallbacks.push(() => document.removeEventListener('visibilitychange', onVisibilityChange))
 
       cleanupCallbacks.push(() => {
         window.cancelAnimationFrame(animationFrame)
@@ -864,10 +864,11 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       disposed = true
       cleanupCallbacks.forEach((cleanup) => cleanup())
     }
-  }, [currentTheme])
+  }, [currentTheme, sceneReady, topBackgroundRef])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
+    if (!sceneReady) return
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setTypedHeadlineLength(headlineText.length)
@@ -892,7 +893,7 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       window.removeEventListener('scroll', updateHeadline)
       window.removeEventListener('resize', updateHeadline)
     }
-  }, [])
+  }, [sceneReady])
 
   const visibleHeadline = typedHeadlineLength > 0 ? headlineText.slice(0, typedHeadlineLength) : ''
 
@@ -901,17 +902,17 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
       <div ref={gradientRef} className="gd-gradient" aria-hidden="true" />
       <canvas ref={canvasRef} className="gd-canvas" aria-hidden="true" />
 
-      <main className="gd-overlay">
+      <div className="gd-overlay">
         <section ref={heroRef} className="gd-hero" id="top">
           <div className="gd-hero-inner">
             <p className="gd-eyebrow">Current work</p>
-            <h1 className="gd-hero-title" aria-label={headlineText}>
+            <h2 className="gd-hero-title" aria-label={headlineText}>
               <span className="gd-hero-title-ghost" aria-hidden="true">{headlineText}</span>
               <span className="gd-hero-title-live">
                 {visibleHeadline}
                 <span className="gd-hero-caret" aria-hidden="true" />
               </span>
-            </h1>
+            </h2>
             <p>Product, research, AI systems, and what&apos;s next.</p>
           </div>
         </section>
@@ -921,11 +922,11 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
             <TimelinePoint key={point.title} point={point} align={index % 2 === 0 ? 'left' : 'right'} />
           ))}
         </section>
-      </main>
+      </div>
 
       <div ref={scrollLabelRef} className="gd-scroll">Scroll</div>
 
-      <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true">
+      <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true" inert>
         <p className="gd-end-name">Akash Dubey</p>
         <div className="gd-end-top-actions">
           <a
@@ -945,9 +946,9 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span>Replay</span>
         </button>
-        <a className="gd-end-button" href="/projects" tabIndex={-1}><span>Projects</span></a>
-        <a className="gd-end-button" href="/writing" tabIndex={-1}><span>Writing</span></a>
-        <a className="gd-end-button" href="/contact" tabIndex={-1}><span>Contact</span></a>
+        <Link className="gd-end-button" href="/projects" tabIndex={-1}><span>Projects</span></Link>
+        <Link className="gd-end-button" href="/writing" tabIndex={-1}><span>Writing</span></Link>
+        <Link className="gd-end-button" href="/contact" tabIndex={-1}><span>Contact</span></Link>
       </nav>
     </section>
   )

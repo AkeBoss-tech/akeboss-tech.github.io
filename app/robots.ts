@@ -11,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ['/moodboard'],
     },
     sitemap: [`${siteUrl}/sitemap.xml`, `${siteUrl}/image-sitemap.xml`],
-    host: siteUrl,
+    host: new URL(siteUrl).host,
   }
 }

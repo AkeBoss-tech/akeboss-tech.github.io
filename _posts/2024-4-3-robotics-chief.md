@@ -10,7 +10,7 @@ tags:
 
 All of the programming related things we did in the 2024 robotics season, Crescendo.
 
-All of this is taken from our Open Alliance page, which you can find [here](https://www.chiefdelphi.com/t/frc-1257-parallel-universe-2024-build-thread-open-alliance/447080). Throughout the season, I contributed heavily there.
+All of this is taken from our [FRC 1257 Open Alliance build thread](https://www.chiefdelphi.com/t/frc-1257-parallel-universe-2024-build-thread-open-alliance/447080). Throughout the season, I contributed heavily there.
 
 # 1/28 Programming Update
 After picking a robot design, our programming team started thinking about how we wanted to organize our robot. Including how to tackle our new challenge of SWERVE! We also have to plan out driver control methods, vision, autos, and the works. This post will highlight everything our programmers have done so far.
@@ -317,7 +317,7 @@ Every tick, the robot gets the ideal angle, sets the pivot arm PID accordingly, 
 If interrupted, the command stops the pivot and shooter. The end condition for the command is for the pivot and shooter to reach their setpoint. An andThen is used to make sure the intake is available before the command is over.
 
 #### ShootAnywhere Prerequisite Functions:
-See [here](https://github.com/FRC1257/2024-Robot/blob/ea8b40ac194a77f1de93b913e1a60e9ff37cc475/src/main/java/frc/robot/RobotContainer.java#L473) for these methods.
+See the [RobotContainer implementation on GitHub](https://github.com/FRC1257/2024-Robot/blob/ea8b40ac194a77f1de93b913e1a60e9ff37cc475/src/main/java/frc/robot/RobotContainer.java#L473) for these methods.
 
 `getEstimatedTransform`
 - Using the current velocity, it predicts how far the robot will move over 20ms (one tick)
@@ -477,7 +477,7 @@ We ended up missing our first practice match since we needed to prepare our robo
 Our [first match](https://www.thebluealliance.com/match/2024njtab_qm4) was really bad. We didn't move initially and it set the tone for the rest of the competition. Because something about our swerve modules was broken, our drivers literally couldn’t control the robot.
 
 
-![alt_text](/images/posts/frc24/comp/image1.gif "image_tooltip")
+![Robot stalled and moving uncontrollably during the opening match](/images/posts/frc24/comp/image1.png)
 
 
 The robot is dead on the field for the first part of the match then it comes to life but moves uncontrollably as we try to align with the amp.
@@ -499,7 +499,7 @@ As we frantically tried to fix the problem, we asked for help from all different
 Notice in this log that the joystick moves pretty smoothly but results in a lot of fast changes in the swerve modules.
 
 
-![alt_text](/images/posts/frc24/comp/image3.png "image_tooltip")
+![Robot gyro log showing an incorrect near-zero angle](/images/posts/frc24/comp/image3.jpg)
 
 
 This match’s log didn’t have the reinmann sum graph but still shows that the gyro wasn’t working. Our robot was moving around and spinning in the match, however, in the log, the gyro doesn’t go above 0.2 radians.
@@ -539,7 +539,7 @@ During alliance selection, we ended up getting picked by Alliance 1 composed of 
 We were selected as a defense bot and we began working on a cheese-cake net (what we like to call the snail sail) to further block notes shot from other robots. Our drivers did a really nice job playing subwoofer defense and blocking robots from lining up and shooting. Although we had one slight hiccup that led us to the lower bracket, our robot was cruising through playoffs with no mechanical issues.
 
 
-![alt_text](/images/posts/frc24/comp/image5.gif "image_tooltip")
+![Team 1257 robot playing subwoofer defense](/images/posts/frc24/comp/image5.jpg)
 
 
 Example of some subwoofer defense
@@ -547,7 +547,7 @@ Example of some subwoofer defense
 Before our finals match, we saw that our robot had lost a lot of its pushing power. We flipped over our robot and saw that our wheel tread was basically gone. So before the match, we quickly replaced our wheels. Here’s a picture of what they looked like. 
 
 
-![alt_text](/images/posts/frc24/comp/image6.jpg "image_tooltip")
+![Worn wheel beside its replacement](/images/posts/frc24/comp/image6.gif)
 
 
 Old wheel vs new wheel comparison
@@ -555,7 +555,7 @@ Old wheel vs new wheel comparison
 We ended up winning and got our first blue banner in eight years!!! Thank you again to our alliance the Miracle Workerz and the Lunatecs we are so happy that we could do this with you!
 
 
-![alt_text](/images/posts/frc24/comp/image7.jpg "image_tooltip")
+![Team 1257 celebrating its first blue banner in eight years](/images/posts/frc24/comp/image7.gif)
 
 
 We also got the Engineering Inspiration award!!! First time in 15 years! Huge congratulations to our documentation team for this big achievement! They’ve been putting in the work to rebuild us from the ground up this year!

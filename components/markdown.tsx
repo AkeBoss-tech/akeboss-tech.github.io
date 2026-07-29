@@ -18,6 +18,12 @@ function fallbackImageAlt(src?: string) {
   return cleaned.charAt(0).toUpperCase() + cleaned.slice(1)
 }
 
+function resolveImageAlt(alt: string | undefined, src?: string) {
+  const normalized = alt?.trim()
+  if (normalized && !/^(alt[_ -]?text|image)$/i.test(normalized)) return normalized
+  return fallbackImageAlt(src)
+}
+
 export function Markdown({ content, className }: { content: string; className?: string }) {
   return (
     <div className={`prose prose-neutral max-w-none ${className ?? ''}`.trim()}>
@@ -30,17 +36,22 @@ export function Markdown({ content, className }: { content: string; className?: 
           [rehypeAutolinkHeadings, { behavior: 'append' }],
         ]}
         components={{
-          iframe: (props) => <div className="media-frame my-8 aspect-video"><iframe {...(props as any)} className="h-full w-full" /></div>,
+          iframe: (props) => (
+            <div className="media-frame my-8 aspect-video">
+              <iframe {...props} title={props.title || 'Embedded content'} className="h-full w-full" />
+            </div>
+          ),
           img: (props) => (
             <ResponsiveImage
               src={typeof props.src === 'string' ? props.src : ''}
-              alt={props.alt?.trim() || fallbackImageAlt(typeof props.src === 'string' ? props.src : undefined)}
+              alt={resolveImageAlt(props.alt, typeof props.src === 'string' ? props.src : undefined)}
               className="my-8 h-auto w-full"
               sizes="(max-width: 1024px) 92vw, 64rem"
               loading="lazy"
             />
           ),
           a: (props) => <a {...props} target={String(props.href).startsWith('http') ? '_blank' : undefined} rel="noreferrer" />,
+          h1: (props) => <h2 {...props} className="group scroll-mt-28" />,
           h2: (props) => <h2 {...props} className="group scroll-mt-28" />,
           h3: (props) => <h3 {...props} className="group scroll-mt-28" />,
         }}

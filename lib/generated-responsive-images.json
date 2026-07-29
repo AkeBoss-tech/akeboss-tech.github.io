@@ -83,6 +83,15 @@
       "height": 1080
     },
     {
+      "src": "/icons/apple-icon-180x180.png",
+      "widths": [
+        160,
+        180
+      ],
+      "width": 180,
+      "height": 180
+    },
+    {
       "src": "/icons/apple-icon.png",
       "widths": [
         160,
@@ -90,6 +99,22 @@
       ],
       "width": 192,
       "height": 192
+    },
+    {
+      "src": "/icons/favicon-16x16.png",
+      "widths": [
+        16
+      ],
+      "width": 16,
+      "height": 16
+    },
+    {
+      "src": "/icons/favicon-32x32.png",
+      "widths": [
+        32
+      ],
+      "width": 32,
+      "height": 32
     },
     {
       "src": "/images/face.jpg",
@@ -1220,6 +1245,30 @@
       ],
       "width": 999,
       "height": 117
+    },
+    {
+      "src": "/images/posts/frc24/comp/image1.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1599,
+      "height": 874
+    },
+    {
+      "src": "/images/posts/frc24/comp/image3.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1080
+      ],
+      "width": 1080,
+      "height": 1080
     },
     {
       "src": "/images/posts/frc24/comp/image5.jpg",

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Link from 'next/link'
 import { Reveal } from '@/components/reveal'
 
 export default function Error({
@@ -44,12 +45,12 @@ export default function Error({
           >
             Attempt Recovery
           </button>
-          <a
+          <Link
             href="/"
             className="rounded-full border border-white/6 px-8 py-4 text-sm font-medium text-text-muted transition-all hover:bg-white/6 hover:text-text"
           >
             Return to Core
-          </a>
+          </Link>
         </div>
       </Reveal>
 

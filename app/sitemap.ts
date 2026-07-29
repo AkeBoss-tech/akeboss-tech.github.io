@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticEntries = staticPages.map((path) => ({
     url: absoluteUrl(path),
-    lastModified: new Date(),
   }))
 
   const projectEntries = getProjects().map((project) => ({
@@ -36,7 +35,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const wikiEntries = getWikiPages().map((page) => ({
     url: absoluteUrl(`/wiki/${page.slug}`),
-    lastModified: new Date(),
   }))
 
   return [

@@ -129,7 +129,10 @@ export function GridHero() {
  */
 export function InfiniteStream() {
   const [mounted, setMounted] = useState(false)
-  const [items, setItems] = useState<{ paths: any[], circles: any[] }>({ paths: [], circles: [] })
+  const [items, setItems] = useState<{
+    paths: Array<{ d: string; duration: number; delay: number }>
+    circles: Array<{ cx: string; cy: string; duration: number; delay: number }>
+  }>({ paths: [], circles: [] })
 
   useEffect(() => {
     setMounted(true)

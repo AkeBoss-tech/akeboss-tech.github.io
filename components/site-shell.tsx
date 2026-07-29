@@ -74,11 +74,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               }}
               className="story-link flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:bg-white/10 md:hidden"
             >
-              <span className="flex w-4 flex-col gap-1">
-                <span className={`h-px rounded-full bg-current transition-transform duration-300 ${mobileNavOpen ? 'translate-y-1 rotate-45' : ''}`} />
-                <span className={`h-px rounded-full bg-current transition-opacity duration-300 ${mobileNavOpen ? 'opacity-0' : 'opacity-100'}`} />
-                <span className={`h-px rounded-full bg-current transition-transform duration-300 ${mobileNavOpen ? '-translate-y-1 -rotate-45' : ''}`} />
-              </span>
+              <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.7">
+                <path d={mobileNavOpen ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16'} />
+              </svg>
             </button>
             <nav className="hidden items-center gap-2 text-sm text-text-muted md:flex">
               {nav.map((item) => (
