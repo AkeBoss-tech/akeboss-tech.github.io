@@ -1,7 +1,7 @@
 ---
 title: "FRC Robot Code"
 excerpt: "Team 1257's 2024 Robot Code"
-image: "/images/portfolio/2024.png"
+image: "/images/posts/frc24/images/image2.png"
 collection: portfolio
 date: 2024-04-20
 tags: [Robotics]
@@ -10,7 +10,7 @@ rank: 3
 # Team 1257's 2024 Robot Code.
 
 Hi! I want to start of by thanking everyone who helped me with this project. This project was a lot of fun to work on and I learned a lot about programming and robotics. I hope you enjoy this project as much as I did! To start off, all the code was written in Java and the robot was programmed using the WPILib library. The robot was programmed to do a variety of tasks such as shooting balls, picking up balls, and climbing. The robot was also programmed to be able to drive around the field and avoid obstacles. Throughout my time as a programmer, I learned a lot about programming, robotics, quick thinking, and team skills. For all the future programers in 1257, here are some tips that I learned while working on this project.
- 
+
 Programming/Robot Tips:
 
  * Always make sure to test your code before you put it on the robot. This will help you catch any bugs or errors before they cause any problems.
@@ -70,12 +70,3 @@ More Resources:
 Remember to have fun and enjoy the process of programming and robotics!
 
 ~ Akash Dubey
-
-
-
-
-
-
-
-
- 

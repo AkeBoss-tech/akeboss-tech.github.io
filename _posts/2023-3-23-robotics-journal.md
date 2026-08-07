@@ -2,7 +2,7 @@
 title: 'Robotics Journal'
 date: 2023-03-21
 permalink: /posts/robotics-journal/
-image: "/images/posts/robotics-journal-hero.png"
+image: "/images/posts/robotics/image8.png"
 tags:
   - journal
   - robotics

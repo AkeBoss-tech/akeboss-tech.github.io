@@ -1,7 +1,7 @@
 ---
 title: "Scarlet Sync"
 excerpt: "A complete scheduling and degree planning solution for Rutgers"
-image: "/images/portfolio/scarlet-sync/home.png"
+image: "/images/portfolio/scarlet-sync/generated-schedule.jpg"
 collection: portfolio
 date: 2026-04-05
 tags: [Web, AI]
@@ -9,7 +9,7 @@ featured: true
 rank: 1
 ---
 
-<img src='/images/portfolio/scarlet-sync/home.png' width='100%' align='center'>
+<img src='/images/portfolio/scarlet-sync/ranked-schedules.jpg' width='100%' align='center'>
 
 
 Navigating the complexities of university course registration can be a frustrating and time-consuming ordeal. Juggling degree requirements, professor preferences, campus locations, and personal availability often feels like a high-stakes puzzle with too many pieces. **Scarlet Sync** was born from this exact challenge, transforming the tedious process of scheduling into a seamless, intelligent, and user-friendly experience for Rutgers University students. It's more than just a CS project; it's a practical solution to a common problem.

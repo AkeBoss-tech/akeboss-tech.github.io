@@ -2,7 +2,7 @@
 title: 'Programming through the 2024 Robotics Season'
 date: 2024-04-03
 permalink: /posts/robotics-development/
-image: "/images/posts/robotics-programming-hero.png"
+image: "/images/posts/frc24/images/image3.jpg"
 tags:
   - programming
   - robotics

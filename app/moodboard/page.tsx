@@ -63,12 +63,12 @@ const collageTiles = [
     title: 'Newspaper grids',
     href: '/projects/newspaper-website',
     span: 'md:col-span-2',
-    media: <ResponsiveImage src="/images/portfolio/newspaper/front_page.png" alt="Newspaper grids" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 42rem" />,
+    media: <ResponsiveImage src="/images/portfolio/newspaper/science_page.png" alt="Newspaper science section grid" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 42rem" />,
   },
   {
     title: 'Campus builder vibe',
     href: '/projects/lykke',
-    media: <ResponsiveImage src="/images/portfolio/lykke/discover.png" alt="Campus builder vibe" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
+    media: <ResponsiveImage src="/images/portfolio/lykke/visual-lab-surface.jpg" alt="Lykke Visual Lab interactive surface" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" sizes="(max-width: 768px) 92vw, 22rem" />,
   },
   {
     title: 'Code + control',

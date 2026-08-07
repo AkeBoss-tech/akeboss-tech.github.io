@@ -61,9 +61,12 @@ const experience = [
       backgroundColor: 'rgba(37, 99, 235, 0.92)',
       borderColor: 'rgba(96, 165, 250, 0.46)',
     },
-    role: 'Incoming Software Engineering Intern',
-    dates: 'May 2026 - Aug 2026',
-    bullets: [],
+    role: 'Software Engineering Intern',
+    dates: 'May 26, 2026 - Aug 6, 2026',
+    bullets: [
+      'Designed and demonstrated a multi-channel claims-assistance prototype with trust-focused evaluation and escalation workflows.',
+      'Built and piloted AI-assisted knowledge, low-code discovery, and design-to-code developer workflows.',
+    ],
   },
   {
     title: 'Scarlet Sync',
@@ -291,13 +294,13 @@ const selectedProjects = [
 ] as const
 
 const cvCollageImages = [
-  { src: '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync interface', className: 'sm:col-span-2 sm:row-span-2' },
+  { src: '/images/portfolio/scarlet-sync/generated-schedule.jpg', alt: 'Scarlet Sync generated schedule', className: 'sm:col-span-2 sm:row-span-2' },
   { src: '/images/portfolio/hic-tad/hero.png', alt: 'Hi-C TAD analysis visualization', className: '' },
-  { src: '/images/portfolio/random_environment.png', alt: 'Path finding visualization', className: '' },
-  { src: '/images/portfolio/lykke/hero.png', alt: 'Lykke study product interface', className: 'sm:col-span-2' },
+  { src: '/images/portfolio/drawn_environment.png', alt: 'Path finding visualization', className: '' },
+  { src: '/images/portfolio/lykke/wiki-reading-surface.jpg', alt: 'Lykke source-grounded wiki interface', className: 'sm:col-span-2' },
   { src: '/images/portfolio/llm-research/image.png', alt: 'LLM research chart', className: '' },
   { src: '/images/portfolio/vis/economic-plotter.png', alt: 'Economic feature plotting interface', className: '' },
-  { src: '/images/portfolio/2024-upscaled.png', alt: 'FRC robot project', className: 'sm:col-span-2 sm:row-span-2' },
+  { src: '/images/posts/frc24/images/image2.png', alt: 'Team 1257 robot command architecture and CAD', className: 'sm:col-span-2 sm:row-span-2' },
   { src: '/images/homepage/2026-05-24/nvidia.png', alt: 'NVIDIA campus photo', className: '' },
   { src: '/images/homepage/2026-05-24/dc.png', alt: 'Washington DC photo', className: '' },
   { src: '/images/homepage/2026-05-24/ruroad.png', alt: 'Rutgers road at night', className: 'sm:col-span-2' },

@@ -14,7 +14,6 @@ export default function Image() {
     title: 'Software engineering, AI systems, and product work.',
     description: 'A recruiter-facing snapshot of internships, startup work, technical depth, and execution.',
     variant: 'resume',
-    imagePath: '/images/portfolio/scarlet-sync/home.png',
+    imagePath: '/images/portfolio/scarlet-sync/generated-schedule.jpg',
   })
 }
-

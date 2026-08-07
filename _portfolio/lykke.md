@@ -1,7 +1,7 @@
 ---
 title: "Lykke — AI Education Platform"
 excerpt: "An AI-first education platform that ingests Canvas course content and transforms it into AI-generated wikis, an adaptive video tutor, interview prep coaching, and a persistent personal knowledge library"
-image: "/images/portfolio/lykke/hero.png"
+image: "/images/portfolio/lykke/wiki-reading-surface.jpg"
 collection: portfolio
 date: 2026-05-06
 tags: [AI, Web]
@@ -9,7 +9,7 @@ featured: true
 rank: 2
 ---
 
-<img src='/images/portfolio/lykke/hero.png' width='100%' align='center'>
+<img src='/images/portfolio/lykke/visual-lab-surface.jpg' width='100%' align='center'>
 
 Students spend more time hunting for materials than actually studying. Notes scattered across Google Drive, assignments buried in Canvas, lecture slides downloaded and forgotten—by the time exams hit, half the battle is just finding everything. **Lykke** reimagines this entirely. It's an AI-first education platform built around a single idea: your courses should become a living, queryable knowledge base. Connect your Canvas account, and Lykke ingests your entire semester—assignments, files, grades, syllabi—then surfaces that knowledge through four distinct AI experiences: **AI-generated wikis** that explain every concept from your actual course materials, an **AI video tutor** that teaches interactively, **AI interview prep** that coaches you using real questions from your field, and a **persistent study workspace** that generates flashcards, quizzes, and infographics on demand. Currently used by **285+ students** across UC San Diego, Michigan, and UT Austin.
 
@@ -35,7 +35,7 @@ Built for students entering technical fields, the interview prep module pulls fr
 
 ## The Study Workspace
 
-<img src='/images/portfolio/lykke/study.png' width='100%' align='center'>
+<img src='/images/portfolio/lykke/video-studio-assistant.jpg' width='100%' align='center'>
 
 The core of Lykke is a RAG-powered chat interface that knows your course materials. Upload your textbooks, notes, and PDFs, and the AI answers questions with citations pulled directly from your documents—not the internet. The right panel tracks everything generated: flashcards, quizzes, study guides, and infographics, all organized by class.
 
@@ -50,15 +50,13 @@ The system uses a **LangGraph multi-agent backend** with specialized agents for 
 
 ## AI-Generated Infographics
 
-<img src='/images/portfolio/lykke/infographic.png' width='100%' align='center'>
+<img src='/images/portfolio/lykke/artifact-library.jpg' width='100%' align='center'>
 
 One of Lykke's most distinctive features: paste in a textbook chapter or lecture notes and get a publication-quality infographic in seconds. The AI reads the content, identifies key concepts and relationships, and produces a structured visual explanation with diagrams, formulas, and definitions. The example above was generated from a Graph Theory textbook—the kind of visual that would normally take an hour to make by hand.
 
 ---
 
 ## Community & Discovery
-
-<img src='/images/portfolio/lykke/discover.png' width='100%' align='center'>
 
 Study materials don't have to be private. The Discover feed lets students browse summaries, infographics, and flashcard sets shared by classmates in the same courses. If someone already made great flashcards for Math 478, you don't have to regenerate them. The community layer turns Lykke into a collaborative knowledge base that improves as more students use it.
 
@@ -73,4 +71,3 @@ Connecting an LLM to a student's actual course materials—not generic internet 
 **Canvas integration.** Rather than asking students to manually re-upload everything, Lykke connects directly to Canvas via OAuth. A Chrome extension extracts course data and files from the LMS, posts them to the backend, and they're automatically embedded and indexed. Assignments, due dates, and grades flow in automatically—the weekly plan agent reads the Canvas calendar to build study schedules around real exam dates.
 
 **Dual-backend architecture.** The platform runs a production Java Spring Boot backend for auth and legacy notes alongside a Python FastAPI backend for all AI operations (agents, RAG, vector search, document processing). The frontend intelligently routes requests between both, giving users a seamless experience while the AI infrastructure scales independently.
-

@@ -75,7 +75,7 @@ export function GET() {
     { url: absoluteUrl('/about'), images: ['/images/face.jpg'] },
     { url: absoluteUrl('/contact'), images: ['/images/face.jpg'] },
     { url: absoluteUrl('/story'), images: ['/hero-nyc.png'] },
-    { url: absoluteUrl('/resume'), images: ['/images/portfolio/scarlet-sync/home.png'] },
+    { url: absoluteUrl('/resume'), images: ['/images/portfolio/scarlet-sync/generated-schedule.jpg'] },
     { url: absoluteUrl('/cv'), images: ['/images/portfolio/hic-tad/hero.png'] },
     { url: absoluteUrl('/projects'), images: ['/images/portfolio/home.png'] },
     { url: absoluteUrl('/writing'), images: ['/images/posts/doing-things-hero.png'] },

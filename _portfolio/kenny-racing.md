@@ -1,7 +1,7 @@
 ---
 title: "ASD Racing Game"
 excerpt: "A 3D racing game made with the Godot game engine!"
-image: "/images/portfolio/racing/title.png"
+image: "/images/portfolio/racing/grand.png"
 collection: portfolio
 date: 2023-06-02
 tags: [Game]

@@ -1,7 +1,7 @@
 ---
 title: "MSDS Final: Depth Estimation"
 excerpt: "CTE Partnerships a website bringing information about local businesses together!"
-image: "/images/portfolio/stereo/poster.png"
+image: "/images/portfolio/stereo/stereo_disparity_map.png"
 collection: portfolio
 date: 2024-01-12
 tags: [AI, Research]

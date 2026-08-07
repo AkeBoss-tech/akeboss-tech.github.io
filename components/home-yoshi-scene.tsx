@@ -19,6 +19,7 @@ type HomePoint = {
   eyebrow: string
   title: string
   body: string
+  bullets?: string[]
   href?: string
   logo?: string
   logoAlt?: string
@@ -246,6 +247,11 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
       </div>
       <h2>{point.title}</h2>
       <p>{point.body}</p>
+      {point.bullets?.length ? (
+        <ul className="gd-card-bullets">
+          {point.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+        </ul>
+      ) : null}
       {point.href ? <a href={point.href}>Open details ↗</a> : null}
     </div>
   )
@@ -499,16 +505,75 @@ function PlacesSection() {
   )
 }
 
+function ClosingSection() {
+  const sectionRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    let animationFrame = 0
+
+    const updateReveal = () => {
+      animationFrame = 0
+      const section = sectionRef.current
+      if (!section) return
+
+      const viewportHeight = window.innerHeight
+      const sectionTop = section.getBoundingClientRect().top
+      const revealStart = viewportHeight * 0.9
+      const revealEnd = viewportHeight * 0.12
+      const progress = Math.min(1, Math.max(0, (revealStart - sectionTop) / (revealStart - revealEnd)))
+      section.style.setProperty('--finale-progress', String(progress))
+    }
+
+    const scheduleReveal = () => {
+      if (animationFrame === 0) animationFrame = window.requestAnimationFrame(updateReveal)
+    }
+
+    updateReveal()
+    window.addEventListener('scroll', scheduleReveal, { passive: true })
+    window.addEventListener('resize', scheduleReveal)
+
+    return () => {
+      window.removeEventListener('scroll', scheduleReveal)
+      window.removeEventListener('resize', scheduleReveal)
+      if (animationFrame !== 0) window.cancelAnimationFrame(animationFrame)
+    }
+  }, [])
+
+  return (
+    <section ref={sectionRef} className="home-closing-section" aria-label="Closing navigation">
+      <div className="home-closing-content">
+        <p className="home-closing-name">Akash Dubey</p>
+        <div className="gd-end-top-actions">
+          <a href="/akash-dubey.vcf" download className="gd-end-contact-shortcut" title="Add to Contacts">
+            <span>Add to Contacts</span>
+          </a>
+          <div className="gd-end-theme">
+            <ThemeToggle className="gd-end-theme-button" />
+          </div>
+        </div>
+        <ContactIconLinks className="gd-end-icons" />
+        <div className="home-closing-buttons">
+          <button type="button" className="gd-end-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <span>Replay</span>
+          </button>
+          <Link className="gd-end-button" href="/projects"><span>Projects</span></Link>
+          <Link className="gd-end-button" href="/writing"><span>Writing</span></Link>
+          <Link className="gd-end-button" href="/contact"><span>Contact</span></Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDescentStageProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const sectionRef = useRef<HTMLElement | null>(null)
   const heroRef = useRef<HTMLElement | null>(null)
   const gradientRef = useRef<HTMLDivElement | null>(null)
-  const endLinksRef = useRef<HTMLElement | null>(null)
   const scrollLabelRef = useRef<HTMLDivElement | null>(null)
   const [sceneReady, setSceneReady] = useState(false)
   const [typedHeadlineLength, setTypedHeadlineLength] = useState(0)
-  const headlineText = 'Make machines that make things. Take actions that enable action.'
+  const headlineText = '“Make machines that make things. Take actions that enable action.”'
   const { resolvedTheme } = useTheme()
   const currentTheme = resolvedTheme === 'light' ? 'light' : 'dark'
 
@@ -805,19 +870,9 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
           setMaterialOpacity(arrow.cone.material, arrowOpacity)
         })
 
-        const bottomNavProgress = THREE.MathUtils.smoothstep(endOrbitBlend, 0.22, 0.86)
-        if (endLinksRef.current) {
-          const navHidden = bottomNavProgress <= 0.35
-          endLinksRef.current.classList.toggle('is-visible', bottomNavProgress > 0.35)
-          endLinksRef.current.style.setProperty('--end-progress', String(bottomNavProgress))
-          endLinksRef.current.setAttribute('aria-hidden', String(navHidden))
-          endLinksRef.current.inert = navHidden
-          endLinksRef.current.querySelectorAll('a, button').forEach((button) => {
-            ;(button as HTMLElement).tabIndex = bottomNavProgress > 0.88 ? 0 : -1
-          })
-        }
         if (scrollLabelRef.current) {
-          scrollLabelRef.current.style.opacity = String(stageVisibility * (1 - bottomNavProgress))
+          const scrollFade = THREE.MathUtils.smoothstep(p, 0.94, 0.995)
+          scrollLabelRef.current.style.opacity = String(stageVisibility * (1 - scrollFade))
         }
 
         renderer.render(scene, camera)
@@ -924,32 +979,10 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         </section>
       </div>
 
-      <div ref={scrollLabelRef} className="gd-scroll">Scroll</div>
+      <PlacesSection />
+      <ClosingSection />
 
-      <nav ref={endLinksRef} className="gd-end-links" aria-label="Bottom navigation" aria-hidden="true" inert>
-        <p className="gd-end-name">Akash Dubey</p>
-        <div className="gd-end-top-actions">
-          <a
-            href="/akash-dubey.vcf"
-            download
-            className="gd-end-contact-shortcut"
-            tabIndex={-1}
-            title="Add to Contacts"
-          >
-            <span>Add to Contacts</span>
-          </a>
-          <div className="gd-end-theme">
-            <ThemeToggle className="gd-end-theme-button" />
-          </div>
-        </div>
-        <ContactIconLinks className="gd-end-icons" />
-        <button type="button" className="gd-end-button" tabIndex={-1} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <span>Replay</span>
-        </button>
-        <Link className="gd-end-button" href="/projects" tabIndex={-1}><span>Projects</span></Link>
-        <Link className="gd-end-button" href="/writing" tabIndex={-1}><span>Writing</span></Link>
-        <Link className="gd-end-button" href="/contact" tabIndex={-1}><span>Contact</span></Link>
-      </nav>
+      <div ref={scrollLabelRef} className="gd-scroll">Scroll</div>
     </section>
   )
 }
@@ -967,9 +1000,15 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
 
   const points = useMemo<HomePoint[]>(() => [
     {
-      eyebrow: 'Currently',
+      eyebrow: 'May–August 2026',
       title: 'New York Life Insurance',
-      body: 'Preparing for a software engineering internship focused on production systems and applied data work.',
+      body: 'Completed a software engineering internship focused primarily on applied AI engineering.',
+      bullets: [
+        'Designed and demonstrated a multi-channel claims-assistance prototype across web, phone, and SMS.',
+        'Built trust-focused evaluation, citation, escalation, and failure-recovery workflows.',
+        'Piloted AI-assisted knowledge and developer tools with enterprise teams.',
+      ],
+      href: '/experience/new-york-life',
       logo: '/company-logos/new-york-life.svg',
       logoAlt: 'New York Life Insurance logo',
       image: '/images/homepage/2026-05-29/nyl.avif',
@@ -983,8 +1022,11 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       logo: '/company-logos/scarlet-sync.png',
       logoAlt: 'Scarlet Sync logo',
       gallery: [
-        { src: scarletSync?.image || '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync interface' },
-        { src: '/images/portfolio/scarlet-sync/home.png', alt: 'Scarlet Sync planner view' },
+        { src: scarletSync?.image || '/images/portfolio/scarlet-sync/generated-schedule.jpg', alt: 'Scarlet Sync generated weekly schedule' },
+        { src: '/images/portfolio/scarlet-sync/degree-planner.png', alt: 'Scarlet Sync populated degree plan with requirements and course content' },
+        { src: '/images/portfolio/scarlet-sync/course-sniper.png', alt: 'Scarlet Sync verified Course Sniper alert workflow' },
+        { src: '/images/portfolio/scarlet-sync/explore.png', alt: 'Scarlet Sync course explorer with availability and student ratings' },
+        { src: '/images/portfolio/scarlet-sync/professor-reviews.png', alt: 'Scarlet Sync professor reviews and teaching evidence directory' },
       ],
     },
     {
@@ -997,9 +1039,9 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       ],
       galleryLayout: 'feature-left-stack-right',
       gallery: [
-        { src: lykke?.image || '/images/portfolio/lykke/hero.png', alt: 'Lykke interface' },
-        { src: '/images/portfolio/lykke/study.png', alt: 'Lykke study tools' },
-        { src: '/images/portfolio/lykke/discover.png', alt: 'Lykke discover feed' },
+        { src: lykke?.image || '/images/portfolio/lykke/wiki-reading-surface.jpg', alt: 'Lykke source-grounded wiki reading surface' },
+        { src: '/images/portfolio/lykke/visual-lab-surface.jpg', alt: 'Lykke Visual Lab interactive learning surface' },
+        { src: '/images/portfolio/lykke/video-studio-assistant.jpg', alt: 'Lykke video studio with AI assistant' },
       ],
     },
     {
@@ -1009,9 +1051,9 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       href: pathFinder ? `/projects/${pathFinder.slug}` : 'https://arc-lab-robotics.github.io/',
       gallerySide: 'right',
       gallery: [
+        { src: '/images/homepage/arc-lab/setup.png', alt: 'Dual-arm robot laboratory setup from public ARC-L research' },
+        { src: '/images/homepage/arc-lab/system-overview.png', alt: 'Dual-arm task and motion planning system overview from public ARC-L research' },
         { src: '/images/homepage/arc-lab/dipn-manipulation.png', alt: 'Robot manipulation pipeline from ARC-L DIPN research' },
-        { src: '/images/homepage/arc-lab/tabletop-rearrangement.png', alt: 'Tabletop object rearrangement planning from ARC-L research' },
-        { src: '/images/homepage/arc-lab/path-planning.png', alt: 'Multi-robot path planning visualization from ARC-L research' },
       ],
     },
     {
@@ -1062,7 +1104,6 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
           <GradientDescentBackground className="home-top-gradient" />
         </div>
         <IntroHero />
-        <PlacesSection />
       </div>
       <HomeGradientDescentStage points={points} topBackgroundRef={topBackgroundRef} />
     </div>

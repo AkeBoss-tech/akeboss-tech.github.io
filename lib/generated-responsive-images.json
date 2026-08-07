@@ -429,50 +429,28 @@
       "height": 262
     },
     {
-      "src": "/images/homepage/arc-lab/path-planning.png",
+      "src": "/images/homepage/arc-lab/setup.png",
       "widths": [
         160,
         320,
         640,
         960,
-        1200
+        1280
       ],
-      "width": 1200,
-      "height": 187
+      "width": 1856,
+      "height": 1515
     },
     {
-      "src": "/images/homepage/arc-lab/tabletop-rearrangement.png",
+      "src": "/images/homepage/arc-lab/system-overview.png",
       "widths": [
         160,
         320,
         640,
         960,
-        1200
+        1280
       ],
-      "width": 1200,
-      "height": 172
-    },
-    {
-      "src": "/images/portfolio/2024-upscaled.png",
-      "widths": [
-        160,
-        320,
-        640,
-        960,
-        1236
-      ],
-      "width": 1236,
-      "height": 1100
-    },
-    {
-      "src": "/images/portfolio/2024.png",
-      "widths": [
-        160,
-        320,
-        618
-      ],
-      "width": 618,
-      "height": 550
+      "width": 8000,
+      "height": 4000
     },
     {
       "src": "/images/portfolio/android/title.png",
@@ -487,15 +465,16 @@
       "height": 621
     },
     {
-      "src": "/images/portfolio/bus/bus-data.png",
+      "src": "/images/portfolio/asa-data/languages-vs-salary.png",
       "widths": [
         160,
         320,
         640,
-        867
+        960,
+        1280
       ],
-      "width": 867,
-      "height": 761
+      "width": 2000,
+      "height": 1125
     },
     {
       "src": "/images/portfolio/bus/image-1.png",
@@ -845,19 +824,18 @@
       "height": 1632
     },
     {
-      "src": "/images/portfolio/lykke/discover.png",
+      "src": "/images/portfolio/lykke/artifact-library.jpg",
       "widths": [
         160,
         320,
         640,
-        960,
-        1280
+        736
       ],
-      "width": 1944,
-      "height": 1768
+      "width": 736,
+      "height": 933
     },
     {
-      "src": "/images/portfolio/lykke/hero.png",
+      "src": "/images/portfolio/lykke/video-studio-assistant.jpg",
       "widths": [
         160,
         320,
@@ -865,11 +843,11 @@
         960,
         1280
       ],
-      "width": 3008,
-      "height": 1714
+      "width": 2370,
+      "height": 1333
     },
     {
-      "src": "/images/portfolio/lykke/infographic.png",
+      "src": "/images/portfolio/lykke/visual-lab-surface.jpg",
       "widths": [
         160,
         320,
@@ -877,11 +855,11 @@
         960,
         1280
       ],
-      "width": 3022,
-      "height": 1722
+      "width": 1422,
+      "height": 800
     },
     {
-      "src": "/images/portfolio/lykke/study.png",
+      "src": "/images/portfolio/lykke/wiki-reading-surface.jpg",
       "widths": [
         160,
         320,
@@ -889,8 +867,8 @@
         960,
         1280
       ],
-      "width": 3024,
-      "height": 1724
+      "width": 1422,
+      "height": 800
     },
     {
       "src": "/images/portfolio/newspaper/article_page.png",
@@ -1025,6 +1003,18 @@
       "height": 926
     },
     {
+      "src": "/images/portfolio/puerto-rico/median-income-comparison.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 3687,
+      "height": 1996
+    },
+    {
       "src": "/images/portfolio/racing/grand.png",
       "widths": [
         160,
@@ -1082,7 +1072,7 @@
       "height": 687
     },
     {
-      "src": "/images/portfolio/scarlet-sync/home.png",
+      "src": "/images/portfolio/scarlet-sync/course-sniper.png",
       "widths": [
         160,
         320,
@@ -1090,8 +1080,68 @@
         960,
         1280
       ],
-      "width": 3024,
-      "height": 1964
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/degree-planner.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/explore.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/generated-schedule.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1658,
+      "height": 788
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/professor-reviews.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/ranked-schedules.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1658,
+      "height": 788
     },
     {
       "src": "/images/portfolio/stereo/boxplot.png",
@@ -1477,30 +1527,6 @@
     },
     {
       "src": "/images/posts/october-journal-hero.png",
-      "widths": [
-        160,
-        320,
-        640,
-        960,
-        1024
-      ],
-      "width": 1024,
-      "height": 1024
-    },
-    {
-      "src": "/images/posts/robotics-journal-hero.png",
-      "widths": [
-        160,
-        320,
-        640,
-        960,
-        1024
-      ],
-      "width": 1024,
-      "height": 1024
-    },
-    {
-      "src": "/images/posts/robotics-programming-hero.png",
       "widths": [
         160,
         320,

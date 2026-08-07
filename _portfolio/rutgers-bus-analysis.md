@@ -1,7 +1,7 @@
 ---
 title: "Rutgers Bus Analysis"
 excerpt: "A comprehensive data analysis of the Rutgers University bus transit system"
-image: "/images/portfolio/bus/bus-data.png"
+image: "/images/portfolio/bus/image-1.png"
 collection: portfolio
 date: 2024-12-10
 tags: [Data, Research]
