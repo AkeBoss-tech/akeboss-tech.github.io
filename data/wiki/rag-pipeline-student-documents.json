@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "rag-pipeline-student-documents",
   "title": "RAG Pipeline for Student Documents",
   "subtitle": "Retrieval-augmented generation turns messy course files into ranked evidence before an AI tutor answers.",
@@ -21,10 +22,10 @@
     {
       "heading": "What RAG Adds",
       "body": [
-        "A language model by itself answers from parameters. A RAG system first retrieves source material, then asks the model to answer with that material in context.",
-        "For course tools, the source material is unusually fragmented: syllabi, lecture notes, Canvas pages, assignment text, PDFs, calendar events, and sometimes handwritten study notes."
+        "A language model can produce fluent text from its parameters, but those parameters do not automatically contain a student's current syllabus, revised rubric, or professor-specific notation. A retrieval-augmented generation (RAG) system first finds passages from an indexed collection and then supplies selected passages as context for generation.",
+        "For course tools, evidence is fragmented across Canvas pages, assignments, files, grades, syllabi, calendars, textbooks, notes, and PDFs. Retrieval makes those pieces addressable without pretending that every stored passage is equally relevant."
       ],
-      "callout": "The retrieval step is the difference between an AI tutor that sounds plausible and one that can point back to the class material."
+      "callout": "Mental model: retrieval is an open-book evidence selection step; generation is the explanation step. The analogy stops when retrieval misses, misparses, or selects stale evidence—the model cannot read a page that never entered its context."
     },
     {
       "heading": "The Working Pipeline",
@@ -45,8 +46,41 @@
     {
       "heading": "Worked Example",
       "body": [
-        "A query like 'what should I study before the vector search quiz?' should retrieve the quiz date, the relevant lecture, and the study guide. Those chunks probably live in different files.",
-        "A strong answer should synthesize them without hiding the evidence chain: quiz timing from Canvas, core terms from lecture notes, and practice prompts from the study guide."
+        "Suppose a student asks, 'What should I study before the vector search quiz?' The phrase 'vector search quiz' gives keyword retrieval an exact anchor, while its meaning points vector retrieval toward passages about embeddings, similarity, hybrid search, and reranking.",
+        "The first stage might return a Canvas quiz entry, two lecture chunks, an older announcement, and a study-guide checklist. Course and date metadata remove out-of-scope material, deduplication collapses repeats, and the reranker promotes the current quiz entry, lecture, and guide.",
+        "The answer can then separate claims by source: timing from Canvas, terms from the lecture, and practice prompts from the guide. If no source states which formulas are assessed, the response should say so rather than inventing coverage."
+      ]
+    },
+    {
+      "heading": "Candidate Fusion and Context Assembly",
+      "body": [
+        "Keyword search protects exact names, formulas, course codes, and assignment labels; vector search can recover passages phrased differently. Hybrid retrieval collects candidates from both signals, but their raw scores are not automatically comparable, so the system needs a defined fusion rule.",
+        "Deduplication preserves room for distinct evidence. A reranker evaluates a smaller candidate set against the full question, then context assembly retains source labels and fits the strongest passages into a bounded prompt. More chunks are not automatically better: unrelated context can distract generation."
+      ],
+      "callout": "A reranker can reorder only the candidates it receives. If first-stage retrieval misses the evidence, reranking cannot recover it."
+    },
+    {
+      "heading": "Evaluation Before Deployment",
+      "body": [
+        "Evaluate retrieval separately from answer quality. For a small set of real student questions, label the minimum sufficient source chunks and measure whether they appear in the candidate set and near the top after reranking.",
+        "Then evaluate grounded generation: every material claim should follow from supplied evidence, source labels should survive synthesis, and the answer should qualify or abstain when the sources are incomplete. Test stale assignments, duplicate uploads, ambiguous course codes, scanned PDFs, and questions spanning several files."
+      ],
+      "table": {
+        "columns": ["Layer", "Question", "Failure"],
+        "rows": [
+          ["Parsing", "Was source content recovered faithfully?", "A formula or due date disappears"],
+          ["Retrieval", "Did sufficient evidence enter the candidates?", "The current rubric is absent"],
+          ["Ranking", "Did the best evidence rise high enough?", "An old announcement wins"],
+          ["Generation", "Does each claim follow from context?", "The answer invents an exam topic"]
+        ]
+      }
+    },
+    {
+      "heading": "Limits and Common Misconceptions",
+      "body": [
+        "RAG does not make a model truthful by definition. Parsing errors, incoherent chunks, retrieval misses, stale indexes, malicious instructions inside uploaded documents, and unsupported synthesis can still produce a wrong response.",
+        "Vector similarity is not proof of relevance, reranking is not fact checking, and a citation does not prove that the cited passage supports the adjacent sentence. Course tools also need authorization boundaries so material from one user or course cannot leak into another retrieval scope.",
+        "The project source describes both production cloud retrieval and browser-side RAG work. These imply different privacy, latency, storage, and hardware tradeoffs; the source does not establish that either architecture is always preferable."
       ]
     }
   ],
@@ -55,20 +89,6 @@
     "Chunking by arbitrary character count instead of document structure.",
     "Letting retrieved chunks into the prompt without source labels.",
     "Using old course files after Canvas content changes."
-  ],
-  "quiz": [
-    {
-      "question": "Why combine keyword and vector search?",
-      "options": ["To make retrieval slower", "To balance exact term matching with semantic matching", "To avoid storing metadata", "To replace reranking entirely"],
-      "answer": 1,
-      "explanation": "Keyword search preserves exact terms; vector search captures meaning. Hybrid retrieval uses both signals."
-    },
-    {
-      "question": "What should a reranker do?",
-      "options": ["Generate the final answer", "Delete all low-frequency words", "Reorder candidate chunks by relevance", "Parse PDFs into text"],
-      "answer": 2,
-      "explanation": "A reranker scores candidate passages after first-stage retrieval and improves the final context set."
-    }
   ],
   "related": ["source-grounded-ai-wikis", "course-materials-queryable-knowledge-base", "persistent-semantic-memory-ai-assistants"]
 }

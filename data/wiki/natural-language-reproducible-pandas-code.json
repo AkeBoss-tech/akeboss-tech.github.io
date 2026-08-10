@@ -1,31 +1,114 @@
 {
+  "schemaVersion": 2,
   "slug": "natural-language-reproducible-pandas-code",
   "title": "Natural Language to Reproducible Pandas Code",
-  "subtitle": "A data agent is useful only if its natural-language answer leaves behind executable, inspectable code.",
+  "subtitle": "A data agent becomes reviewable when a plain-language request leaves behind executable code, explicit assumptions, output data, and validation evidence.",
   "domain": "Data agents",
   "difficulty": "Intermediate",
-  "summary": "The Data Cleaning Assistant turns plain-English CSV cleaning requests into reproducible pandas scripts and cleaned outputs.",
+  "summary": "The Data Cleaning Assistant reports a workflow that turns plain-English CSV cleaning requests into cleaned outputs and reusable pandas scripts.",
   "tags": ["Pandas", "Data cleaning", "Agents", "Reproducibility"],
   "sourceFiles": ["_portfolio/clean-your-data.md"],
   "sourceLinks": [{ "label": "Data Cleaning Assistant project", "href": "/projects/clean-your-data" }],
   "externalSources": [
-    { "label": "pandas user guide", "href": "https://pandas.pydata.org/docs/user_guide/index.html" },
+    { "label": "Data Cleaning Assistant source repository", "href": "https://github.com/AkeBoss-tech/clean-your-data" },
+    { "label": "pandas user guide", "href": "https://pandas.pydata.org/docs/user_guide/" },
     { "label": "pandas missing data guide", "href": "https://pandas.pydata.org/docs/user_guide/missing_data.html" },
-    { "label": "pandas GroupBy guide", "href": "https://pandas.pydata.org/docs/user_guide/groupby.html" }
+    { "label": "pandas Copy-on-Write guide", "href": "https://pandas.pydata.org/pandas-docs/stable/user_guide/copy_on_write.html" },
+    { "label": "pandas GroupBy guide", "href": "https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html" }
   ],
   "artifact": { "type": "feature-engineering", "title": "From request to transformations", "description": "Toggle common transformations to see how raw columns become model-ready features or cleaned fields." },
   "contentBlocks": [
-    { "type": "heading", "level": 2, "text": "The Translation Problem" },
-    { "type": "paragraph", "text": "A user says, 'make hired a boolean, remove bad rows, and graph followers against following.' The agent has to infer columns, data types, missing-value rules, output expectations, and whether a change should mutate the file or create a derived column." },
-    { "type": "markdown", "content": "A robust data-cleaning agent should produce three things:\n\n1. **A cleaned dataset** the user can download.\n2. **A script** that can reproduce the transformation.\n3. **A short audit trail** explaining assumptions and rows affected." }
+    { "type": "heading", "level": 2, "text": "Translation Is a Schema-and-Policy Problem" },
+    { "type": "paragraph", "text": "A request such as 'make hired a boolean and remove bad rows' leaves key questions unresolved: which strings count as true, what makes a row bad, how missing values should behave, whether row identity must be preserved, and which output is authoritative. Reproducible code must make those decisions visible." },
+    { "type": "markdown", "content": "A reviewable run should produce:\n\n1. **A script** with explicit inputs, transformations, and outputs.\n2. **A cleaned dataset** or other deterministic artifact.\n3. **An audit summary** with assumptions, before/after metrics, and validation results." }
   ],
   "sections": [
-    { "heading": "Reproducibility as the Product", "body": ["The script is not a side effect; it is the trust object. A cleaned CSV without code is hard to audit and hard to reuse when the source file changes.", "Generated code should be small, dependency-light, and deterministic. It should avoid hidden state, random mutation, and ambiguous column guessing when the schema is unclear."] },
-    { "heading": "Execution Safety", "body": ["Running generated code needs guardrails: whitelisted imports, file sandboxing, timeouts, memory limits, and clear separation between code generation and execution.", "The user should be able to inspect the code before trusting the output, and the system should show shape changes, null counts, and modified columns after execution."], "table": { "columns": ["Risk", "Guardrail"], "rows": [["Bad column assumption", "Preview schema and ask or infer conservatively"], ["Destructive mutation", "Work on a copy and keep original available"], ["Unsafe code", "Whitelist imports and block arbitrary system calls"], ["Silent row loss", "Report before/after row counts"], ["Non-reproducibility", "Export the exact script"]] } }
+    {
+      "heading": "Reported Project Behavior and Recommended Contract",
+      "body": [
+        "Project fact: the portfolio source says the Data Cleaning Assistant accepts a CSV and plain-English instructions, then returns a cleaned dataset plus the exact Python script. It reports a FastAPI and Google Gemini multi-agent backend, schema exploration, pandas/numpy code execution in a sandboxed environment with no `exec` or `eval` and whitelisted imports, visualization, statistical analysis, merging, regex, planning, and specialist routing.",
+        "The source demonstrates 'make the hired column a boolean' and reports that the agent ran `df['Hired'].astype(bool)` while the DataFrame shape stayed unchanged. That demonstration is not a generally correct parsing rule: in pandas/Python, a non-empty string such as `'False'` is truthy. The schema-first translation and validation policies below are recommendations for making such transformations dependable."
+      ],
+      "table": {
+        "columns": ["Statement", "Classification"],
+        "rows": [
+          ["The project returns cleaned data and a Python script", "Reported project behavior"],
+          ["The portfolio reports whitelisted imports and no exec/eval", "Reported project guardrail"],
+          ["Boolean conversion should use an explicit value map", "Recommended correctness policy"],
+          ["Every run should pin pandas and record input/output hashes", "Recommended reproducibility policy"]
+        ]
+      }
+    },
+    {
+      "heading": "Compile Intent into an Explicit Transformation Plan",
+      "body": [
+        "Before generating code, inspect column names, dtypes, representative values, null counts, uniqueness, and row identifiers. Translate the request into operations with preconditions and postconditions. If a consequential rule remains ambiguous, present the assumption or ask for clarification rather than guessing from a column name.",
+        "Separate cleaning from analysis. Cleaning standardizes representation, repairs or flags invalid values, and preserves lineage. Aggregation, modeling, and plotting may consume the cleaned data, but they should remain distinct steps so a user can rerun or reject one without silently changing another."
+      ],
+      "table": {
+        "columns": ["Natural-language intent", "Required decision", "Postcondition"],
+        "rows": [
+          ["Make hired a boolean", "Accepted true/false tokens and null policy", "Only True, False, or allowed NA remains"],
+          ["Remove bad rows", "Formal invalidity predicate", "Every removed row has a reason code"],
+          ["Deduplicate customers", "Identity keys and keep rule", "At most one row per selected key"],
+          ["Fill missing income", "Imputation method and grouping", "No target NA; imputation flags retained"],
+          ["Graph followers vs following", "Numeric coercion and exclusion rules", "Plot inputs and excluded rows are reported"]
+        ]
+      },
+      "callout": "Analogy limit: generated code resembles a compiler output because it translates a higher-level request. Natural language lacks a formal grammar and complete semantics, so schema inspection, confirmation, and tests remain necessary."
+    },
+    {
+      "heading": "Reproducibility and Execution Safety",
+      "body": [
+        "A reproducible script declares the input path or object, expected schema, dependency versions, ordered transformations, deterministic parameters, validation assertions, and output path. Record input and output hashes plus before/after row counts, dtypes, and null counts. Avoid hidden notebook state and broad `inplace` mutation; pandas 3.0's official Copy-on-Write behavior also means older assumptions about views, chained assignment, and side effects should not be carried across versions without testing.",
+        "Execution safety is a separate boundary from reproducibility. Recommended controls include a disposable working directory, read-only original input, narrow output directory, import allowlist, disabled network, resource and time limits, subprocess restrictions, file-size caps, and structured result capture. A ban on `exec`/`eval` and an import allowlist reduce risk but do not by themselves prove complete sandbox isolation."
+      ],
+      "table": {
+        "columns": ["Risk", "Guardrail", "Evidence to retain"],
+        "rows": [
+          ["Wrong column assumption", "Schema preview and explicit precondition", "Observed columns and selected mapping"],
+          ["Silent row loss", "Reason-coded filter and count assertion", "Before/after counts by reason"],
+          ["Version-dependent behavior", "Pinned environment and fixture tests", "pandas version and test output"],
+          ["Filesystem escape", "Isolated read/write mounts", "Declared accessed paths"],
+          ["Non-reproducible output", "Exact script, parameters, and hashes", "Run manifest"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Input values in `Hired` are `['Yes', 'no', 'TRUE', '0', '', null]`. The user asks, 'make Hired a boolean and remove rows where the answer is blank.' An explicit policy maps `yes/true/1` to `True`, `no/false/0` to `False`, treats an empty string and null as missing, and removes only missing outcomes. The agent reports the policy before execution.",
+        "The generated script normalizes text with `str.strip().str.lower()`, maps through a fixed dictionary, stores the result using pandas' nullable `boolean` dtype, asserts that every non-missing normalized token was recognized, records two removed row IDs, and writes a new output instead of overwriting the upload. For the six illustrative rows, four remain: `[True, False, True, False]`.",
+        "Using `.astype(bool)` directly would be wrong for this string column because non-empty strings—including `'no'` and `'0'`—evaluate truthy. If an unexpected token such as `'maybe'` appears, the correct result is a failed validation or explicit unresolved category, not silent coercion."
+      ],
+      "table": {
+        "columns": ["Raw value", "Normalized", "Output", "Reason"],
+        "rows": [
+          ["Yes", "yes", "True", "Explicit true token"],
+          ["no", "no", "False", "Explicit false token"],
+          ["TRUE", "true", "True", "Case normalized"],
+          ["0", "0", "False", "Explicit false token"],
+          ["empty string", "empty", "removed", "Declared missing-row policy"],
+          ["null", "NA", "removed", "Declared missing-row policy"]
+        ]
+      }
+    },
+    {
+      "heading": "Validation, Audit Output, and Limitations",
+      "body": [
+        "Validate both structure and meaning: required columns, dtype expectations, allowed domains, key uniqueness, row-count bounds, missingness, distribution shifts, and invariants specific to the task. For grouping or imputation, remember that pandas GroupBy follows split-apply-combine and that count-like operations can differ in their handling of missing values; tests should encode the intended statistic rather than rely on a vague word such as 'count.'",
+        "Natural language cannot recover business rules that are absent from the request and data. A passing script can implement the wrong policy, a cleaned dataset can erase meaningful outliers, and deterministic code can reproduce a biased transformation perfectly. Preserve the original, expose changed cells or reason-coded row removals, and keep human review proportional to consequence."
+      ]
+    }
   ],
-  "pitfalls": ["Returning a verbal answer without code.", "Silently dropping rows.", "Using inplace mutations that make debugging harder.", "Conflating data cleaning with statistical modeling.", "Letting generated code access the network or filesystem broadly."],
-  "quiz": [
-    { "question": "Why should the agent export the pandas script?", "options": ["So the transformation can be audited and rerun", "To make the UI slower", "To avoid cleaning the data", "To hide assumptions"], "answer": 0, "explanation": "The script is the reproducible record of the cleaning operation." }
+  "pitfalls": [
+    "Converting string booleans with `astype(bool)` and turning every non-empty string into True.",
+    "Dropping rows under a vague 'bad row' rule without reason codes or before/after counts.",
+    "Returning only a cleaned CSV without the exact script, environment, and assumptions.",
+    "Assuming an import allowlist or a ban on exec/eval proves complete sandbox isolation.",
+    "Using chained assignment or version-sensitive mutation without pinned pandas tests.",
+    "Conflating cleaning with modeling and silently changing the analysis target.",
+    "Presenting recommended validation and sandbox policies as reported project features."
   ],
-  "related": ["sandboxed-code-execution-data-agents", "data-exploration-agents-csv-profiling"]
+  "related": ["mcp-tools-agent-workflows", "evidence-backed-think-envelopes"]
 }

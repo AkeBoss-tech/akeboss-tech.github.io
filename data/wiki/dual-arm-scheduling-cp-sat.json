@@ -1,29 +1,80 @@
 {
+  "schemaVersion": 2,
   "slug": "dual-arm-scheduling-cp-sat",
   "title": "Dual-Arm Scheduling with CP-SAT",
   "subtitle": "A dual-arm robot needs more than an action list; it needs a schedule that respects resources, precedence, and collision risk.",
   "domain": "Robotics planning",
   "difficulty": "Advanced",
-  "summary": "The TAMP project assigns actions to robot arms using greedy scheduling and OR-Tools CP-SAT before motion verification.",
+  "summary": "The TAMP roadmap compares greedy scheduling with an OR-Tools CP-SAT formulation before motion verification.",
   "tags": ["CP-SAT", "Scheduling", "TAMP", "Robotics"],
   "sourceFiles": ["_portfolio/tamp-research.md"],
+  "sourceStatus": { "label": "Research direction", "note": "The scheduling comparison is presented by the source as part of the broader technical roadmap." },
   "sourceLinks": [{ "label": "TAMP research project", "href": "/projects/tamp-research" }],
   "externalSources": [
     { "label": "Google OR-Tools CP-SAT solver", "href": "https://developers.google.com/optimization/cp/cp_solver" },
-    { "label": "OR-Tools constraint optimization", "href": "https://developers.google.com/optimization/cp" }
+    { "label": "OR-Tools job-shop scheduling example", "href": "https://developers.google.com/optimization/scheduling/job_shop" }
   ],
   "artifact": { "type": "tamp-pipeline", "title": "Scheduling between symbolic planning and motion checks", "description": "Step through the pipeline and notice where scheduling sits before geometric verification." },
   "contentBlocks": [
-    { "type": "latex", "content": "A simplified interval model has start times $s_i$, durations $d_i$, and end times $e_i=s_i+d_i$.\n\nPrecedence constraints look like:\n\n$$e_i \\le s_j$$\n\nResource constraints prevent two actions from using the same arm or workspace at incompatible times." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Precedence</strong>Pick before place; open before insert.</div><div><strong>Arm resource</strong>One arm cannot execute two actions at once.</div><div><strong>Shared workspace</strong>Two arms may conflict even if they are different resources.</div><div><strong>Objective</strong>Minimize makespan, risk, or expected verification cost.</div></div>" }
+    { "type": "latex", "content": "A simplified interval model has start times $s_i$, integer durations $d_i$, and end times $e_i=s_i+d_i$.\n\nA precedence edge $i \\rightarrow j$ requires:\n\n$$e_i \\le s_j$$\n\nResource constraints prevent incompatible intervals from overlapping." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Precedence</strong>Pick before place; open before insert.</div><div><strong>Arm resource</strong>One arm cannot execute two actions at once.</div><div><strong>Shared workspace</strong>Different arms may still conflict geometrically.</div><div><strong>Objective</strong>Minimize makespan, risk, or expected verification cost.</div></div>" }
   ],
   "sections": [
-    { "heading": "Why CP-SAT Fits", "body": ["CP-SAT is designed for discrete optimization over integer variables and constraints. Scheduling is full of integer decisions: which arm gets an action, when an interval starts, whether two intervals can overlap, and what objective is minimized.", "In TAMP, CP-SAT can produce a candidate schedule, but that schedule still needs IK, collision checking, and trajectory feasibility."] },
-    { "heading": "Greedy vs Solver-Based Scheduling", "body": ["A greedy scheduler is fast and simple, but early choices can block later actions. A solver can reason globally, but it costs more compute and needs a well-posed model.", "The useful research comparison is not ideological. It is empirical: when does solver overhead pay for itself by reducing downstream motion failures?"], "table": { "columns": ["Approach", "Strength", "Weakness"], "rows": [["Greedy", "Fast and easy to inspect", "Can make locally good but globally bad assignments"], ["CP-SAT", "Handles precedence and resource constraints globally", "Requires modeling work and solve time"], ["Learned guidance", "Can prioritize likely-feasible schedules", "Needs trace data and validation"]] } }
+    {
+      "heading": "Definition: Scheduling a Symbolic Skeleton",
+      "body": [
+        "A dual-arm schedule assigns each action to an arm and an integer time interval while enforcing action precedence and resource compatibility. In a CP-SAT formulation, start, duration, and end variables describe intervals; Boolean variables can represent optional arm assignments or ordering choices.",
+        "The schedule is still a candidate abstraction. It can prevent one arm from doing two actions simultaneously and encode known workspace exclusions, but only downstream IK, collision, and trajectory checks can validate the detailed geometry."
+      ],
+      "callout": "Scheduling answers who acts when under encoded constraints; motion planning answers whether those actions have executable trajectories."
+    },
+    {
+      "heading": "Why CP-SAT Fits—and Why Greedy Still Matters",
+      "body": [
+        "CP-SAT searches discrete assignments under logical and integer constraints. It can reason globally about precedence, alternative arms, interval overlap, synchronization, and objectives such as makespan. OR-Tools requires integer-valued models, so continuous duration estimates need an explicit time unit and conservative rounding policy.",
+        "A greedy scheduler commits to the next locally attractive assignment and is often faster and easier to inspect. Its early decisions can block useful later overlap, while a solver can revisit coupled choices. The project's public source states that greedy and OR-Tools CP-SAT scheduling are included, but presents the learned comparison as roadmap work rather than a reported benchmark."
+      ],
+      "table": {
+        "columns": ["Approach", "Strength", "Limit"],
+        "rows": [
+          ["Greedy", "Low overhead and transparent choices", "Local choices can create poor global schedules"],
+          ["CP-SAT", "Global discrete constraint reasoning", "Modeling and solve-time overhead"],
+          ["Learned guidance", "May prioritize promising schedules", "Needs representative traces and verification"],
+          ["Motion checker", "Tests geometry", "Potentially expensive and not a scheduler"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: Variables, Constraints, and Objectives",
+      "body": [
+        "For each action i, define start s_i, duration d_i, and end e_i = s_i + d_i. A pick-before-place rule becomes e_pick ≤ s_place. No-overlap constraints protect each arm; optional intervals can activate exactly one left- or right-arm assignment. A handoff can link the giver's and receiver's timing with equality or bounded synchronization constraints.",
+        "A shared workspace is not automatically safe because actions use different arms. A conservative model can add a unary zone resource or pairwise disjunction for known incompatible actions. The objective can minimize final completion time, but adding penalties for uncertain duration, risky overlap, or expensive verification may better reflect downstream planning cost.",
+        "All encoded constraints must be audited against the physical meaning. A CP-SAT solution is optimal only for the stated model and objective, not for omitted collision geometry."
+      ]
+    },
+    {
+      "heading": "Worked Example: Overlap, Handoff, and Makespan",
+      "body": [
+        "Suppose left-pick L takes 3 time units, right-open R takes 2, handoff H takes 2 and requires both arms, and right-place P takes 3. L and R can begin at time 0 because they use different arms and independent workspaces. Then L ends at 3, R ends at 2, H runs from 3 to 5, and P runs from 5 to 8. The makespan is 8.",
+        "A naive sequential schedule L→R→H→P finishes at time 10. Global scheduling finds the safe overlap between L and R. But if L and R sweep through the same narrow zone, the eight-unit schedule is only symbolically valid; adding a zone no-overlap constraint may force serialization, and the motion checker must still validate the chosen paths.",
+        "If predicted durations are L=3 but occasionally 5, a brittle synchronization constraint can create execution waits. Buffering or replanning policies should reflect uncertainty rather than treating a learned point estimate as exact."
+      ]
+    },
+    {
+      "heading": "Limits and a Fair Research Comparison",
+      "body": [
+        "Scheduling quality depends on which geometric risks are abstracted. Too few constraints produce schedules that fail during motion refinement; too many conservative exclusions erase useful parallelism. Learned overlap or duration predictions may improve the abstraction, but their mistakes require fallbacks and final checking.",
+        "A useful greedy-versus-CP-SAT experiment should report scheduling overhead, makespan after verification, number and cost of failed motion calls, task success, and median and tail end-to-end planning time on identical held-out scenes. Solver status and time limits also matter: a feasible incumbent under a short limit is not the same as a proven optimum."
+      ],
+      "callout": "Research status: the source establishes the intended scheduling stack and comparison direction, not a conclusion that CP-SAT or learned scheduling already wins."
+    }
   ],
-  "pitfalls": ["Modeling scheduling constraints while ignoring geometric collisions.", "Using real-valued durations without converting carefully for integer solvers.", "Optimizing makespan only and producing risky near-collisions.", "Forgetting uncertainty in learned duration estimates."],
-  "quiz": [
-    { "question": "What kind of problems is CP-SAT especially suited for?", "options": ["Discrete constraint optimization", "Rendering CSS", "Unstructured prose", "Camera exposure only"], "answer": 0, "explanation": "CP-SAT works over integer variables and constraints, which fits many scheduling formulations." }
+  "pitfalls": [
+    "Modeling arm resources while ignoring shared-workspace collisions.",
+    "Converting real-valued durations to integers without documenting units and rounding.",
+    "Optimizing makespan only and producing risky near-collisions.",
+    "Treating learned duration estimates as exact.",
+    "Calling a time-limited feasible solution a proven optimum."
   ],
   "related": ["dual-arm-tamp-pipeline", "learned-feasibility-prediction-robot-plans"]
 }

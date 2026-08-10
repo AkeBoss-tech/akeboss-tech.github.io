@@ -1,29 +1,97 @@
 {
+  "schemaVersion": 2,
   "slug": "model-size-speed-accuracy-tradeoffs",
   "title": "Model Size, Speed, and Accuracy Trade-Offs",
-  "subtitle": "Small language model work is the art of buying enough reasoning quality with far less latency, memory, and infrastructure.",
+  "subtitle": "Small-model engineering chooses a Pareto point across task quality, latency, throughput, memory, and operational constraints.",
   "domain": "AI research",
   "difficulty": "Advanced",
-  "summary": "The SLM research project studies small-model optimization, post-training, quantization, pruning, and HPC execution for math reasoning.",
+  "summary": "The SLM research project studies small-model post-training, quantization, structural pruning, and HPC execution for GSM8K math reasoning.",
   "tags": ["SLMs", "Optimization", "Quantization", "Post-training"],
   "sourceFiles": ["_portfolio/llm-research.md"],
   "sourceLinks": [{ "label": "SLM research project", "href": "/projects/llm-research" }],
   "externalSources": [
-    { "label": "scikit-learn preprocessing reference", "href": "https://scikit-learn.org/stable/modules/preprocessing.html" }
+    { "label": "Hugging Face Transformers: Quantization concepts", "href": "https://huggingface.co/docs/transformers/quantization/concept_guide" },
+    { "label": "PyTorch: Pruning tutorial", "href": "https://docs.pytorch.org/tutorials/intermediate/pruning_tutorial.html" },
+    { "label": "PyTorch: Benchmark utilities", "href": "https://docs.pytorch.org/docs/stable/benchmark_utils.html" }
   ],
   "artifact": { "type": "model-tradeoff", "title": "Accuracy is not the only axis", "description": "Move the model-size slider to see how quality, latency, and memory pull against each other." },
   "contentBlocks": [
-    { "type": "heading", "level": 2, "text": "Why Smaller Can Be Better" },
-    { "type": "paragraph", "text": "A large model may win on peak benchmark accuracy, but a smaller model can win the product if it is fast enough to run interactively, cheap enough to call often, and controllable enough to fine-tune or deploy near the data." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Post-training</strong>Improve behavior after pretraining with supervised examples or preference signals.</div><div><strong>Quantization</strong>Store weights in fewer bits to reduce memory and improve throughput.</div><div><strong>Pruning</strong>Remove less useful structure to shrink compute.</div><div><strong>Distillation</strong>Train a smaller model to imitate a stronger teacher.</div></div>" }
+    { "type": "heading", "level": 2, "text": "There Is No Single Best Model" },
+    { "type": "paragraph", "text": "A deployment chooses among feasible points, not a universal winner. The same model can be excellent for offline batches and unacceptable for interactive use; a compressed checkpoint can use fewer bytes yet run no faster when the hardware lacks optimized kernels." },
+    { "type": "latex", "content": "$$M_{weights} \\approx \\frac{N \\cdot b}{8}$$\n\nParameter count $N$ times storage bit-width $b$ estimates weight bytes only. Runtime also needs activations, KV cache, temporary buffers, framework state, and allocator headroom." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Post-training</strong>Change behavior after pretraining with examples or preference data.</div><div><strong>Quantization</strong>Represent values with fewer bits and explicit scales.</div><div><strong>Pruning</strong>Set or remove selected structure to create sparsity.</div><div><strong>Benchmarking</strong>Measure the resulting system on its actual task and hardware.</div></div>" }
   ],
   "sections": [
-    { "heading": "The Deployment Equation", "body": ["A model is not just a score. It is a bundle of memory footprint, context length, latency, batch throughput, hardware availability, calibration, and failure modes.", "For math reasoning, the key question is not only whether the model can solve hard problems, but whether post-training improves systematic reasoning rather than memorized answer patterns."] },
-    { "heading": "Optimization Stack", "body": ["Quantization changes numeric representation. Pruning changes model structure. Fine-tuning changes behavior. Evaluation decides whether any of those changes helped.", "The dangerous part is that each optimization can improve one metric while damaging another. A smaller model can become faster but less calibrated; a fine-tuned model can improve one benchmark while narrowing its generality."], "table": { "columns": ["Technique", "Primary gain", "Main risk"], "rows": [["Quantization", "Lower memory and faster inference", "Quality loss if precision is too low"], ["Pruning", "Less compute", "Removing useful capacity"], ["SFT", "Task behavior improves", "Overfitting to format"], ["Distillation", "Smaller model imitates larger one", "Teacher errors get copied"], ["Batching", "Higher throughput", "Worse single-user latency"]] } }
+    {
+      "heading": "Define the Deployment Envelope",
+      "body": [
+        "Start with task quality, maximum memory, time-to-first-token, inter-token latency, throughput, context length, hardware, concurrency, and cost. Average latency alone can hide slow tail requests; tokens per second can hide an unacceptable initial wait; benchmark accuracy can hide fragile formatting or calibration.",
+        "The project source reports nano-scale Transformer adaptation, GSM8K evaluation, SLURM jobs on Rutgers Amarel, quantization, structural pruning, and mid-training/SFT dataset work. It says post-training produced measurable GSM8K improvement over base checkpoints but provides no model names, parameter counts, exact scores, latency, memory, or statistical uncertainty. Those results must remain qualitative until the repository supplies measurements."
+      ],
+      "callout": "Analogy limit: choosing a model resembles choosing a vehicle only in trading capacity against cost and speed. Model latency depends on token sequence, batching, kernels, memory bandwidth, and hardware utilization; parameter count is not a horsepower rating."
+    },
+    {
+      "heading": "Optimization Techniques Change Different Things",
+      "body": [
+        "Supervised fine-tuning changes behavior by updating weights toward labeled demonstrations. Quantization changes numeric representation; post-training quantization applies after training, while quantization-aware training simulates quantization during optimization. Pruning induces sparsity, but stored zeros do not automatically reduce wall-clock time unless the runtime and hardware exploit the resulting pattern.",
+        "Distillation, batching, compilation, and cache management target other constraints. Techniques compose, but order and compatibility matter: a quantized model may require a specific backend; an unstructured sparse checkpoint may be smaller after special encoding but slower after conversion overhead."
+      ],
+      "table": {
+        "columns": ["Technique", "Primary target", "Necessary measurement"],
+        "rows": [
+          ["SFT/post-training", "Task behavior", "Held-out task quality and generalization"],
+          ["Quantization", "Weight/activation representation", "Quality, memory, and latency on supported kernels"],
+          ["Structured pruning", "Channels, heads, or blocks", "True graph size and wall-clock speed"],
+          ["Unstructured pruning", "Sparse individual weights", "Sparse-kernel utilization and storage format"],
+          ["Batching", "Aggregate throughput", "Per-request latency and queue wait"],
+          ["Compilation", "Kernel and graph overhead", "Warm and cold behavior on target shapes"]
+        ]
+      }
+    },
+    {
+      "heading": "Measure Quality as a Distribution",
+      "body": [
+        "For math reasoning, exact-match accuracy requires a normalization policy for units, commas, signs, and final-answer extraction. Keep train, tuning, and final evaluation sets separate; detect prompt-template leakage; and report results by problem type and difficulty. A higher aggregate score can conceal a regression in multi-step arithmetic or instruction following.",
+        "Run repeated evaluation when decoding is stochastic and preserve seeds, checkpoint hashes, prompts, decoding settings, and evaluator version. Compare paired examples between variants: the important question is not only how many answers changed, but which gains and regressions created the net score."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Consider an illustrative 3-billion-parameter checkpoint. Weight storage alone is about 6 GB at 16 bits per parameter and about 3 GB at 8 bits. A 4-bit estimate is 1.5 GB. These are lower-bound teaching calculations; scales, zero points, unquantized layers, runtime buffers, activations, and KV cache increase actual memory.",
+        "Suppose the same hypothetical variants produce held-out exact match of 52%, 51%, and 47%, with measured p95 latency of 420 ms, 300 ms, and 250 ms on one fixed GPU and request shape. The 8-bit variant may be the Pareto choice because no other listed variant is both more accurate and faster. Every number in this paragraph is illustrative, not a result from the SLM project or a guarantee of quantization speedup."
+      ],
+      "table": {
+        "columns": ["Illustrative variant", "Weight lower bound", "Illustrative quality", "Illustrative p95 latency"],
+        "rows": [
+          ["FP16", "6.0 GB", "52%", "420 ms"],
+          ["INT8", "3.0 GB plus metadata", "51%", "300 ms"],
+          ["4-bit", "1.5 GB plus metadata", "47%", "250 ms"]
+        ]
+      }
+    },
+    {
+      "heading": "Benchmark the Whole Serving Path",
+      "body": [
+        "Use the actual tokenizer, prompt lengths, output lengths, batch sizes, dtype, backend, and device. Warm up lazy initialization, synchronize accelerators, and collect multiple replicates. PyTorch's benchmark utilities explicitly account for warmups and accelerator synchronization, reducing common timing errors.",
+        "Report cold-start time, time to first token, inter-token latency, p50/p95/p99 end-to-end latency, throughput, peak allocated memory, energy or cost when relevant, and quality from the same artifact hash. A throughput improvement achieved only by batching can worsen single-user latency; both values belong in the decision table."
+      ]
+    },
+    {
+      "heading": "Choose a Pareto Point and Revalidate",
+      "body": [
+        "A variant is Pareto-dominated if another measured variant is at least as good on every required axis and strictly better on one. Remove dominated choices, then select among the frontier using product constraints such as minimum accuracy and maximum p95 latency.",
+        "Revalidate after framework, driver, compiler, quantization backend, prompt, or hardware changes. Performance claims are properties of a complete system configuration, not permanent properties of the model file."
+      ]
+    }
   ],
-  "pitfalls": ["Reporting only accuracy without latency or memory.", "Evaluating on the same distribution used for fine-tuning.", "Assuming quantization is free.", "Optimizing average latency while ignoring tail latency.", "Confusing benchmark gains with robust reasoning gains."],
-  "quiz": [
-    { "question": "Why might a smaller model be preferable despite lower peak accuracy?", "options": ["It may be faster, cheaper, and easier to deploy", "It never makes mistakes", "It does not need evaluation", "It removes all infrastructure"], "answer": 0, "explanation": "Real systems balance quality with latency, cost, memory, and deployment constraints." }
+  "pitfalls": [
+    "Reporting benchmark accuracy without latency, memory, hardware, or serving configuration.",
+    "Treating theoretical weight bytes as total runtime memory.",
+    "Assuming fewer bits or more zeros automatically produce faster inference.",
+    "Evaluating on examples used to tune prompts or fine-tune weights.",
+    "Optimizing mean latency while ignoring time to first token and tail latency.",
+    "Claiming exact project improvements when the source reports no numeric results."
   ],
-  "related": ["small-language-model-post-training", "quantization-pruning-inference-throughput"]
+  "related": ["slurm-training-jobs-hpc-clusters", "natural-language-reproducible-pandas-code"]
 }

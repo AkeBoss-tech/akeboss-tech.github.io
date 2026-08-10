@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "langgraph-multi-agent-study-backend",
   "title": "LangGraph Multi-Agent Study Backend",
   "subtitle": "A multi-agent backend is a graph of roles, tools, state, and handoffs, not just a pile of prompts.",
@@ -10,18 +11,96 @@
   "sourceLinks": [{ "label": "Lykke project", "href": "/projects/lykke" }],
   "externalSources": [
     { "label": "LangChain multi-agent docs", "href": "https://docs.langchain.com/oss/python/langchain/multi-agent" },
-    { "label": "LangGraph graph API docs", "href": "https://docs.langchain.com/oss/python/langgraph/graph-api" }
+    { "label": "LangGraph graph API docs", "href": "https://docs.langchain.com/oss/python/langgraph/graph-api" },
+    { "label": "LangGraph persistence docs", "href": "https://docs.langchain.com/oss/python/langgraph/persistence" }
   ],
   "artifact": { "type": "agent-graph", "title": "Routing and handoff as graph structure", "description": "Toggle between a tool-routing architecture and an agent-handoff architecture." },
   "contentBlocks": [
-    { "type": "paragraph", "text": "A study backend has multiple kinds of work: answer from documents, generate quizzes, plan the week, inspect due dates, calculate formulas, and decide when web search is allowed. A graph architecture makes those roles explicit." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>State</strong>The shared record of user request, retrieved evidence, intermediate decisions, and final output.</div><div><strong>Node</strong>A function, agent, tool call, or model step.</div><div><strong>Edge</strong>The routing rule that decides what runs next.</div><div><strong>Guardrail</strong>A constraint on sources, tools, cost, or allowed actions.</div></div>" }
+    { "type": "paragraph", "text": "A study backend coordinates qualitatively different work: answer from documents, generate quizzes, inspect Canvas deadlines, allocate study time, calculate formulas, and decide when outside search is allowed. LangGraph's official model makes the control plane explicit as state, nodes, and edges." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>State</strong>The typed snapshot shared across the run.</div><div><strong>Node</strong>A function that reads state and returns updates or performs a bounded side effect.</div><div><strong>Edge</strong>A fixed or conditional transition to the next node.</div><div><strong>Checkpoint</strong>A persisted state boundary for recovery, memory, or review.</div></div>" }
   ],
   "sections": [
-    { "heading": "When Multi-Agent Helps", "body": ["Multi-agent design helps when different subtasks need different context, tools, or evaluation criteria. A quiz generator, calendar planner, and document-grounded tutor should not all carry the same prompt and memory.", "It does not help when a single well-tooled agent can do the job. Extra agents add latency, debugging surface, and routing failure modes."] },
-    { "heading": "Study Workflow Example", "body": ["A user asks, 'What should I study before Friday?' The orchestrator retrieves Canvas deadlines, asks a study agent to identify relevant topics, asks a planning agent to allocate time blocks, and returns a source-linked plan.", "The output should expose what evidence was used: due dates, lecture titles, assignment rubrics, and weak spots from previous quizzes."], "table": { "columns": ["Agent", "Responsibility"], "rows": [["Chat agent", "Answer source-grounded questions"], ["Study agent", "Create flashcards, quizzes, and review guides"], ["Weekly plan agent", "Map due dates to study sessions"], ["Orchestrator", "Route requests and enforce tool policy"], ["Verifier", "Check citations, freshness, and missing evidence"]] } }
+    {
+      "heading": "Start with the Workflow, Not the Agent Count",
+      "body": [
+        "Multi-agent design helps when subtasks require different context, tools, permissions, or evaluation criteria. A source-grounded tutor, an artifact generator, and a calendar planner may benefit from separate contracts. When one agent with a small tool set can handle the request reliably, extra agents add model calls, latency, routing errors, and more places for source context to disappear.",
+        "The Lykke source explicitly reports a LangGraph multi-agent backend with Chat, Study, Weekly Plan, and Orchestrator agents. It also reports document-grounded chat, web fallback, Canvas-calendar planning, and specialized research, calculator, LMS-data, and stress-heatmap roles. Exact node topology, state schema, retry policy, and verifier behavior are not described and should not be presented as implemented facts."
+      ],
+      "callout": "Analogy limit: an agent graph resembles an organization chart only at a high level. Software nodes do not possess judgment or accountability; the graph must encode inputs, permissions, stop conditions, and error handling explicitly."
+    },
+    {
+      "heading": "Typed State and Evidence-Preserving Handoffs",
+      "body": [
+        "LangGraph state is a schema plus reducer functions that determine how node updates are applied. A study workflow should pass typed facts such as assignment IDs, due times, source passage IDs, learner constraints, routing reason, and unresolved gaps—not an ever-growing block of conversational prose.",
+        "Reducers require care. Appending messages may be appropriate, while replacing a current route or deadline may be correct for scalar fields. Parallel branches that both update a field need a deliberate merge rule; otherwise one branch can overwrite another or duplicate evidence."
+      ],
+      "table": {
+        "columns": ["State field", "Example type", "Why it exists"],
+        "rows": [
+          ["request", "string", "Preserve the learner's actual question"],
+          ["course_scope", "course IDs", "Prevent cross-course evidence leakage"],
+          ["evidence", "source ID + passage + timestamp", "Keep claims traceable through handoffs"],
+          ["deadlines", "assignment ID + due time", "Represent calendar facts separately from prose"],
+          ["route", "enum + reason", "Make the routing decision inspectable"],
+          ["gaps", "list of missing facts", "Stop unsupported certainty from propagating"]
+        ]
+      }
+    },
+    {
+      "heading": "Routing, Tool Calls, and Handoffs",
+      "body": [
+        "A router can call a specialized subagent as a tool and keep central control, or it can hand off active control to another agent. Central routing fits predictable tasks and common policy enforcement. Handoffs fit conversations where a specialist must continue interacting, but they make ownership and context boundaries more important.",
+        "Recommended design policy: route with explicit predicates before asking a model to improvise. A request containing due-date constraints can require LMS retrieval before planning; a request asking only for quiz generation can go directly to the Study agent after document retrieval. Tool inputs and outputs should remain structured and source IDs should survive every transition."
+      ],
+      "table": {
+        "columns": ["Pattern", "Good fit", "Main risk"],
+        "rows": [
+          ["Specialist as tool", "Centralized policy and short subtasks", "Orchestrator becomes a bottleneck"],
+          ["Agent handoff", "Specialist-led multi-turn work", "Unclear control and lost context"],
+          ["Parallel fan-out", "Independent retrieval or critique", "Merge conflicts and duplicated cost"],
+          ["Deterministic edge", "Known policy or data dependency", "Rigid if the predicate is underspecified"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "A learner asks, 'What should I study before Friday if I have four hours?' The entry node records the request, timezone, course scope, and time budget. A deterministic edge sends the run to LMS retrieval because planning depends on current due dates. The retrieval node returns assignment IDs, due times, course labels, and source timestamps; missing Canvas access produces a gap instead of invented deadlines.",
+        "The orchestrator next routes relevant topics to the Study agent and constraints to the Weekly Plan agent. The study output contains topic priorities with source passage IDs; the planning output allocates four hours without changing the deadlines. A merge node checks that every scheduled topic has evidence and total duration is at most 240 minutes, then the response node cites the underlying course artifacts."
+      ],
+      "table": {
+        "columns": ["Step", "State added", "Failure behavior"],
+        "rows": [
+          ["Classify", "intent=weekly_plan", "Ask for missing timezone or course scope"],
+          ["Retrieve LMS", "deadlines + timestamps", "Record access or freshness gap"],
+          ["Retrieve course evidence", "topics + passage IDs", "Do not invent unsupported topics"],
+          ["Plan", "sessions totaling ≤240 minutes", "Relax priorities, never rewrite due dates"],
+          ["Verify", "coverage and citation checks", "Return partial plan with named gaps"]
+        ]
+      }
+    },
+    {
+      "heading": "Persistence, Recovery, and Human Review",
+      "body": [
+        "LangGraph checkpointers save state by thread and support recovery, conversational memory, replay, and human-in-the-loop interrupts. Checkpointing does not make side effects exactly once: replay can re-execute later nodes, including API calls. Nodes that send email, create calendar events, or modify LMS data need idempotency keys, durable action records, or approval gates.",
+        "Recommended design policy: interrupt before consequential writes and show the proposed action, source evidence, target, and diff. Keep long-term learner profiles in an intentional store rather than allowing every transient message to accumulate forever in graph state."
+      ]
+    },
+    {
+      "heading": "Evaluation and Debugging",
+      "body": [
+        "Evaluate the workflow at three layers: routing accuracy, specialist output quality, and end-to-end task success. Trace the route, model and tool calls, state diffs, source IDs, token cost, latency, and write attempts. A good final answer can still conceal a wrong route or an unsafe attempted side effect.",
+        "Build fixtures for ambiguous intent, stale LMS data, retrieval with conflicting due dates, one failed parallel branch, and replay after a checkpoint. Compare the multi-agent graph with a single-agent baseline; keep the graph only when specialization improves a measured outcome enough to justify its operational cost."
+      ]
+    }
   ],
-  "pitfalls": ["Adding agents before the workflow actually needs them.", "Letting agents pass unstructured prose instead of typed state.", "Forgetting source-grounding when handing work between agents.", "Hiding routing decisions from debugging views."],
-  "quiz": [{ "question": "What is the main advantage of graph-based agent design?", "options": ["Explicit state and routing", "No need for tools", "Guaranteed correctness", "No latency"], "answer": 0, "explanation": "Graphs make the workflow structure, state transitions, and routing rules visible." }],
+  "pitfalls": [
+    "Adding agents before the workflow needs distinct context, tools, or permissions.",
+    "Letting handoffs pass unstructured prose instead of typed state and source IDs.",
+    "Using append reducers for fields that should replace or deduplicate.",
+    "Treating checkpoint replay as exactly-once execution of side effects.",
+    "Allowing a planning agent to alter retrieved deadlines rather than report missing evidence.",
+    "Evaluating only the final prose while ignoring route, cost, state transitions, and tool attempts."
+  ],
   "related": ["source-grounded-ai-wikis", "mcp-tools-agent-workflows"]
 }

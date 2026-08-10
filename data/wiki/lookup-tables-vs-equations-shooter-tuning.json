@@ -1,29 +1,91 @@
 {
+  "schemaVersion": 2,
   "slug": "lookup-tables-vs-equations-shooter-tuning",
   "title": "Lookup Tables vs Equations for Shooter Tuning",
   "subtitle": "When robot physics is messy, a measured lookup table can beat a beautiful but incomplete equation.",
   "domain": "Robotics",
   "difficulty": "Intermediate",
-  "summary": "The robotics writing explains choosing lookup tables for shooter angle and RPM because real-world behavior was nonlinear and tunable.",
+  "summary": "How to choose, interpolate, validate, and maintain shooter setpoints without confusing calibration with closed-loop control.",
   "tags": ["FRC", "Shooter", "Lookup table", "Calibration"],
   "sourceFiles": ["_posts/2024-4-3-robotics-chief.md"],
   "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
   "externalSources": [
-    { "label": "WPILib trajectory generation", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/trajectories/trajectory-generation.html" }
+    { "label": "WPILib: InterpolatingDoubleTreeMap", "href": "https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/interpolation/InterpolatingDoubleTreeMap.html" }
   ],
-  "artifact": { "type": "pid-controller", "title": "Tuning curve response", "description": "The PID curve stands in for the closed-loop side; the page explains how lookup values choose the setpoint." },
+  "artifact": {
+    "type": "pid-controller",
+    "title": "Setpoint choice and closed-loop response",
+    "description": "The curve represents the controller tracking a chosen setpoint. The lookup table chooses that setpoint; PID is responsible for tracking it."
+  },
   "contentBlocks": [
     { "type": "heading", "level": 2, "text": "The Equation Is Not the Robot" },
-    { "type": "paragraph", "text": "A projectile equation can estimate launch angle and speed, but an FRC shooter includes wheel compression, battery sag, spin, changing carpet interaction, mechanism flex, measurement noise, and game-piece variation. A lookup table records what the robot actually did." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Measure</strong>Test shots at known distances.</div><div><strong>Store</strong>Record angle and RPM that scored reliably.</div><div><strong>Interpolate</strong>Blend between nearby distances.</div><div><strong>Retune</strong>Update values after mechanical changes.</div></div>" }
+    { "type": "paragraph", "text": "A projectile equation can estimate launch conditions, but a real FRC shooter also reflects wheel compression, battery behavior, spin, mechanism flex, measurement uncertainty, and game-piece variation. A lookup table records settings that were actually tested on that robot." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Measure</strong>Test shots at known distances.</div><div><strong>Store</strong>Record angle and RPM that score reliably.</div><div><strong>Interpolate</strong>Blend between nearby distances.</div><div><strong>Retune</strong>Update values after mechanical changes.</div></div>" }
   ],
   "sections": [
-    { "heading": "What the Table Stores", "body": ["A shooter table usually maps distance to mechanism setpoints: pivot angle, flywheel RPM, hood position, or spin differential. The drivetrain estimates distance; the table returns setpoints.", "Interpolation is the bridge between measured distances. If 2.5 m and 3.0 m are measured, a 2.7 m shot can blend between them."] },
-    { "heading": "When Equations Still Help", "body": ["Equations are still useful for initial guesses, simulation, sanity checks, and extrapolation warnings. The best system often combines physics intuition with measured calibration.", "A table without physics can become dangerous outside its tested range; an equation without measurement can miss the robot's real behavior."], "table": { "columns": ["Method", "Best use", "Risk"], "rows": [["Equation", "Initial estimate and sanity check", "Ignores messy robot-specific effects"], ["Lookup table", "Reliable match-tuned setpoints", "Poor extrapolation"], ["Hybrid", "Equation seeded, table corrected", "More implementation complexity"]] } }
+    {
+      "heading": "Definitions: Model, Calibration, and Setpoint",
+      "body": [
+        "An equation maps inputs to outputs using an explicit model. A lookup table stores measured input-output pairs. For a shooter, distance may be the input and pivot angle plus left/right wheel RPM may be outputs. Interpolation estimates values between tested keys.",
+        "Neither method directly controls the hardware. The mapping chooses setpoints; position or velocity controllers then make the pivot and wheels track those setpoints. Keeping selection and control separate makes failures easier to diagnose."
+      ],
+      "callout": "A table is empirical memory, not a suspension of physics. Its advantage is that unmodeled robot-specific effects are folded into measurements inside the tested region."
+    },
+    {
+      "heading": "Why Team 1257 Chose a Table",
+      "body": [
+        "Team 1257's season notes say the team chose a lookup table instead of a single angle-and-RPM equation because real behavior was nonlinear and dynamic and because individual values would need adjustment. The team wrote Lookup and LookupTuner utilities using logged dashboard numbers and noted WPILib's InterpolatingDoubleTreeMap as a future option.",
+        "The same notes are careful about maturity: an early shoot-while-moving command did not yet work in simulation, and later the team reported tuning the table from 3–5 m while close shots still used known fixed setpoints pending more tuning. The page therefore treats full-field accuracy as a goal, not a proven result."
+      ],
+      "table": {
+        "columns": ["Method", "Best use", "Main strength", "Main risk"],
+        "rows": [
+          ["Equation", "Initial estimate and sanity check", "Compact and explainable", "Misses robot-specific effects"],
+          ["Lookup table", "Reliable settings in a measured range", "Easy point-by-point calibration", "Weak extrapolation and maintenance burden"],
+          ["Hybrid", "Physics-seeded calibration", "Combines prior knowledge with evidence", "More implementation and validation work"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example: Linear Interpolation",
+      "body": [
+        "Suppose testing found 3600 RPM at 3.0 m and 4200 RPM at 4.0 m. For a measured distance of 3.4 m, the fraction through the interval is (3.4 - 3.0) / (4.0 - 3.0) = 0.4. Linear interpolation returns 3600 + 0.4 × (4200 - 3600) = 3840 RPM.",
+        "Apply the same calculation independently to pivot angle. If the endpoints are 32° and 40°, the interpolated target is 35.2°. These values are illustrative, not Team 1257's recorded calibration. WPILib's InterpolatingDoubleTreeMap performs this kind of linear interpolation for undefined keys between defined points."
+      ],
+      "callout": "Interpolation stays between tested neighbors; extrapolation goes beyond them. A production implementation should clamp, reject, or deliberately handle out-of-range distance rather than silently trusting a distant guess."
+    },
+    {
+      "heading": "Calibration Workflow and Data Quality",
+      "body": [
+        "Choose repeatable distance bins, verify pose/distance measurement, warm the mechanism, and take multiple shots at each bin. Record more than a single make: include angle, both wheel speeds, battery condition, game-piece condition, and dispersion. Prefer a setting that is repeatable over one spectacular shot.",
+        "After filling points, test between them to validate interpolation. Then test boundary distances and the exact out-of-range policy. Version the table with the mechanical configuration because wheel material, compression, gearing, pivot zero, or shooter repairs can invalidate old calibration."
+      ],
+      "table": {
+        "columns": ["Observation", "Likely layer", "First check"],
+        "rows": [
+          ["Both mechanisms reach target but shots miss", "Setpoint mapping or pose", "Distance estimate and table values"],
+          ["RPM never reaches table target", "Velocity control or hardware", "Output saturation, battery, friction, gains"],
+          ["Pivot angle is consistently offset", "Zeroing or position control", "Encoder zero and units"],
+          ["Only between-point shots miss", "Interpolation assumption", "Add measurements or change representation"]
+        ]
+      }
+    },
+    {
+      "heading": "Limits, Hybrid Models, and Moving Shots",
+      "body": [
+        "A one-dimensional distance table assumes distance captures enough of the problem. It may not capture robot velocity, lateral motion, battery voltage, heading error, release delay, or asymmetric wheel behavior. Adding dimensions increases calibration cost and can leave sparse regions.",
+        "Equations remain valuable for initial guesses, range checks, simulation, and detecting implausible table entries. Team 1257's moving-shot notes predicted the next-tick pose from current velocity, computed estimated distance, then queried angle and RPM. That was a reasonable architecture to test, but the source explicitly says the early command still needed fixes."
+      ],
+      "callout": "The smallest adequate model is usually safest: add a variable only when logged misses show that the current mapping cannot explain or correct the error."
+    }
   ],
-  "pitfalls": ["Extrapolating far beyond tested distances.", "Forgetting to retune after changing wheels or compression.", "Interpolating angles without checking actual shot arcs.", "Blaming PID when the table setpoint is wrong."],
-  "quiz": [
-    { "question": "Why might a lookup table outperform a projectile equation on a real robot?", "options": ["It captures measured robot-specific behavior", "It violates physics", "It removes sensors", "It guarantees every shot"], "answer": 0, "explanation": "Measured tables include real effects that simple equations often omit." }
+  "pitfalls": [
+    "Extrapolating far beyond tested distances.",
+    "Forgetting to retune after changing wheels, compression, gearing, or pivot zero.",
+    "Interpolating angles and speeds without validating actual shots between sample points.",
+    "Blaming PID when the table selected the wrong setpoint.",
+    "Calling a single successful shot a calibrated point.",
+    "Claiming shoot-while-moving performance that the source only described as unfinished or simulated."
   ],
-  "related": ["velocity-pid-intake-shooter-wheels", "shooting-while-moving-predicting-future-robot-pose"]
+  "related": ["velocity-pid-intake-shooter-wheels", "pid-control-robot-mechanisms"]
 }

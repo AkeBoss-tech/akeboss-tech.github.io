@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "async-api-rate-limits-backoff",
   "title": "Async API Clients with Rate Limits and Backoff",
   "subtitle": "Reliable API clients treat failure as a flow-control signal, not just an exception to retry immediately.",
@@ -10,23 +11,89 @@
   "sourceLinks": [{ "label": "Grokipedia API project", "href": "/projects/grokipedia-api" }],
   "externalSources": [
     { "label": "Google Cloud: Retry strategy", "href": "https://docs.cloud.google.com/storage/docs/retry-strategy" },
-    { "label": "Google Drive API usage limits", "href": "https://developers.google.com/workspace/drive/labels/limits" }
+    { "label": "HTTP Semantics: Retry-After", "href": "https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after" }
   ],
   "artifact": { "type": "api-backoff", "title": "Retry spacing with jitter", "description": "Change failed attempts and jitter to see why clients should spread retries instead of stampeding a struggling service." },
   "contentBlocks": [
     { "type": "heading", "level": 2, "text": "The Contract of a Polite Client" },
-    { "type": "paragraph", "text": "An async client is powerful because it can keep many requests in flight. That same power can become rude or dangerous if every failed request retries instantly. A good client needs concurrency limits, request timeouts, response classification, retries with backoff, cache hits where possible, and a way to resume long jobs." },
-    { "type": "latex", "content": "$$delay_i = \\min(maxDelay, base \\cdot 2^i) + jitter_i$$\n\nBackoff grows the delay after each failed attempt. Jitter randomizes it so many clients do not retry at the same instant." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>429</strong>Slow down; respect the server's rate policy.</div><div><strong>500/503</strong>Retry only if the operation is safe or idempotent.</div><div><strong>Timeout</strong>Retry with a bounded budget, then surface uncertainty.</div><div><strong>Cache hit</strong>Avoid the request entirely when freshness allows.</div></div>" }
+    { "type": "paragraph", "text": "An async client can keep useful work moving while other requests wait, but concurrency multiplies pressure. Reliability comes from a closed control loop: classify the outcome, honor server guidance, retry only safe operations, delay with bounded backoff and jitter, and stop when the request's attempt or time budget is exhausted." },
+    { "type": "latex", "content": "$$cap_i = \\min(d_{max}, d_0 2^i), \\qquad delay_i \\sim U(0, cap_i)$$\n\nThis full-jitter form samples each delay from zero to the exponential cap. Other jitter algorithms are valid; the important property is that independent clients do not remain synchronized." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Classify</strong>Separate transient failures from permanent request errors.</div><div><strong>Constrain</strong>Limit in-flight work and total retry cost.</div><div><strong>Delay</strong>Honor Retry-After when present; otherwise back off with jitter.</div><div><strong>Observe</strong>Record attempts, final outcomes, and retry latency.</div></div>" }
   ],
   "sections": [
-    { "heading": "Response Classification", "body": ["Not every error deserves a retry. A malformed request should fail fast; a transient service outage can be retried; a rate-limit response should slow the client down.", "The client should distinguish network exceptions, timeout errors, HTTP 429, 5xx responses, and permanent 4xx responses. Otherwise retry logic becomes a machine for repeating bad requests."] },
-    { "heading": "Concurrency and Backpressure", "body": ["Async code needs a worker pool or semaphore so the client controls pressure. Without a cap, pagination or discovery jobs can create thousands of simultaneous requests.", "Backpressure means later work waits when the system is saturated. That protects the API, your process, and the final data quality."], "table": { "columns": ["Mechanism", "Purpose"], "rows": [["Semaphore", "Limit concurrent in-flight requests"], ["Exponential backoff", "Increase wait time after transient failures"], ["Jitter", "Prevent synchronized retry storms"], ["Cache", "Avoid repeated identical calls"], ["Checkpoint", "Resume long crawls without starting over"]] } }
+    {
+      "heading": "Response Classification Before Retry",
+      "body": [
+        "Google Cloud's official retry guidance uses two gates: the response must indicate a transient problem, and the operation must be idempotent or protected by a precondition. Timeouts, disconnects, HTTP 408, 429, and many 5xx responses can be transient; malformed input, failed authorization, and most other 4xx responses require a change rather than another attempt.",
+        "A timeout is ambiguous: the server may have completed the operation even though the client did not receive the response. Repeating a read is usually safe, while repeating a payment or create operation can duplicate a side effect unless the API supports an idempotency key or conditional write."
+      ],
+      "table": {
+        "columns": ["Outcome", "Default decision", "Reason"],
+        "rows": [
+          ["200–299", "Return", "The request completed successfully"],
+          ["408 or network timeout", "Retry only if safe", "The failure may be transient, but completion may be uncertain"],
+          ["429", "Honor Retry-After or back off", "The service is explicitly asking for less request pressure"],
+          ["500, 502, 503, 504", "Bounded retry if safe", "The service or an intermediary may recover"],
+          ["400, 401, 403", "Fail or repair first", "More identical attempts will not fix input or authorization"]
+        ]
+      }
+    },
+    {
+      "heading": "Backoff, Jitter, and Retry Budgets",
+      "body": [
+        "Exponential backoff increases spacing after successive failures; a maximum delay prevents unbounded pauses. Jitter breaks phase alignment between workers that failed together. A retry budget adds the missing stop condition: cap attempts, total elapsed time, or both, and propagate cancellation from the caller.",
+        "If the server sends Retry-After, interpret the supported date or seconds form and do not intentionally retry sooner. The client may still apply its own maximum wait or deadline and return a clear error when the server's requested delay exceeds the caller's budget."
+      ],
+      "callout": "Analogy limit: a crowded doorway explains why random spacing reduces a stampede, but requests are not people. Servers may publish exact reset times, distinguish tenants, or process operations with side effects; protocol metadata and idempotency rules outrank the analogy."
+    },
+    {
+      "heading": "Concurrency and Backpressure",
+      "body": [
+        "A semaphore limits simultaneous requests, but it is not a rate limiter: ten workers can still issue thousands of very fast requests per minute. Throughput control may need both an in-flight cap and a token bucket, leaky bucket, or server-provided quota window. Backpressure makes producers wait, shed low-priority work, or persist a checkpoint instead of growing an unlimited queue.",
+        "The Grokipedia portfolio source reports async clients, configurable worker pools, caching, resume capability, rate-limit handling, and automatic retries with exponential backoff. Exact retry predicates, jitter distribution, and budget values are not documented there; those choices must be verified in code rather than inferred from the project summary."
+      ],
+      "table": {
+        "columns": ["Mechanism", "Controls", "Does not guarantee"],
+        "rows": [
+          ["Semaphore", "Concurrent in-flight requests", "Requests per time window"],
+          ["Rate limiter", "Admission frequency or quota", "Low memory use by itself"],
+          ["Bounded queue", "Waiting work and memory", "Remote service recovery"],
+          ["Cache", "Avoidable duplicate reads", "Freshness without an invalidation policy"],
+          ["Checkpoint", "Resume position", "Exactly-once remote side effects"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Suppose 20 workers request page data and one read receives 503 three times. With base delay 0.5 seconds, a 4-second cap, and full jitter, the retry caps are 0.5, 1.0, and 2.0 seconds. Sampled delays might be 0.31, 0.77, and 1.42 seconds, for 2.50 seconds of waiting. Those samples are illustrative, not guaranteed outputs.",
+        "Now suppose a write times out. The retry classifier checks the method and request metadata before applying the same schedule. A GET can normally enter the retry path; a create request without an idempotency key stops with an ambiguous-outcome error. If the third response includes Retry-After: 5 but only two seconds remain in the caller's deadline, the client stops instead of sleeping past the contract."
+      ],
+      "table": {
+        "columns": ["Attempt", "Observed result", "Decision"],
+        "rows": [
+          ["1", "503 on idempotent GET", "Sample delay in [0, 0.5], then retry"],
+          ["2", "503", "Sample delay in [0, 1.0], then retry"],
+          ["3", "503", "Sample delay in [0, 2.0], then retry"],
+          ["4", "200", "Return response and record three retries"]
+        ]
+      }
+    },
+    {
+      "heading": "Observability and Testing",
+      "body": [
+        "Log the request class, attempt number, chosen delay, status or exception family, Retry-After value, remaining deadline, and final outcome without leaking secrets. Metrics should separate first-attempt success, retry success, exhausted retries, throttling, and queue wait; an apparently high success rate can hide excessive latency and load amplification.",
+        "Test with an injectable clock and deterministic random source. Cover a permanent 400, a 429 with Retry-After, transient failures followed by success, exhaustion of the time budget, cancellation while sleeping, and concurrent callers. The invariant is not 'eventually succeeds'; it is 'never violates safety or the configured budget.'"
+      ]
+    }
   ],
-  "pitfalls": ["Retrying non-idempotent writes without safeguards.", "Treating every 4xx response as temporary.", "Using exponential backoff without a maximum retry budget.", "Running async discovery without concurrency limits.", "Caching without recording freshness or invalidation rules."],
-  "quiz": [
-    { "question": "Why add jitter to exponential backoff?", "options": ["To make logs shorter", "To keep many clients from retrying at the same instant", "To disable rate limits", "To convert JSON to XML"], "answer": 1, "explanation": "Jitter spreads retries across time, reducing retry storms." },
-    { "question": "Which response usually means the client should slow down?", "options": ["200", "301", "429", "404 for a known missing resource"], "answer": 2, "explanation": "HTTP 429 indicates too many requests or rate limiting." }
+  "pitfalls": [
+    "Retrying a non-idempotent write without an idempotency key or precondition.",
+    "Treating every 4xx response as temporary.",
+    "Using exponential backoff without jitter, a delay cap, and a total retry budget.",
+    "Confusing a concurrency semaphore with a requests-per-second limiter.",
+    "Ignoring Retry-After or sleeping past the caller's deadline.",
+    "Caching without recording freshness and invalidation rules."
   ],
-  "related": ["cross-language-sdk-feature-parity", "course-materials-queryable-knowledge-base"]
+  "related": ["mcp-tools-agent-workflows", "course-materials-queryable-knowledge-base"]
 }

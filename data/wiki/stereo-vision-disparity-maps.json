@@ -1,59 +1,91 @@
 {
+  "schemaVersion": 2,
   "slug": "stereo-vision-disparity-maps",
   "title": "Stereo Vision and Disparity Maps",
-  "subtitle": "Stereo vision estimates depth by comparing where the same scene point appears in two camera views.",
+  "subtitle": "Calibrated stereo turns horizontal correspondence shifts into metric depth, with uncertainty that grows as disparity shrinks.",
   "domain": "Computer vision",
   "difficulty": "Intermediate",
-  "summary": "The depth estimation project compared stereo vision, SGBM, and machine learning depth models against measured distances.",
+  "summary": "Build the geometry behind disparity, follow calibration and rectification through depth conversion, and diagnose matching, scale, occlusion, and evaluation failures.",
   "tags": ["Stereo vision", "Depth", "OpenCV", "Disparity"],
   "sourceFiles": ["_portfolio/depth-estimation.md"],
   "sourceLinks": [{ "label": "Depth estimation project", "href": "/projects/depth-estimation" }],
   "externalSources": [
-    { "label": "OpenCV stereo matching docs", "href": "https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" }
+    { "label": "OpenCV: Depth map from stereo images", "href": "https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" },
+    { "label": "OpenCV: StereoSGBM class reference", "href": "https://docs.opencv.org/4.x/d2/d85/classcv_1_1StereoSGBM.html" },
+    { "label": "OpenCV: Camera calibration tutorial", "href": "https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html" },
+    { "label": "OpenCV: Camera calibration and 3D reconstruction API", "href": "https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html" }
   ],
   "artifact": {
     "type": "stereo-disparity",
     "title": "Disparity as a depth cue",
-    "description": "Increase pixel disparity and the estimated depth drops because close objects shift more between camera views."
+    "description": "Increase pixel disparity and the estimated depth drops because close points shift more between rectified camera views. The scale is metric only when calibration and baseline units are correct."
   },
   "sections": [
     {
-      "heading": "Two Views, One Point",
+      "heading": "Definition: Two Images, One Geometric Constraint",
       "body": [
-        "A stereo camera setup observes the same scene from two positions separated by a baseline.",
-        "A point close to the cameras appears at noticeably different horizontal positions. A far point shifts less."
+        "A stereo rig observes a scene from two camera centers separated by a baseline B. The same 3D point projects to different image coordinates. After stereo rectification, corresponding points should lie on the same image row, reducing correspondence search mainly to the horizontal direction.",
+        "Disparity d is the horizontal coordinate difference between matched projections, commonly d=x_left−x_right under one sign convention. For an ideal rectified pinhole pair with focal length f in pixels, depth along the camera axis is Z=fB/d. Nearby points have larger disparity; distant points have smaller disparity."
+      ],
+      "callout": "Metric scale comes from calibration. If f is in pixels and B is in meters, Z is in meters; if the baseline value has no trustworthy unit, neither does the depth."
+    },
+    {
+      "heading": "Why Disparity Is Useful—and Fragile",
+      "body": [
+        "Stereo can produce dense depth from synchronized images without learning a scene-specific metric scale. It works best when both cameras see textured, static surfaces with adequate lighting and overlap. Rectification lets a matcher compare candidate pixels or patches along epipolar lines rather than across the whole image.",
+        "Correspondence is ambiguous on blank walls, repetitive textures, reflections, transparent objects, and independently moving objects. Occluded pixels appear in only one view and have no valid match. These regions should be marked invalid or uncertain rather than filled with confident-looking numbers."
+      ],
+      "table": {
+        "columns": ["Failure pattern", "Likely cause", "Useful response"],
+        "rows": [
+          ["Speckled blank surface", "Insufficient texture", "Add texture or confidence filtering"],
+          ["Horizontal edge halos", "Occlusion or mismatched support windows", "Left–right consistency and edge-aware filtering"],
+          ["Repeated false bands", "Repetitive texture", "Constrain disparity range and improve matching cost"],
+          ["Depth changes after resizing", "Intrinsics or disparity scale not updated", "Scale focal length and coordinates consistently"],
+          ["Uniform scale error", "Wrong baseline or focal calibration", "Recalibrate and verify physical units"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: Calibrate, Rectify, Match, Reproject",
+      "body": [
+        "Calibrate each camera's intrinsics and distortion, then estimate the relative rotation and translation of the pair with stereo calibration. The calibration target's declared square size establishes the translation unit. Validate reprojection error and use images that span the field of view and working distances; a low training error alone does not guarantee good real-world geometry.",
+        "Stereo rectification computes transforms that align epipolar lines. A matcher such as OpenCV StereoSGBM then minimizes a data cost plus smoothness penalties along several paths. Important parameters include minimum disparity, number of disparities, block size, uniqueness, and speckle filtering. Parameter tuning changes invalid regions, detail, and bias; it does not fix bad calibration.",
+        "Convert the matcher output using its documented fixed-point scale before applying Z=fB/d, or use the reprojection matrix Q with `reprojectImageTo3D`. Reject zero, negative, out-of-range, or consistency-failing disparities. Preserve an invalid mask and uncertainty instead of reporting every pixel as measured depth."
       ]
     },
     {
-      "heading": "From Disparity to Depth",
+      "heading": "Worked Example",
       "body": [
-        "Disparity is the pixel difference between matching points in the left and right images. With calibration, focal length, and baseline, disparity can be converted into depth.",
-        "Block-matching methods such as SGBM estimate disparity by searching for similar image patches across the two views."
+        "A rectified rig has focal length f=700 pixels and baseline B=0.12 meters. A feature appears at x_left=510 and x_right=482, so d=28 pixels. The ideal depth is Z=(700 px × 0.12 m)/28 px=3.0 m. Pixel units cancel, leaving meters because the baseline is in meters.",
+        "If the correspondence were off by one pixel, depths from d=27 and d=29 would be about 3.11 m and 2.90 m. The same one-pixel error at d=7 changes depth from 12.0 m to either 14.0 m at d=6 or 10.5 m at d=8. This illustrates the derivative |dZ/dd|=fB/d²: depth sensitivity grows quickly for small disparities, so far-range estimates are intrinsically fragile."
       ],
       "table": {
-        "columns": ["Quantity", "Meaning"],
+        "columns": ["Disparity", "Depth", "Interpretation"],
         "rows": [
-          ["Baseline", "Distance between the two cameras"],
-          ["Focal length", "Camera projection scale"],
-          ["Disparity", "Pixel shift between matching points"],
-          ["Depth", "Estimated distance from the camera rig"]
+          ["29 px", "2.90 m", "One-pixel higher match"],
+          ["28 px", "3.00 m", "Nominal estimate"],
+          ["27 px", "3.11 m", "One-pixel lower match"],
+          ["7 px", "12.00 m", "Farther point; much greater sensitivity"]
         ]
       }
+    },
+    {
+      "heading": "Limits and Honest Evaluation",
+      "body": [
+        "The usable depth range is constrained at both ends. Very large disparities may fall outside the search range or camera overlap; very small disparities yield large depth uncertainty. A wider baseline improves far-range disparity but increases occlusion and can reduce near-range overlap. Calibration can also drift if focus, zoom, camera mounting, or resolution changes.",
+        "The portfolio project compared stereo, GLPN-NYU, and MiDaS-style predictions with measured distances and reported t-test p-values. A non-significant test does not demonstrate that estimates are equivalent or accurate; it only indicates insufficient evidence against the tested null under that design. Report sample size, residuals, bias, absolute error, range-stratified error, calibration protocol, and uncertainty. A smoother monocular map is not automatically metrically better, and many monocular models produce relative depth unless an explicit scale is recovered."
+      ],
+      "callout": "Analogy limit: binocular vision explains the left–right shift, but a stereo algorithm does not 'see depth' directly—it solves a noisy correspondence and calibration problem."
     }
   ],
   "pitfalls": [
-    "Skipping camera calibration.",
-    "Expecting textureless surfaces to match well.",
-    "Comparing raw depth maps without understanding their scale.",
-    "Assuming smoother ML depth maps are automatically more accurate."
+    "Skipping intrinsic and stereo calibration or using a calibration target with unknown physical dimensions.",
+    "Computing depth before undoing the matcher's fixed-point disparity scale.",
+    "Resizing images without scaling camera intrinsics and related disparity geometry.",
+    "Treating zero, negative, occluded, or inconsistent disparity as valid depth.",
+    "Assuming a smoother monocular output is more accurate or already has metric scale.",
+    "Interpreting a non-significant t-test as proof of equivalence or low error."
   ],
-  "quiz": [
-    {
-      "question": "If disparity increases while calibration stays fixed, what usually happens to estimated depth?",
-      "options": ["It increases", "It decreases", "It becomes unrelated", "It always becomes zero"],
-      "answer": 1,
-      "explanation": "Nearer objects have larger disparity, so depth is inversely related to disparity."
-    }
-  ],
-  "related": ["semi-global-block-matching", "camera-calibration-robot-vision"]
+  "related": ["semi-global-block-matching", "apriltag-vision-pose-estimation"]
 }

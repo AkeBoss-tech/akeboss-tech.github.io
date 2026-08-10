@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "godot-vehiclebody3d-racing-physics",
   "title": "Godot VehicleBody3D Racing Physics",
   "subtitle": "A racing game feels right when engine force, steering, friction, suspension, and track design reinforce each other.",
@@ -8,9 +9,10 @@
   "tags": ["Godot", "VehicleBody3D", "Racing", "Game physics"],
   "sourceFiles": ["_portfolio/kenny-racing.md"],
   "sourceLinks": [{ "label": "Kenny Racing project", "href": "/projects/kenny-racing" }],
+  "sourceStatus": { "label": "Implemented", "note": "Kenny Racing documents VehicleBody3D/VehicleWheel3D cars, tuned handling, speed-responsive audio and cameras, Path3D checkpoints, and a simple look-ahead AI. Exact numeric tuning values are not published." },
   "externalSources": [
     { "label": "Godot VehicleBody3D docs", "href": "https://docs.godotengine.org/en/stable/classes/class_vehiclebody3d.html" },
-    { "label": "Godot VehicleWheel3D docs", "href": "https://docs.godotengine.org/en/4.3/classes/class_vehiclewheel3d.html" }
+    { "label": "Godot VehicleWheel3D docs", "href": "https://docs.godotengine.org/en/stable/classes/class_vehiclewheel3d.html" }
   ],
   "artifact": { "type": "vehicle-physics", "title": "Power and steering change the racing line", "description": "Adjust engine force and steering to see how turn shape, speed, and slip risk interact." },
   "contentBlocks": [
@@ -19,9 +21,10 @@
   ],
   "sections": [
     { "heading": "Game Feel Over Realism", "body": ["Racing games often do not need physically perfect vehicle dynamics. They need understandable control, readable drift, fair recovery, and consistent feedback.", "The right friction and steering values depend on camera angle, track width, expected speed, and whether the game is arcade or simulation leaning."] },
-    { "heading": "AI Cars and Checkpoints", "body": ["A simple racing AI can follow a path or checkpoint sequence with look-ahead steering. It does not need to solve the full driving problem if the track and target points are designed well.", "Checkpoints also solve race validation: they define lap order, prevent shortcuts, and provide progress for HUD and ranking."], "table": { "columns": ["System", "Purpose"], "rows": [["VehicleBody3D", "Main physics body"], ["VehicleWheel3D", "Wheel contact and steering behavior"], ["Path3D", "Racing line for AI cars"], ["Checkpoints", "Progress and lap validation"], ["HUD", "Speed, lap, ranking, and feedback"]] } }
+    { "heading": "Mechanics: Body, Wheels, and Control", "body": ["VehicleBody3D is a RigidBody3D-based raycast vehicle. Each VehicleWheel3D child represents wheel contact; traction wheels receive engine force, steering wheels follow the body's steering value, and braking acts only while wheels contact a surface.", "Mass changes the force needed for acceleration and braking. Steering is edited in degrees in the inspector but set in radians in code. A low VehicleBody3D origin lowers the effective center of gravity; changing the body's transform directly is not the intended control method."], "table": { "columns": ["System", "Purpose"], "rows": [["VehicleBody3D", "Main raycast-vehicle physics body"], ["VehicleWheel3D", "Wheel contact, grip, suspension, traction, and steering"], ["Path3D", "Project racing line for AI cars"], ["Checkpoints", "Project progress and lap validation"], ["HUD", "Speed, lap, ranking, and feedback"]] } },
+    { "heading": "Worked Example", "body": ["A car enters a tight turn too quickly and understeers. First reduce the commanded steering angle as speed rises rather than letting full input snap the wheels. Next reduce engine force or apply braking before turn-in, while confirming all intended traction wheels are in contact.", "If the rear should rotate more for an arcade drift, lower rear wheel_friction_slip slightly relative to the front and retest recovery. Change one parameter family at a time and record speed, steering input, skid information, and lap consistency; otherwise several compensating errors can feel acceptable but remain unstable."], "callout": "This is a tuning sequence, not a claim about Kenny Racing's unpublished numeric settings." },
+    { "heading": "AI, Checkpoints, and Model Limits", "body": ["Kenny Racing's ai_driver.gd follows a Path3D racing line with a small look-ahead target for steering and acceleration. Look-ahead reduces point-to-point oscillation, but the documented AI ignores other drivers; it is therefore path following, not full racing strategy.", "Regular Path3D-derived checkpoints detect cars with collision objects, establish progress order, and support lap timing. A robust course must prevent a car from receiving valid progress by crossing checkpoints out of sequence or from the wrong direction.", "Godot's official docs state that VehicleBody3D and VehicleWheel3D have known issues and are not designed for realistic advanced vehicle physics. Their model also omits gears unless game logic adds them. Use custom CharacterBody3D or RigidBody3D integration when the required tire, drivetrain, or suspension behavior exceeds this abstraction."] }
   ],
   "pitfalls": ["Expecting VehicleBody3D to produce realistic simulation without tuning.", "Putting visual wheel meshes in the wrong node structure.", "Making steering too sharp at high speed.", "Building AI cars without look-ahead and causing oscillation.", "Using checkpoints that allow shortcuts."],
-  "quiz": [{ "question": "What does VehicleWheel3D represent?", "options": ["A wheel/contact node under VehicleBody3D", "A UI button", "A database row", "A texture shader only"], "answer": 0, "explanation": "VehicleWheel3D simulates wheel behavior as a child of VehicleBody3D." }],
-  "related": ["racing-ai-path3d-look-ahead-steering", "pathplanner-autonomous-routes"]
+  "related": ["pathplanner-autonomous-routes", "astar-search-open-closed-fscore"]
 }

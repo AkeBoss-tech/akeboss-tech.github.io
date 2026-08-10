@@ -1,28 +1,90 @@
 {
+  "schemaVersion": 2,
   "slug": "elementary-symmetric-functions",
   "title": "Elementary Symmetric Functions",
-  "subtitle": "Elementary symmetric functions package every square-free product of a fixed degree into one invariant polynomial.",
+  "subtitle": "Elementary symmetric functions collect every square-free product of a fixed degree into one permutation-invariant polynomial.",
   "domain": "Math",
   "difficulty": "Advanced",
-  "summary": "The DRP project uses elementary symmetric functions as the bridge from symmetric polynomials to the q-binomial theorem.",
+  "summary": "The DRP project uses elementary symmetric functions as the bridge from symmetric polynomials to the finite q-binomial theorem.",
   "tags": ["Symmetric functions", "Combinatorics", "q-binomial", "Generating functions"],
   "sourceFiles": ["_portfolio/drp-spring-2025.md"],
   "sourceLinks": [{ "label": "DRP q-binomial project", "href": "/projects/drp-spring-2025" }],
   "externalSources": [
-    { "label": "MathWorld: q-Binomial Coefficient", "href": "https://mathworld.wolfram.com/q-BinomialCoefficient.html" }
+    { "label": "NIST DLMF: q-binomial coefficients and theorem", "href": "https://dlmf.nist.gov/17.2" }
   ],
   "artifact": { "type": "q-binomial", "title": "Generating functions turn products into coefficients", "description": "The q-integer demo previews the weighted-counting idea that appears after substituting powers of q into elementary symmetric functions." },
   "contentBlocks": [
-    { "type": "latex", "content": "For variables $x_1,\\ldots,x_n$, the elementary symmetric function $e_k$ is\n\n$$e_k(x_1,\\ldots,x_n)=\\sum_{1\\le i_1<\\cdots<i_k\\le n}x_{i_1}\\cdots x_{i_k}$$\n\nExamples:\n\n$$e_1=x_1+x_2+x_3$$\n$$e_2=x_1x_2+x_1x_3+x_2x_3$$\n$$e_3=x_1x_2x_3$$" },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Symmetric</strong>Swapping variables does not change the value.</div><div><strong>Elementary</strong>Each term uses distinct variables.</div><div><strong>Degree k</strong>Every term multiplies exactly k variables.</div><div><strong>Generating function</strong>All e_k appear as coefficients of one product.</div></div>" }
+    { "type": "latex", "content": "For variables $x_1,\\ldots,x_n$, define\n\n$$e_k(x_1,\\ldots,x_n)=\\sum_{1\\le i_1<\\cdots<i_k\\le n}x_{i_1}\\cdots x_{i_k},\\qquad e_0=1.$$\n\nFor three variables,\n\n$$e_1=x_1+x_2+x_3,\\quad e_2=x_1x_2+x_1x_3+x_2x_3,\\quad e_3=x_1x_2x_3.$$" },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Symmetric</strong>Permuting variables leaves the polynomial unchanged.</div><div><strong>Elementary</strong>Each selected variable appears once.</div><div><strong>Degree k</strong>Every monomial chooses exactly k distinct indices.</div><div><strong>Generating function</strong>One product stores every e_k as a coefficient.</div></div>" }
   ],
   "sections": [
-    { "heading": "The Generating Function", "body": ["The compact identity is E(t)=product(1+x_i t). When expanded, choosing the t term from exactly k factors creates a degree-k square-free product, so the coefficient of t^k is e_k.", "This is the clean combinatorial mechanism behind the later q-binomial connection."] },
-    { "heading": "Why They Matter", "body": ["Elementary symmetric functions are building blocks for symmetric polynomials. If a polynomial is unchanged by permuting variables, it can be expressed in terms of elementary symmetric functions.", "For the DRP project, substituting x_i=q^{i-1} turns the generating function into a product whose coefficients are Gaussian binomial coefficients up to a q power."], "table": { "columns": ["Object", "Meaning"], "rows": [["e1", "Sum of variables"], ["e2", "Sum of pairwise products"], ["ek", "Sum of all k-variable products"], ["E(t)", "Generating function containing all ek"]] } }
+    {
+      "heading": "Definition and Selection Model",
+      "body": [
+        "The strict inequalities $i_1<\\cdots<i_k$ mean that each $k$-element subset of the variables contributes exactly once. Every monomial is square-free and has total degree $k$. The boundary values are $e_0=1$ and $e_k=0$ for $k>n$.",
+        "Permutation invariance follows because reordering the variables merely reorders the same collection of $k$-element subsets. Symmetry describes the whole sum; an individual monomial such as $x_1x_3$ is not itself invariant under every variable swap."
+      ],
+      "table": {
+        "columns": ["Object", "Selection rule", "Number of monomials"],
+        "rows": [
+          ["$e_0$", "Choose no variables", "$1$"],
+          ["$e_1$", "Choose one variable", "$\\binom{n}{1}$"],
+          ["$e_k$", "Choose $k$ distinct variables", "$\\binom{n}{k}$"],
+          ["$e_n$", "Choose every variable", "$1$"]
+        ]
+      }
+    },
+    {
+      "heading": "The Generating Function",
+      "body": [
+        "The finite generating identity is $\\prod_{i=1}^{n}(1+x_i t)=\\sum_{k=0}^{n}e_k(x_1,\\ldots,x_n)t^k$. To obtain $t^k$ during expansion, choose $x_it$ from exactly $k$ factors and choose $1$ from all others. The coefficient therefore sums all products of $k$ distinct variables.",
+        "This coefficient-extraction view is more than shorthand: it turns subset selection into multiplication. Evaluating at $t=1$ gives $\\prod_i(1+x_i)=\\sum_k e_k$, while setting every $x_i=1$ gives $(1+t)^n=\\sum_k\\binom{n}{k}t^k$."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "For $(x_1,x_2,x_3)=(2,3,5)$, expand $(1+2t)(1+3t)(1+5t)$. First, $(1+2t)(1+3t)=1+5t+6t^2$; multiplying by $(1+5t)$ gives $1+10t+31t^2+30t^3$.",
+        "Thus $e_0=1$, $e_1=2+3+5=10$, $e_2=2\\cdot3+2\\cdot5+3\\cdot5=31$, and $e_3=2\\cdot3\\cdot5=30$. The coefficient $31$ comes from choosing the $t$-term in exactly two factors, never twice from one factor."
+      ],
+      "table": {
+        "columns": ["Power of $t$", "Selections", "Coefficient"],
+        "rows": [
+          ["$t^0$", "Choose no variables", "$1$"],
+          ["$t^1$", "$2,3,5$", "$10$"],
+          ["$t^2$", "$2\\cdot3,2\\cdot5,3\\cdot5$", "$31$"],
+          ["$t^3$", "$2\\cdot3\\cdot5$", "$30$"]
+        ]
+      }
+    },
+    {
+      "heading": "Why They Generate Symmetric Polynomials",
+      "body": [
+        "The fundamental theorem of symmetric polynomials says that every symmetric polynomial in $n$ variables over an appropriate coefficient ring can be expressed uniquely as a polynomial in $e_1,\\ldots,e_n$. This is a structural statement about the algebra of symmetric polynomials, not a claim that each symmetric polynomial equals one $e_k$.",
+        "For example, $x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2=e_1^2-2e_2$. The right-hand side uses elementary symmetric functions even though the original polynomial contains squared variables."
+      ]
+    },
+    {
+      "heading": "The q-Binomial Bridge",
+      "body": [
+        "Substitute $(x_1,\\ldots,x_n)=(1,q,\\ldots,q^{n-1})$ into the finite generating function. Then $\\prod_{i=0}^{n-1}(1+q^it)=\\sum_{k=0}^{n}e_k(1,q,\\ldots,q^{n-1})t^k$.",
+        "The finite q-binomial theorem identifies $e_k(1,q,\\ldots,q^{n-1})=q^{k(k-1)/2}\\binom{n}{k}_q$. The factor $q^{k(k-1)/2}$ is essential. As $q\\to1$, the variables all approach $1$, $e_k(1,\\ldots,1)=\\binom{n}{k}$, and the identity returns to the ordinary binomial theorem."
+      ]
+    },
+    {
+      "heading": "Limits and Common Misconceptions",
+      "body": [
+        "Elementary does not mean linear: $e_k$ has degree $k$. It means that variables occur with exponent at most one in each monomial. Complete homogeneous symmetric functions instead allow repeated indices and powers such as $x_1^2$.",
+        "The displayed product is finite for $n$ variables. The infinite-variable identity in the DRP source is interpreted degree by degree in the theory of symmetric functions; it is not an instruction to multiply numerically without convergence assumptions. Also, $e_k(1,q,\\ldots,q^{n-1})$ is not merely $\\binom{n}{k}_q$—the scaling power of $q$ must remain."
+      ]
+    }
   ],
-  "pitfalls": ["Including powers like x1 squared inside elementary terms.", "Forgetting the strict index order prevents duplicate products.", "Confusing elementary symmetric functions with complete homogeneous symmetric functions.", "Expanding without tracking the coefficient of t."],
-  "quiz": [
-    { "question": "What is e2(x1,x2,x3)?", "options": ["x1+x2+x3", "x1x2+x1x3+x2x3", "x1^2+x2^2+x3^2", "x1x2x3"], "answer": 1, "explanation": "e2 sums all square-free products of exactly two variables." }
+  "pitfalls": [
+    "Allowing repeated indices such as $x_1^2$ inside $e_k$.",
+    "Counting both $x_ix_j$ and $x_jx_i$ despite the strict index order.",
+    "Confusing elementary symmetric functions with complete homogeneous symmetric functions.",
+    "Forgetting $e_0=1$ or that $e_k=0$ when $k>n$.",
+    "Dropping $q^{k(k-1)/2}$ after the geometric specialization."
   ],
   "related": ["q-binomial-theorem", "q-integers-meaning-q-analogues"]
 }

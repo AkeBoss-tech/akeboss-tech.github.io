@@ -1,26 +1,105 @@
 {
+  "schemaVersion": 2,
   "slug": "slurm-training-jobs-hpc-clusters",
   "title": "SLURM Training Jobs on HPC Clusters",
-  "subtitle": "An HPC training run is a resource request, a batch script, an environment, and a reproducibility contract.",
+  "subtitle": "An HPC training run combines a resource request, executable batch script, recorded environment, and durable outputs.",
   "domain": "AI infrastructure",
   "difficulty": "Intermediate",
-  "summary": "The SLM research project used Rutgers Amarel HPC and SLURM batch scripts to distribute training and evaluation jobs.",
+  "summary": "The SLM research project used Rutgers Amarel HPC and SLURM batch scripts to distribute training jobs across multiple nodes; the operational patterns here are general Slurm guidance, not a recovered project script.",
   "tags": ["SLURM", "HPC", "Training", "AI research"],
   "sourceFiles": ["_portfolio/llm-research.md"],
   "sourceLinks": [{ "label": "SLM research project", "href": "/projects/llm-research" }],
   "externalSources": [
     { "label": "Slurm sbatch manual", "href": "https://slurm.schedmd.com/sbatch.html" },
-    { "label": "Slurm documentation", "href": "https://slurm.schedmd.com/documentation.html" }
+    { "label": "Slurm srun manual", "href": "https://slurm.schedmd.com/srun.html" },
+    { "label": "Slurm job arrays", "href": "https://slurm.schedmd.com/job_array.html" },
+    { "label": "Slurm sacct manual", "href": "https://slurm.schedmd.com/sacct.html" }
   ],
   "artifact": { "type": "hpc-queue", "title": "Job eligibility under resource constraints", "description": "Change GPUs and wall time to see which jobs can fit a scheduler request." },
   "contentBlocks": [
-    { "type": "markdown", "content": "A minimal `sbatch` script has three layers:\n\n```bash\n#!/bin/bash\n#SBATCH --job-name=slm-sft\n#SBATCH --gres=gpu:2\n#SBATCH --time=04:00:00\n#SBATCH --mem=64G\n\nmodule load cuda\npython train.py --config configs/gsm8k-sft.yml\n```\n\nThe scheduler reads the directives, queues the job, and runs it when resources are available." }
+    { "type": "markdown", "content": "Illustrative general Slurm script—not the project's original script:\n\n```bash\n#!/bin/bash\n#SBATCH --job-name=slm-sft\n#SBATCH --nodes=1\n#SBATCH --ntasks-per-node=1\n#SBATCH --gres=gpu:2\n#SBATCH --time=04:00:00\n#SBATCH --mem=64G\n#SBATCH --output=logs/%x-%j.out\n\nset -euo pipefail\nmodule load cuda            # cluster-specific\nsrun python train.py --config configs/gsm8k-sft.yml\n```\n\nDirective names, GPU syntax, modules, partitions, accounts, launchers, and storage paths are site-specific. Confirm them in the target cluster's documentation." }
   ],
   "sections": [
-    { "heading": "What the Scheduler Decides", "body": ["SLURM does not just run code. It decides when a job can run based on requested resources, partitions, limits, priority, and cluster availability.", "A request for too much time or too many GPUs can sit in the queue longer. A request for too little can fail mid-training."] },
-    { "heading": "Reproducibility for Training", "body": ["A good training job records code commit, config file, dataset version, environment, seed, hardware, and output checkpoint path.", "Without those details, a result like 'GSM8k improved' is not reproducible. The cluster job becomes a one-off event rather than a scientific artifact."], "table": { "columns": ["Record", "Why it matters"], "rows": [["Git commit", "Recreates code state"], ["Config", "Captures hyperparameters"], ["Dataset version", "Prevents silent data drift"], ["Environment", "Explains library and CUDA behavior"], ["Job ID", "Links logs and scheduler metadata"]] } }
+    {
+      "heading": "Allocation, Step, and Process",
+      "body": [
+        "`sbatch` submits a script and requests a job allocation. Slurm evaluates that request against partitions, limits, priority, and available resources. Once allocated, the script runs; `srun` can launch one or more job steps inside the allocation and propagate task placement according to the site's configuration.",
+        "A node request is not the same as distributed training. The training framework must initialize ranks, coordinate workers, shard data or state, and communicate across nodes. Requesting two nodes while launching one ordinary Python process does not automatically use both nodes."
+      ],
+      "table": {
+        "columns": ["Layer", "Question", "Typical evidence"],
+        "rows": [
+          ["Submission", "What resources are requested?", "Batch directives and `sbatch` output"],
+          ["Allocation", "What did Slurm grant?", "Job ID, node list, TRES, start/end state"],
+          ["Launch", "Which processes ran where?", "`srun`/launcher configuration and rank logs"],
+          ["Training", "What experiment executed?", "Commit, config, seed, data version"],
+          ["Artifacts", "What survived the job?", "Logs, metrics, checkpoints, provenance manifest"]
+        ]
+      }
+    },
+    {
+      "heading": "Right-Sizing the Resource Request",
+      "body": [
+        "Request CPUs, memory, accelerators, nodes, tasks, and wall time from measurements rather than aspiration. Too little memory or time can terminate a run; excessive requests can reduce scheduling opportunities. Slurm's official `sbatch` manual notes that a time request above a partition's limit can leave a job pending.",
+        "GPU flags and meanings depend on cluster configuration. `--gres=gpu:2` is common but not universally sufficient; partitions, GPU types, TRES settings, accounts, and binding rules may also be required. Measure utilization and distinguish per-node from per-task quantities."
+      ]
+    },
+    {
+      "heading": "Reproducibility and Durable State",
+      "body": [
+        "A reproducible run records the Git commit and dirty-state patch, full resolved configuration, dataset identity and preprocessing, random seeds, container or package environment, hardware, Slurm job ID, and checkpoint/log destinations. Standard output alone is rarely a complete experiment record.",
+        "Use durable project or scratch storage according to local policy, and write checkpoints atomically when possible. Node-local temporary storage may be fast but can disappear after the allocation. Capture exit status and scheduler accounting so failed, timed-out, cancelled, or out-of-memory runs cannot be mistaken for completed experiments."
+      ],
+      "table": {
+        "columns": ["Record", "Why it matters"],
+        "rows": [
+          ["Git commit + dirty state", "Reconstructs the executed code"],
+          ["Resolved config", "Captures effective hyperparameters"],
+          ["Dataset/preprocessing version", "Prevents silent input drift"],
+          ["Environment", "Explains library, driver, and CUDA behavior"],
+          ["Job ID and accounting", "Links the run to scheduler state and resources"],
+          ["Checkpoint manifest", "Identifies durable recovery points"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Illustrative numbers: a one-GPU pilot processes 8 samples per second, uses 37 GB of a 40 GB GPU, peaks at 46 GB host memory, and finishes one epoch in 95 minutes. A production request might reserve one GPU, 56–64 GB host memory, and two hours plus measured checkpoint overhead. These numbers are pedagogical and do not describe the SLM project's actual run.",
+        "If the pilot exits at 01:54 under a two-hour limit, increasing directly to 12 hours hides uncertainty. First inspect where time was spent, checkpoint before the limit, and estimate a bounded margin. After completion, compare requested versus consumed resources through scheduler accounting and update the next request."
+      ],
+      "table": {
+        "columns": ["Observation", "Decision", "Reason"],
+        "rows": [
+          ["37/40 GB GPU memory", "Keep one 40 GB-class GPU or reduce batch size", "Little memory headroom"],
+          ["46 GB host-memory peak", "Request measured headroom, e.g. 56–64 GB", "Avoid host OOM without gross overrequest"],
+          ["95-minute epoch", "Budget training plus validation/checkpoint time", "Wall time covers the entire allocation"],
+          ["Exit near limit", "Checkpoint and profile before a large time increase", "Separates true compute from stalls"]
+        ]
+      }
+    },
+    {
+      "heading": "Arrays, Dependencies, and Failure Recovery",
+      "body": [
+        "Job arrays efficiently submit repeated runs that share initial resource options. Slurm sets `SLURM_ARRAY_TASK_ID` for each array element, which can index a manifest of seeds or configurations. A concurrency cap such as `--array=0-15%4` limits simultaneously running elements.",
+        "Arrays are not a replacement for multi-process distributed training: each element is a separate batch job. Dependencies can order preprocessing, training, and evaluation, while restartable checkpoints make timeout or preemption survivable. Each stage should validate required inputs before consuming expensive accelerators."
+      ]
+    },
+    {
+      "heading": "Project Context, Limits, and Common Misconceptions",
+      "body": [
+        "The portfolio source supports these project claims: the work ran training and evaluation on Rutgers Amarel, used SLURM batch scripts across multiple nodes, adapted `nanochat`, and explored SFT, quantization, structural pruning, and GSM8k performance. It does not expose exact directives, node counts, GPU models, commands, numerical gains, or environment versions; the example script and numbers above are explicitly illustrative.",
+        "A queued job is not necessarily broken, a submitted job is not necessarily reproducible, and multiple GPUs do not guarantee a speedup. Queue time depends on site policy and availability; scaling depends on communication, workload, data pipeline, and framework configuration. Always follow the target cluster's documentation over generic examples."
+      ]
+    }
   ],
-  "pitfalls": ["Requesting resources without measuring actual usage.", "Training from a dirty or unrecorded code state.", "Writing checkpoints to temporary storage accidentally.", "Ignoring failed or preempted jobs in results."],
-  "quiz": [{ "question": "What does sbatch do?", "options": ["Submits a batch script to Slurm", "Plots a loss curve", "Creates a vector embedding", "Builds a web page"], "answer": 0, "explanation": "The Slurm sbatch command submits batch scripts to the scheduler." }],
-  "related": ["model-size-speed-accuracy-tradeoffs", "small-language-model-post-training"]
+  "pitfalls": [
+    "Treating a resource allocation as proof that training uses every allocated device.",
+    "Copying GPU, module, partition, or account directives without checking cluster-specific policy.",
+    "Requesting resources without measuring actual consumption and runtime.",
+    "Training from an unrecorded code, data, or environment state.",
+    "Writing the only checkpoint to node-local temporary storage.",
+    "Counting failed, cancelled, or timed-out runs as completed results."
+  ],
+  "related": ["model-size-speed-accuracy-tradeoffs", "repo-system-of-record-research"]
 }

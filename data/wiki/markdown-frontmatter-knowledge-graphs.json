@@ -1,25 +1,108 @@
 {
+  "schemaVersion": 2,
   "slug": "markdown-frontmatter-knowledge-graphs",
   "title": "Markdown Frontmatter Knowledge Graphs",
-  "subtitle": "Markdown can become a lightweight knowledge graph when every note carries typed metadata and explicit links.",
+  "subtitle": "Markdown becomes a lightweight knowledge graph when notes carry typed metadata and relationships with enforceable meaning.",
   "domain": "AI infrastructure",
   "difficulty": "Intermediate",
-  "summary": "KRAIL builds markdown-frontmatter entities, edges, topic documents, search, think envelopes, and integrity artifacts.",
+  "summary": "KRAIL reports markdown-frontmatter entities, edges, topic documents, search, think envelopes, and integrity artifacts in a repo-backed workspace.",
   "tags": ["Markdown", "Knowledge graph", "Frontmatter", "Local-first"],
   "sourceFiles": ["_portfolio/knowledge.md"],
+  "sourceStatus": { "label": "Pilot-ready", "note": "The portfolio source calls KRAIL pilot-ready rather than polished production software. The modeling and validation practices below are recommendations unless explicitly identified as reported capabilities." },
   "sourceLinks": [{ "label": "KRAIL project", "href": "/projects/knowledge" }],
   "externalSources": [
-    { "label": "SQLite FTS5 documentation", "href": "https://sqlite.org/fts5.html" }
+    { "label": "KRAIL source repository", "href": "https://github.com/AkeBoss-tech/knowledge" },
+    { "label": "SQLite FTS5 documentation", "href": "https://www.sqlite.org/fts5.html" }
   ],
-  "artifact": { "type": "agent-graph", "title": "Files become typed nodes and edges", "description": "The graph demo maps nicely to markdown entities connected by source, task, topic, and evidence relationships." },
+  "artifact": { "type": "agent-graph", "title": "Files become typed nodes and edges", "description": "The graph demo maps markdown entities connected by source, task, topic, and evidence relationships." },
   "contentBlocks": [
-    { "type": "markdown", "content": "A markdown note can carry structured frontmatter:\n\n```yaml\ntype: source-note\ntopic: transit-analysis\nproject: rutgers-bus-analysis\nstatus: reviewed\nlinks:\n  - route-loop-time-estimation\n  - campus-bus-load-curves\n```\n\nThe prose remains readable, but the metadata lets software query and connect it." }
+    { "type": "paragraph", "text": "Frontmatter gives a readable note an addressable identity, type, lifecycle state, and explicit relationships. A graph emerges only when those fields have shared definitions and software can validate their targets; a folder full of tags is not automatically a knowledge graph." },
+    { "type": "markdown", "content": "```yaml\nid: claim-route-loop-time\ntype: claim\nstatus: reviewed\ntopic: transit-analysis\nsupported_by:\n  - source-ntd-2025\nabout:\n  - route-loop-time-estimation\n```\n\nThe prose can remain ordinary Markdown while tools query the typed metadata." }
   ],
   "sections": [
-    { "heading": "Why Frontmatter Works", "body": ["Frontmatter gives plain files just enough structure. You can keep the benefits of Git, grep, and human-readable notes while adding machine-readable type, status, source, and relationship fields.", "This is useful for agent work because the agent can search, cite, update, and validate context without needing a heavyweight database for every task."] },
-    { "heading": "Graph Edges", "body": ["Edges can be explicit links, shared tags, source references, task dependencies, or generated backlinks. The important part is that relationships should have meaning, not just visual beauty.", "A graph is useful when it answers questions: which claims depend on this source, which tasks are blocked, which topics have stale evidence, and which outputs were verified."], "table": { "columns": ["Node type", "Example"], "rows": [["Source", "API docs, paper, dataset note"], ["Topic", "A concept or research area"], ["Task", "A work order or investigation"], ["Claim", "An evidence-backed statement"], ["Artifact", "Report, chart, code output, wiki page"]] } }
+    {
+      "heading": "Reported KRAIL Capability and Modeling Recommendations",
+      "body": [
+        "Project fact: the KRAIL portfolio source reports markdown-frontmatter entities, edges, and topic documents alongside deterministic file search, SQLite vector retrieval, task records, think envelopes, and integrity artifacts. It describes a local-first, headless runtime in a repository.",
+        "Project status: the same source calls the system pilot-ready. Stable IDs, controlled vocabularies, edge constraints, migration rules, and graph-quality metrics below are recommended modeling practices, not claims that the portfolio version enforces every rule."
+      ],
+      "table": {
+        "columns": ["Statement", "Classification"],
+        "rows": [
+          ["Markdown frontmatter represents entities and edges", "Reported KRAIL capability"],
+          ["Files remain usable with Git and text search", "Property of the repo-backed plain-text approach"],
+          ["Each node should have a stable ID independent of its filename", "Recommended schema policy"],
+          ["Edge types should constrain valid source and target types", "Recommended validation policy"]
+        ]
+      }
+    },
+    {
+      "heading": "Nodes, Edges, and Semantic Contracts",
+      "body": [
+        "A node is an entity with a durable identity, such as a source, claim, topic, task, or artifact. An edge is a typed assertion connecting two nodes. `supported_by` should mean evidentiary support; `depends_on` should mean workflow dependency; `about` should mean topical association. If every relationship is merely `related_to`, the graph cannot answer precise questions.",
+        "Recommended schema: require `id`, `type`, `status`, and a small set of typed relation fields. Keep filenames descriptive but do not use a path as the only identity because files move. Define cardinality and direction: a claim may have many supporting sources, while a supersession edge should point from the newer record to the older one."
+      ],
+      "table": {
+        "columns": ["Node type", "Useful fields", "Example edge"],
+        "rows": [
+          ["Source", "origin, captured_at, version, checksum", "source supports claim"],
+          ["Claim", "statement, status, confidence basis", "claim supported_by source"],
+          ["Topic", "label, aliases, scope", "claim about topic"],
+          ["Task", "owner, state, acceptance check", "task depends_on task"],
+          ["Artifact", "path, generator, verification", "artifact derived_from source"]
+        ]
+      },
+      "callout": "Analogy limit: frontmatter is like an index card attached to a document. Unlike a database constraint, YAML text does not enforce uniqueness, referential integrity, authorization, or transactional updates unless separate tooling validates it."
+    },
+    {
+      "heading": "From Files to Queryable Indexes",
+      "body": [
+        "A graph build reads frontmatter, normalizes IDs and relationship fields, validates targets, and materializes nodes and edges into an index. Full-text search remains valuable for exact phrases and identifiers; SQLite FTS5 officially provides full-text matching, prefix, phrase, proximity, Boolean queries, and relevance ordering. A graph traversal answers a different question: not 'which text contains this term?' but 'which reviewed claims depend on this source?'",
+        "Treat the index as derived data. The Markdown files remain the authored record, and a deterministic rebuild should reproduce the index. Record parser and schema versions, reject duplicate IDs, report dangling edges, and avoid silently guessing targets from similar filenames. Vector similarity may add candidates, but it does not create a semantically valid edge."
+      ],
+      "table": {
+        "columns": ["Mechanism", "Good at", "Cannot establish alone"],
+        "rows": [
+          ["Text search / FTS5", "Exact terms, phrases, identifiers", "Typed relationships"],
+          ["Frontmatter filters", "Type, status, date, project", "Relevance of prose"],
+          ["Graph traversal", "Dependencies and provenance paths", "Whether an asserted edge is true"],
+          ["Vector retrieval", "Paraphrased topical similarity", "Authorization or evidentiary support"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Suppose `claim-route-loop-time` is a reviewed claim supported by `source-ntd-2025`, and report `artifact-transit-brief` is derived from that claim. When the source note's checksum changes, a traversal finds the claim and then the report. An integrity job can mark both for review without scanning every file for matching words.",
+        "Now rename the source file from `ntd.md` to `sources/transport/ntd-2025.md`. Because the frontmatter ID remains `source-ntd-2025`, edges still resolve after rebuilding the index. If an author instead changes the ID without a migration alias, the validator reports a dangling `supported_by` edge rather than silently connecting to a similarly named source.",
+        "This is an illustrative schema and validation flow. The KRAIL source supports frontmatter graph capability, but it does not establish that these exact field names or migration behaviors are the portfolio implementation's contract."
+      ],
+      "table": {
+        "columns": ["Change", "Expected result", "Reason"],
+        "rows": [
+          ["Move a file, keep ID", "Edges remain valid", "Identity is independent of path"],
+          ["Change source checksum", "Dependent records become review candidates", "Evidence freshness changed"],
+          ["Delete target node", "Dangling edge error", "Referential integrity is broken"],
+          ["Add similar prose", "No automatic support edge", "Similarity is not evidence"]
+        ]
+      }
+    },
+    {
+      "heading": "Evolution, Governance, and Limitations",
+      "body": [
+        "Recommended practice: version the frontmatter schema, validate in continuous integration, provide migrations for renamed types or IDs, and distinguish authored edges from generated suggestions. Review graph metrics such as duplicate IDs, dangling-edge count, orphan nodes, stale sources, and claims with no support. Generated backlinks should always be reproducible from forward edges.",
+        "Plain files trade database guarantees for portability and reviewability. Concurrent edits can conflict; large graphs may rebuild slowly; YAML types can surprise parsers; and access control cannot be inferred from a folder name. For high-volume transactional data or complex multi-user permissions, keep the repo as the durable contract while using a database or service as an execution index."
+      ]
+    }
   ],
-  "pitfalls": ["Using tags as decoration instead of queryable structure.", "Creating graph edges without semantics.", "Letting metadata drift from the prose.", "Depending on generated backlinks without validating them."],
-  "quiz": [{ "question": "Why use frontmatter in markdown notes?", "options": ["To make notes queryable while preserving readable files", "To prevent Git from tracking files", "To hide all text", "To replace every database forever"], "answer": 0, "explanation": "Frontmatter adds structure without giving up plain-text workflows." }],
+  "pitfalls": [
+    "Using tags as decoration instead of defining queryable semantics.",
+    "Using filenames as identities and breaking edges whenever files move.",
+    "Treating vector similarity or co-occurrence as a verified relationship.",
+    "Generating backlinks that cannot be rebuilt from canonical forward edges.",
+    "Letting frontmatter drift from the prose without validation or review.",
+    "Presenting recommended constraints as features already enforced by a pilot-ready project.",
+    "Assuming YAML files provide database transactions, permissions, or referential integrity by themselves."
+  ],
   "related": ["evidence-backed-think-envelopes", "repo-system-of-record-research"]
 }

@@ -1,61 +1,88 @@
 {
+  "schemaVersion": 2,
   "slug": "pid-control-robot-mechanisms",
   "title": "PID Control for Robot Mechanisms",
   "subtitle": "PID control pushes a mechanism toward a setpoint by reacting to present, accumulated, and changing error.",
   "domain": "Controls",
   "difficulty": "Intermediate",
-  "summary": "The robotics season used PID-style control for pivot, shooter, intake, and other mechanisms.",
+  "summary": "A practical mental model for position and velocity feedback, grounded in Team 1257's pivot, shooter, intake, and drivetrain work.",
   "tags": ["PID", "Controls", "FRC", "Feedback"],
   "sourceFiles": ["_posts/2024-4-3-robotics-chief.md", "_posts/2023-3-23-robotics-journal.md"],
   "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
   "externalSources": [
     { "label": "WPILib: Introduction to PID", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html" },
-    { "label": "WPILib: PIDController", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html" }
+    { "label": "WPILib: PID Control in WPILib", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html" }
   ],
   "artifact": {
     "type": "pid-controller",
     "title": "A mechanism response curve",
-    "description": "Tune proportional gain and derivative damping to see how overshoot and settling change."
+    "description": "Tune proportional gain and derivative damping to see how overshoot, rise time, and settling change. Treat the visual as a simplified model, not a replacement for testing the real mechanism."
   },
   "sections": [
     {
-      "heading": "The Feedback Loop",
+      "heading": "Definitions: Closing the Feedback Loop",
       "body": [
-        "A controller compares the desired setpoint with the measured state. The difference is error.",
-        "The proportional term reacts to current error, the integral term reacts to accumulated error, and the derivative term reacts to how fast error is changing."
+        "A feedback controller repeatedly compares a desired state, the setpoint r, with a measured process variable y. Their difference is the error: e = r - y. The controller converts that error into control effort u, such as motor voltage.",
+        "Closed-loop control differs from percent output because the command changes when the measurement changes. A pivot disturbed by gravity or a shooter slowed by a game piece produces new error, so the loop can respond."
       ],
-      "callout": "A useful controller is not the most aggressive one. It is the one that reaches the target quickly without unstable motion."
+      "callout": "Mental model: P is a software spring pulling toward the setpoint; D is a software damper resisting relative motion; I remembers persistent error. The analogy stops at actuator saturation, friction, backlash, delays, and sensor noise, which real mechanisms must handle explicitly."
     },
     {
-      "heading": "Robot Examples",
+      "heading": "How P, I, and D Build the Output",
       "body": [
-        "A pivot can use position PID to reach an angle. A shooter can use velocity PID to hold RPM. An intake can use sensor feedback to stop after capturing a game piece.",
-        "The same feedback pattern applies, but the measurement, setpoint, and acceptable error all change."
+        "The combined law is u = Kp·e + Ki·∫e dt + Kd·de/dt. The proportional term reacts to current error. The derivative term reacts to the rate of error change and can reduce oscillation. The integral term accumulates error and can remove a persistent offset.",
+        "More gain is not automatically better. Large Kp can overshoot or oscillate; Kd can amplify noisy measurements; Ki can wind up while the actuator is saturated. WPILib specifically recommends avoiding integral gain in many FRC applications when an accurate feedforward can address steady-state load."
       ],
       "table": {
-        "columns": ["Mechanism", "Setpoint", "Measurement"],
+        "columns": ["Term", "Uses", "Typical benefit", "Typical risk"],
         "rows": [
-          ["Pivot", "Target angle", "Encoder angle"],
-          ["Shooter", "Target RPM", "Wheel velocity"],
-          ["Elevator", "Target height", "Encoder position"],
-          ["Drivetrain heading", "Target angle", "Gyro yaw"]
+          ["P", "Current error", "Fast correction", "Oscillation or overshoot"],
+          ["I", "Accumulated error", "Removes persistent offset", "Windup and slow recovery"],
+          ["D", "Error-rate estimate", "Damping", "Noise-sensitive output"],
+          ["Feedforward", "Expected mechanism behavior", "Supplies baseline effort", "Model error requires feedback correction"]
         ]
       }
+    },
+    {
+      "heading": "Worked Example: Pivot Voltage Command",
+      "body": [
+        "Suppose a pivot setpoint is 50°, the encoder reads 42°, the previous loop's error was 10°, and the loop period is 0.020 s. The present error is 8°. With Kp = 0.30 V/°, Ki = 0, and Kd = 0.01 V·s/°, the P contribution is 2.40 V. The error derivative is (8 - 10) / 0.020 = -100°/s, so D contributes -1.00 V. The feedback output is therefore 1.40 V before clamping or feedforward.",
+        "The negative D contribution is sensible: the error is shrinking rapidly, so damping backs off the push. If gravity compensation predicts 1.2 V at this angle, a combined controller might request 2.6 V, subject to voltage and mechanism safety limits. These numbers are illustrative, not Team 1257's recorded gains."
+      ],
+      "callout": "Always keep units attached to gains. Changing an encoder from degrees to radians without converting gains changes the controller by a factor of about 57.3."
+    },
+    {
+      "heading": "One Pattern, Different Mechanisms",
+      "body": [
+        "Team 1257's 2024 notes describe position PID and voltage modes for a four-NEO pivot, velocity PID for intake and shooter wheels, and an angular-speed PID loop for auto-aim. The 2023 journal also records that mechanism PID values still needed real-robot tuning after code was prepared.",
+        "The loop structure transfers across mechanisms, but the process variable, units, dynamics, tolerance, and safe output do not. A drivetrain heading wraps around a circle; an elevator has hard travel limits; a flywheel can rotate continuously but needs a velocity measurement."
+      ],
+      "table": {
+        "columns": ["Mechanism", "Setpoint", "Measurement", "Readiness evidence"],
+        "rows": [
+          ["Pivot", "Target angle", "Encoder angle", "Angle and angular-rate tolerances"],
+          ["Shooter", "Target RPM", "Wheel velocity", "RPM stable under expected load"],
+          ["Elevator", "Target height", "Encoder position", "Position near target and motion settled"],
+          ["Drivetrain heading", "Target angle", "Gyro yaw", "Wrapped angle error near zero"]
+        ]
+      }
+    },
+    {
+      "heading": "Tuning, Validation, and Limits",
+      "body": [
+        "Start by verifying sensor direction, units, motor direction, and output limits. Tune on the real mechanism with representative mass and battery conditions: raise P until response is useful, add damping if needed, and add feedforward for predictable loads. Use integral only with a specific reason and anti-windup protection.",
+        "Log setpoint, measurement, error, output, current, and battery voltage. Judge a tune by rise time, overshoot, settling, disturbance recovery, and repeatability—not by whether it moved once. Team 1257 used simulation and tunable numbers to catch bugs and speed testing, while its season notes also show why final validation on hardware matters."
+      ],
+      "callout": "A controller cannot repair a disconnected encoder, an incorrect gear ratio, a binding mechanism, or an actuator that lacks enough authority. Diagnose the plant and sensors before compensating with gains."
     }
   ],
   "pitfalls": [
     "Raising P until the mechanism oscillates and calling it tuned.",
-    "Adding integral control before understanding steady-state error.",
-    "Ignoring sensor noise in the derivative term.",
-    "Testing with no load and expecting the same behavior during a match."
-  ],
-  "quiz": [
-    {
-      "question": "Which PID term reacts to the current error?",
-      "options": ["P", "I", "D", "None of them"],
-      "answer": 0,
-      "explanation": "The proportional term scales the current error."
-    }
+    "Adding integral control before understanding the source of steady-state error.",
+    "Ignoring sensor noise and loop-period consistency in the derivative term.",
+    "Testing with no load and expecting the same behavior during a match.",
+    "Declaring readiness from position error alone while the mechanism is still moving quickly.",
+    "Enabling continuous input on a mechanism whose wires or hard stops prevent continuous rotation."
   ],
   "related": ["swerve-drive-basics-frc", "velocity-pid-intake-shooter-wheels"]
 }

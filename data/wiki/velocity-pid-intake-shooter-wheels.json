@@ -1,20 +1,87 @@
 {
+  "schemaVersion": 2,
   "slug": "velocity-pid-intake-shooter-wheels",
   "title": "Velocity PID for Intake and Shooter Wheels",
   "subtitle": "Velocity control is about holding speed under load, not merely sending a motor percentage.",
   "domain": "Controls",
   "difficulty": "Intermediate",
-  "summary": "The 2024 robot used velocity PID loops for intake and shooter mechanisms.",
+  "summary": "A practical guide to velocity feedback, feedforward, readiness checks, and disturbance recovery for FRC rollers and flywheels.",
   "tags": ["PID", "Velocity", "Shooter", "FRC"],
   "sourceFiles": ["_posts/2024-4-3-robotics-chief.md"],
   "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
-  "externalSources": [{ "label": "WPILib: PIDController", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html" }],
-  "artifact": { "type": "pid-controller", "title": "Speed response to a setpoint", "description": "Change gain and damping to see why a wheel can overshoot, undershoot, or settle." },
-  "sections": [
-    { "heading": "Why Percent Output Is Not Enough", "body": ["A shooter wheel slows when it contacts a game piece. A fixed motor percentage cannot know that happened.", "Velocity feedback measures actual wheel speed and pushes the motor harder when the measured speed falls below target."] },
-    { "heading": "Feedforward plus Feedback", "body": ["Many mechanisms use feedforward for the expected voltage and PID feedback for correction. The feedforward gets close; the feedback cleans up error."] }
+  "externalSources": [
+    { "label": "WPILib: PID Control in WPILib", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html" },
+    { "label": "WPILib: Introduction to Feedforward", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-feedforward.html" }
   ],
-  "pitfalls": ["Tuning shooter speed with no game piece interaction.", "Ignoring sensor units and loop period.", "Using position PID constants for velocity control."],
-  "quiz": [{ "question": "What is the measured variable in velocity PID?", "options": ["Wheel speed", "Robot color", "Field pose only", "Match time"], "answer": 0, "explanation": "Velocity PID compares target speed with measured speed." }],
+  "artifact": {
+    "type": "pid-controller",
+    "title": "Speed response to a setpoint",
+    "description": "Change gain and damping to inspect overshoot, steady error, and recovery. The simplified curve does not model every flywheel, controller, or game-piece interaction."
+  },
+  "sections": [
+    {
+      "heading": "Definitions: Controlling a Rate",
+      "body": [
+        "A velocity loop uses a target rate as its setpoint and a measured rate as its process variable. For a shooter, both might be RPM; for an intake, they might be rotations per second. The error is target velocity minus measured velocity.",
+        "Percent output is open-loop: the same command is sent whether the wheel is free-spinning or loaded. Velocity control is closed-loop: when a note slows the wheel, the increased error requests more effort, within current and voltage limits."
+      ],
+      "callout": "Velocity PID regulates speed; it does not guarantee that a note is present, centered, or launched accurately. Sensors and command sequencing must establish those separate facts."
+    },
+    {
+      "heading": "Why Feedforward and Feedback Work Together",
+      "body": [
+        "Feedforward estimates the voltage needed for the requested motion before an error appears. A simple rotating-mechanism model may include a static-friction term and a velocity term. PID feedback then corrects for battery sag, friction changes, imperfect modeling, and disturbances.",
+        "This division makes tuning easier: feedforward supplies most of the steady effort, while feedback stays small enough to correct rather than fight the mechanism. If the output is clamped, the requested sum must still respect hardware safety limits."
+      ],
+      "table": {
+        "columns": ["Signal", "Question it answers", "Example"],
+        "rows": [
+          ["Setpoint", "How fast should it spin?", "4200 RPM"],
+          ["Feedforward", "What voltage should approximately sustain that speed?", "8.0 V"],
+          ["Feedback", "What correction does measured error require?", "+0.6 V"],
+          ["Clamped output", "What safe command reaches the motor?", "8.6 V, limited to the allowed range"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example: Recovering After a Shot",
+      "body": [
+        "Assume a shooter target of 4500 RPM. Just before a shot it measures 4470 RPM, so the error is 30 RPM. Contact with a note drops the next measurement to 3900 RPM, increasing error to 600 RPM. With Kp = 0.002 V/RPM, the proportional correction rises from 0.06 V to 1.20 V.",
+        "If feedforward predicts 8.5 V at 4500 RPM, the post-shot request is 9.70 V before clamping. As the wheel recovers, error and correction shrink. These values are illustrative; the Team 1257 source confirms two-sided shooter velocity loops but does not publish these gains or setpoints."
+      ],
+      "callout": "A 'ready to fire' flag should normally require speed to remain inside a tolerance for several samples. Crossing the target once during overshoot is not the same as settling."
+    },
+    {
+      "heading": "Intake and Shooter Are Similar—but Not Identical",
+      "body": [
+        "Team 1257 described the intake and ground intake as programmatically similar, with a velocity PID loop on the intake. The intake also had a break-beam sensor and a command that ran until a note was detected; the ground intake did not. The shooter used velocity PID loops on both sides.",
+        "That distinction matters. The velocity loop answers whether a roller tracks speed, while the break beam answers whether a game piece crossed a location. A two-wheel shooter may also need both wheels within tolerance, and possibly a controlled speed differential, before feeding."
+      ],
+      "table": {
+        "columns": ["Mechanism", "Primary feedback", "Separate state evidence", "Typical disturbance"],
+        "rows": [
+          ["Intake", "Roller velocity", "Break beam or current/sensor logic", "Note contact or jam"],
+          ["Ground intake", "Roller velocity", "Command timing or another sensor", "Carpet and note contact"],
+          ["Two-wheel shooter", "Left and right velocities", "Both stable inside tolerance", "Shot energy transfer"]
+        ]
+      }
+    },
+    {
+      "heading": "Implementation, Tuning, and Limits",
+      "body": [
+        "Confirm encoder conversion factors and sign before tuning. Call the controller at its configured period; WPILib's default PIDController period is 20 ms, and irregular timing changes derivative and integral behavior. For a velocity loop, WPILib's position-error accessor represents velocity error, while its velocity-error accessor represents acceleration error.",
+        "Tune and log free-spin startup, steady running, a representative shot or note intake, and recovery. Compare target speed, each measured wheel speed, voltage, current, and battery voltage. A bad bearing, slipping belt, weak battery, or saturated motor cannot be corrected merely by increasing gain."
+      ],
+      "callout": "Do not copy position-loop gains into a velocity loop. Their units and plant dynamics are different even if the software class has the same method names."
+    }
+  ],
+  "pitfalls": [
+    "Tuning shooter speed without testing a real game-piece interaction.",
+    "Ignoring encoder conversion factors, sensor sign, or loop period.",
+    "Using position PID constants for velocity control.",
+    "Firing as soon as speed crosses the target instead of requiring stable readiness.",
+    "Looking only at average shooter speed when the left and right wheels differ.",
+    "Using higher gains to conceal voltage saturation or a mechanical fault."
+  ],
   "related": ["pid-control-robot-mechanisms", "lookup-tables-vs-equations-shooter-tuning"]
 }

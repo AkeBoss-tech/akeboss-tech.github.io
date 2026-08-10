@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "conflict-free-schedule-generation",
   "title": "Conflict-Free Schedule Generation",
   "subtitle": "Course scheduling is a constraint problem disguised as a registration chore.",
@@ -9,22 +10,70 @@
   "sourceFiles": ["_portfolio/scarlet-sync.md", "app/cv/page.tsx"],
   "sourceLinks": [{ "label": "Scarlet Sync project", "href": "/projects/scarlet-sync" }],
   "externalSources": [
-    { "label": "Canvas OAuth docs for LMS-style integrations", "href": "https://developerdocs.instructure.com/services/canvas/oauth2/file.oauth" },
-    { "label": "OR-Tools scheduling examples", "href": "https://developers.google.com/optimization/cp" }
+    { "label": "OR-Tools CP-SAT guide", "href": "https://developers.google.com/optimization/cp/cp_solver" },
+    { "label": "OR-Tools employee scheduling example", "href": "https://developers.google.com/optimization/scheduling/employee_scheduling" }
   ],
   "artifact": { "type": "schedule-grid", "title": "A constraint grid for semester planning", "description": "Adjust campus travel and gap avoidance to see how preferences reshape the feasible schedule space." },
   "contentBlocks": [
     { "type": "heading", "level": 2, "text": "What Counts as a Conflict?" },
-    { "type": "paragraph", "text": "The obvious conflict is two sections at the same time. The less obvious conflicts are back-to-back sections on different campuses, labs that require a paired lecture, sections that reserve seats, degree requirements that need a specific course number, and personal blocks for work or commuting." },
+    { "type": "paragraph", "text": "A conflict is any combination that violates a rule the student or institution requires. Time overlap is only the simplest case: linked lecture-lab components, personal unavailable blocks, and impossible campus transitions can also invalidate a schedule." },
     { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Hard constraints</strong>No overlapping meetings, valid sections, required linked components.</div><div><strong>Soft constraints</strong>Campus preference, professor rating, compact day, friend overlap.</div><div><strong>Objective</strong>Rank valid schedules by how well they match the student's life.</div></div>" }
   ],
   "sections": [
-    { "heading": "Generate Then Rank", "body": ["One practical approach is to enumerate combinations of sections, reject invalid combinations, and score the survivors. For large course sets, pruning must happen early because combinations grow quickly.", "A more formal approach models each section as a variable assignment and each rule as a constraint. The best schedule is then the feasible assignment with the best objective score."] },
-    { "heading": "User Trust", "body": ["Students need to see why a schedule was produced. A black-box generator is less useful than a system that explains which constraints were binding and what tradeoff created the recommendation.", "Good scheduling UI should expose the reason for rejection: time overlap, campus travel, unavailable block, missing prerequisite, or no open sections."], "table": { "columns": ["Constraint", "Hard or soft", "Explanation shown to user"], "rows": [["No time overlap", "Hard", "Sections meet at the same time"], ["Campus travel", "Usually soft", "Back-to-back travel may be too tight"], ["Unavailable block", "Hard", "User blocked this time"], ["Professor preference", "Soft", "Lower score, but still feasible"], ["Degree progress", "Hard or soft", "Depends on graduation requirement urgency"]] } }
+    {
+      "heading": "Definition: Feasibility Before Preference",
+      "body": [
+        "A course schedule is an assignment of one valid section choice to each requested course. A hard constraint divides assignments into feasible and infeasible sets; a soft constraint assigns costs or rewards inside the feasible set.",
+        "This separation matters because a preference such as a favorite professor should usually lower a schedule's rank, not erase every otherwise workable option. By contrast, a meeting overlap or a user-declared work block must reject the candidate."
+      ],
+      "callout": "Mental model: hard constraints decide whether a schedule may exist; soft constraints decide which valid schedule should appear first."
+    },
+    {
+      "heading": "Why Generation Needs Early Pruning",
+      "body": [
+        "If four courses each have eight sections, naive enumeration begins with 8^4 = 4,096 combinations. Ten courses with eight sections each create more than one billion combinations. Rejecting partial assignments as soon as they overlap prevents wasted work below an already-invalid branch.",
+        "Scarlet Sync's source describes generating multiple optimized, conflict-free schedules in seconds from desired courses, unavailable times, and campus preferences. It does not publish the production solver or scoring formula, so enumeration and CP-SAT are useful implementation models rather than claims about the deployed internals."
+      ],
+      "table": {
+        "columns": ["Rule", "Typical class", "Effect"],
+        "rows": [
+          ["No meeting overlap", "Hard", "Reject candidate"],
+          ["Unavailable work block", "Hard", "Reject candidate"],
+          ["Preferred campus", "Soft or hard by user choice", "Rank lower or reject"],
+          ["Compact day", "Soft", "Add gap penalty"],
+          ["Professor preference", "Soft", "Adjust score"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: Generate, Check, Score, Explain",
+      "body": [
+        "Normalize every meeting into comparable day-and-time intervals. During search, choose a section for one course, test its meetings against the partial schedule and personal blocks, and backtrack immediately on a hard violation. When an assignment is complete, compute soft costs such as total gaps, campus switches, or preference penalties.",
+        "Ranking should be reproducible: define each score term, its weight, and a deterministic tie-breaker. Keep rejection reasons alongside the search state so the interface can explain that a section overlapped work, lacked a linked component, or required an infeasible transition rather than merely saying 'no schedule.'"
+      ]
+    },
+    {
+      "heading": "Worked Example: Three Courses and a Commute",
+      "body": [
+        "Suppose Algorithms has sections A1 Monday 10:00–11:20 and A2 Tuesday 14:00–15:20. Databases has D1 Monday 11:30–12:50 and D2 Tuesday 14:30–15:50. The student blocks Monday 12:00–14:00 for work and needs 25 minutes between different campuses.",
+        "A2+D2 is rejected because the Tuesday meetings overlap. A1+D1 has no clock overlap, but it is rejected if the sections are on different campuses: the ten-minute gap is shorter than the 25-minute transition. If both are on the same campus, D1 still intersects the work block from 12:00–12:50. The generator must therefore report no feasible pair unless the student changes a hard rule or adds another section.",
+        "If work availability is negotiable rather than mandatory, model it as a penalty. Then A1+D1 may survive and rank below schedules that preserve work time; changing the classification changes the feasible set, not merely the display order."
+      ]
+    },
+    {
+      "heading": "Limits, Trust, and Data Quality",
+      "body": [
+        "A mathematically valid result can still be unusable when upstream section times, campuses, linked components, seat restrictions, or degree rules are stale. Scarlet Sync's project source emphasizes that Rutgers data is fragmented across legacy systems and that AI-assisted ingestion was built for classes, sections, and degree requirements; validation and provenance are therefore part of scheduling correctness.",
+        "Optimization also cannot decide a student's priorities without an explicit policy. Overweighting compactness may produce risky transitions, while turning every preference into a hard rule may produce no result. Show which constraints were binding, offer controlled relaxations, and never imply that a generated plan guarantees registration availability."
+      ]
+    }
   ],
-  "pitfalls": ["Treating every preference as a hard rule and finding no schedules.", "Hiding why a schedule failed.", "Ignoring linked recitations, labs, or cross-listed sections.", "Optimizing compactness while creating impossible campus transitions."],
-  "quiz": [
-    { "question": "What is the difference between a hard and soft constraint?", "options": ["Hard constraints must be satisfied; soft constraints affect ranking", "Soft constraints are always ignored", "Hard constraints are visual only", "They are the same thing"], "answer": 0, "explanation": "Hard rules define feasibility; soft rules define preference quality." }
+  "pitfalls": [
+    "Treating every preference as a hard rule and finding no schedules.",
+    "Hiding why a schedule failed.",
+    "Ignoring linked recitations, labs, reserved seats, or cross-listed sections.",
+    "Optimizing compactness while creating impossible campus transitions.",
+    "Treating stale source data as a solver failure."
   ],
-  "related": ["ai-assisted-course-degree-requirement-extraction", "course-materials-queryable-knowledge-base"]
+  "related": ["course-materials-queryable-knowledge-base", "langgraph-multi-agent-study-backend"]
 }

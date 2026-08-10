@@ -1,20 +1,89 @@
 {
+  "schemaVersion": 2,
   "slug": "multi-scale-tad-boundary-detection",
   "title": "Multi-Scale TAD Boundary Detection",
-  "subtitle": "A robust chromatin boundary should remain visible across more than one analysis window.",
+  "subtitle": "A boundary call is stronger when its insulation pattern persists across justified window sizes, resolutions, and replicates.",
   "domain": "Computational biology",
   "difficulty": "Advanced",
-  "summary": "The HiC-TAD project sweeps window sizes to separate robust boundaries from noisy local patterns.",
+  "summary": "Understand insulation and directionality signals, sweep analysis scale without confusing it with map resolution, and turn boundary persistence into calibrated evidence rather than a binary verdict.",
   "tags": ["Hi-C", "TADs", "Boundary detection", "Genomics"],
   "sourceFiles": ["_portfolio/hic-tad-analysis.md"],
   "sourceLinks": [{ "label": "HiC-TAD project", "href": "/projects/hic-tad-analysis" }],
-  "externalSources": [{ "label": "PMC: TAD boundaries and regulatory territories", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10119121/" }],
-  "artifact": { "type": "hic-heatmap", "title": "Boundary signal across scales", "description": "Move the boundary and read the heatmap as domain structure rather than a single fixed line." },
-  "sections": [
-    { "heading": "Why Scale Matters", "body": ["A small window can detect local insulation changes but may be noisy. A large window smooths noise but can blur nearby domains.", "Multi-scale detection asks whether a boundary is stable enough to survive changes in window size."] },
-    { "heading": "Robustness Over One-Off Peaks", "body": ["A single peak in an insulation track is weaker evidence than a boundary that appears across resolutions or window settings."] }
+  "externalSources": [
+    { "label": "Nature: Directionality index and topological domains", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3356448/" },
+    { "label": "Nature: Insulation-score analysis across scales", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4498965/" },
+    { "label": "PMC: TAD boundaries and regulatory territories", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10119121/" },
+    { "label": "Nucleic Acids Research: TopDom and boundary-call sensitivity", "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4838359/" }
   ],
-  "pitfalls": ["Calling boundaries from one arbitrary window size.", "Comparing resolutions without normalization.", "Treating all boundary calls as equal confidence."],
-  "quiz": [{ "question": "Why sweep multiple window sizes?", "options": ["To make plots larger", "To test whether boundary calls are robust", "To delete low-contact regions", "To avoid normalization"], "answer": 1, "explanation": "Robust boundaries should not depend entirely on one analysis window." }],
-  "related": ["hic-contact-maps-tad-triangles", "insulation-score-directionality-index"]
+  "artifact": {
+    "type": "hic-heatmap",
+    "title": "Boundary signal across scales",
+    "description": "Move the boundary and read the heatmap as domain structure rather than a single fixed line. Use the visual to predict scale effects, not to assign statistical confidence."
+  },
+  "sections": [
+    {
+      "heading": "Definition: Boundary Evidence at More Than One Scale",
+      "body": [
+        "A TAD boundary is a genomic position near a transition between preferential interaction neighborhoods. Boundary detection converts a contact matrix into a one-dimensional signal or a segmentation, then identifies candidate transitions. Multi-scale analysis repeats that calculation over several neighborhood window sizes instead of accepting one arbitrary setting.",
+        "Analysis window and matrix resolution are different. Resolution is the width of each genomic bin; a window is how many neighboring bins contribute to a score. At 5 kb resolution, a 100 kb window spans 20 bins. Changing either quantity changes the evidence and must be reported."
+      ],
+      "callout": "Persistence across scales is evidence of robustness, not proof that a boundary is universal, causal, or equally strong in every cell."
+    },
+    {
+      "heading": "Why Scale Changes the Boundary You See",
+      "body": [
+        "A small window is sensitive to narrow local insulation and nested subdomains, but it also responds strongly to sparse pixels and local artifacts. A large window aggregates more contacts and can reveal broad domains, yet it may merge nearby boundaries or blur a narrow one. A multi-scale heatmap makes this tradeoff visible: each row is a window size and each column is a genomic position.",
+        "The portfolio project sweeps windows from 25 kb to 500 kb. A vertical low-insulation streak across many rows is a candidate persistent boundary; a signal confined to fine rows may be a real nested feature or noise. The plot alone cannot decide which—replicates, coverage, genomic annotations, and alternative callers provide additional evidence."
+      ],
+      "table": {
+        "columns": ["Pattern across scales", "Candidate interpretation", "Required check"],
+        "rows": [
+          ["Persistent vertical minimum", "Robustly insulated position", "Replicate and preprocessing stability"],
+          ["Fine-scale minimum only", "Nested boundary or local noise", "Depth, nearby invalid bins, finer replicates"],
+          ["Broad-scale minimum only", "Large domain transition or smoothing effect", "Nearby boundary merging and window width"],
+          ["Position drifts with scale", "Diffuse transition or competing nearby minima", "Report uncertainty rather than one exact coordinate"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: Insulation, Directionality, and Calling",
+      "body": [
+        "An insulation score summarizes contacts that cross each candidate position inside a square or diamond-shaped neighborhood. A local depletion of cross-position contacts produces an insulation minimum; implementations often normalize the score to a chromosome-wide or local background and may use a log transform. Exact definitions, masking, and edge handling vary, so scores from different tools are not automatically interchangeable.",
+        "The directionality index asks whether a bin interacts preferentially upstream or downstream. A transition in that bias can support a domain edge. Combining matrix structure, insulation, and directionality is useful because the signals summarize different aspects of the same contact data, but they are not fully independent experiments.",
+        "A practical caller chooses candidate minima, estimates strength or prominence, merges nearby calls under a declared rule, and records which scales support each position. Thresholds should be tuned or validated against replicates and a task-specific objective, not selected solely because the resulting track looks clean."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Suppose a 5 kb matrix is evaluated at one candidate position with 25, 50, 100, and 200 kb windows. After the same balancing and distance-aware normalization, the log2 insulation scores relative to the chromosome median are -1.4, -1.1, -0.7, and -0.1. Negative values indicate fewer cross-position contacts than the selected background. The strong minima at 25–100 kb and weak value at 200 kb suggest a local boundary whose evidence fades when the neighborhood becomes very broad.",
+        "Now suppose a replicate gives -1.2, -1.0, -0.6, and 0.0 at the same aligned position. The scale profile is reproducible enough to nominate a fine-to-mid-scale boundary. It should not be labeled constitutive across cell types or assigned an exact base-pair edge: binning limits position precision, and the 200 kb window does not support broad-scale insulation."
+      ],
+      "table": {
+        "columns": ["Window", "Bins at 5 kb", "Replicate 1", "Replicate 2", "Reading"],
+        "rows": [
+          ["25 kb", "5", "-1.4", "-1.2", "Strong local minimum"],
+          ["50 kb", "10", "-1.1", "-1.0", "Persistent"],
+          ["100 kb", "20", "-0.7", "-0.6", "Moderate support"],
+          ["200 kb", "40", "-0.1", "0.0", "Little broad-scale support"]
+        ]
+      }
+    },
+    {
+      "heading": "Limits, Uncertainty, and Perturbation Claims",
+      "body": [
+        "Boundary calls depend on sequencing depth, cell population, binning, balancing, distance normalization, excluded regions, smoothing, caller, threshold, and window set. Nearby structural variants can also change mappability or copy number, creating apparent contact changes. Report a position interval, strength, supported scales, and replicate concordance rather than only a binary boundary label.",
+        "The project also uses AlphaGenome to predict deletion effects. A predicted weakening of insulation is a computational hypothesis, not an observed outcome. Validation could combine a matched perturbation contact assay with CTCF or chromatin profiling and expression measurements chosen for the mechanism under study."
+      ],
+      "callout": "Analogy limit: zooming a map can reveal streets or regions, but genomic scale is not merely visual zoom—the scoring neighborhood and available contact counts change mathematically."
+    }
+  ],
+  "pitfalls": [
+    "Calling boundaries from one convenient window size and reporting no sensitivity analysis.",
+    "Confusing map resolution with the insulation window measured over that map.",
+    "Comparing boundary strength across matrices with different balancing, coverage, or distance normalization.",
+    "Treating agreement among insulation and directionality tracks as fully independent experimental replication.",
+    "Calling a boundary constitutive from one cell type or treating AlphaGenome-predicted deletion effects as observations."
+  ],
+  "related": ["hic-contact-maps-tad-triangles", "synthetic-enhancer-design-pipeline"]
 }

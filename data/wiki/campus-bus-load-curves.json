@@ -1,59 +1,107 @@
 {
+  "schemaVersion": 2,
   "slug": "campus-bus-load-curves",
   "title": "Campus Bus Load Curves by Time of Day",
-  "subtitle": "Transit demand becomes legible when bus pings and load observations are aggregated into daily route curves.",
+  "subtitle": "Transit demand becomes legible only after irregular vehicle observations are validated, deduplicated, aligned, and aggregated with their coverage visible.",
   "domain": "Transit analytics",
   "difficulty": "Foundational",
-  "summary": "The Rutgers Bus Analysis project collected PassioGO data and analyzed route load, speed, loop time, and capacity patterns.",
+  "summary": "The Rutgers Bus Analysis project collected PassioGO data and analyzed route load, speed, loop time, capacity, and daily operating patterns.",
   "tags": ["Transit", "Data visualization", "Rutgers", "Time series"],
   "sourceFiles": ["_portfolio/rutgers-bus-analysis.md"],
   "sourceLinks": [{ "label": "Rutgers Bus Analysis project", "href": "/projects/rutgers-bus-analysis" }],
   "externalSources": [
-    { "label": "PassioGo project reference", "href": "https://github.com/athuler/PassioGo" }
+    { "label": "PassioGo Python client repository", "href": "https://github.com/athuler/PassioGo" },
+    { "label": "GTFS Realtime overview", "href": "https://developers.google.com/transit/gtfs-realtime" },
+    { "label": "GTFS Realtime vehicle-position example", "href": "https://developers.google.com/transit/gtfs-realtime/examples/vehicle-positions" }
   ],
-  "artifact": {
-    "type": "transit-load",
-    "title": "Route demand pulses",
-    "description": "Move through the day and watch route loads peak at different times."
-  },
+  "artifact": { "type": "transit-load", "title": "Route demand pulses", "description": "Move through the day and watch route loads peak at different times." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "A Curve Is an Aggregation, Not a Raw Feed" },
+    { "type": "paragraph", "text": "Vehicle feeds arrive as irregular events. A route curve is produced by a declared pipeline: validate timestamps and identities, deduplicate vehicle state, place snapshots into local-time buckets, compute a route statistic, and publish coverage beside the value." },
+    { "type": "latex", "content": "$$\\bar L_{r,b}=\\frac{1}{|S_{r,b}|}\\sum_{s \\in S_{r,b}}\\left(\\frac{1}{|V_{r,s}|}\\sum_{v \\in V_{r,s}}L_{v,s}\\right)$$\n\nOne defensible curve first averages active vehicles within each route snapshot, then averages snapshots within a time bucket. Other estimands are possible, but the choice must be named." }
+  ],
   "sections": [
     {
-      "heading": "From Pings to Curves",
+      "heading": "Reported Collection and Findings",
       "body": [
-        "A real-time bus feed produces many small observations: bus identity, route, position, timestamp, and sometimes load.",
-        "A load curve groups those observations by route and time bucket so patterns become visible."
+        "The project source reports polling the Rutgers PassioGO system every 30 seconds from an Azure VM, collecting more than 100 MB and approximately 300,000 observations over one week. It reports analyses of route load, LX load, loop time, bus capacity, active buses, speed, and vehicle movement.",
+        "The source also reports that peak wait times correlated with class-change periods, route efficiency varied by time of day, load followed predictable daily cycles, and the team identified bus-distribution patterns. It does not publish the load field's exact unit, missing-data rate, route-level numeric peaks, confidence intervals, or a causal model; this page does not invent them."
+      ],
+      "callout": "Analogy limit: a load curve resembles a heartbeat because both show recurring pulses. Transit data is not a continuous vital sign: vehicles enter and leave service, pings disappear, routes change, and the observed fleet can vary from bucket to bucket."
+    },
+    {
+      "heading": "Normalize Each Observation",
+      "body": [
+        "A usable record needs event time, retrieval time, vehicle identity, route identity, coordinates, and the feed's load representation when present. Preserve the raw value and its unit or category before normalization. Reject impossible coordinates and negative ages; flag stale observations rather than silently treating them as current.",
+        "GTFS Realtime is a useful reference for common vehicle-position concepts such as trip, route, position, vehicle identity, timestamp, and optional occupancy, but the portfolio source does not claim that PassioGO records conform to GTFS Realtime. Schema mapping must be verified against the actual PassioGO payload and client code."
+      ],
+      "table": {
+        "columns": ["Field", "Validation question"],
+        "rows": [
+          ["vehicle_id", "Is it stable across pings and service changes?"],
+          ["route_id", "Was the assignment valid at event time?"],
+          ["event_time", "Is it source time or collection time, and in which zone?"],
+          ["load", "Count, percentage, category, or provider-specific estimate?"],
+          ["position", "Is it plausible and fresh?"],
+          ["collection_run", "Can outages and restarts be traced?"]
+        ]
+      }
+    },
+    {
+      "heading": "From Pings to Comparable Time Buckets",
+      "body": [
+        "Raw ping averages can overweight vehicles that report more often. A safer route snapshot keeps at most one valid state per vehicle at a target time, usually the latest within a declared freshness tolerance. Time buckets then summarize route snapshots, not an arbitrary pile of events.",
+        "Publish active-vehicle count, observed-vehicle count, ping count, and coverage or staleness with every bucket. A mean load of 60 based on one observed bus does not mean the same thing as 60 based on eight buses. Keep weekday, weekend, semester, holiday, and service-day boundaries explicit."
+      ],
+      "table": {
+        "columns": ["Aggregation", "Question answered", "Bias to watch"],
+        "rows": [
+          ["Mean across observed vehicles", "How loaded was the observed route fleet?", "Missing high-load or low-load buses"],
+          ["Maximum observed load", "Was any observed bus severely crowded?", "Sensitive to noisy extremes"],
+          ["Passenger-weighted metric", "How was rider exposure distributed?", "Requires valid passenger counts"],
+          ["Median loop time", "What was a typical completed circuit?", "Incomplete or misidentified loops"],
+          ["Active vehicle count", "What supply was visible?", "Feed disappearance may mimic service withdrawal"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "In an illustrative 10:00 snapshot, Route R has Bus A at load 40 and Bus B at load 70, so the observed fleet mean is 55 across two vehicles. At 10:05, A reports load 50 three times and B reports load 80 once. Deduplicating to one state per vehicle gives (50+80)/2=65; averaging all four raw pings would give 57.5 and incorrectly weight A three times.",
+        "The 10:00–10:10 bucket can average its two route snapshots to (55+65)/2=60 and report two snapshots with two vehicles observed in each. All loads, times, and route labels in this example are illustrative; they are not measured Rutgers results and do not establish the PassioGO load unit."
+      ],
+      "table": {
+        "columns": ["Illustrative time", "Deduplicated vehicle loads", "Route mean", "Coverage"],
+        "rows": [
+          ["10:00", "A=40, B=70", "55", "2 vehicles"],
+          ["10:05", "A=50, B=80", "65", "2 vehicles"],
+          ["Bucket", "Two equal-weight snapshots", "60", "2 snapshots"]
+        ]
+      }
+    },
+    {
+      "heading": "Loop Time, Speed, and Supply Need Separate Denominators",
+      "body": [
+        "Load describes demand only through the feed's measurement. Active buses approximate observed supply. Loop time requires identifying a vehicle's return to a route reference point or completed trip without double-counting GPS jitter. Speed derived from positions requires distance and elapsed event time, with outlier checks for jumps and stale pings.",
+        "Relate metrics without collapsing them: a high load can coincide with many active buses because demand is higher still; a long loop can come from congestion, dwell, detour, or data gaps. A useful dashboard aligns these curves in time but keeps units and sample counts separate."
       ]
     },
     {
-      "heading": "Why Time of Day Matters",
+      "heading": "Uncertainty, Comparison, and Responsible Claims",
       "body": [
-        "Campus transit is shaped by synchronized class schedules. Ten minutes before and after class changes can look very different from the middle of a lecture block.",
-        "A route can be efficient on average while still failing during narrow peaks."
-      ],
-      "table": {
-        "columns": ["Metric", "Question it answers"],
-        "rows": [
-          ["Average load", "How crowded is the route?"],
-          ["Loop time", "How long does a bus take to return?"],
-          ["Speed", "Where does the route slow down?"],
-          ["Active buses", "Is supply matching demand?"]
-        ]
-      }
+        "One week can reveal repeated patterns but may not represent exams, weather, holidays, construction, or another semester. Compare like service days, show per-day curves behind the average, and use intervals or quantile ribbons when enough days exist. Mark feed outages as gaps rather than connecting across them.",
+        "Correlation between class changes and wait peaks is useful operational evidence but does not by itself prove a cause. A stronger evaluation would align scheduled class transitions, control for route and weekday, measure service supply, and test whether the pattern repeats outside the original collection week."
+      ]
     }
   ],
   "pitfalls": [
-    "Averaging across the full day and hiding class-change spikes.",
-    "Treating GPS pings as evenly spaced when polling or connectivity can vary.",
-    "Comparing routes without considering route length.",
-    "Ignoring missing data during outages or low-signal periods."
+    "Averaging raw pings and overweighting vehicles that report more often.",
+    "Averaging across the full day and hiding narrow class-change peaks.",
+    "Treating stale or missing observations as zero load or zero service.",
+    "Comparing routes without route length, service pattern, active vehicles, or coverage.",
+    "Computing speed from collection time when event timestamps are available.",
+    "Generalizing a one-week pattern to every semester without uncertainty.",
+    "Assigning a load unit or numeric peak not documented by the source."
   ],
-  "quiz": [
-    {
-      "question": "Why bucket bus observations by time?",
-      "options": ["To remove all uncertainty", "To reveal daily demand patterns", "To hide route differences", "To avoid plotting data"],
-      "answer": 1,
-      "explanation": "Time buckets turn noisy pings into route-level curves that can be compared."
-    }
-  ],
-  "related": ["real-time-transit-data-collection-loops", "route-loop-time-estimation"]
+  "related": ["real-time-transit-data-collection-loops", "fred-bls-api-time-series-plotting"]
 }

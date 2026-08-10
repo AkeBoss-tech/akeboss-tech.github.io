@@ -1,23 +1,85 @@
 {
+  "schemaVersion": 2,
   "slug": "q-integers-meaning-q-analogues",
   "title": "q-Integers and the Meaning of q-Analogues",
-  "subtitle": "A q-analogue preserves a classical formula while adding a parameter that records extra structure.",
+  "subtitle": "A q-analogue recovers a classical object while using powers of q to record additional structure.",
   "domain": "Math",
   "difficulty": "Intermediate",
-  "summary": "The DRP project introduces q-integers, q-factorials, Gaussian binomial coefficients, and the q-binomial theorem.",
+  "summary": "The DRP project introduces q-integers, q-factorials, Gaussian binomial coefficients, and their $q\\to1$ classical limits.",
   "tags": ["q-analogues", "Combinatorics", "Generating functions", "Math"],
   "sourceFiles": ["_portfolio/drp-spring-2025.md"],
   "sourceLinks": [{ "label": "DRP q-binomial project", "href": "/projects/drp-spring-2025" }],
-  "externalSources": [{ "label": "Encyclopedia of Mathematics: Gaussian binomial coefficient", "href": "https://encyclopediaofmath.org/wiki/Gaussian_binomial_coefficient" }],
+  "externalSources": [{ "label": "NIST DLMF: q-binomial coefficients", "href": "https://dlmf.nist.gov/17.2#ii" }],
   "artifact": { "type": "q-binomial", "title": "Weighted counting with q", "description": "Move q to see how [n]q differs from ordinary n while returning to n at q = 1." },
   "contentBlocks": [
-    { "type": "latex", "content": "$$[n]_q = 1+q+q^2+\\cdots+q^{n-1}=\\frac{q^n-1}{q-1}$$\n\nThe sanity check is $[n]_1=n$." }
+    { "type": "latex", "content": "$$[n]_q=1+q+q^2+\\cdots+q^{n-1}=\\frac{q^n-1}{q-1}\\quad(q\\ne1).$$\n\nThe polynomial definition remains valid at $q=1$, giving $[n]_1=n$. Then\n\n$$[n]_q!=\\prod_{j=1}^{n}[j]_q,\\qquad \\binom{n}{k}_q=\\frac{[n]_q!}{[k]_q![n-k]_q!}. $$" }
   ],
   "sections": [
-    { "heading": "Why Add q?", "body": ["The extra parameter can track rank, area, inversions, dimension, or another statistic depending on the combinatorial setting.", "The original formula remains visible when q approaches 1."] },
-    { "heading": "The Habit", "body": ["A useful q-analogue should specialize back to the classical object and reveal a meaningful refinement, not just decorate a formula."] }
+    {
+      "heading": "What a q-Integer Records",
+      "body": [
+        "The ordinary integer $n$ can count $n$ objects with equal weight. The q-integer $[n]_q=1+q+\\cdots+q^{n-1}$ instead assigns weights $q^0,q^1,\\ldots,q^{n-1}$. The exponent can encode rank, inversions, area, dimension, or another statistic, but its meaning must come from the surrounding problem.",
+        "At $q=1$, every weight equals one, so $[n]_1=n$. Although the rational expression $(q^n-1)/(q-1)$ displays $0/0$ at $q=1$, the polynomial is perfectly defined there; the apparent singularity is removable."
+      ]
+    },
+    {
+      "heading": "From q-Integers to Gaussian Coefficients",
+      "body": [
+        "Multiplying q-integers gives the q-factorial $[n]_q!=[1]_q[2]_q\\cdots[n]_q$. The Gaussian coefficient $\\binom{n}{k}_q=[n]_q!/([k]_q![n-k]_q!)$ is a polynomial in $q$ even though this definition is written as a quotient.",
+        "The boundary conventions mirror ordinary binomial coefficients: $\\binom{n}{0}_q=\\binom{n}{n}_q=1$. For prime-power $q$, Gaussian coefficients also count $k$-dimensional subspaces of an $n$-dimensional vector space over the finite field with $q$ elements; in purely formal identities, however, $q$ need not be assigned that interpretation."
+      ],
+      "table": {
+        "columns": ["Classical object", "q-analogue", "$q\\to1$"],
+        "rows": [
+          ["$n$", "$[n]_q$", "$n$"],
+          ["$n!$", "$[n]_q!$", "$n!$"],
+          ["$\\binom{n}{k}$", "$\\binom{n}{k}_q$", "$\\binom{n}{k}$"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Compute $[4]_q=1+q+q^2+q^3$. At $q=2$, this is $1+2+4+8=15$; this numerical value is illustrative of evaluation, not a claim that $q$ always equals two. At $q=1$, it is $1+1+1+1=4$, which passes the classical check.",
+        "Next, $\\binom{4}{2}_q=[4]_q!/[2]_q!^2$. Cancelling factors gives $([4]_q[3]_q)/[2]_q=(1+q+q^2+q^3)(1+q+q^2)/(1+q)=1+q+2q^2+q^3+q^4$. Evaluating at $q=1$ yields $1+1+2+1+1=6=\\binom{4}{2}$."
+      ],
+      "table": {
+        "columns": ["Object", "Polynomial", "Value at $q=1$"],
+        "rows": [
+          ["$[4]_q$", "$1+q+q^2+q^3$", "$4$"],
+          ["$[4]_q!$", "$(1)(1+q)(1+q+q^2)(1+q+q^2+q^3)$", "$24$"],
+          ["$\\binom{4}{2}_q$", "$1+q+2q^2+q^3+q^4$", "$6$"]
+        ]
+      }
+    },
+    {
+      "heading": "Recurrences and Weighted Counting",
+      "body": [
+        "One q-Pascal recurrence is $\\binom{n}{k}_q=\\binom{n-1}{k-1}_q+q^k\\binom{n-1}{k}_q$. NIST DLMF also records the equivalent form $\\binom{n}{k}_q=\\binom{n-1}{k}_q+q^{n-k}\\binom{n-1}{k-1}_q$. The placement of the q-power depends on how cases are partitioned.",
+        "This illustrates what makes a useful q-analogue: coefficients of $q^r$ count or weight objects with statistic value $r$, and summing all coefficients by setting $q=1$ forgets the statistic while retaining the total count."
+      ]
+    },
+    {
+      "heading": "Choosing and Checking a q-Analogue",
+      "body": [
+        "A formula is not meaningful merely because it contains $q$. Ask what the coefficient of each power counts, whether the result is a polynomial or formal series in the intended setting, and whether the classical specialization is correct.",
+        "Use the polynomial form when substituting $q=1$. If a quotient formula has numerator and denominator both zero, simplify algebraically or take a limit; do not declare the q-object undefined. Checks at $q=0$ or small positive integers can reveal mistakes, but they do not replace a structural interpretation."
+      ]
+    },
+    {
+      "heading": "Limits and Common Misconceptions",
+      "body": [
+        "$q$ is often a formal variable, not necessarily a probability, a physical constant, or the size of a field. A specific application must state its meaning. Different valid q-analogues of the same classical expression can exist because they record different statistics.",
+        "The notation $[n]_q$ is not ordinary multiplication $nq$, and $[n]_q!$ is not $([n]_q)!$. The $q\\to1$ check is necessary but not sufficient: many artificial expressions share the same limit without encoding useful structure."
+      ]
+    }
   ],
-  "pitfalls": ["Forgetting the q equals 1 sanity check.", "Treating every q-formula as equally meaningful.", "Losing track of which statistic q records."],
-  "quiz": [{ "question": "What is the key sanity check for a q-analogue?", "options": ["Set q to 1 and recover the classical object", "Set q to infinity", "Delete every coefficient", "Replace q with x always"], "answer": 0, "explanation": "A q-analogue should return to the original object at q = 1." }],
+  "pitfalls": [
+    "Reading $[n]_q$ as the product $nq$.",
+    "Substituting $q=1$ directly into the unsimplified quotient and stopping at $0/0$.",
+    "Treating every formula with the correct $q\\to1$ limit as equally meaningful.",
+    "Using a recurrence without checking which q-power convention it follows.",
+    "Losing track of the statistic represented by the exponent of $q$."
+  ],
   "related": ["q-binomial-theorem", "elementary-symmetric-functions"]
 }

@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "astar-search-open-closed-fscore",
   "title": "A* Search: Open Set, Closed Set, and f-score",
   "subtitle": "A* finds paths by balancing the cost already paid with a heuristic estimate of what remains.",
@@ -8,6 +9,7 @@
   "tags": ["A*", "Pathfinding", "Heuristics", "Algorithms"],
   "sourceFiles": ["_portfolio/path-finder.md"],
   "sourceLinks": [{ "label": "A* path finder project", "href": "/projects/path-finder" }],
+  "sourceStatus": { "label": "Implemented", "note": "The source documents a pygame grid visualizer with configurable obstacles, taxicab or Euclidean heuristics, visited-cell coloring, and a final path. Its exact priority-queue and tie-breaking implementation are not documented here." },
   "externalSources": [
     { "label": "Hart, Nilsson, Raphael A* paper", "href": "https://ieeexplore.ieee.org/document/4082128/" },
     { "label": "Wikipedia overview of A* search", "href": "https://en.wikipedia.org/wiki/A*_search_algorithm" }
@@ -77,6 +79,22 @@
           ["Wall", "Blocked cell that cannot be traversed"]
         ]
       }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Suppose S connects to A at cost 2 and B at cost 1. A connects to goal G at cost 3; B connects to G at cost 7. With h(A)=3, h(B)=4, and h(G)=0, both A and B initially have f=5.",
+        "If a tie-break selects A, expanding it proposes G with g=5 and f=5. Following parent pointers G←A←S reconstructs a path of total cost 5. The example shows that f controls exploration while parents encode the final route; equal f-scores may change expansion order without changing optimal cost under A*'s guarantee conditions."
+      ],
+      "callout": "When a route through the current node lowers a neighbor's g-score, update that score and parent. This relaxation step is essential."
+    },
+    {
+      "heading": "Guarantees, Mechanics, and Limits",
+      "body": [
+        "A* starts with g(start)=0, repeatedly selects a minimum-f open node, tests it for the goal, and relaxes traversable neighbors using tentative_g=g(current)+edge_cost. Expanded nodes enter the closed set; a correct implementation may reopen one if a later route improves it.",
+        "An admissible heuristic never overestimates true remaining cost. A consistent heuristic also satisfies h(n) ≤ c(n,n′)+h(n′), so f does not decrease along an edge and graph search is simpler. With h=0, A* becomes Dijkstra-style uniform-cost search.",
+        "The usual model assumes nonnegative edge costs and can consume substantial memory for the frontier, scores, parents, and closed set. The repository describes the teaching visualizer's behavior but not its exact queue structure or tie rule, so those details should not be inferred."
+      ]
     }
   ],
   "pitfalls": [
@@ -85,13 +103,5 @@
     "Confusing visited cells with the final path.",
     "Using Euclidean distance on a grid where only four-direction movement is allowed without thinking through the movement model."
   ],
-  "quiz": [
-    {
-      "question": "What does f(n) combine?",
-      "options": ["Only distance from start", "Known cost plus estimated remaining cost", "Only wall density", "Random tie-breaking"],
-      "answer": 1,
-      "explanation": "A* uses f(n) = g(n) + h(n)."
-    }
-  ],
-  "related": ["heuristics-manhattan-vs-euclidean", "random-obstacle-density-path-solvability"]
+  "related": ["heuristics-manhattan-vs-euclidean", "pathplanner-autonomous-routes"]
 }

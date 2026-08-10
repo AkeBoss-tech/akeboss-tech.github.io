@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "source-grounded-ai-wikis",
   "title": "Source-Grounded AI Wikis",
   "subtitle": "An AI wiki is useful when every explanation remains tied to the material that produced it.",
@@ -41,6 +42,53 @@
           ["Quiz", "Test transfer, not memorization"]
         ]
       }
+    },
+    {
+      "heading": "Claim-Level Provenance",
+      "body": [
+        "Grounding is strongest when each material claim can be mapped to one or more source blocks, not merely when a bibliography appears at the bottom. A definition may point to lecture slides, a deadline to Canvas, and an example to a textbook section.",
+        "Provenance should retain source identity and version so a later update can reveal which claims and study aids may be stale. A displayed citation should lead to evidence that actually supports the nearby claim; source presence alone is not support."
+      ],
+      "table": {
+        "columns": ["Claim status", "Meaning", "Presentation"],
+        "rows": [
+          ["Directly supported", "The source states or entails the claim", "Cite the exact source block"],
+          ["Synthesized", "Several sources jointly support the explanation", "Cite each contribution"],
+          ["Inferred", "A useful conclusion goes beyond explicit wording", "Label it as an inference"],
+          ["Unsupported", "Retrieved material is insufficient", "Qualify or omit the claim"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Imagine generating a wiki entry for a Fourier transform from a professor's slides, a textbook chapter, and a homework set. The definition and notation should follow the slides, the derivation may use the textbook, and the worked computation can mirror the source's conventions rather than substituting a generic notation.",
+        "During generation, the system extracts candidate claims, retrieves supporting blocks, drafts the explanation, and records claim-to-source links. A quiz question about interpreting frequency peaks should be derivable from the lesson, while a new practice signal can be clearly presented as an exercise rather than as a fact from the professor.",
+        "If revised slides change the sign convention, version tracking marks the definition, formulas, example, flashcards, and relevant quiz items for review or regeneration. The old page can remain identifiable as an earlier version instead of silently changing history."
+      ],
+      "callout": "Preserve the source's terminology, notation, examples, and uncertainty. Regeneration should update teaching structure without laundering an inference into a quoted course fact."
+    },
+    {
+      "heading": "From Explanation to Learning Surface",
+      "body": [
+        "A generated wiki should begin with the concept, then connect definition, purpose, mechanics, a worked example, variations, failure modes, and practice. Visuals should encode a relationship—such as a pipeline or comparison—and controls should change a meaningful variable rather than decorate the page.",
+        "Flashcards serve recall, while applied multiple-choice questions test transfer. These study aids should use the same grounded terminology as the article and should not introduce unsupported rules in distractors or explanations."
+      ]
+    },
+    {
+      "heading": "Regeneration and Review",
+      "body": [
+        "A source-grounded page is a derived artifact. Store the sources and versions used, the generation time, and any human edits that must survive regeneration. When inputs change, compute which blocks are affected instead of assuming every page needs a blind rewrite.",
+        "Review should test both factual support and pedagogy: do cited passages entail claims, are conflicts exposed, does the example use the stated rule, and do quiz explanations reject the major distractors?"
+      ]
+    },
+    {
+      "heading": "Limits and Common Misconceptions",
+      "body": [
+        "Source-grounded does not mean infallible. Retrieval can miss evidence, extraction can damage formulas, sources can conflict, and generation can still make a claim that its citation does not support.",
+        "More citations do not automatically produce stronger grounding. Repeated citations to weak or irrelevant passages can create false confidence, while a concise explanation with precise claim-level support may be better.",
+        "Versioning does not decide which source is authoritative, and an interactive diagram does not validate its underlying computation. Human review remains important for high-stakes course policies, grades, and assessments."
+      ]
     }
   ],
   "pitfalls": [
@@ -49,13 +97,5 @@
     "Making diagrams decorative instead of explanatory.",
     "Not versioning regenerated pages when source material changes."
   ],
-  "quiz": [
-    {
-      "question": "What makes an AI wiki source-grounded?",
-      "options": ["It is long", "It has every claim tied to source material", "It uses a dark theme", "It avoids diagrams"],
-      "answer": 1,
-      "explanation": "Grounding comes from traceable source support, not from length or style."
-    }
-  ],
-  "related": ["rag-pipeline-student-documents", "ai-generated-infographics-from-textbooks"]
+  "related": ["rag-pipeline-student-documents", "vector-search-vs-keyword-search"]
 }

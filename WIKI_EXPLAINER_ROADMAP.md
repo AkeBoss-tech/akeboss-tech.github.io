@@ -1,22 +1,22 @@
 # Wiki Explainer Roadmap
 
-This roadmap turns concepts already present across the site into Lykke-style educational HTML pages. Each page should teach the concept directly, include a visual or interactive artifact, and connect back to the relevant portfolio or writing source.
+This roadmap turns concepts already present across the site into source-grounded educational pages. Forty pages are implemented and were regenerated against the current `generate-wiki` contract in August 2026; the remaining topics are candidates, not published commitments.
 
 ## Proposed Route
 
 - Index: `/wiki`
 - Topic pages: `/wiki/[slug]`
-- Content registry: `lib/wiki-topics.ts`
+- Content registry: `data/wiki/*.json`, loaded and validated by `lib/wiki.ts`
 - Interactive components: `components/wiki/`
-- First build batch: 8-12 high-value pages, then expand in clusters.
+- Current corpus: 40 source-linked pages with 20 reusable teaching interactions.
 
 ## Production Workflow
 
 1. Pick a batch of 5-10 topics from one domain.
 2. For each topic, generate a source-grounded page outline using the `generate-wiki` skill.
-3. Convert artifact markers into real React components: SVG diagrams, small simulations, quizzes, flashcards, timelines, maps, or charts.
-4. Add each topic to the wiki registry with title, slug, source files, domain, related project, difficulty, and artifact type.
-5. Run `npm run build` and visually check desktop/mobile layouts.
+3. Convert artifact markers into real React components: generated figures, SVG diagrams, small simulations, timelines, maps, or charts.
+4. Add each topic as schema-versioned JSON with source files, source-status caveats, sections, pitfalls, related pages, and artifact metadata.
+5. Run `npm run wiki:validate`, `npm run build`, and visually check desktop/mobile layouts.
 6. Ship in batches so each cluster has consistent quality.
 
 ## Parallel Thread Plan
@@ -44,7 +44,7 @@ This roadmap turns concepts already present across the site into Lykke-style edu
 | 11 | MCP Tools for Agent Workflows | AI infrastructure | `_portfolio/knowledge.md`, `_portfolio/rutgers-agentic-intelligence-labs.md`, `_portfolio/grokipedia-api.md` | Tool-call architecture diagram |
 | 12 | Repo as System of Record for Research | Research infrastructure | `_portfolio/rutgers-agentic-intelligence-labs.md` | Versioned research lifecycle diagram |
 | 13 | Ontology-Backed Research Workspaces | Research infrastructure | `_portfolio/rutgers-agentic-intelligence-labs.md` | Ontology explorer |
-| 14 | Research Integrity Records | Research infrastructure | `_portfolio/rutgers-agentic-intelligence-labs.md`, `_portfolio/knowledge.md` | Audit-trail quiz |
+| 14 | Research Integrity Records | Research infrastructure | `_portfolio/rutgers-agentic-intelligence-labs.md`, `_portfolio/knowledge.md` | Interactive audit trail |
 | 15 | Small Language Model Post-Training | AI research | `_portfolio/llm-research.md` | Training-stage diagram |
 | 16 | Model Size, Speed, and Accuracy Trade-Offs | AI research | `_portfolio/llm-research.md` | Trade-off slider chart |
 | 17 | SLURM Training Jobs on HPC Clusters | AI infrastructure | `_portfolio/llm-research.md` | Cluster job scheduler diagram |
@@ -106,7 +106,7 @@ This roadmap turns concepts already present across the site into Lykke-style edu
 | 73 | Learning-Guided Planning with Final Verification | Robotics planning | `_portfolio/tamp-research.md`, `app/cv/page.tsx` | Planner vs verifier diagram |
 | 74 | Learned Feasibility Prediction for Robot Plans | Robotics planning | `_portfolio/tamp-research.md` | Plan pruning demo |
 | 75 | Dual-Arm Scheduling with CP-SAT | Robotics planning | `_portfolio/tamp-research.md` | Schedule optimizer visualization |
-| 76 | Planner Guidance vs Final Motion Verification | Robotics planning | `_portfolio/tamp-research.md` | Concept quiz |
+| 76 | Planner Guidance vs Final Motion Verification | Robotics planning | `_portfolio/tamp-research.md` | Verifier simulation |
 | 77 | Godot VehicleBody3D Racing Physics | Game engineering | `_portfolio/kenny-racing.md` | Vehicle physics simulator |
 | 78 | Racing AI with Path3D Look-Ahead Steering | Game engineering | `_portfolio/kenny-racing.md` | Racing line visualizer |
 | 79 | Real-Time Transit Data Collection Loops | Data systems | `_portfolio/rutgers-bus-analysis.md` | Polling architecture diagram |
@@ -132,9 +132,9 @@ This roadmap turns concepts already present across the site into Lykke-style edu
 | 99 | q-Integers and the Meaning of q-Analogues | Math | `_portfolio/drp-spring-2025.md` | q-limit slider demo |
 | 100 | The q-Binomial Theorem | Math | `_portfolio/drp-spring-2025.md` | Coefficient visualizer |
 
-## Strong First Batch
+## Regenerated Launch Corpus
 
-These are the best first pages because they connect to flagship work and naturally support interactive teaching:
+The original first batch is complete and now anchors the wider 40-page corpus:
 
 1. RAG Pipeline for Student Documents
 2. Source-Grounded AI Wikis
@@ -154,7 +154,12 @@ Each finished page should include:
 - One concept-first opening paragraph.
 - A source connection box linking the project or post where the idea appears.
 - A pedagogical visual in the first third of the page.
-- At least one worked example or step-through.
+- At least four substantive teaching sections and an explicit worked example.
 - A pitfalls section.
-- A compact quiz or flashcard section.
+- A generated visual world or topic-specific figure with an accurate text equivalent.
+- A live HTML demo or simulation where changing an input reveals the concept's causal structure.
 - Related links to projects, writing, and adjacent wiki topics.
+- Repository-source provenance and explicit status language for planned, in-progress, or illustrative claims.
+- Stable demo, primary-control, reset, result, and feedback hooks.
+
+The build-time validator enforces the structural parts of this contract and rejects missing source files, unsafe source paths, unknown artifacts, or dangling related-page links.

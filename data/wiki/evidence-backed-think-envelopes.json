@@ -1,25 +1,112 @@
 {
+  "schemaVersion": 2,
   "slug": "evidence-backed-think-envelopes",
   "title": "Evidence-Backed Think Envelopes",
   "subtitle": "A think envelope turns an agent answer into a reviewable object with citations, gaps, conflicts, and next actions.",
   "domain": "AI infrastructure",
   "difficulty": "Intermediate",
-  "summary": "KRAIL describes think envelopes with citations, gaps, conflicts, next actions, task records, and integrity artifacts.",
+  "summary": "KRAIL describes think envelopes that preserve the answer, its evidence, unresolved gaps and conflicts, and the next verification actions.",
   "tags": ["Evidence", "Agents", "Citations", "Integrity"],
   "sourceFiles": ["_portfolio/knowledge.md"],
+  "sourceStatus": { "label": "Pilot-ready", "note": "The portfolio source describes KRAIL as pilot-ready rather than polished production software. The design guidance below must not be read as proof that every suggested review or security control is implemented." },
   "sourceLinks": [{ "label": "KRAIL project", "href": "/projects/knowledge" }],
   "externalSources": [
-    { "label": "MCP intro for external context and tools", "href": "https://modelcontextprotocol.io/docs/getting-started/intro" }
+    { "label": "KRAIL source repository", "href": "https://github.com/AkeBoss-tech/knowledge" },
+    { "label": "MCP architecture overview", "href": "https://modelcontextprotocol.io/docs/learn/architecture" }
   ],
   "artifact": { "type": "agent-graph", "title": "Answer state as a review pipeline", "description": "The graph illustrates how evidence, conflicts, and next actions can pass through a structured answer envelope." },
   "contentBlocks": [
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Answer</strong>The concise result.</div><div><strong>Evidence</strong>Sources and snippets that support it.</div><div><strong>Gaps</strong>What is unknown or unverified.</div><div><strong>Next actions</strong>What should happen if more confidence is needed.</div></div>" }
+    { "type": "paragraph", "text": "A think envelope is a contract around an answer. It separates what the system concluded from the records that support it, what remains uncertain, where sources disagree, and what a reviewer can do next. It exposes inspectable work products without asking for private chain-of-thought." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Answer</strong>The concise result.</div><div><strong>Evidence</strong>Traceable records that support specific claims.</div><div><strong>Gaps and conflicts</strong>Missing checks and disagreements that constrain confidence.</div><div><strong>Next actions</strong>Concrete work that could change the conclusion.</div></div>" }
   ],
   "sections": [
-    { "heading": "The Problem", "body": ["Agent outputs often sound complete even when they rest on partial evidence. A think envelope makes uncertainty visible without dumping hidden reasoning.", "The user does not need a private chain of thought. They need an inspectable result: what was used, what was not checked, what conflicts exist, and what to do next."] },
-    { "heading": "Envelope Fields", "body": ["A practical envelope can include answer, evidence list, assumptions, conflicts, confidence, open questions, verification steps, and next actions.", "For research workflows, the envelope can be stored in the repository next to the source notes and artifacts, making later review possible."], "table": { "columns": ["Field", "Purpose"], "rows": [["Evidence", "Support claims with traceable sources"], ["Assumptions", "Expose unstated defaults"], ["Conflicts", "Highlight disagreement across sources"], ["Gaps", "Show missing or stale information"], ["Next actions", "Convert uncertainty into work"]] } }
+    {
+      "heading": "Reported KRAIL Contract and Recommended Extensions",
+      "body": [
+        "Project fact: the portfolio source reports deterministic think queries and evidence-backed envelopes containing citations, gaps, conflicts, and next actions. It also reports task records, workflow outputs, markdown graphs, and integrity artifacts in a local-first, repository-backed workspace.",
+        "Project status: the portfolio calls KRAIL pilot-ready, not polished production software. Recommendations on claim-level citations, confidence language, freshness rules, authorization, and evaluation below are a robust design pattern; they are not evidence that every control ships in the portfolio version."
+      ],
+      "table": {
+        "columns": ["Statement", "Classification"],
+        "rows": [
+          ["Think results include citations, gaps, conflicts, and next actions", "Reported KRAIL capability"],
+          ["Project knowledge is stored in a repo-backed local workspace", "Reported KRAIL architecture"],
+          ["Every important claim should map to evidence IDs", "Recommended review policy"],
+          ["Confidence should be calibrated against explicit checks", "Recommended evaluation policy"]
+        ]
+      }
+    },
+    {
+      "heading": "The Envelope as a Claim-to-Evidence Contract",
+      "body": [
+        "An answer paragraph is easy to read but hard to audit if its citations only decorate the end. A stronger envelope gives claims stable identifiers and links each claim to evidence records containing source identity, location, retrieval time, and a short relevant excerpt or structured result. The link means support, not truth: a cited source can still be stale, biased, or misread.",
+        "Keep observations separate from inferences. An observation might be a value returned by an API or a sentence in a source. An inference combines observations under stated assumptions. A recommendation adds a decision rule or preference. This separation lets a reviewer challenge the exact transition that matters."
+      ],
+      "table": {
+        "columns": ["Field", "Review question", "Example"],
+        "rows": [
+          ["answer", "What is the concise conclusion?", "Adopt a hybrid retrieval baseline"],
+          ["claims", "Which propositions must hold?", "Exact identifiers improve lexical retrieval"],
+          ["evidence", "What record supports each claim?", "Source ID, location, captured time"],
+          ["assumptions", "What was accepted without direct proof?", "Corpus labels are reliable"],
+          ["gaps", "What was not checked?", "No multilingual benchmark"],
+          ["conflicts", "Where do records disagree?", "Two documents report different limits"],
+          ["nextActions", "What check could change the answer?", "Run a labeled retrieval evaluation"]
+        ]
+      },
+      "callout": "Analogy limit: an envelope resembles a lab report because it packages result, method, and uncertainty. It is not peer review; structure alone cannot catch fabricated evidence, invalid methods, or omitted alternatives."
+    },
+    {
+      "heading": "Gaps, Conflicts, Freshness, and Confidence",
+      "body": [
+        "A gap is missing evidence or an unperformed check. A conflict is positive disagreement among available records. They demand different actions: fill a gap by retrieving or measuring; resolve a conflict by comparing scope, dates, methods, authority, and whether both statements can be true under different conditions.",
+        "Confidence should not be a decorative percentage. Recommended policy: use bounded language tied to named evidence coverage, freshness, and validation. For example, 'supported for the two inspected releases; deployment behavior unverified' is more actionable than '87% confident.' Store capture time and source version so a later integrity check can mark dependent claims stale."
+      ],
+      "table": {
+        "columns": ["State", "Meaning", "Appropriate response"],
+        "rows": [
+          ["Supported", "Current evidence directly bears on the claim", "Retain provenance and scope"],
+          ["Gap", "Required evidence or test is absent", "Retrieve, measure, or narrow the claim"],
+          ["Conflict", "Eligible sources disagree", "Compare dates, definitions, and methods"],
+          ["Stale", "Source or result exceeded its freshness rule", "Refresh before relying on it"],
+          ["Unverified inference", "Reasoning extends beyond direct observations", "Label assumptions and test the transition"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "A team asks, 'Should the research assistant use hybrid retrieval by default?' Evidence E1 is a labeled evaluation in the current repository: lexical recall@5 is 0.62 and hybrid recall@5 is 0.78 on 100 queries. Evidence E2 is a latency trace: median response time rises from 90 ms to 145 ms. A configuration note says offline vector retrieval is optional, but no mobile-hardware test exists.",
+        "The envelope answers: 'Use hybrid retrieval as the default for this evaluated corpus, with a lexical-only fallback.' Claim C1 links to E1; claim C2, 'the latency increase is acceptable,' is explicitly a recommendation based on a 200 ms target assumption and E2. The gap records missing mobile tests. The next action is a device-specific benchmark, not another prose summary.",
+        "If a newer evaluation reports hybrid recall@5 of 0.60, the system should not average the numbers blindly. It records a conflict and asks whether corpus, labels, model, chunking, or query mix changed. The numeric example is illustrative and is not a reported KRAIL benchmark."
+      ],
+      "table": {
+        "columns": ["Envelope item", "Value", "Why it matters"],
+        "rows": [
+          ["Answer", "Hybrid by default; lexical fallback", "Actionable but scoped conclusion"],
+          ["Evidence", "E1 recall test; E2 latency trace", "Direct support is inspectable"],
+          ["Assumption", "Median latency target is 200 ms", "Makes the recommendation conditional"],
+          ["Gap", "No mobile-hardware run", "Prevents an overbroad deployment claim"],
+          ["Next action", "Repeat benchmark on target device", "Could confirm or reverse the decision"]
+        ]
+      }
+    },
+    {
+      "heading": "Integrity, Review, and Limitations",
+      "body": [
+        "Recommended workflow: validate the envelope schema; resolve every evidence ID; check that quotations or computed values match their source; test freshness and access scope; ensure conflicts are not silently discarded; then promote the output only if its required checks pass. Keep the envelope and verification result together so later readers can distinguish authored content from reviewed content.",
+        "An envelope cannot reveal evidence the system never retrieved, guarantee that a source is correct, or prove that an inference is logically valid. It can also become bureaucratic if every trivial statement receives the same treatment. Apply stronger provenance and approval to consequential, contested, or time-sensitive claims, while keeping low-risk summaries compact."
+      ]
+    }
   ],
-  "pitfalls": ["Pretending confidence is binary.", "Citing sources that were not actually used.", "Mixing hidden reasoning with user-facing evidence.", "Failing to update envelopes when sources change."],
-  "quiz": [{ "question": "What is the point of a think envelope?", "options": ["Make an answer reviewable without exposing hidden reasoning", "Make every answer longer", "Avoid citations", "Replace source material"], "answer": 0, "explanation": "The envelope surfaces evidence, assumptions, conflicts, and gaps." }],
-  "related": ["markdown-frontmatter-knowledge-graphs", "research-integrity-records"]
+  "pitfalls": [
+    "Treating a citation as proof rather than a traceable support relationship.",
+    "Inventing numeric confidence without a calibration dataset or named checks.",
+    "Conflating a missing source with an actual disagreement between sources.",
+    "Citing sources that were retrieved but did not support the associated claim.",
+    "Presenting recommendations as shipped KRAIL behavior while the portfolio describes a pilot-ready system.",
+    "Exposing private chain-of-thought instead of concise assumptions, evidence, and verification records.",
+    "Failing to invalidate dependent claims when evidence becomes stale."
+  ],
+  "related": ["markdown-frontmatter-knowledge-graphs", "repo-system-of-record-research"]
 }

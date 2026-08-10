@@ -1,42 +1,59 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 import type { WikiPage } from '@/lib/wiki'
 
 type DemoType = WikiPage['artifact']['type']
 
 export function WikiInteractive({ type }: { type: DemoType }) {
-  if (type === 'rag-retrieval') return <RagRetrievalDemo />
-  if (type === 'source-wiki') return <SourceWikiDemo />
-  if (type === 'hic-heatmap') return <HiCHeatmapDemo />
-  if (type === 'astar-grid') return <AStarDemo />
-  if (type === 'swerve-vectors') return <SwerveDemo />
-  if (type === 'pid-controller') return <PidDemo />
-  if (type === 'stereo-disparity') return <StereoDemo />
-  if (type === 'tamp-pipeline') return <TampDemo />
-  if (type === 'transit-load') return <TransitDemo />
-  if (type === 'api-backoff') return <ApiBackoffDemo />
-  if (type === 'economic-series') return <EconomicSeriesDemo />
-  if (type === 'schedule-grid') return <ScheduleGridDemo />
-  if (type === 'feature-engineering') return <FeatureEngineeringDemo />
-  if (type === 'alphagenome') return <AlphaGenomeDemo />
-  if (type === 'model-tradeoff') return <ModelTradeoffDemo />
-  if (type === 'agent-graph') return <AgentGraphDemo />
-  if (type === 'hpc-queue') return <HpcQueueDemo />
-  if (type === 'logging-replay') return <LoggingReplayDemo />
-  if (type === 'vehicle-physics') return <VehiclePhysicsDemo />
-  return <QBinomialDemo />
+  const [revision, setRevision] = useState(0)
+  let demo: React.ReactNode
+  if (type === 'rag-retrieval') demo = <RagRetrievalDemo />
+  else if (type === 'source-wiki') demo = <SourceWikiDemo />
+  else if (type === 'hic-heatmap') demo = <HiCHeatmapDemo />
+  else if (type === 'astar-grid') demo = <AStarDemo />
+  else if (type === 'swerve-vectors') demo = <SwerveDemo />
+  else if (type === 'pid-controller') demo = <PidDemo />
+  else if (type === 'stereo-disparity') demo = <StereoDemo />
+  else if (type === 'tamp-pipeline') demo = <TampDemo />
+  else if (type === 'transit-load') demo = <TransitDemo />
+  else if (type === 'api-backoff') demo = <ApiBackoffDemo />
+  else if (type === 'economic-series') demo = <EconomicSeriesDemo />
+  else if (type === 'schedule-grid') demo = <ScheduleGridDemo />
+  else if (type === 'feature-engineering') demo = <FeatureEngineeringDemo />
+  else if (type === 'alphagenome') demo = <AlphaGenomeDemo />
+  else if (type === 'model-tradeoff') demo = <ModelTradeoffDemo />
+  else if (type === 'agent-graph') demo = <AgentGraphDemo />
+  else if (type === 'hpc-queue') demo = <HpcQueueDemo />
+  else if (type === 'logging-replay') demo = <LoggingReplayDemo />
+  else if (type === 'vehicle-physics') demo = <VehiclePhysicsDemo />
+  else demo = <QBinomialDemo />
+
+  return (
+    <DemoResetContext.Provider value={() => setRevision((value) => value + 1)}>
+      <div key={revision}>{demo}</div>
+    </DemoResetContext.Provider>
+  )
 }
 
+const DemoResetContext = createContext<() => void>(() => undefined)
+
 function DemoShell({ title, children }: { title: string; children: React.ReactNode }) {
+  const reset = useContext(DemoResetContext)
   return (
-    <div className="wiki-demo">
+    <div className="wiki-demo" data-testid="wiki-demo">
       <div className="wiki-demo-header">
-        <p className="eyebrow">Interactive</p>
-        <h3>{title}</h3>
+        <div>
+          <p className="eyebrow">Interactive</p>
+          <h3>{title}</h3>
+        </div>
+        <button id="wiki-demo-reset" type="button" onClick={reset}>Reset</button>
       </div>
-      {children}
+      <div id="wiki-demo-result" data-testid="wiki-primary-control">{children}</div>
+      <p id="wiki-demo-feedback" className="wiki-demo-feedback" aria-live="polite">
+        This is a simplified teaching model. Its displayed values are computed from the controls; the article explains where the model stops.
+      </p>
     </div>
   )
 }
@@ -44,11 +61,18 @@ function DemoShell({ title, children }: { title: string; children: React.ReactNo
 function RagRetrievalDemo() {
   const [query, setQuery] = useState('exam due date and vector search')
   const chunks = [
-    { title: 'Syllabus policies', keyword: 0.38, vector: 0.62, hybrid: 0.72 },
-    { title: 'Lecture: embeddings', keyword: 0.34, vector: 0.94, hybrid: 0.87 },
-    { title: 'Canvas calendar export', keyword: 0.76, vector: 0.42, hybrid: 0.79 },
-    { title: 'Study guide draft', keyword: 0.28, vector: 0.68, hybrid: 0.61 },
+    { title: 'Syllabus policies', text: 'exam rules grading attendance deadline due date', concepts: 'course policy assessment schedule' },
+    { title: 'Lecture: embeddings', text: 'vector search embeddings semantic similarity retrieval', concepts: 'meaning related words representation' },
+    { title: 'Canvas calendar export', text: 'assignment due date exam calendar deadline', concepts: 'schedule time upcoming work' },
+    { title: 'Study guide draft', text: 'study review retrieval practice concepts', concepts: 'learn exam preparation meaning' },
   ]
+  const tokenize = (value: string) => new Set(value.toLowerCase().match(/[a-z0-9]+/g) ?? [])
+  const queryTerms = tokenize(query)
+  const score = (candidate: string) => {
+    const terms = tokenize(candidate)
+    const overlap = [...queryTerms].filter((term) => terms.has(term)).length
+    return queryTerms.size ? overlap / queryTerms.size : 0
+  }
 
   return (
     <DemoShell title="Hybrid retrieval turns a vague study question into ranked evidence">
@@ -58,16 +82,17 @@ function RagRetrievalDemo() {
       </label>
       <div className="wiki-rank-list">
         {chunks
-          .map((chunk) => ({
-            ...chunk,
-            score: Math.min(0.98, chunk.hybrid + (query.length > 34 ? 0.05 : 0)),
-          }))
+          .map((chunk) => {
+            const keyword = score(chunk.text)
+            const vector = Math.min(1, score(`${chunk.text} ${chunk.concepts}`) * 1.35)
+            return { ...chunk, keyword, vector, score: keyword * 0.55 + vector * 0.45 }
+          })
           .sort((a, b) => b.score - a.score)
           .map((chunk) => (
             <div key={chunk.title} className="wiki-rank-row">
               <div>
                 <strong>{chunk.title}</strong>
-                <span>keyword {chunk.keyword.toFixed(2)} / vector {chunk.vector.toFixed(2)}</span>
+                <span>lexical {chunk.keyword.toFixed(2)} / expanded meaning {chunk.vector.toFixed(2)}</span>
               </div>
               <div className="wiki-meter" aria-label={`Hybrid score ${chunk.score.toFixed(2)}`}>
                 <span style={{ width: `${chunk.score * 100}%` }} />
@@ -85,15 +110,9 @@ function SourceWikiDemo() {
   const blocks = ['Definition block', 'Worked example', 'Pitfall note', 'Flashcards']
   return (
     <DemoShell title="A source-grounded wiki page is a small versioned knowledge product">
-      <input
-        type="range"
-        min="1"
-        max="4"
-        value={version}
-        onChange={(event) => setVersion(Number(event.target.value))}
-        className="wiki-range"
-        aria-label="Material version"
-      />
+      <label className="wiki-label">Material version <output>{version}</output>
+        <input type="range" min="1" max="4" value={version} onChange={(event) => setVersion(Number(event.target.value))} className="wiki-range" />
+      </label>
       <div className="wiki-flow">
         {blocks.map((block, index) => (
           <div key={block} className={index < version ? 'active' : ''}>
@@ -136,22 +155,58 @@ function AStarDemo() {
   const [heuristic, setHeuristic] = useState<'manhattan' | 'euclidean'>('manhattan')
   const cells = useMemo(() => {
     const walls = new Set([7, 8, 9, 17, 25, 33, 34, 35, 43])
-    const path = heuristic === 'manhattan' ? new Set([0, 1, 2, 10, 18, 26, 27, 28, 36, 44, 52, 53, 54, 55]) : new Set([0, 1, 10, 19, 28, 37, 46, 55])
-    const visited = new Set([0, 1, 2, 3, 10, 11, 18, 19, 20, 26, 27, 28, 36, 37, 44, 45, 46, 52, 53, 54, 55])
+    const start = 0
+    const goal = 55
+    const open = new Set([start])
+    const visited = new Set<number>()
+    const cameFrom = new Map<number, number>()
+    const g = new Map<number, number>([[start, 0]])
+    const distance = (cell: number) => {
+      const dx = Math.abs((cell % 8) - (goal % 8))
+      const dy = Math.abs(Math.floor(cell / 8) - Math.floor(goal / 8))
+      return heuristic === 'manhattan' ? dx + dy : Math.hypot(dx, dy)
+    }
+    while (open.size) {
+      const current = [...open].sort((a, b) => (g.get(a) ?? Infinity) + distance(a) - (g.get(b) ?? Infinity) - distance(b))[0]
+      if (current === goal) break
+      open.delete(current)
+      visited.add(current)
+      const x = current % 8
+      const neighbors = [current - 8, current + 8, ...(x > 0 ? [current - 1] : []), ...(x < 7 ? [current + 1] : [])]
+        .filter((cell) => cell >= 0 && cell < 64 && !walls.has(cell))
+      for (const neighbor of neighbors) {
+        const tentative = (g.get(current) ?? Infinity) + 1
+        if (tentative < (g.get(neighbor) ?? Infinity)) {
+          cameFrom.set(neighbor, current)
+          g.set(neighbor, tentative)
+          open.add(neighbor)
+        }
+      }
+    }
+    const path = new Set<number>()
+    let cursor: number | undefined = goal
+    while (cursor !== undefined) {
+      path.add(cursor)
+      if (cursor === start) break
+      cursor = cameFrom.get(cursor)
+    }
     return Array.from({ length: 64 }, (_, index) => ({ index, wall: walls.has(index), path: path.has(index), visited: visited.has(index) }))
   }, [heuristic])
+  const visitedCount = cells.filter((cell) => cell.visited).length
+  const pathLength = cells.filter((cell) => cell.path).length
 
   return (
     <DemoShell title="A* expands likely paths first instead of flooding the whole grid">
       <div className="wiki-segmented">
-        <button onClick={() => setHeuristic('manhattan')} className={heuristic === 'manhattan' ? 'active' : ''}>Manhattan</button>
-        <button onClick={() => setHeuristic('euclidean')} className={heuristic === 'euclidean' ? 'active' : ''}>Euclidean</button>
+        <button onClick={() => setHeuristic('manhattan')} aria-pressed={heuristic === 'manhattan'} className={heuristic === 'manhattan' ? 'active' : ''}>Manhattan</button>
+        <button onClick={() => setHeuristic('euclidean')} aria-pressed={heuristic === 'euclidean'} className={heuristic === 'euclidean' ? 'active' : ''}>Euclidean</button>
       </div>
       <div className="wiki-grid-demo">
         {cells.map((cell) => (
           <span key={cell.index} className={cell.wall ? 'wall' : cell.path ? 'path' : cell.visited ? 'visited' : ''} />
         ))}
       </div>
+      <p className="wiki-demo-note">Expanded <strong>{visitedCount}</strong> cells; path contains <strong>{pathLength}</strong> cells.</p>
     </DemoShell>
   )
 }
@@ -223,7 +278,9 @@ function TampDemo() {
   const steps = ['Symbolic skeleton', 'Arm assignment', 'IK check', 'Collision check', 'Trajectory', 'Trace log']
   return (
     <DemoShell title="Learning can rank plans, but geometry still verifies them">
-      <input type="range" min="1" max={steps.length} value={stage} onChange={(e) => setStage(Number(e.target.value))} className="wiki-range" aria-label="TAMP stage" />
+      <label className="wiki-label">Pipeline stage <output>{stage} of {steps.length}</output>
+        <input type="range" min="1" max={steps.length} value={stage} onChange={(e) => setStage(Number(e.target.value))} className="wiki-range" />
+      </label>
       <div className="wiki-flow">
         {steps.map((step, index) => (
           <div key={step} className={index < stage ? 'active' : ''}>
@@ -256,13 +313,13 @@ function TransitDemo() {
 
 function QBinomialDemo() {
   const [q, setQ] = useState(2)
-  const values = Array.from({ length: 6 }, (_, n) => (q ** n - 1) / (q - 1 || 1))
+  const values = Array.from({ length: 6 }, (_, n) => q === 1 ? n : (q ** n - 1) / (q - 1))
   return (
     <DemoShell title="A q-integer records a weighted count: 1 + q + ... + q^(n-1)">
-      <label className="wiki-label">q value<input type="range" min="1" max="5" value={q} onChange={(e) => setQ(Number(e.target.value))} className="wiki-range" /></label>
+      <label className="wiki-label">q value <output>{q}</output><input type="range" min="1" max="5" value={q} onChange={(e) => setQ(Number(e.target.value))} className="wiki-range" /></label>
       <div className="wiki-bar-chart">
         {values.map((value, index) => (
-          <div key={index}><span style={{ height: `${Math.min(100, value * 4)}%` }} /><b>[{index}]q</b></div>
+          <div key={index}><span style={{ height: `${Math.min(100, value * 4)}%` }} /><b>[{index}]q = {value}</b></div>
         ))}
       </div>
     </DemoShell>
@@ -308,8 +365,8 @@ function EconomicSeriesDemo() {
   return (
     <DemoShell title="Normalization lets unlike economic series share a visual frame">
       <div className="wiki-segmented">
-        <button onClick={() => setNormalize(true)} className={normalize ? 'active' : ''}>Indexed</button>
-        <button onClick={() => setNormalize(false)} className={!normalize ? 'active' : ''}>Raw scale</button>
+        <button onClick={() => setNormalize(true)} aria-pressed={normalize} className={normalize ? 'active' : ''}>Indexed</button>
+        <button onClick={() => setNormalize(false)} aria-pressed={!normalize} className={!normalize ? 'active' : ''}>Raw scale</button>
       </div>
       <svg viewBox="0 0 105 90" className="wiki-svg-demo" role="img" aria-label="Economic series chart">
         {points.map((point, index) => <polyline key={series[index].name} points={point} fill="none" stroke={['#84a9ff', '#d1bf8a', '#c15353'][index]} strokeWidth="2.5" />)}
@@ -402,8 +459,8 @@ function AgentGraphDemo() {
   return (
     <DemoShell title="Agent systems are graphs of state, routing, and tool access">
       <div className="wiki-segmented">
-        <button onClick={() => setMode('router')} className={mode === 'router' ? 'active' : ''}>Tool routing</button>
-        <button onClick={() => setMode('handoff')} className={mode === 'handoff' ? 'active' : ''}>Agent handoff</button>
+        <button onClick={() => setMode('router')} aria-pressed={mode === 'router'} className={mode === 'router' ? 'active' : ''}>Tool routing</button>
+        <button onClick={() => setMode('handoff')} aria-pressed={mode === 'handoff'} className={mode === 'handoff' ? 'active' : ''}>Agent handoff</button>
       </div>
       <div className="wiki-agent-graph">
         {nodes.map((node, index) => (

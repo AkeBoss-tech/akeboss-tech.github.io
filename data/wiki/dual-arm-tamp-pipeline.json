@@ -1,52 +1,77 @@
 {
+  "schemaVersion": 2,
   "slug": "dual-arm-tamp-pipeline",
   "title": "Dual-Arm Task and Motion Planning Pipeline",
   "subtitle": "TAMP connects symbolic task choices to geometric motion checks so a robot plan is both logical and physically executable.",
   "domain": "Robotics planning",
   "difficulty": "Advanced",
-  "summary": "The TAMP research project uses traces to train feasibility, scheduling, and duration guidance while preserving final motion verification.",
+  "summary": "The TAMP research direction proposes using planning traces to train feasibility, scheduling, and duration guidance while preserving final motion verification.",
   "tags": ["TAMP", "Robotics", "Planning", "Verification"],
   "sourceFiles": ["_portfolio/tamp-research.md"],
+  "sourceStatus": { "label": "Research direction", "note": "The source presents trace-based learned guidance as a goal and roadmap, not as a completed measured result." },
   "sourceLinks": [{ "label": "TAMP research project", "href": "/projects/tamp-research" }],
   "externalSources": [
     { "label": "PDDLStream project", "href": "https://github.com/caelan/pddlstream" },
     { "label": "OR-Tools CP-SAT guide", "href": "https://developers.google.com/optimization/cp/cp_solver" }
   ],
-  "artifact": {
-    "type": "tamp-pipeline",
-    "title": "From skeleton to verified trajectory",
-    "description": "Step through the pipeline from symbolic action skeleton to trace log."
-  },
+  "artifact": { "type": "tamp-pipeline", "title": "From skeleton to verified trajectory", "description": "Step through the pipeline from symbolic action skeleton to trace log." },
   "sections": [
     {
-      "heading": "Why Task Planning Is Not Enough",
+      "heading": "Definition: Linking Discrete Intent to Continuous Motion",
       "body": [
-        "A symbolic plan can say pick, move, hand off, and place. That plan may still fail because the arm cannot reach, the path collides, or two arms need the same space at the same time.",
-        "Task and motion planning keeps the symbolic structure while asking geometric questions before execution."
+        "Task and Motion Planning (TAMP) couples symbolic decisions—pick an object, hand it off, place it in a container—with continuous decisions such as grasp pose, inverse-kinematics solution, collision-free path, and trajectory timing. A symbolic action skeleton records action order and parameters without yet proving every geometric detail.",
+        "Dual-arm manipulation adds arm assignment, synchronization, shared-workspace conflicts, and handoff configurations. A logically valid skeleton can therefore fail late when an arm cannot reach, a path collides, or both arms require incompatible space or timing."
+      ],
+      "callout": "A symbolic plan proposes what should happen; motion checking establishes whether a concrete version can happen in the modeled scene."
+    },
+    {
+      "heading": "Why Trace Supervision Matters",
+      "body": [
+        "Motion calls can be expensive, but their outcomes carry supervision. A trace can retain the scene, partial skeleton, arm assignment, proposed continuous parameters, check result, duration, and failure stage. Successful and failed attempts together describe where symbolic plausibility diverges from geometric reality.",
+        "The project source identifies an early feasibility predictor as the first research goal and lists skeleton ranking, overlap prediction, duration prediction, learned grasp and placement proposals, and failure-aware replanning as a broader roadmap. These are intended guidance mechanisms, not reported performance results."
+      ],
+      "table": {
+        "columns": ["Trace stage", "Possible label", "Guidance use"],
+        "rows": [
+          ["IK", "reachable / unreachable", "Rank action parameters"],
+          ["Collision", "clear / colliding", "Avoid poor scene-action pairs"],
+          ["Motion", "trajectory found / failed", "Prioritize candidates"],
+          ["Scheduling", "overlap accepted / rejected", "Guide arm assignment and timing"],
+          ["Execution", "completed / recovery needed", "Support failure-aware replanning"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: A Nine-Stage Research Loop",
+      "body": [
+        "The proposed pipeline begins by randomizing dual-arm tabletop, shelf, handoff, block-tower, and container-insertion tasks. It produces symbolic skeletons, assigns actions using greedy or OR-Tools CP-SAT scheduling, and sends candidates through analytic and cuRobo-backed IK, collision, and motion adapters.",
+        "The system would then log attempts as JSONL traces, build Parquet datasets, train feasibility, duration, and scheduling guidance, insert that guidance back into search, and compare it against planner-only baselines. Isaac Sim 5.0 dual-Franka execution, ROS 2 Jazzy, BehaviorTree.CPP, MLflow, benchmark dashboards, and report/export hooks form the stated integration environment.",
+        "The feedback loop is the essential mechanism: planning generates labeled experience, learning changes candidate order or pruning, and unchanged geometric verification tests whether the guided candidate is real."
       ]
     },
     {
-      "heading": "Trace Supervision",
+      "heading": "Worked Example: A Dual-Arm Handoff",
       "body": [
-        "The project logs successful and failed planning attempts as traces. Those traces become training data for predictors that estimate feasibility, duration, or scheduling quality.",
-        "The learned model guides search, but IK, collision checking, trajectory optimization, and execution validation remain the final gate."
+        "Consider moving a block from a left shelf to a right-side container. A skeleton proposes: left-arm pick, move to handoff, right-arm receive, right-arm place. The scheduler assigns intervals and a synchronization point for the handoff.",
+        "Suppose the left pick and approach pass IK and collision checks, but the chosen handoff pose leaves the right arm without an IK solution. The pipeline logs a failure at the right-arm receive step rather than labeling the entire task vaguely unsuccessful. It can try another handoff pose or another skeleton; that trace later becomes a negative example for feasibility guidance.",
+        "If a learned model later gives that configuration a probability of 0.08, the planner may rank it behind stronger candidates. It must not call 0.08 a proof of impossibility: distribution shift or model error could hide a valid motion, so the system needs a pruning policy with fallbacks and motion checking remains authoritative."
+      ]
+    },
+    {
+      "heading": "Verification, Evaluation, and Limits",
+      "body": [
+        "The stated success criteria are fewer expensive motion calls, fewer late geometric failures, lower median and tail planning time, and preserved or improved task success on held-out scene seeds. A fair comparison must use the same task distribution, time budget, verifier, and success definition for learned guidance and planner-only baselines.",
+        "Trace data is policy-dependent: the current planner decides which candidates receive checks, so the dataset may omit unexplored regions. Randomized scenes do not automatically match deployment, duration predictions are uncertain, and simulator success does not prove real-world safety. IK, collision checking, trajectory optimization, and execution validation remain the final gate."
       ],
-      "callout": "Learning guides planning; motion checking verifies reality."
+      "callout": "Research status: the public source specifies architecture, integrations, goals, and evaluation targets; it does not claim completed learned-guidance benchmarks."
     }
   ],
   "pitfalls": [
     "Letting a learned model replace geometric verification.",
     "Training only on easy scenes and expecting robust planning.",
-    "Ignoring failed traces even though they contain the strongest supervision.",
-    "Optimizing average planning time while missing tail failures."
-  ],
-  "quiz": [
-    {
-      "question": "What role should the learned feasibility model play?",
-      "options": ["Final safety authority", "Guidance for ranking or pruning candidate plans", "Replacement for collision checking", "Camera calibration"],
-      "answer": 1,
-      "explanation": "The project principle is that learned guidance helps planning, while motion checks verify feasibility."
-    }
+    "Ignoring failed traces even though they provide valuable supervision.",
+    "Optimizing average planning time while missing tail failures.",
+    "Comparing methods under different motion-check or time budgets."
   ],
   "related": ["learned-feasibility-prediction-robot-plans", "dual-arm-scheduling-cp-sat"]
 }

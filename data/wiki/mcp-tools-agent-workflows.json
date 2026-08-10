@@ -1,7 +1,8 @@
 {
+  "schemaVersion": 2,
   "slug": "mcp-tools-agent-workflows",
   "title": "MCP Tools for Agent Workflows",
-  "subtitle": "MCP standardizes how AI clients connect to tools, data sources, prompts, and workflows.",
+  "subtitle": "MCP standardizes how AI hosts connect to servers that expose tools, resources, and prompts; the host still owns workflow policy and safety.",
   "domain": "AI infrastructure",
   "difficulty": "Intermediate",
   "summary": "KRAIL, RAIL, and Grokipedia API all expose search, hydration, API, or knowledge functions for agent workflows.",
@@ -13,19 +14,96 @@
     { "label": "Grokipedia API project", "href": "/projects/grokipedia-api" }
   ],
   "externalSources": [
-    { "label": "Model Context Protocol intro", "href": "https://modelcontextprotocol.io/docs/getting-started/intro" },
-    { "label": "MCP specification", "href": "https://modelcontextprotocol.io/specification/2025-06-18" }
+    { "label": "Model Context Protocol introduction", "href": "https://modelcontextprotocol.io/docs/getting-started/intro" },
+    { "label": "MCP specification", "href": "https://modelcontextprotocol.io/specification/2025-11-25" },
+    { "label": "MCP authorization specification", "href": "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization" }
   ],
-  "artifact": { "type": "agent-graph", "title": "Tools become callable graph nodes", "description": "MCP lets an AI client discover and call external capabilities through a standard protocol surface." },
+  "artifact": { "type": "agent-graph", "title": "Tools become callable graph nodes", "description": "MCP lets an AI host discover and call external capabilities through a standard protocol surface." },
   "contentBlocks": [
-    { "type": "paragraph", "text": "Without a standard protocol, every AI application has to integrate every tool in its own way. MCP reduces that integration mess by defining a common client-server shape for tools, resources, prompts, and workflows." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Host</strong>The app the user interacts with.</div><div><strong>Client</strong>The protocol component inside the host.</div><div><strong>Server</strong>The external system exposing tools or resources.</div><div><strong>Tool call</strong>A structured request with parameters and returned data.</div></div>" }
+    { "type": "paragraph", "text": "MCP is a protocol boundary, not an autonomous agent. A host creates clients that connect to servers, discovers declared capabilities, and decides when information or actions enter the model's workflow. Standard messages reduce one-off integration code, but they do not decide which call is appropriate or safe." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Host</strong>The user-facing application that coordinates clients and policy.</div><div><strong>Client</strong>The protocol participant that maintains a connection to one server.</div><div><strong>Server</strong>A program exposing bounded capabilities.</div><div><strong>Primitive</strong>A tool, resource, or prompt advertised through MCP.</div></div>" }
   ],
   "sections": [
-    { "heading": "Why It Matters for Repo-Native Research", "body": ["A research agent needs more than chat. It needs to inspect files, query sources, hydrate data, run checks, and record artifacts. MCP gives those actions a protocol boundary.", "For KRAIL and RAIL-style systems, that boundary is valuable because tools can be audited, permissioned, and reused across clients."] },
-    { "heading": "Security and Trust", "body": ["Tool access is power. An MCP server that can read files, run queries, or execute commands must be scoped carefully. The protocol standardizes connection shape, but application design still has to handle authorization, sandboxing, prompt injection, and audit trails.", "The safest pattern is narrow tools with explicit schemas, clear descriptions, and logs of inputs and outputs."], "table": { "columns": ["Surface", "Risk", "Guardrail"], "rows": [["Resources", "Leaking sensitive context", "Scope and redact"], ["Tools", "Unsafe action execution", "Require schemas and permissions"], ["Prompts", "Instruction injection", "Separate trusted instructions from retrieved text"], ["Long workflows", "Hidden side effects", "Write audit records"]] } }
+    {
+      "heading": "Host, Client, Server, and Capability Negotiation",
+      "body": [
+        "The host is the application in which the user works. It creates an MCP client for each server connection. During initialization, protocol versions and capabilities are negotiated so each side knows which features are available. A tool list is discovery metadata, not permission to call everything automatically.",
+        "The USB analogy is useful only for compatibility: a shared connector lets different hosts integrate with different servers. It stops at trust and behavior. An MCP server can expose confidential data or consequential actions, and a compatible connection does not make the server, its descriptions, or its outputs safe."
+      ],
+      "table": {
+        "columns": ["Layer", "Responsibility", "Must not be assumed"],
+        "rows": [
+          ["Host", "User experience, model orchestration, consent and policy", "That server output is trusted instruction"],
+          ["Client", "Protocol session and message exchange", "That discovery grants action approval"],
+          ["Server", "Expose declared capabilities and handle requests", "That it controls the host's whole workflow"],
+          ["Transport", "Carry protocol messages", "That transport security alone authorizes tools"]
+        ]
+      }
+    },
+    {
+      "heading": "Tools, Resources, and Prompts Are Different Contracts",
+      "body": [
+        "Tools are model-callable operations described by a name, purpose, and input schema. Resources expose context identified by URIs for an application to read. Prompts are server-provided templates or workflow starters selected through the client. Keeping the primitives distinct improves consent: reading a resource is not the same event as executing a write tool.",
+        "A narrow tool schema constrains shape, not meaning. The server must validate values and authorization again, while the host should display high-impact proposed calls and inspect returned content as untrusted data. Recommended design policy: separate read and write tools and make destructive or external side effects explicit in both names and descriptions."
+      ],
+      "table": {
+        "columns": ["Primitive", "Typical use", "Example"],
+        "rows": [
+          ["Tool", "Invoke computation or an action", "hydrate_dataset(source_id)"],
+          ["Resource", "Read addressable context", "repo://project/assumptions.md"],
+          ["Prompt", "Offer a reusable user-selected template", "review-evidence-gap"],
+          ["Workflow", "Host-side composition of calls and checks", "retrieve → analyze → verify"]
+        ]
+      }
+    },
+    {
+      "heading": "Project Facts Versus Recommended Deployment Policy",
+      "body": [
+        "Project facts: KRAIL reports MCP tools for search, think, capture, tasks, workflows, and integrity. RAIL reports an MCP server for ontology inspection, hydration, queries, project updates, and verification. The Grokipedia API source reports MCP server integration among its examples. These statements establish exposed or demonstrated surfaces, not their exact schemas or deployment permissions.",
+        "Recommended design policy: expose a small operation per auditable intent, attach project and source identifiers, return structured evidence and gaps, and log call identity, actor, arguments, result status, and artifact references. Authentication, tenant isolation, approval thresholds, and sandboxing must be verified in implementation; protocol support alone does not prove them."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "A researcher asks, 'Refresh CPI data and explain what changed.' The host first reads a project configuration resource to identify the approved series and assumptions. It then proposes a narrow hydrate_series tool call with project_id, source_id, and an explicit date window. Because hydration changes repository artifacts, the host can show the call for approval before execution.",
+        "The server validates project access, fetches the source, writes a versioned artifact, and returns an artifact ID plus source metadata. A second read-only analysis tool consumes that artifact ID; a verifier checks whether claims cite the hydrated output. Retrieved web text remains evidence, never a new instruction to call unrelated tools."
+      ],
+      "table": {
+        "columns": ["Step", "Primitive or policy", "Evidence retained"],
+        "rows": [
+          ["Inspect configuration", "Resource read", "Project URI and version"],
+          ["Propose refresh", "Host approval policy", "Displayed arguments and target"],
+          ["Hydrate", "Narrow write tool", "Source metadata and artifact ID"],
+          ["Analyze", "Read-only tool", "Input artifact ID and computed output"],
+          ["Verify", "Workflow check", "Claim-to-source links and named gaps"]
+        ]
+      }
+    },
+    {
+      "heading": "Authorization, Consent, and Untrusted Content",
+      "body": [
+        "Remote MCP authorization uses OAuth-based mechanisms defined by the specification; protected-resource metadata and token audience rules help bind credentials to the intended server. Tokens should not be passed through to downstream services as though they belonged there. Local transports still need operating-system boundaries and explicit configuration because local does not mean harmless.",
+        "Tool descriptions, resource content, and tool results can contain malicious or misleading instructions. Hosts should separate trusted policy from retrieved data, restrict which tools can be composed, require confirmation for consequential actions, and avoid placing secrets in model-visible context. Servers must authorize every call for the actual subject and resource rather than trusting host prose."
+      ],
+      "callout": "Model limit: a graph diagram can show the intended path but not all trust boundaries. Credentials, subprocess permissions, network egress, storage scope, and human approval live outside the arrows and must be tested separately."
+    },
+    {
+      "heading": "Reliability, Observability, and Testing",
+      "body": [
+        "A protocol call can fail before execution, during execution, after a side effect but before the result arrives, or because the returned schema changed. Give write operations idempotency controls, bounded timeouts, cancellation behavior, and stable result identifiers. Do not automatically replay a possibly completed write simply because the client lost its response.",
+        "Contract tests should cover initialization and capability negotiation, invalid inputs, unauthorized scope, tool timeouts, cancellation, duplicate requests, schema-compatible errors, malicious resource text, and audit-log redaction. End-to-end tests should prove that the host asks for approval at the intended boundary and that a server cannot escape its configured filesystem or network scope."
+      ]
+    }
   ],
-  "pitfalls": ["Treating protocol support as a complete security model.", "Exposing broad shell or filesystem access as one giant tool.", "Skipping tool-call logs.", "Letting untrusted retrieved text become tool instructions."],
-  "quiz": [{ "question": "What problem does MCP primarily address?", "options": ["Standardizing connections between AI apps and external tools/data", "Replacing all databases", "Training language models", "Rendering CSS"], "answer": 0, "explanation": "MCP defines a common way for AI applications to connect to tools, data, prompts, and workflows." }],
+  "pitfalls": [
+    "Treating MCP compatibility as a complete authorization or sandboxing model.",
+    "Exposing broad shell, database, or filesystem authority as one giant tool.",
+    "Conflating resources that provide context with tools that cause actions.",
+    "Letting untrusted resource or tool-result text become host policy.",
+    "Skipping per-call authorization and assuming tool discovery grants permission.",
+    "Retrying an ambiguous write without idempotency protection.",
+    "Logging secrets or full sensitive payloads instead of redacted audit metadata."
+  ],
   "related": ["langgraph-multi-agent-study-backend", "repo-system-of-record-research"]
 }

@@ -1,31 +1,98 @@
 {
+  "schemaVersion": 2,
   "slug": "synthetic-enhancer-design-pipeline",
   "title": "Synthetic Enhancer Design Pipeline",
-  "subtitle": "Enhancer design links sequence edits, regulatory-track prediction, cell-type specificity, and experimental caution.",
+  "subtitle": "Designing an enhancer is a constrained propose–predict–filter–test loop, not a request for the sequence with the largest model score.",
   "domain": "Computational biology",
   "difficulty": "Advanced",
-  "summary": "The HiC-TAD project sketches a pipeline using AlphaGenome predictions, CNN training, motif insertion, and validation loops.",
+  "summary": "Connect locus nomination, sequence optimization, multi-track prediction, controls, and experimental validation while keeping AlphaGenome outputs clearly separate from measured regulatory activity.",
   "tags": ["Enhancers", "AlphaGenome", "Genomics", "Design"],
   "sourceFiles": ["_portfolio/hic-tad-analysis.md"],
   "sourceLinks": [{ "label": "HiC-TAD project", "href": "/projects/hic-tad-analysis" }],
   "externalSources": [
-    { "label": "Nature: AlphaGenome", "href": "https://www.nature.com/articles/s41586-025-10014-0" },
-    { "label": "Google DeepMind AlphaGenome blog", "href": "https://deepmind.google/blog/alphagenome-ai-for-better-understanding-the-genome/" },
-    { "label": "Google DeepMind AlphaGenome GitHub", "href": "https://github.com/google-deepmind/alphagenome" }
+    { "label": "Nature: AlphaGenome sequence-to-function model", "href": "https://www.nature.com/articles/s41586-025-10014-0" },
+    { "label": "Google DeepMind: AlphaGenome overview", "href": "https://deepmind.google/blog/alphagenome-ai-for-better-understanding-the-genome/" },
+    { "label": "Google DeepMind: AlphaGenome SDK", "href": "https://github.com/google-deepmind/alphagenome" },
+    { "label": "Nature: Massively parallel reporter assays", "href": "https://www.nature.com/articles/nrg.2017.105" }
   ],
-  "artifact": { "type": "alphagenome", "title": "Predicted regulatory-track response", "description": "Change the deletion size index to see how regulatory tracks might remain stable or become disrupted." },
+  "artifact": {
+    "type": "alphagenome",
+    "title": "Predicted regulatory-track response",
+    "description": "Change the deletion size index to see how regulatory tracks might remain stable or become disrupted. The values are pedagogical predictions, not experimental measurements."
+  },
   "contentBlocks": [
     { "type": "heading", "level": 2, "text": "Design Is a Loop, Not a Single Prediction" },
-    { "type": "paragraph", "text": "A synthetic enhancer pipeline proposes sequence changes, predicts regulatory effects, checks cell-type specificity, filters for safety and off-target structure, then returns to sequence design. The model is a guide; biology still gets the final vote." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Nominate locus</strong>Choose a region from chromatin structure, expression, or variant evidence.</div><div><strong>Propose sequence</strong>Add, remove, or optimize motifs.</div><div><strong>Predict tracks</strong>Compare CTCF, ATAC, histone marks, and expression effects.</div><div><strong>Validate</strong>Prioritize experiments rather than replacing them.</div></div>" }
+    { "type": "paragraph", "text": "A synthetic enhancer pipeline proposes sequence changes, predicts regulatory effects, checks cell-type specificity, filters for competing and structural effects, and then returns to sequence design. A model can rank hypotheses; only experiments can measure whether a construct works in its intended biological context." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Nominate locus</strong>Choose a region from chromatin structure, expression, or variant evidence.</div><div><strong>Propose sequence</strong>Add, remove, or optimize motifs under declared constraints.</div><div><strong>Predict tracks</strong>Compare accessibility, binding, expression, and contact outputs.</div><div><strong>Test</strong>Use negative, positive, sequence, and context controls in experiments.</div></div>" }
   ],
   "sections": [
-    { "heading": "What AlphaGenome Adds", "body": ["AlphaGenome-style models predict many regulatory outputs from long DNA sequence context. That matters because an enhancer's effect is not just local motif grammar; it depends on surrounding sequence and cell type.", "For design, the useful object is the delta: what changed between the original and edited sequence across regulatory tracks."] },
-    { "heading": "Why Structure Matters", "body": ["An enhancer that raises a desired signal may still be wrong if it disrupts chromatin boundaries or activates in the wrong cell type.", "That is why this project connects enhancer design with Hi-C/TAD analysis: sequence function and 3D genome organization are entangled."], "table": { "columns": ["Signal", "Question"], "rows": [["ATAC", "Did accessibility increase?"], ["H3K27ac", "Does the sequence look enhancer-active?"], ["CTCF", "Did boundary-associated binding change?"], ["RNA", "Could expression change downstream?"], ["Contact map", "Did 3D organization shift?"]] } }
+    {
+      "heading": "Definition: What Is Being Designed?",
+      "body": [
+        "An enhancer is a cis-regulatory DNA element that can increase transcription from a compatible promoter in a particular cellular context. A synthetic enhancer is an engineered sequence intended to produce a chosen regulatory behavior. Its behavior depends on motif identities, orientation and spacing, surrounding sequence, promoter compatibility, chromatin state, genomic context, delivery method, and cell state.",
+        "The design target should therefore be a measurable specification, not merely 'high activity': for example, increased accessibility and reporter expression in one cell type, low activity in specified off-target cell types, preserved boundary-associated signals, and acceptable sequence constraints."
+      ],
+      "callout": "Mental model: design searches a multi-objective landscape. A candidate is a hypothesis satisfying several predicted constraints, not a proven biological device."
+    },
+    {
+      "heading": "Why Long Context and Multiple Tracks Matter",
+      "body": [
+        "AlphaGenome takes long DNA context and predicts many genomic modalities, including accessibility, histone modifications, transcription-factor binding, expression-related tracks, and contact maps across biological contexts. Comparing reference and edited sequences can expose predicted tradeoffs that a single accessibility score would hide.",
+        "The model's outputs are estimates learned from experimental datasets. They may inherit training-set biases, omit the intended cell state, miss delivery and integration effects, or extrapolate poorly for highly synthetic sequences. Agreement across predicted tracks is helpful but is not the same as independent experimental confirmation because the outputs share a model and training foundation."
+      ],
+      "table": {
+        "columns": ["Signal or constraint", "Design question", "What it cannot prove alone"],
+        "rows": [
+          ["ATAC or DNase", "Is local accessibility predicted to rise?", "Enhancer-driven transcription"],
+          ["H3K27ac", "Does predicted chromatin resemble active enhancer state?", "Causal enhancer activity"],
+          ["TF binding", "Were intended and unintended motif effects predicted?", "Occupancy in the target experiment"],
+          ["RNA-related tracks", "Is a desired expression change predicted?", "Phenotype or safety"],
+          ["Contact map or CTCF", "Could the edit affect 3D organization?", "Observed structural disruption"],
+          ["GC, repeats, motifs", "Does the sequence meet explicit construct constraints?", "Cell-type performance"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: Nominate, Propose, Score, and Filter",
+      "body": [
+        "First nominate a locus and target cell state using structural, regulatory, and biological evidence. Define the baseline sequence, intended promoter or genomic locus, allowed edit length, protected motifs, GC range, repeat limits, and the assays that will determine success. Splitting these choices before optimization reduces post-hoc storytelling.",
+        "Next generate candidates by motif insertion, constrained mutation, gradient-based relaxation, or another declared search method. Score every candidate against the same reference context and preserve the full vector of deltas rather than collapsing immediately to one number. Reject candidates that improve the target while violating off-target, structural, manufacturability, or diversity constraints.",
+        "The portfolio pipeline uses Hi-C structure for nomination, a CNN trained on AlphaGenome-derived accessibility predictions, gradient optimization, transcription-factor motif insertion, and AlphaGenome rescoring. Because the CNN labels and final rescoring both ultimately depend on model predictions, this is model-based triangulation—not independent biological validation."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Assume a 200 bp candidate must increase a target-cell accessibility score by at least 0.08, keep off-target-cell change below 0.02, keep the absolute contact-map disruption score below 0.03, and maintain 40–60% GC. These numbers are illustrative decision thresholds, not biological standards. Three candidates produce predicted deltas A=(+0.12, +0.07, 0.01, 48% GC), B=(+0.09, +0.01, 0.02, 55% GC), and C=(+0.15, +0.00, 0.08, 51% GC), ordered as target accessibility, off-target accessibility, contact disruption, and GC.",
+        "Candidate B passes every declared filter. A fails cell-type specificity despite its larger target score; C fails the structural guardrail despite the largest accessibility gain. B is therefore the best candidate under this specification, but it is not 'validated.' It advances with shuffled-sequence and motif-ablation controls into a reporter assay, followed by endogenous-context perturbation if the scientific question requires it."
+      ],
+      "table": {
+        "columns": ["Candidate", "Target Δ", "Off-target Δ", "Contact disruption", "GC", "Decision"],
+        "rows": [
+          ["A", "+0.12", "+0.07", "0.01", "48%", "Reject: off-target activity"],
+          ["B", "+0.09", "+0.01", "0.02", "55%", "Advance to experiments"],
+          ["C", "+0.15", "+0.00", "0.08", "51%", "Reject: structural guardrail"],
+          ["Reference", "0.00", "0.00", "0.00", "53%", "Baseline control"]
+        ]
+      }
+    },
+    {
+      "heading": "Validation Ladder and Failure Modes",
+      "body": [
+        "Begin with computational controls: untouched reference, matched random edits, dinucleotide- or GC-matched sequences, motif ablations, reverse complements when meaningful, and multiple seeds or model perturbations. Hold out candidate families during evaluation so near-duplicates do not inflate apparent generalization.",
+        "A reporter assay tests sequence activity in the assay's delivery and promoter context, while an endogenous perturbation tests the native locus more directly. Chromatin accessibility, TF occupancy, expression, contact assays, and phenotype measurements answer different questions. A negative result can reflect a failed sequence, the wrong cell state, missing chromatin context, delivery failure, or an inaccurate prediction; the controls should help separate these explanations.",
+        "The project reports CNN and final candidate scores plus motif-associated score changes. Those are useful internal model outcomes, not experimental effect sizes. They should remain labeled as predictions until measured with replicated assays and prespecified success criteria."
+      ],
+      "callout": "Optimization exploits whatever the objective rewards—including model artifacts. Always inspect diverse candidates and test whether gains survive model, sequence, and experimental controls."
+    }
   ],
-  "pitfalls": ["Treating predicted enhancer strength as experimental truth.", "Ignoring cell-type specificity.", "Optimizing one track while damaging another.", "Forgetting that non-coding edits can affect chromatin structure.", "Skipping negative controls."],
-  "quiz": [
-    { "question": "What is the main use of model predictions in enhancer design?", "options": ["Prioritizing and filtering candidates before experiments", "Proving biology is solved", "Avoiding controls", "Removing cell-type context"], "answer": 0, "explanation": "Predictions guide candidate selection; experiments remain necessary for validation." }
+  "pitfalls": [
+    "Treating AlphaGenome or CNN scores as experimental enhancer activity.",
+    "Optimizing one predicted track while ignoring off-target cell types, expression, or 3D structure.",
+    "Calling rescoring by a model independent validation when training labels or objectives came from the same model family.",
+    "Letting the optimizer exploit out-of-distribution sequence patterns without diversity and plausibility checks.",
+    "Testing only a reporter construct and generalizing directly to the native chromosomal locus.",
+    "Skipping matched negative controls, motif ablations, replicates, or prespecified success thresholds."
   ],
   "related": ["hic-contact-maps-tad-triangles", "multi-scale-tad-boundary-detection"]
 }

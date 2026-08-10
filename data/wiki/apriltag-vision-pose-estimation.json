@@ -1,30 +1,103 @@
 {
+  "schemaVersion": 2,
   "slug": "apriltag-vision-pose-estimation",
   "title": "AprilTag Vision for Robot Pose Estimation",
-  "subtitle": "AprilTags give a robot field-relative visual landmarks that can correct drifting odometry.",
-  "domain": "Robotics vision",
-  "difficulty": "Intermediate",
-  "summary": "The robotics season used PhotonVision, AprilTags, multiple cameras, and pose estimates to update drivetrain odometry.",
-  "tags": ["AprilTags", "PhotonVision", "Pose estimation", "FRC"],
-  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md", "_posts/2023-3-23-robotics-journal.md"],
-  "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
-  "externalSources": [
-    { "label": "PhotonVision pose estimation docs", "href": "https://docs.photonvision.org/en/latest/docs/programming/photonlib/robot-pose-estimator.html" },
-    { "label": "WPILib swerve odometry", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-odometry.html" }
+  "subtitle": "Use known field landmarks to produce time-stamped, uncertainty-aware pose measurements that complement wheel odometry and a gyro.",
+  "domain": "Robotics",
+  "difficulty": "Advanced",
+  "summary": "Wheel and gyro odometry updates quickly but accumulates error. AprilTag observations provide an absolute field reference; reliable localization requires correct calibration and transforms, pose-quality checks, measurement timestamps, and deliberate fusion rather than blind averaging.",
+  "tags": ["FRC", "AprilTag", "PhotonVision", "Pose Estimation", "Sensor Fusion"],
+  "sourceFiles": [
+    "_posts/2024-4-3-robotics-chief.md",
+    "_posts/2023-3-23-robotics-journal.md"
   ],
-  "artifact": { "type": "swerve-vectors", "title": "Pose correction enters the drivetrain world model", "description": "The swerve vector demo represents the motion side; AprilTags add external field landmarks that correct pose estimates." },
+  "sourceLinks": [
+    {"label": "2024 robotics development post", "href": "/writing/robotics-development"},
+    {"label": "2023 robotics journal", "href": "/writing/robotics-journal"}
+  ],
+  "externalSources": [
+    {"label": "PhotonVision: AprilTags and PhotonPoseEstimator", "href": "https://docs.photonvision.org/en/latest/docs/programming/photonlib/robot-pose-estimator.html"},
+    {"label": "PhotonVision: MultiTag Localization", "href": "https://docs.photonvision.org/en/latest/docs/apriltag-pipelines/multitag.html"},
+    {"label": "PhotonVision: 3D Tracking and Ambiguity", "href": "https://docs.photonvision.org/en/latest/docs/apriltag-pipelines/3D-tracking.html"},
+    {"label": "WPILib: Pose Estimators", "href": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-pose-estimators.html"}
+  ],
+  "artifact": {"type": "swerve-vectors", "title": "Pose correction enters the drivetrain world model", "description": "The swerve vector demo represents the motion side; AprilTags add external field landmarks that correct pose estimates."},
   "contentBlocks": [
-    { "type": "heading", "level": 2, "text": "Why Odometry Drifts" },
-    { "type": "paragraph", "text": "Wheel encoders and gyros estimate motion by integrating small changes. Small errors accumulate. A camera seeing a known AprilTag can provide an absolute field reference and pull the estimate back toward reality." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Detect tag</strong>Find corners and decode the tag ID.</div><div><strong>Know field pose</strong>Look up where that tag lives on the field.</div><div><strong>Solve camera pose</strong>Estimate where the camera must be.</div><div><strong>Fuse estimate</strong>Add the vision measurement to pose estimation with uncertainty.</div></div>" }
+    {"type": "heading", "level": 2, "text": "Why Odometry Drifts"},
+    {"type": "paragraph", "text": "Wheel encoders and gyros estimate motion by integrating small changes. Small errors accumulate. A camera seeing a known AprilTag can provide an absolute field reference and pull the estimate back toward reality."},
+    {"type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Detect tag</strong>Find corners and decode the tag ID.</div><div><strong>Know field pose</strong>Look up where that tag lives on the field.</div><div><strong>Solve camera pose</strong>Estimate where the camera must be.</div><div><strong>Fuse estimate</strong>Add the vision measurement to pose estimation with uncertainty.</div></div>"}
   ],
   "sections": [
-    { "heading": "From Tag to Robot Pose", "body": ["The tag ID tells the system which field landmark is visible. The observed tag corners plus camera calibration estimate the camera's pose relative to the tag. The robot-to-camera transform then converts camera pose into robot pose.", "The estimate should carry uncertainty. A faraway tag, motion blur, partial occlusion, or bad calibration should count less than a close clean observation."] },
-    { "heading": "Multi-Camera Systems", "body": ["Multiple cameras widen field coverage and reduce blind spots, but they add calibration and synchronization complexity. Each camera needs its own transform relative to the robot frame.", "A robust system rejects impossible estimates, handles latency, and avoids over-trusting vision during collisions or ambiguous tag layouts."], "table": { "columns": ["Signal", "Why it matters"], "rows": [["Tag count", "More tags usually improve pose confidence"], ["Distance", "Far tags increase uncertainty"], ["Ambiguity", "Some tag poses have multiple plausible solutions"], ["Latency", "Old measurements must be inserted at the correct time"], ["Calibration", "Bad camera intrinsics or transforms corrupt every estimate"]] } }
+    {
+      "heading": "What Vision Adds to Odometry",
+      "body": [
+        "Swerve odometry estimates pose by integrating gyro heading and module motion. It is responsive and available even when no landmark is visible, but wheel slip, imperfect geometry, and sensor bias accumulate into drift. An AprilTag is a visual fiducial with an ID whose field pose is listed in a known layout.",
+        "A tag observation can therefore produce an absolute field-relative pose measurement. It does not replace odometry: cameras can be occluded, delayed, blurred, or ambiguous. A pose estimator combines frequent local motion updates with occasional global corrections and weights each according to expected uncertainty."
+      ],
+      "callout": "Mental model: odometry predicts continuously; AprilTag vision periodically observes where the robot was when the image was captured."
+    },
+    {
+      "heading": "From Pixels to Robot Pose",
+      "body": [
+        "The pipeline detects four tag corners and decodes an ID. Camera intrinsics describe how rays map to image pixels. A pose solver combines those corner observations with the tag's known size and field pose to estimate a field-to-camera transform.",
+        "The fixed robot-to-camera Transform3d then converts camera pose into robot pose. Each camera needs its own measured transform and pose-estimator instance. A wrong tag layout, focal calibration, camera orientation, or transform creates a systematic error that filtering cannot repair."
+      ],
+      "table": {
+        "columns": ["Required information", "Role", "Failure symptom"],
+        "rows": [
+          ["Tag field layout", "Maps ID to known field pose", "Estimate shifts toward the wrong landmark location"],
+          ["Camera intrinsics", "Maps image points to rays", "Distance- and angle-dependent bias"],
+          ["Robot-to-camera transform", "Moves camera pose to robot center", "Consistent offset or rotation"],
+          ["Capture timestamp", "Places the correction at the right time", "Pose jumps or trails during motion"]
+        ]
+      }
+    },
+    {
+      "heading": "Fusion, Latency, and Measurement Quality",
+      "body": [
+        "Feed the vision measurement to the drivetrain pose estimator with the image's measurement timestamp, not simply the time at which the result arrives. WPILib pose estimators can latency-compensate by applying the observation to the earlier state and propagating forward.",
+        "Standard deviations express confidence. A close multi-tag solution is generally more trustworthy than a distant single-tag solution, but thresholds must be validated on the actual camera, resolution, exposure, field, and robot. PhotonVision documents multi-tag estimation as its recommended strategy and suggests a lower-ambiguity single-tag fallback when multi-tag output is unavailable."
+      ],
+      "table": {
+        "columns": ["Observation", "Reasonable response"],
+        "rows": [
+          ["Several close tags and valid field pose", "Use relatively tighter x-y uncertainty after validation"],
+          ["One far tag", "Increase uncertainty or reject beyond a tested range"],
+          ["Pose outside field bounds", "Reject as physically implausible"],
+          ["Stale or duplicate result", "Do not fuse it as a new measurement"],
+          ["Camera disconnected or calibration invalid", "Report invalid; rely on odometry until recovered"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example: Correcting a Drifting Pose",
+      "body": [
+        "At image capture time t = 6.80 s, odometry says the robot is at (4.20 m, 2.00 m). A calibrated camera sees two tags and produces a robot pose of (4.05 m, 2.08 m) with capture timestamp 6.80 s. The pipeline result reaches robot code at 6.92 s, after the robot has continued moving.",
+        "The 0.12 s delay matters. Supplying 6.92 s as the measurement time incorrectly treats the old image as a current observation. Supplying 6.80 s lets the estimator compare it with the historical state, apply a weighted correction there, and then replay subsequent motion updates to the present.",
+        "The estimator should not necessarily jump exactly to (4.05, 2.08). The correction depends on configured uncertainty. If the same pose came from one distant, high-ambiguity tag, the system should assign less confidence or reject it according to tested rules."
+      ]
+    },
+    {
+      "heading": "Multiple Cameras and Source Lessons",
+      "body": [
+        "Multiple cameras increase coverage but do not become one super-camera automatically. Process every unread result with its camera-specific calibration, transform, timestamp, and quality estimate. Then add accepted measurements individually so the estimator can account for their timing and uncertainty.",
+        "Team 1257's source post documents an early multi-camera implementation that averaged estimates into one combined measurement, then reports better behavior after looping through estimates and adding each to the pose estimator. That team experience supports careful per-measurement fusion; it does not by itself establish a universal tuning formula for every robot."
+      ]
+    },
+    {
+      "heading": "Limits and Failure Modes",
+      "body": [
+        "Single-tag pose can be ambiguous because different 3D poses may project to similar corner locations. Multi-tag geometry can reduce ambiguity, but only if the uploaded field layout matches the physical field. Motion blur, rolling shutter, glare, occlusion, bent mounts, and clock or timestamp errors still matter.",
+        "Avoid accepting a measurement merely because a tag was detected. Log camera name, tag count, target distance, ambiguity or solver strategy, timestamp, candidate pose, uncertainty, and rejection reason. Compare estimates against controlled measurements before enabling aggressive corrections in a match."
+      ]
+    }
   ],
-  "pitfalls": ["Adding every vision estimate with equal trust.", "Ignoring camera-to-robot transform errors.", "Forgetting latency compensation.", "Using vision during high-motion blur without filtering.", "Assuming odometry and vision coordinate systems match automatically."],
-  "quiz": [
-    { "question": "What does an AprilTag ID provide?", "options": ["A known field landmark identity", "The robot battery voltage", "A direct motor command", "The match score"], "answer": 0, "explanation": "The ID lets the robot look up the tag's known field pose." }
+  "pitfalls": [
+    "Using result-arrival time instead of image-capture time.",
+    "Applying one robot-to-camera transform to every camera.",
+    "Averaging poses without respecting timestamps and uncertainty.",
+    "Trusting a distant or ambiguous single-tag estimate as much as a close multi-tag estimate.",
+    "Trying to filter away a bad field layout or calibration."
   ],
-  "related": ["multi-camera-pose-estimation", "field-relative-vs-robot-relative-driving"]
+  "related": ["swerve-drive-basics-frc", "field-relative-vs-robot-relative-driving"]
 }

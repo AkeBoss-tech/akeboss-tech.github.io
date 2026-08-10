@@ -1,59 +1,96 @@
 {
+  "schemaVersion": 2,
   "slug": "q-binomial-theorem",
   "title": "The q-Binomial Theorem",
-  "subtitle": "The q-binomial theorem is a weighted version of binomial counting that records extra combinatorial structure with q.",
+  "subtitle": "The finite q-binomial theorem expands a product whose choices carry position-dependent q-weights.",
   "domain": "Math",
   "difficulty": "Advanced",
-  "summary": "The DRP project connects symmetric functions, q-analogues, Gaussian binomial coefficients, and the q-binomial theorem.",
+  "summary": "The DRP project connects elementary symmetric functions, q-analogues, Gaussian binomial coefficients, and the finite q-binomial theorem.",
   "tags": ["q-binomial", "Symmetric functions", "Combinatorics", "Generating functions"],
   "sourceFiles": ["_portfolio/drp-spring-2025.md"],
   "sourceLinks": [{ "label": "DRP q-binomial project", "href": "/projects/drp-spring-2025" }],
   "externalSources": [
-    { "label": "Encyclopedia of Mathematics: Gaussian binomial coefficient", "href": "https://encyclopediaofmath.org/wiki/Gaussian_binomial_coefficient" }
+    { "label": "NIST DLMF: q-binomial theorem", "href": "https://dlmf.nist.gov/17.2#iii" },
+    { "label": "NIST DLMF equation 17.2.35", "href": "https://dlmf.nist.gov/17.2.E35" }
   ],
   "artifact": {
     "type": "q-binomial",
     "title": "q-integers as weighted counts",
     "description": "Move q and watch q-integers grow away from their ordinary integer values."
   },
+  "contentBlocks": [
+    { "type": "latex", "content": "The finite form used in the DRP project is\n\n$$\\prod_{i=0}^{n-1}(1+q^it)=\\sum_{r=0}^{n}q^{r(r-1)/2}\\binom{n}{r}_q t^r.$$\n\nEquivalently, NIST DLMF 17.2.35 writes\n\n$$\\prod_{i=0}^{n-1}(1-zq^i)=\\sum_{r=0}^{n}\\binom{n}{r}_q(-z)^r q^{r(r-1)/2}.$$" }
+  ],
   "sections": [
     {
-      "heading": "From Integers to q-Integers",
+      "heading": "Reading the Identity",
       "body": [
-        "A q-integer replaces n with the polynomial [n]q = 1 + q + q^2 + ... + q^(n-1).",
-        "When q approaches 1, the q-integer approaches n, so q-analogues preserve the classical case while adding a grading."
+        "Each factor $(1+q^it)$ offers a binary choice: select $1$, or select $q^it$. Choosing the second term from exactly $r$ factors produces $t^r$ and a q-weight determined by the selected indices. The coefficient of $t^r$ therefore summarizes all $r$-element selections with their weights.",
+        "The Gaussian coefficient is $\\binom{n}{r}_q=[n]_q!/([r]_q![n-r]_q!)$. The prefactor $q^{r(r-1)/2}$ accounts for the minimum possible sum $0+1+\\cdots+(r-1)$ of $r$ distinct nonnegative indices."
+      ],
+      "table": {
+        "columns": ["Symbol", "Role"],
+        "rows": [
+          ["$n$", "Number of product factors"],
+          ["$r$", "Number of selected q-weighted terms"],
+          ["$t^r$", "Marks selection size"],
+          ["$q$", "Marks the accumulated index statistic"],
+          ["$q^{r(r-1)/2}$", "Shifts by the minimum index sum"],
+          ["$\\binom{n}{r}_q$", "Gaussian coefficient"]
+        ]
+      }
+    },
+    {
+      "heading": "Derivation from Elementary Symmetric Functions",
+      "body": [
+        "Start from $\\prod_{j=1}^{n}(1+x_jt)=\\sum_{r=0}^{n}e_r(x_1,\\ldots,x_n)t^r$. Substitute $(x_1,\\ldots,x_n)=(1,q,\\ldots,q^{n-1})$ to obtain the product on the theorem's left side.",
+        "The coefficient is $e_r(1,q,\\ldots,q^{n-1})$. Factoring the minimum exponent from every increasing $r$-index selection yields $e_r(1,q,\\ldots,q^{n-1})=q^{r(r-1)/2}\\binom{n}{r}_q$. This is the precise bridge emphasized in the DRP project."
       ]
     },
     {
-      "heading": "Connection to Symmetric Functions",
+      "heading": "Worked Example",
       "body": [
-        "The elementary symmetric function generating function is E(t) = product(1 + x_i t).",
-        "Setting variables to powers of q turns coefficients into q-binomial coefficients multiplied by a power of q."
+        "Take $n=3$. Direct multiplication gives $(1+t)(1+qt)(1+q^2t)=1+(1+q+q^2)t+(q+q^2+q^3)t^2+q^3t^3$.",
+        "On the theorem side, $\\binom{3}{1}_q=\\binom{3}{2}_q=1+q+q^2$. For $r=2$, the prefactor is $q^{2(2-1)/2}=q$, producing $q(1+q+q^2)=q+q^2+q^3$. For $r=3$, the prefactor $q^3$ multiplies $\\binom{3}{3}_q=1$. Every coefficient agrees."
       ],
       "table": {
-        "columns": ["Object", "Role"],
+        "columns": ["$r$", "Theorem coefficient", "Expanded coefficient"],
         "rows": [
-          ["q-integer", "Weighted version of n"],
-          ["q-factorial", "Product of q-integers"],
-          ["Gaussian binomial coefficient", "q-analogue of n choose k"],
-          ["Generating function", "Packages all coefficients into one identity"]
+          ["$0$", "$1$", "$1$"],
+          ["$1$", "$1+q+q^2$", "$1+q+q^2$"],
+          ["$2$", "$q(1+q+q^2)$", "$q+q^2+q^3$"],
+          ["$3$", "$q^3$", "$q^3$"]
         ]
       }
+    },
+    {
+      "heading": "The Classical Limit",
+      "body": [
+        "As $q\\to1$, each factor $(1+q^it)$ approaches $(1+t)$, so the product approaches $(1+t)^n$. At the same time, $q^{r(r-1)/2}\\to1$ and $\\binom{n}{r}_q\\to\\binom{n}{r}$.",
+        "Thus the entire identity becomes $(1+t)^n=\\sum_{r=0}^{n}\\binom{n}{r}t^r$. This coefficient-by-coefficient check is stronger than checking only one q-integer: it verifies the product, scaling factor, and Gaussian coefficients together."
+      ]
+    },
+    {
+      "heading": "Equivalent Sign Convention and Recurrence",
+      "body": [
+        "NIST DLMF writes the finite theorem as $(z;q)_n=\\prod_{i=0}^{n-1}(1-zq^i)=\\sum_{r=0}^{n}\\binom{n}{r}_q(-z)^rq^{r(r-1)/2}$. Substituting $z=-t$ gives the plus-sign form used here. These are the same theorem, not competing formulas.",
+        "Comparing whether the last factor is selected yields q-Pascal recurrences for Gaussian coefficients. The exact exponent placement depends on the decomposition, so a recurrence should be checked against its stated convention rather than memorized without context."
+      ]
+    },
+    {
+      "heading": "Limits and Common Misconceptions",
+      "body": [
+        "This finite product identity should not be conflated with the infinite q-binomial series, which requires separate convergence conditions. In the finite theorem, formal polynomial algebra is sufficient and no analytic convergence assumption is needed.",
+        "The factors $(1+q^it)$ commute in the displayed identity; this is not the noncommutative binomial theorem for variables satisfying $yx=qxy$. Do not omit the factor $q^{r(r-1)/2}$, shift the index from $i=0$ to $i=1$ without compensating, or replace Gaussian coefficients by ordinary ones before taking $q\\to1$."
+      ]
     }
   ],
   "pitfalls": [
-    "Treating q as just another number instead of a bookkeeping parameter.",
-    "Forgetting the q -> 1 check.",
-    "Losing the extra q power in the theorem statement.",
-    "Confusing ordinary binomial coefficients with Gaussian binomial coefficients."
-  ],
-  "quiz": [
-    {
-      "question": "What happens to [n]q when q approaches 1?",
-      "options": ["It approaches n", "It approaches 0 for every n", "It becomes undefined forever", "It becomes n squared"],
-      "answer": 0,
-      "explanation": "The polynomial 1 + q + ... + q^(n-1) evaluates to n at q = 1."
-    }
+    "Dropping $q^{r(r-1)/2}$ from the coefficient.",
+    "Starting the product at $i=1$ while keeping the same right-hand side.",
+    "Confusing the finite polynomial theorem with the infinite q-binomial series.",
+    "Treating $\\binom{n}{r}_q$ as $\\binom{n}{r}$ before the $q\\to1$ limit.",
+    "Thinking the DLMF minus-sign form and the DRP plus-sign form disagree instead of substituting $z=-t$."
   ],
   "related": ["elementary-symmetric-functions", "q-integers-meaning-q-analogues"]
 }

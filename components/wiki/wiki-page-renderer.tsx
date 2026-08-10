@@ -1,15 +1,18 @@
 import Link from 'next/link'
 
 import { Markdown } from '@/components/markdown'
+import { WikiGeneratedFigure } from '@/components/wiki/wiki-generated-figure'
 import { WikiInteractive } from '@/components/wiki/wiki-interactive'
+import { WikiVisualExperience } from '@/components/wiki/wiki-visual-experience'
 import type { WikiContentBlock, WikiPage } from '@/lib/wiki'
 
 function WikiTableView({ table }: { table: { columns: string[]; rows: string[][] } }) {
   return (
     <div className="wiki-table-wrap">
       <table>
+        <caption className="sr-only">Reference table for this concept</caption>
         <thead>
-          <tr>{table.columns.map((column) => <th key={column}>{column}</th>)}</tr>
+          <tr>{table.columns.map((column) => <th key={column} scope="col">{column}</th>)}</tr>
         </thead>
         <tbody>
           {table.rows.map((row) => (
@@ -44,6 +47,12 @@ function WikiContentBlockView({ block, page }: { block: WikiContentBlock; page: 
 }
 
 export function WikiPageRenderer({ page, related }: { page: WikiPage; related: WikiPage[] }) {
+  const sectionLinks = [
+    { id: 'visual-model', label: 'Interactive model' },
+    ...page.sections.map((section, index) => ({ id: `section-${index + 1}`, label: section.heading })),
+    { id: 'common-pitfalls', label: 'Common pitfalls' },
+  ]
+
   return (
     <article className="wiki-article">
       <header className="wiki-header">
@@ -58,10 +67,32 @@ export function WikiPageRenderer({ page, related }: { page: WikiPage; related: W
         </div>
       </header>
 
+      {page.visualExperience ? <WikiVisualExperience experience={page.visualExperience} /> : <WikiGeneratedFigure page={page} />}
+
+      <nav className="wiki-toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <ol>
+          {sectionLinks.map((item) => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}
+        </ol>
+      </nav>
+
+      <section className="wiki-artifact" id="visual-model">
+        <div>
+          <p className="eyebrow">Interactive model</p>
+          <h2>{page.artifact.title}</h2>
+          <p>{page.artifact.description}</p>
+          <p className="wiki-model-note">Live HTML simulation · adjust the controls and watch the computed output respond.</p>
+        </div>
+        <WikiInteractive type={page.artifact.type} />
+      </section>
+
       <section className="wiki-source-box">
         <div>
           <p className="eyebrow">Site connection</p>
           <p>{page.summary}</p>
+          {page.sourceStatus ? (
+            <p className="wiki-source-status"><strong>{page.sourceStatus.label}:</strong> {page.sourceStatus.note}</p>
+          ) : null}
         </div>
         <div className="wiki-source-links">
           {page.sourceLinks.map((source) => (
@@ -70,14 +101,19 @@ export function WikiPageRenderer({ page, related }: { page: WikiPage; related: W
         </div>
       </section>
 
-      <section className="wiki-artifact">
-        <div>
-          <p className="eyebrow">Visual model</p>
-          <h2>{page.artifact.title}</h2>
-          <p>{page.artifact.description}</p>
-        </div>
-        <WikiInteractive type={page.artifact.type} />
-      </section>
+      <aside className="wiki-provenance" aria-label="Source provenance">
+        <strong>Grounded in repository sources</strong>
+        <p>These local files supplied the project-specific context. Further-reading links support the broader concepts.</p>
+        <ul>
+          {page.sourceFiles.map((sourceFile) => (
+            <li key={sourceFile}>
+              <a href={`https://github.com/AkeBoss-tech/akeboss-tech.github.io/blob/master/${sourceFile}`} target="_blank" rel="noreferrer">
+                <code>{sourceFile}</code>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
       {page.contentBlocks?.length ? (
         <section className="wiki-section wiki-freeform">
@@ -87,8 +123,8 @@ export function WikiPageRenderer({ page, related }: { page: WikiPage; related: W
         </section>
       ) : null}
 
-      {page.sections.map((section) => (
-        <section key={section.heading} className="wiki-section">
+      {page.sections.map((section, index) => (
+        <section key={section.heading} className="wiki-section" id={`section-${index + 1}`}>
           <h2>{section.heading}</h2>
           {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           {section.callout ? <blockquote>{section.callout}</blockquote> : null}
@@ -96,29 +132,11 @@ export function WikiPageRenderer({ page, related }: { page: WikiPage; related: W
         </section>
       ))}
 
-      <section className="wiki-section">
+      <section className="wiki-section" id="common-pitfalls">
         <h2>Common Pitfalls</h2>
         <ul className="wiki-list">
           {page.pitfalls.map((pitfall) => <li key={pitfall}>{pitfall}</li>)}
         </ul>
-      </section>
-
-      <section className="wiki-quiz">
-        <p className="eyebrow">Quick check</p>
-        <h2>Quiz</h2>
-        <div className="wiki-quiz-grid">
-          {page.quiz.map((question) => (
-            <details key={question.question}>
-              <summary>{question.question}</summary>
-              <ol>
-                {question.options.map((option, index) => (
-                  <li key={option} className={index === question.answer ? 'correct' : ''}>{option}</li>
-                ))}
-              </ol>
-              <p>{question.explanation}</p>
-            </details>
-          ))}
-        </div>
       </section>
 
       <section className="wiki-section">

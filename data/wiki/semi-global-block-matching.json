@@ -1,20 +1,90 @@
 {
+  "schemaVersion": 2,
   "slug": "semi-global-block-matching",
   "title": "Semi-Global Block Matching",
-  "subtitle": "SGBM estimates stereo disparity by matching local image patches while smoothing the result across paths.",
+  "subtitle": "SGBM estimates stereo disparity by combining local matching evidence with smoothness costs accumulated along multiple image paths.",
   "domain": "Computer vision",
   "difficulty": "Advanced",
-  "summary": "The depth estimation project used OpenCV and SGBM to build stereo disparity maps.",
+  "summary": "The depth estimation project used OpenCV and SGBM to build stereo disparity maps from calibrated stereo images.",
   "tags": ["Stereo vision", "SGBM", "OpenCV", "Depth"],
   "sourceFiles": ["_portfolio/depth-estimation.md"],
   "sourceLinks": [{ "label": "Depth estimation project", "href": "/projects/depth-estimation" }],
-  "externalSources": [{ "label": "OpenCV: Depth Map from Stereo Images", "href": "https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" }],
-  "artifact": { "type": "stereo-disparity", "title": "Disparity changes with correspondence", "description": "The demo compresses the core idea: matched points shift more when the object is closer." },
-  "sections": [
-    { "heading": "Block Matching", "body": ["The algorithm searches for similar patches between the left and right camera images. The horizontal offset between a matching pair becomes disparity."] },
-    { "heading": "Semi-Global Smoothing", "body": ["Pure local matching is noisy. SGBM adds penalties so neighboring disparities prefer to vary smoothly unless image evidence says otherwise."] }
+  "externalSources": [
+    { "label": "OpenCV: StereoSGBM class reference", "href": "https://docs.opencv.org/4.x/d2/d85/classcv_1_1StereoSGBM.html" },
+    { "label": "OpenCV: Depth Map from Stereo Images", "href": "https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" },
+    { "label": "OpenCV: Camera calibration tutorial", "href": "https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html" }
   ],
-  "pitfalls": ["Expecting good matches on blank walls.", "Using unrectified camera images.", "Over-smoothing real depth discontinuities."],
-  "quiz": [{ "question": "What does stereo block matching try to find?", "options": ["Similar patches across left and right images", "The fastest CPU core", "A language token", "Only the image center"], "answer": 0, "explanation": "Disparity comes from matching corresponding visual patches." }],
-  "related": ["stereo-vision-disparity-maps", "camera-calibration-robot-vision"]
+  "artifact": { "type": "stereo-disparity", "title": "Disparity changes with correspondence", "description": "The demo compresses the core idea: matched points shift more when the object is closer." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "Correspondence First, Geometry Second" },
+    { "type": "paragraph", "text": "A rectified stereo pair turns correspondence into a mostly horizontal search. SGBM scores candidate disparities for each pixel, then discourages implausible disparity changes while preserving strong boundaries. Only after correspondence is estimated do calibration parameters convert disparity into metric depth." },
+    { "type": "latex", "content": "$$Z = \\frac{fB}{d}$$\n\nFor a rectified pair, depth $Z$ is inversely proportional to disparity $d$, with focal length $f$ expressed in pixels and baseline $B$ in distance units." }
+  ],
+  "sections": [
+    {
+      "heading": "Rectification Defines the Search Geometry",
+      "body": [
+        "Calibration estimates the camera matrices and lens distortion; stereo calibration also estimates the relative camera pose. Rectification warps both views so corresponding scene points lie on the same image row. SGBM can then search disparity along the horizontal axis instead of over a two-dimensional area.",
+        "The project source reports two Logitech camera views, calibration assistance, SGBM matching, parameter tuning, and disparity/depth visualization. It does not publish its final calibration matrix, baseline, image resolution, or SGBM parameter values, so this page does not infer them."
+      ],
+      "callout": "Analogy limit: sliding one transparent image over another explains horizontal disparity only after good rectification. Real cameras add distortion, exposure differences, occlusion, repeated texture, and subpixel estimates that the overlay analogy omits."
+    },
+    {
+      "heading": "Matching Costs and Semi-Global Aggregation",
+      "body": [
+        "For each pixel and candidate disparity, the matcher computes a local photometric cost. Pure block matching chooses from local evidence and can be unstable on weak texture. SGBM aggregates costs along several paths and adds a small penalty P1 for changing disparity by one and a larger penalty P2 for larger jumps.",
+        "The penalties express a piecewise-smooth prior, not a belief that every surface is flat. P2 must exceed P1. Larger penalties can fill noisy regions but also smear foreground boundaries; smaller penalties preserve variation but admit speckle. OpenCV's implementation exposes modes that trade path coverage, memory, and runtime."
+      ],
+      "table": {
+        "columns": ["Parameter", "Role", "Typical failure when mis-set"],
+        "rows": [
+          ["minDisparity", "Start of search range", "Valid matches fall outside the range"],
+          ["numDisparities", "Search width; OpenCV requires divisibility by 16", "Too small clips near objects; too large adds work and ambiguity"],
+          ["blockSize", "Local support window", "Large windows blur edges; tiny windows amplify noise"],
+          ["P1 and P2", "Smoothness penalties", "Over-smoothing or fragmented disparity"],
+          ["uniquenessRatio", "Reject ambiguous winners", "Too strict removes valid pixels; too loose accepts repeats"],
+          ["speckleWindowSize/range", "Filter small inconsistent regions", "Real small objects may disappear"]
+        ]
+      }
+    },
+    {
+      "heading": "Disparity Validity and Depth Conversion",
+      "body": [
+        "A disparity is usable only when the correspondence is credible. Occluded pixels appear in one view but not the other; uniform walls have little texture; repeating rails can produce several similar matches. Left-right consistency checks, uniqueness tests, invalid-value masks, and speckle filtering reduce false certainty but also reduce coverage.",
+        "Depth conversion requires consistent units. If focal length is in pixels, disparity must be in pixels and baseline can be in meters to produce meters. OpenCV disparity outputs may use fixed-point scaling depending on the API path, so code must inspect and convert representation before applying the formula. Near-zero disparity should be marked invalid or effectively beyond the reliable range, not divided blindly."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Consider an illustrative rectified rig with focal length 700 pixels and baseline 0.12 meters. If a feature appears at x=410 in the left image and x=368 in the right image, disparity is 42 pixels. The pinhole estimate is Z=(700×0.12)/42=2.0 meters.",
+        "A second match with disparity 14 pixels gives 6.0 meters. Thus a threefold smaller disparity implies a threefold larger estimated depth for the same calibrated rig. These camera values and matches are teaching numbers, not measurements reported by the project. If the 42-pixel match lies across an occlusion boundary, the arithmetic remains correct but the correspondence—and therefore the depth—is wrong."
+      ],
+      "table": {
+        "columns": ["Quantity", "Illustrative value", "Check"],
+        "rows": [
+          ["Focal length", "700 px", "Use rectified calibration value"],
+          ["Baseline", "0.12 m", "Use camera-center separation"],
+          ["Disparity", "42 px", "Left x minus corresponding right x"],
+          ["Estimated depth", "2.0 m", "Valid only for a credible match"]
+        ]
+      }
+    },
+    {
+      "heading": "Evaluation and Project Interpretation",
+      "body": [
+        "Evaluate disparity separately from metric depth. Inspect valid-pixel coverage, left-right inconsistency, boundary behavior, and error versus known geometry across distance. Then report depth error with units, robust summaries, and failure slices for texture, lighting, and range rather than only a colored map.",
+        "The portfolio source reports that the student study found no statistically significant difference between measured distances and three model outputs, with a stereo-model p-value of 12.5%, and also reports that its stereo depth map was the noisiest visually. That project-specific hypothesis test is not proof of equivalence or production accuracy; sample size, power, calibration uncertainty, residual structure, and effect sizes would be needed for stronger claims."
+      ]
+    }
+  ],
+  "pitfalls": [
+    "Running correspondence on unrectified or poorly calibrated images.",
+    "Treating every numeric disparity as valid, especially at occlusions and blank walls.",
+    "Forgetting fixed-point disparity scaling before depth conversion.",
+    "Searching too narrow a disparity range for the nearest expected object.",
+    "Increasing smoothness until true object boundaries disappear.",
+    "Interpreting a non-significant test as proof that methods are equivalent."
+  ],
+  "related": ["stereo-vision-disparity-maps", "apriltag-vision-pose-estimation"]
 }

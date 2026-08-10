@@ -1,7 +1,8 @@
 {
+  "schemaVersion": 2,
   "slug": "fred-bls-api-time-series-plotting",
   "title": "FRED and BLS API Time-Series Plotting",
-  "subtitle": "Economic plotting is mostly a data-contract problem: series IDs, frequencies, units, revisions, and comparable scales.",
+  "subtitle": "Economic plotting is a data-contract problem before it is a charting problem: identity, frequency, units, adjustment, missingness, and revision status determine the claim.",
   "domain": "Economics",
   "difficulty": "Intermediate",
   "summary": "The Economic Series Plotter fetches FRED and BLS data and turns it into consistently formatted charts for FED Challenge analysis.",
@@ -9,24 +10,100 @@
   "sourceFiles": ["_portfolio/economic-grapher.md"],
   "sourceLinks": [{ "label": "Economic Series Plotter project", "href": "/projects/economic-grapher" }],
   "externalSources": [
-    { "label": "FRED API documentation", "href": "https://fred.stlouisfed.org/docs/api/fred/" },
-    { "label": "BLS Public Data API features", "href": "https://www.bls.gov/bls/api_features.htm" },
-    { "label": "BLS API getting started", "href": "https://www.bls.gov/developers/home.htm" }
+    { "label": "FRED API overview", "href": "https://fred.stlouisfed.org/docs/api/fred/overview.html" },
+    { "label": "FRED series observations", "href": "https://fred.stlouisfed.org/docs/api/fred/series_observations.html" },
+    { "label": "FRED series vintage dates", "href": "https://fred.stlouisfed.org/docs/api/fred/series_vintagedates.html" },
+    { "label": "BLS Public Data API v2 signature", "href": "https://www.bls.gov/developers/api_signature_v2.htm" }
   ],
   "artifact": { "type": "economic-series", "title": "Raw scale vs indexed comparison", "description": "Toggle indexed and raw scale views to see why economic series often need normalization before comparison." },
   "contentBlocks": [
     { "type": "heading", "level": 2, "text": "The Plot Is the Last Step" },
-    { "type": "paragraph", "text": "A clean economic chart starts before Matplotlib or Seaborn. The important choices are what series means, how often it is sampled, what units it uses, whether values are seasonally adjusted, and whether the latest observation is preliminary or revised." },
-    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Series ID</strong>Choose the exact FRED or BLS identifier.</div><div><strong>Frequency</strong>Monthly, quarterly, weekly, or annual values should not be mixed casually.</div><div><strong>Units</strong>Level, percent, index, change, and annualized rate encode different claims.</div><div><strong>Transform</strong>Indexing, percent change, or rolling averages make comparisons readable.</div></div>" }
+    { "type": "paragraph", "text": "A defensible chart preserves what each observation means. The same line shape can represent a level, index, percent, annualized change, or seasonally adjusted statistic; consistent colors cannot repair incompatible definitions." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Identify</strong>Resolve the exact series and source.</div><div><strong>Normalize</strong>Parse dates, values, flags, and metadata into one schema.</div><div><strong>Transform</strong>Apply an explicit economic comparison.</div><div><strong>Render</strong>Label units, adjustment, period, and retrieval context.</div></div>" }
   ],
   "sections": [
-    { "heading": "FRED vs BLS", "body": ["FRED is a broad economic database that aggregates many sources and exposes series through a web API. BLS publishes labor, price, productivity, wage, and employment data through its own public API.", "A plotting tool that supports both needs an internal normalized shape: date, value, source, series ID, units, title, frequency, and notes."] },
-    { "heading": "The Comparison Trap", "body": ["Putting CPI, unemployment, and an interest rate on one y-axis is usually not meaningful. Indexing each series to a base date can reveal relative movement, while separate axes or panels preserve units.", "For policy analysis, the transformation must be explicit because a visual slope can change depending on whether the chart uses levels, percentage changes, or indexed values."], "table": { "columns": ["Transformation", "Use when"], "rows": [["Raw level", "Units are directly meaningful"], ["Indexed to 100", "Comparing relative movement across unlike units"], ["Percent change", "Studying growth rates or inflation"], ["Rolling average", "Reducing high-frequency noise"], ["Year-over-year change", "Handling seasonality in monthly data"]] } }
+    {
+      "heading": "FRED and BLS Expose Different Data Contracts",
+      "body": [
+        "FRED is maintained by the Federal Reserve Bank of St. Louis and aggregates series from many sources. Its API supports series metadata, observations, releases, real-time periods, and vintage dates. BLS is the primary publisher for many labor, price, wage, productivity, and employment series; its v2 API accepts one or more series IDs and can return catalog metadata, calculations, annual averages, and aspects when requested under supported conditions.",
+        "The project source establishes only that the Economic Series Plotter calls FRED and BLS APIs and charts results with Matplotlib, Seaborn, and Streamlit for consistent FED Challenge use. It does not document specific series IDs, transformations, vintage handling, cache policy, or validation results."
+      ],
+      "table": {
+        "columns": ["Field in a normalized record", "Purpose"],
+        "rows": [
+          ["provider + series_id", "Stable identity and lookup path"],
+          ["observation_date + value", "The measured period and parsed number"],
+          ["frequency + units", "Interpret spacing and magnitude"],
+          ["seasonal_adjustment", "Prevent adjusted/unadjusted confusion"],
+          ["title + source/agency", "Human meaning and provenance"],
+          ["retrieved_at + vintage/realtime window", "Reproduce what was known when"],
+          ["status + footnotes", "Preserve preliminary, revised, or special values"]
+        ]
+      }
+    },
+    {
+      "heading": "Parsing Is Part of the Analysis",
+      "body": [
+        "API success means the envelope was returned, not that every requested series is valid. Check provider status and messages, then validate each series ID, observation date, numeric value, and requested window. FRED can represent missing observation values with a period; BLS responses include period codes, latest flags, and footnotes. Missing is null, never zero.",
+        "BLS monthly records use period codes such as M01 through M12, while M13 can represent an annual average in relevant outputs and should not be plotted as a thirteenth month. Sort by actual period, deduplicate deliberately, and keep raw payload references so parser decisions remain auditable."
+      ],
+      "callout": "Analogy limit: a series ID resembles a stock ticker because it is a compact identifier. Unlike a ticker, it may encode survey, population, area, measure, adjustment, and other dimensions; a similar label does not imply a comparable statistic."
+    },
+    {
+      "heading": "Transformations Must Answer a Named Question",
+      "body": [
+        "Raw levels are best when the unit itself matters. Indexing each series to 100 at a shared valid base date compares cumulative relative movement. Percent change answers growth over an interval; year-over-year change compares a period with the same period one year earlier and can reduce recurring seasonality, though it does not replace an official seasonal-adjustment method.",
+        "Do not put CPI index points, an unemployment percentage, and a policy rate on one unlabeled scale. Use separate panels or clearly labeled axes when levels matter. If indexing, state the base date and exclude series without a valid base observation rather than silently choosing a different date for each."
+      ],
+      "table": {
+        "columns": ["Transformation", "Formula or rule", "Question"],
+        "rows": [
+          ["Raw level", "x_t", "What was the reported level?"],
+          ["Indexed", "100 × x_t / x_base", "How far has each series moved from one common base?"],
+          ["Period change", "100 × (x_t/x_{t-k} - 1)", "How fast did it change over k periods?"],
+          ["Rolling mean", "Mean of a declared trailing window", "What is the local trend after smoothing?"],
+          ["Separate panels", "Shared time axis, independent units", "How did unlike measures co-move without erasing units?"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Take two illustrative monthly series on a shared valid base month. Series A rises from 200 to 210, so its index moves from 100 to 105. Series B falls from 4.0 to 3.8, so its index moves from 100 to 95. The indexed chart shows +5% versus -5% movement, but it does not make their raw units interchangeable.",
+        "For a separate inflation-style example, an index moving from 300 in May last year to 309 this May has year-over-year change 100×(309/300−1)=3%. If last May is missing, the correct output is missing, not zero or a comparison against June. All values here are illustrative and are not observations or results reported by the Economic Series Plotter."
+      ],
+      "table": {
+        "columns": ["Illustrative series", "Base", "Later", "Indexed later"],
+        "rows": [
+          ["A", "200", "210", "105"],
+          ["B", "4.0", "3.8", "95"],
+          ["Interpretation", "Both start at 100", "Units remain different", "Relative movement only"]
+        ]
+      }
+    },
+    {
+      "heading": "Revisions, Vintages, and Reproducibility",
+      "body": [
+        "Economic observations can be revised. FRED's vintage-date and real-time-period facilities let an analyst distinguish the latest value from what was available at an earlier date. A policy briefing recreated months later may change if it silently fetches the newest revision.",
+        "Store the request parameters, retrieval timestamp, raw response hash, provider metadata, transformation configuration, and chart code version. Label preliminary observations and decide whether the product shows latest-vintage analysis or an as-of historical view."
+      ]
+    },
+    {
+      "heading": "Chart Validation",
+      "body": [
+        "Before rendering, assert monotonic dates, expected frequency, unit compatibility, adjustment compatibility, missing-value counts, and enough history for the transformation. After rendering, confirm that titles, axes, legends, base period, notes, and source labels describe the actual data rather than defaults.",
+        "Use fixture responses containing a missing FRED value, BLS M13, a preliminary footnote, duplicate periods, and a provider-level error. A screenshot test can catch layout regression but cannot prove the economic transformation is correct; test the output table numerically first."
+      ]
+    }
   ],
-  "pitfalls": ["Mixing seasonally adjusted and non-adjusted series.", "Plotting unlike units on one axis without indexing.", "Ignoring revisions or vintage data.", "Treating missing months as zero.", "Using chart style consistency to hide incompatible definitions."],
-  "quiz": [
-    { "question": "Why index two economic series to 100?", "options": ["To compare relative movement despite unlike units", "To delete all missing values", "To make API keys unnecessary", "To turn monthly data into annual data"], "answer": 0, "explanation": "Indexing makes relative change comparable when raw units differ." },
-    { "question": "What should every fetched economic series retain?", "options": ["Only the color used in the chart", "Source metadata such as units, frequency, and series ID", "A random category", "The browser width"], "answer": 1, "explanation": "Metadata is needed to interpret and audit the chart." }
+  "pitfalls": [
+    "Mixing seasonally adjusted and non-adjusted series without disclosure.",
+    "Plotting unlike units on one scale and letting visual proximity imply comparability.",
+    "Treating missing observations or provider error payloads as zero.",
+    "Ignoring revisions, vintage dates, preliminary flags, and footnotes.",
+    "Treating BLS annual-average period M13 as a calendar month.",
+    "Indexing each series from a different silent base date.",
+    "Inventing project transformations or results not documented in the source."
   ],
-  "related": ["economic-data-normalization-graphing", "comparing-economic-indicators-shared-axes"]
+  "related": ["campus-bus-load-curves", "natural-language-reproducible-pandas-code"]
 }

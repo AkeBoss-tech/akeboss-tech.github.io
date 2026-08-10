@@ -1,20 +1,107 @@
 {
+  "schemaVersion": 2,
   "slug": "persistent-semantic-memory-ai-assistants",
   "title": "Persistent Semantic Memory for AI Assistants",
   "subtitle": "Semantic memory lets an assistant retrieve relevant past context instead of treating every conversation as isolated.",
   "domain": "AI agents",
   "difficulty": "Intermediate",
-  "summary": "The personal assistant project uses embeddings and ChromaDB-style retrieval for preferences, files, and past conversations.",
+  "summary": "The in-progress personal assistant project describes embeddings and ChromaDB retrieval for preferences, files, and past conversations.",
   "tags": ["AI agents", "Memory", "Embeddings", "Semantic search"],
   "sourceFiles": ["_portfolio/personal-assistant.md"],
+  "sourceStatus": { "label": "In progress", "note": "The project source explicitly describes the system as active work with core functionality around 70% complete; architecture descriptions are not evidence that every policy on this page is implemented." },
   "sourceLinks": [{ "label": "AI assistant project", "href": "/projects/personal-assistant" }],
-  "externalSources": [{ "label": "Pinecone: rerankers and retrieval", "href": "https://www.pinecone.io/learn/series/rag/rerankers/" }],
-  "artifact": { "type": "rag-retrieval", "title": "Memory retrieval as ranked context", "description": "A memory system retrieves the past facts most relevant to the current request." },
-  "sections": [
-    { "heading": "Memory as Retrieval", "body": ["The assistant should not dump all past history into every prompt. It should retrieve a small set of relevant memory records.", "That makes memory closer to search than to a giant transcript."] },
-    { "heading": "What Gets Stored", "body": ["Useful records include durable preferences, facts the user explicitly wants remembered, summaries of projects, and indexed documents. Temporary chatter should usually expire or remain unpromoted."] }
+  "externalSources": [
+    { "label": "Chroma: Query and Get", "href": "https://docs.trychroma.com/docs/querying-collections/query-and-get" },
+    { "label": "Chroma: Metadata filtering", "href": "https://docs.trychroma.com/docs/querying-collections/metadata-filtering" }
   ],
-  "pitfalls": ["Saving everything forever.", "Retrieving memories without timestamps or source context.", "Letting stale preferences override newer user intent."],
-  "quiz": [{ "question": "Why rank memories before using them?", "options": ["To keep only relevant context in the prompt", "To delete all old context", "To avoid user consent", "To make responses random"], "answer": 0, "explanation": "Ranked retrieval keeps the active context focused." }],
-  "related": ["rag-pipeline-student-documents", "specialist-agent-orchestration"]
+  "artifact": { "type": "rag-retrieval", "title": "Memory retrieval as ranked context", "description": "A memory system retrieves the past facts most relevant to the current request." },
+  "contentBlocks": [
+    { "type": "heading", "level": 2, "text": "Memory Is a Retrieval System with Governance" },
+    { "type": "paragraph", "text": "Persistent memory is not the entire transcript pasted into every prompt. It is a pipeline that selects candidate records, retrieves and ranks a small context set, preserves provenance and time, and lets the user correct or delete what was stored." },
+    { "type": "html", "content": "<div class=\"concept-ladder\"><div><strong>Capture</strong>Turn an event into a candidate memory.</div><div><strong>Represent</strong>Store content, embedding, source, time, scope, and status.</div><div><strong>Retrieve</strong>Combine semantic similarity with filters and recency.</div><div><strong>Govern</strong>Correct, expire, delete, and audit use.</div></div>" }
+  ],
+  "sections": [
+    {
+      "heading": "Reported Project Facts and Recommended Policy",
+      "body": [
+        "Project fact: the personal-assistant source names a persistent memory system for preferences, past conversations, and important facts; ChromaDB for semantic memory storage and retrieval; PostgreSQL for user, session, and structured-memory persistence; and sentence-transformer embeddings. It also reports semantic search over uploaded files and describes Google-service integrations.",
+        "Project status: the same source calls the system work in progress at about 70% completion. It does not document a memory schema, promotion threshold, expiry policy, consent workflow, correction UI, encryption model, retrieval formula, or evaluation results. The policies below are recommendations for a robust implementation, not claims that those features already exist."
+      ],
+      "table": {
+        "columns": ["Statement", "Classification"],
+        "rows": [
+          ["ChromaDB supports semantic memory storage and retrieval", "Reported project architecture"],
+          ["PostgreSQL stores user, session, and structured memory data", "Reported project architecture"],
+          ["Temporary chatter should expire unless promoted", "Recommended design policy"],
+          ["Users should be able to inspect, correct, and delete memories", "Recommended design policy"],
+          ["Retrieval should combine semantic score, scope, and recency", "Recommended design policy"]
+        ]
+      }
+    },
+    {
+      "heading": "Memory Records, Not Transcript Fragments",
+      "body": [
+        "A useful memory record separates the normalized claim from the evidence that produced it. Store a stable ID, owner and workspace scope, type, content, source conversation or file, created and last-confirmed times, sensitivity, status, and embedding version. Contradictory facts should coexist as evidence until a policy resolves them; silently overwriting destroys history.",
+        "Recommended design policy: distinguish episodic records ('the user requested aisle seats on 12 May') from semantic preferences ('the user usually prefers aisle seats') and source documents. Promotion from one event to a durable preference should require repetition or explicit confirmation, especially for sensitive or consequential facts."
+      ],
+      "callout": "Analogy limit: a memory store resembles a card catalog because retrieval uses labels and search. It is not human memory: vector similarity has no understanding of truth, importance, consent, or whether a preference is still current."
+    },
+    {
+      "heading": "Retrieval, Filtering, and Ranking",
+      "body": [
+        "Chroma's official docs support vector queries plus metadata and document filters. A robust request first enforces tenant and workspace scope, filters deleted or disallowed records, retrieves semantic candidates, and then reranks with signals such as recency, explicit importance, source reliability, and conflict status.",
+        "Cosine or distance rank is only a candidate signal. A semantically close medical fact from another user is never eligible, a stale preference should not override a current instruction, and a remembered claim without provenance should not be presented as verified."
+      ],
+      "table": {
+        "columns": ["Signal", "What it contributes", "Failure if used alone"],
+        "rows": [
+          ["Semantic similarity", "Topical relevance", "Can retrieve a related but wrong fact"],
+          ["Tenant/workspace filter", "Authorization boundary", "Does not establish truth"],
+          ["Recency", "Preference freshness", "New does not always mean correct"],
+          ["Importance", "User- or policy-marked priority", "Can entrench a bad record"],
+          ["Source provenance", "Traceability and correction path", "A source can itself be unreliable"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Assume the current request is, 'Book dinner after my meeting.' Candidate A says 'prefers quiet restaurants,' confirmed 20 days ago with relevance 0.86. Candidate B says 'vegetarian this month,' explicitly stated yesterday with relevance 0.78. Candidate C says 'lunch with Maya at noon,' relevance 0.92 but it belongs to a different workspace. Scope filtering removes C before ranking even though it has the highest semantic score.",
+        "The assistant uses A and B as planning constraints but asks before booking because an external write is consequential. If the user now says, 'I'm eating fish again,' the system records the correction, marks B superseded rather than erasing its provenance, and reruns retrieval. The numeric similarities are illustrative; the project source does not report this formula or behavior."
+      ],
+      "table": {
+        "columns": ["Candidate", "Relevance", "Eligibility", "Decision"],
+        "rows": [
+          ["Quiet restaurant preference", "0.86", "Same user, current", "Use as soft preference"],
+          ["Vegetarian this month", "0.78", "Same user, newly confirmed", "Use until corrected"],
+          ["Lunch with Maya", "0.92", "Different workspace", "Exclude before ranking"],
+          ["Current user correction", "Direct instruction", "Same turn", "Override stale memory and preserve correction trail"]
+        ]
+      }
+    },
+    {
+      "heading": "Write Policy, Privacy, and User Control",
+      "body": [
+        "Recommended design policy: do not persist every utterance. Use explicit memory categories and default retention windows; require stronger consent for sensitive data; encrypt data in transit and at rest; isolate tenants before vector search; and make inspect, export, correct, and delete operations first-class product features.",
+        "Retrieval must be permission-aware at query time, not only when content is inserted. Deletion also needs to cover derived embeddings, cached prompts, and backups according to the product's retention contract. Logs should say which memory IDs influenced an answer without copying sensitive text into telemetry."
+      ]
+    },
+    {
+      "heading": "Evaluation and Failure Modes",
+      "body": [
+        "Evaluate retrieval with labeled requests and eligible memories. Measure recall of relevant records, precision of injected context, cross-user leakage rate, stale-memory rate, correction latency, and the fraction of answers that expose provenance. A memory system can have excellent semantic recall and still be unsafe if its authorization filter fails once.",
+        "Test contradictions, negation, same-name users, workspace boundaries, deletions, embedding-model migration, and an instruction that conflicts with a stored preference. The current user instruction should win unless a higher-priority safety or legal rule applies."
+      ]
+    }
+  ],
+  "pitfalls": [
+    "Saving every conversation fragment forever without a promotion or retention policy.",
+    "Running similarity search before enforcing user and workspace scope.",
+    "Retrieving memories without timestamps, source provenance, or conflict status.",
+    "Letting stale preferences override the user's current instruction.",
+    "Treating an embedding score as truth or authorization.",
+    "Deleting visible text but leaving embeddings, caches, or derived records active.",
+    "Presenting recommended governance controls as implemented project features."
+  ],
+  "related": ["rag-pipeline-student-documents", "langgraph-multi-agent-study-backend"]
 }

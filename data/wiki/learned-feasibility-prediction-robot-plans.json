@@ -1,20 +1,78 @@
 {
+  "schemaVersion": 2,
   "slug": "learned-feasibility-prediction-robot-plans",
   "title": "Learned Feasibility Prediction for Robot Plans",
   "subtitle": "A feasibility predictor estimates which symbolic actions are likely to survive expensive motion checks.",
   "domain": "Robotics planning",
   "difficulty": "Advanced",
-  "summary": "The TAMP project trains feasibility guidance from successful and failed traces while keeping motion checking as the verifier.",
+  "summary": "The first TAMP research goal is to train feasibility guidance from successful and failed traces while keeping motion checking as the verifier.",
   "tags": ["TAMP", "Learning", "Feasibility", "Robotics"],
   "sourceFiles": ["_portfolio/tamp-research.md"],
+  "sourceStatus": { "label": "Research direction", "note": "The source describes the feasibility predictor as the first research goal; this page explains the intended architecture." },
   "sourceLinks": [{ "label": "TAMP research project", "href": "/projects/tamp-research" }],
-  "externalSources": [{ "label": "PDDLStream", "href": "https://github.com/caelan/pddlstream" }],
+  "externalSources": [
+    { "label": "PDDLStream", "href": "https://github.com/caelan/pddlstream" },
+    { "label": "PyTorch BCEWithLogitsLoss", "href": "https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html" }
+  ],
   "artifact": { "type": "tamp-pipeline", "title": "Guidance before verification", "description": "The predictor ranks or prunes plans before IK, collision, and trajectory checks spend real compute." },
   "sections": [
-    { "heading": "The Supervision Signal", "body": ["Every failed IK call and collision check is useful data. A trace tells the learner what kind of partial plan was plausible symbolically but bad geometrically."] },
-    { "heading": "What It Should Not Do", "body": ["The predictor should not declare a plan safe. It should only help decide what to try first or what to avoid trying too often."] }
+    {
+      "heading": "Definition: A Probability for Search Guidance",
+      "body": [
+        "A learned feasibility predictor maps a scene and an action or partial symbolic plan to a score estimating whether downstream IK, collision, and motion checks are likely to succeed. Its practical role is to order candidates, allocate verification effort, or cautiously prune low-value branches.",
+        "Feasibility is conditional on representation and verifier settings: object poses, geometry, selected arm, grasp or placement parameters, preceding actions, and available time can all change the outcome. A single context-free label for an action name is therefore too weak for most useful guidance."
+      ],
+      "callout": "The score is evidence about what to try next, not a safety certificate and not a replacement for motion checking."
+    },
+    {
+      "heading": "Why Failed Traces Are Essential Supervision",
+      "body": [
+        "A trace can record a symbolically plausible candidate and the exact stage at which refinement succeeded or failed. Positive examples identify configurations worth exploring; negative IK, collision, or trajectory outcomes define difficult boundaries that successful plans alone cannot teach.",
+        "The public project source proposes JSONL traces, Parquet datasets, PyTorch Geometric GPU training, checkpoint-backed inference, MLflow, and benchmark dashboards. It describes the early predictor as the first research goal and does not report a trained model's accuracy or planning-time improvement."
+      ],
+      "table": {
+        "columns": ["Input evidence", "Potential signal", "Leakage or bias risk"],
+        "rows": [
+          ["Scene geometry", "Reachability and clearance", "Train/test copies of the same seed"],
+          ["Action and arm", "Kinematic compatibility", "Rare actions underrepresented"],
+          ["Continuous proposal", "Grasp or placement quality", "Label generated after features"],
+          ["Partial-plan history", "State after prior actions", "Future verifier outcome accidentally included"],
+          ["Failure stage", "Targeted supervision", "Planner policy determines observed cases"]
+        ]
+      }
+    },
+    {
+      "heading": "Mechanics: Dataset, Model, and Search Policy",
+      "body": [
+        "First define the prediction unit and label: for example, whether one proposed action survives all configured IK, collision, and motion checks. Split data by held-out scene seeds or task instances before training so near-duplicate traces from one scene do not cross the boundary. Handle imbalance explicitly and report precision-recall behavior, calibration, and subgroup performance by task and failure stage.",
+        "At inference, ranking is safer than irreversible pruning because every candidate remains recoverable. If pruning is used, select thresholds from planning-level tradeoffs, preserve an unguided fallback, and periodically explore low-score regions to reduce policy-induced blind spots. Checkpoint-backed inference should be versioned with feature schema and verifier configuration.",
+        "The relevant objective is downstream: fewer expensive calls and late failures, lower median and tail planning time, and preserved or improved held-out task success. Classification accuracy alone can hide confident false negatives that remove the only viable plan."
+      ]
+    },
+    {
+      "heading": "Worked Example: Ranking Three Handoff Poses",
+      "body": [
+        "A planner proposes handoff poses A, B, and C. The predictor scores them 0.82, 0.55, and 0.08. Ranking tries A first. Its left-arm approach succeeds, but the right-arm receive path collides, so verification rejects it and logs a negative trace at the collision stage. B then passes all checks and becomes the executable candidate.",
+        "A threshold of 0.10 would prune C. That saves a call if C is genuinely poor, but creates a false-negative failure if C was the only valid candidate under an unmodeled scene detail. A fallback that reopens pruned candidates when ranked candidates fail protects completeness better than permanent pruning.",
+        "For five comparable tasks, suppose unguided search uses [12, 8, 25, 10, 45] motion calls and guided search uses [7, 6, 14, 9, 44]. Guidance improves typical cases but barely changes the worst case. Reporting only the mean would obscure the tail behavior that the research goal explicitly cares about."
+      ]
+    },
+    {
+      "heading": "Limits: Calibration, Shift, and Selective Labels",
+      "body": [
+        "A score of 0.8 is calibrated only if roughly 80% of comparable scored candidates succeed under the same label definition. Ranking quality can be useful without perfect calibration, but threshold pruning depends heavily on reliable probabilities, especially near the cutoff.",
+        "The planner creates selective labels because only checked candidates receive outcomes. After guidance changes the search distribution, new candidates may differ from the training traces. Randomized tasks help coverage but do not eliminate distribution shift across tabletop, shelf, handoff, block-tower, container-insertion, simulation, and real execution conditions.",
+        "False positives waste verification compute; false negatives can hide valid plans. Evaluation must therefore couple model metrics to end-to-end success, motion-call count, late-failure rate, and median and tail planning time on held-out scenes. Motion checking and execution validation remain authoritative."
+      ],
+      "callout": "Research status: this architecture and its expected benefits are proposed goals. The public source does not claim that these numerical examples are measured project results."
+    }
   ],
-  "pitfalls": ["Training only on successful traces.", "Letting the predictor replace collision checking.", "Optimizing median planning time while ignoring rare catastrophic failures."],
-  "quiz": [{ "question": "What is the final verifier in this architecture?", "options": ["The learned predictor", "IK, collision, trajectory, and execution checks", "A CSS animation", "The task name"], "answer": 1, "explanation": "Learned guidance helps search, but geometric and execution checks verify feasibility." }],
-  "related": ["dual-arm-tamp-pipeline", "planner-guidance-final-motion-verification"]
+  "pitfalls": [
+    "Training only on successful traces.",
+    "Letting the predictor replace collision checking.",
+    "Splitting individual traces so the same scene leaks into training and evaluation.",
+    "Optimizing median planning time while ignoring rare tail failures.",
+    "Using a pruning threshold without a recovery path under distribution shift."
+  ],
+  "related": ["dual-arm-tamp-pipeline", "dual-arm-scheduling-cp-sat"]
 }

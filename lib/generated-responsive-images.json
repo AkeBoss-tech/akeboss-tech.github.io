@@ -1653,6 +1653,54 @@
       "height": 1024
     },
     {
+      "src": "/images/wiki/ai-knowledge-systems.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "src": "/images/wiki/genomics-computer-vision.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "src": "/images/wiki/math-data-transit.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "src": "/images/wiki/robotics-control-planning.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
       "src": "/school-logos/ait-logo.png",
       "widths": [
         160,

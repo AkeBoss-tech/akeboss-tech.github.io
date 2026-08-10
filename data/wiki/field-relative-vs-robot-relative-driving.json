@@ -1,20 +1,77 @@
 {
+  "schemaVersion": 2,
   "slug": "field-relative-vs-robot-relative-driving",
   "title": "Field-Relative vs Robot-Relative Driving",
-  "subtitle": "The same joystick push means different things depending on whether commands are interpreted from the field or the robot.",
+  "subtitle": "The same joystick vector means different motion depending on the coordinate frame in which it is interpreted.",
   "domain": "Robotics",
   "difficulty": "Intermediate",
-  "summary": "The robotics writing describes gyro-dependent swerve behavior and why orientation sensing matters.",
-  "tags": ["FRC", "Swerve", "Gyro", "Coordinates"],
+  "summary": "Robot-relative commands rotate with the chassis; field-relative commands remain aligned to the field and must be transformed using the robot's heading. The distinction affects teleoperation, autonomous control, debugging, and driver recovery when heading is wrong.",
+  "tags": ["FRC", "Swerve", "Coordinate Frames", "Kinematics", "Gyro"],
   "sourceFiles": ["_posts/2024-4-3-robotics-chief.md"],
-  "sourceLinks": [{ "label": "Robotics development post", "href": "/writing/robotics-development" }],
-  "externalSources": [{ "label": "WPILib: Coordinate System", "href": "https://docs.wpilib.org/en/stable/docs/software/basic-programming/coordinate-system.html" }],
-  "artifact": { "type": "swerve-vectors", "title": "Command frame changes module vectors", "description": "A swerve command combines translation and rotation, but the frame of reference decides what forward means." },
-  "sections": [
-    { "heading": "Robot-Relative", "body": ["Forward means the direction the robot is currently facing. If the robot turns, the same joystick input moves in a new field direction."] },
-    { "heading": "Field-Relative", "body": ["Forward means the field's forward direction. The robot uses its gyro heading to rotate the driver command into robot coordinates."], "callout": "Field-relative driving feels natural to drivers, but it depends on trustworthy heading estimation." }
+  "sourceLinks": [{"label": "Robotics development post", "href": "/writing/robotics-development"}],
+  "externalSources": [
+    {"label": "WPILib: Coordinate System", "href": "https://docs.wpilib.org/en/stable/docs/software/basic-programming/coordinate-system.html"},
+    {"label": "WPILib: Swerve Drive Kinematics", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html"}
   ],
-  "pitfalls": ["Using the wrong coordinate convention in kinematics.", "Not resetting gyro heading before a match.", "Failing gracefully when the gyro disconnects."],
-  "quiz": [{ "question": "What sensor is usually essential for field-relative driving?", "options": ["Gyro", "Break beam", "LED controller", "Bumper switch"], "answer": 0, "explanation": "The robot needs heading to rotate field commands into robot-relative commands." }],
-  "related": ["swerve-drive-basics-frc", "gyro-failures-swerve-instability"]
+  "artifact": {"type": "swerve-vectors", "title": "Command frame changes module vectors", "description": "A swerve command combines translation and rotation, but the frame of reference decides what forward means."},
+  "sections": [
+    {
+      "heading": "Two Frames for One Command",
+      "body": [
+        "A robot-relative translation command is expressed in axes attached to the chassis: forward stays out the robot's front and sideways stays out its left side as the robot turns. A field-relative command is expressed in fixed field axes, so a field-forward request keeps the same field direction even while the chassis rotates.",
+        "Neither frame is universally correct. Robot-relative control is direct and independent of heading estimation. Field-relative control often matches a driver's view and is convenient for trajectories, but it relies on a correct definition of field axes and a trustworthy robot heading."
+      ],
+      "table": {
+        "columns": ["Frame", "Axes move with", "Heading required for conversion", "Typical use"],
+        "rows": [
+          ["Robot-relative", "Robot chassis", "No", "Fallback control, direct mechanism-aligned motion"],
+          ["Field-relative", "Field", "Yes", "Holonomic teleop and field-based path following"]
+        ]
+      }
+    },
+    {
+      "heading": "How the Rotation Works",
+      "body": [
+        "A field-relative vector must be rotated into the robot frame before drivetrain kinematics creates wheel commands. WPILib's ChassisSpeeds.fromFieldRelativeSpeeds performs this conversion from field vx, field vy, angular speed, and the robot angle.",
+        "Conceptually, if the robot heading is θ, the conversion uses the inverse heading rotation: robot coordinates equal R(-θ) times the field translation vector. The sign and axis conventions matter; copying a formula from a different coordinate convention can reverse or swap directions."
+      ],
+      "callout": "Field-relative does not eliminate robot-relative kinematics. It adds a coordinate transform before kinematics."
+    },
+    {
+      "heading": "Worked Example: Robot Facing Left",
+      "body": [
+        "Assume the robot is rotated 90° counterclockwise from field forward. The driver requests 2 m/s field-forward, with no field-sideways motion and no rotation.",
+        "In robot coordinates, field forward is now toward the robot's right side. Using the inverse 90° rotation, the field vector (2, 0) becomes approximately (0, -2) under WPILib's standard robot axes, where +x is forward and +y is left. The modules therefore create a rightward strafe relative to the chassis, which still moves the robot field-forward.",
+        "Under robot-relative control, the same joystick-forward request would instead command (2, 0) in robot axes, sending the robot toward its own front—field-left in this setup."
+      ],
+      "table": {
+        "columns": ["Interpretation of joystick forward", "Robot-frame command", "Observed field motion"],
+        "rows": [
+          ["Field-relative at 90° heading", "Approximately vx = 0, vy = -2 m/s", "Field-forward"],
+          ["Robot-relative", "vx = 2 m/s, vy = 0", "Toward robot front, currently field-left"]
+        ]
+      }
+    },
+    {
+      "heading": "Heading Quality and Driver Recovery",
+      "body": [
+        "The transform is only as good as the supplied heading. A 15° heading error rotates every field-relative translation command by roughly 15°. A sudden gyro reset can make controls appear to rotate even though each swerve module is tracking its assigned state correctly.",
+        "Teams should define when heading is zeroed, account for alliance or operator-perspective conventions deliberately, log raw heading and transformed chassis speeds, and provide a tested reset or robot-relative fallback. Team 1257's source discusses customizable drive controls and log-based troubleshooting, both useful when diagnosing a frame mismatch."
+      ]
+    },
+    {
+      "heading": "Limits and Common Failure Modes",
+      "body": [
+        "Field-relative driving does not make a robot know its field position; translation conversion needs heading, while full pose also needs x and y estimation. Likewise, AprilTag pose updates can correct pose estimates but should not conceal a wrong axis convention.",
+        "Common errors include degrees-versus-radians mistakes, clockwise-versus-counterclockwise sign errors, swapping x and y, applying the transform twice, using stale heading, and changing the zero reference without updating driver expectations. Diagnose these with a simple cardinal-direction test before tuning wheel controllers."
+      ]
+    }
+  ],
+  "pitfalls": [
+    "Treating field-relative driving as if it provides field position.",
+    "Applying the field-to-robot rotation twice.",
+    "Mixing coordinate or angle conventions.",
+    "Ignoring gyro reset, drift, disconnection, or stale timestamps."
+  ],
+  "related": ["swerve-drive-basics-frc", "apriltag-vision-pose-estimation"]
 }

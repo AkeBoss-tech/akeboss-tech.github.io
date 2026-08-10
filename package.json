@@ -14,11 +14,12 @@
   },
   "scripts": {
     "predev": "npm run images:build",
-    "prebuild": "npm run images:build",
+    "prebuild": "npm run images:build && npm run wiki:validate",
     "dev": "next dev --port 3001",
     "build": "next build",
     "redirects:build": "node scripts/build-legacy-redirects.mjs",
     "images:build": "node scripts/build-responsive-images.mjs",
+    "wiki:validate": "node scripts/validate-wiki.mjs",
     "start": "next start",
     "lint": "eslint ."
   },

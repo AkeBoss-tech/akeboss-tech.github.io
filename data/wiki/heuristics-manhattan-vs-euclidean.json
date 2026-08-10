@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 2,
   "slug": "heuristics-manhattan-vs-euclidean",
   "title": "Heuristics: Manhattan vs Euclidean Distance",
   "subtitle": "A heuristic is a guess about remaining cost; the right guess depends on how movement is allowed.",
@@ -8,7 +9,8 @@
   "tags": ["A*", "Heuristics", "Geometry", "Pathfinding"],
   "sourceFiles": ["_portfolio/path-finder.md"],
   "sourceLinks": [{ "label": "A* path finder project", "href": "/projects/path-finder" }],
-  "externalSources": [{ "label": "Wikipedia: A* search algorithm", "href": "https://en.wikipedia.org/wiki/A*_search_algorithm" }],
+  "sourceStatus": { "label": "Implemented", "note": "The project source explicitly supports taxicab and Euclidean modes. It does not document diagonal moves, terrain weights, or heuristic scaling, so those cases are taught as extensions rather than project claims." },
+  "externalSources": [{ "label": "Hart, Nilsson, Raphael A* paper", "href": "https://ieeexplore.ieee.org/document/4082128/" }],
   "artifact": { "type": "astar-grid", "title": "Heuristic pressure changes the frontier", "description": "Toggle the demo and watch how the path frontier changes when the estimated distance changes." },
   "contentBlocks": [
     { "type": "latex", "content": "$$h_{manhattan}=|x_1-x_2|+|y_1-y_2|$$\n\n$$h_{euclidean}=\\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}$$" },
@@ -16,9 +18,10 @@
   ],
   "sections": [
     { "heading": "What the Heuristic Is Doing", "body": ["The heuristic does not move the agent. It ranks candidates by giving the algorithm a directional estimate.", "A weak heuristic expands too much. An overconfident heuristic can become greedy and wrong."] },
-    { "heading": "Choosing the Distance", "body": ["Manhattan distance is right for four-neighbor grids. Euclidean distance is natural when diagonal or continuous movement is allowed."], "table": { "columns": ["Movement model", "Better heuristic"], "rows": [["Four-direction grid", "Manhattan"], ["Eight-direction grid", "Diagonal or octile distance"], ["Continuous space", "Euclidean"], ["Unknown cost terrain", "Domain-specific estimate"]] } }
+    { "heading": "Choosing the Distance", "body": ["Manhattan distance exactly matches unobstructed unit-cost travel on a four-neighbor grid. Euclidean distance is the straight-line lower bound for movement in a plane. Both can be admissible on a four-neighbor unit grid, but Manhattan is more informed because it is never smaller there.", "For eight-direction grids with cardinal cost 1 and diagonal cost √2, octile distance matches the empty-grid geometry more closely than either raw Manhattan or Euclidean."], "table": { "columns": ["Movement model", "Useful baseline"], "rows": [["Four-direction, unit cost", "Manhattan"], ["Eight-direction, diagonal cost √2", "Octile"], ["Continuous straight-line movement", "Euclidean"], ["Weighted terrain", "A proven lower bound using minimum step cost"]] } },
+    { "heading": "Worked Example", "body": ["From (1,2) to (5,5), the coordinate differences are dx=4 and dy=3. Manhattan distance is 4+3=7. Euclidean distance is √(4²+3²)=5.", "On a four-neighbor unit grid, every legal path needs four horizontal and three vertical steps before obstacles, so 7 is exact in open space while 5 is a weaker lower bound. If unrestricted straight-line motion is legal, the 5-unit Euclidean segment is the relevant geometry."], "callout": "A larger admissible heuristic is usually more informed, but only comparisons under the same movement and cost model are meaningful." },
+    { "heading": "Scaling, Guarantees, and Limits", "body": ["A heuristic is admissible when it never exceeds true remaining cost. Consistency additionally requires h(n) ≤ c(n,n′)+h(n′) for each edge. Scaling a valid heuristic upward can make it overestimate; scaling downward preserves admissibility but weakens guidance.", "Terrain, one-way motion, turn penalties, and nonuniform action costs can make geometric distance poorly informed even when it remains a lower bound. Multiply geometric steps by a proven minimum per-step cost only when that bound truly applies.", "The path finder source lets learners select taxicab or Euclidean distance, but does not establish which movement transitions its implementation permits. The demo should therefore make its movement model visible before claiming one heuristic is best."] }
   ],
   "pitfalls": ["Using Euclidean distance on a four-direction grid without checking admissibility.", "Assuming a more complex heuristic is automatically better.", "Forgetting that terrain costs can make geometric distance misleading."],
-  "quiz": [{ "question": "Which heuristic fits four-direction grid movement best?", "options": ["Manhattan", "Euclidean", "Random", "No heuristic can work"], "answer": 0, "explanation": "Manhattan distance counts horizontal and vertical steps, matching four-direction movement." }],
-  "related": ["astar-search-open-closed-fscore", "random-obstacle-density-path-solvability"]
+  "related": ["astar-search-open-closed-fscore", "pathplanner-autonomous-routes"]
 }

@@ -1,20 +1,88 @@
 {
+  "schemaVersion": 2,
   "slug": "real-time-transit-data-collection-loops",
   "title": "Real-Time Transit Data Collection Loops",
-  "subtitle": "A polling loop turns a live vehicle feed into an analyzable historical dataset.",
+  "subtitle": "A polling loop turns a changing vehicle feed into an auditable historical time series.",
   "domain": "Data systems",
   "difficulty": "Foundational",
-  "summary": "The Rutgers Bus Analysis project polled PassioGO every 30 seconds and collected hundreds of thousands of data points.",
+  "summary": "The Rutgers Bus Analysis project polled the unofficial PassioGO API every 30 seconds from an Azure VM, collecting approximately 300,000+ observations and more than 100 MB over one week.",
   "tags": ["Transit", "APIs", "Polling", "Data engineering"],
   "sourceFiles": ["_portfolio/rutgers-bus-analysis.md"],
   "sourceLinks": [{ "label": "Rutgers Bus Analysis project", "href": "/projects/rutgers-bus-analysis" }],
-  "externalSources": [{ "label": "PassioGo project reference", "href": "https://github.com/athuler/PassioGo" }],
+  "externalSources": [
+    { "label": "PassioGo unofficial Python API", "href": "https://github.com/athuler/PassioGo" },
+    { "label": "GTFS Realtime: Vehicle Positions", "href": "https://gtfs.org/documentation/realtime/feed-entities/vehicle-positions/" },
+    { "label": "GTFS Realtime Best Practices", "href": "https://gtfs.org/documentation/realtime/realtime-best-practices/" }
+  ],
   "artifact": { "type": "transit-load", "title": "Repeated polling becomes a time series", "description": "The chart stands in for route observations accumulating across the day." },
   "sections": [
-    { "heading": "The Loop", "body": ["A collector calls the API, timestamps the response, normalizes fields, writes records, waits, and repeats.", "The important design detail is consistency: the same polling interval and schema make later analysis much easier."] },
-    { "heading": "Operational Concerns", "body": ["Long-running collectors need retries, logs, disk checks, and a plan for API failures. A week of data is only useful if gaps are visible."] }
+    {
+      "heading": "The Collection Loop",
+      "body": [
+        "A collector repeats six actions: request a snapshot, record when it was fetched, validate the response, normalize each vehicle record, append durable rows, and wait until the next scheduled poll. The useful mental model is sampling: every successful poll is one imperfect observation of a continuously changing system.",
+        "The Rutgers project used a 30-second polling interval and ran the collector on an Azure VM for continuous operation. Those are documented project choices, not universal requirements. GTFS Realtime guidance independently recommends frequent refreshes for vehicle positions, but a consumer must still respect the actual provider's terms, rate limits, timestamps, and update cadence."
+      ],
+      "table": {
+        "columns": ["Field", "Purpose", "Failure it helps diagnose"],
+        "rows": [
+          ["fetched_at", "When the collector received the snapshot", "Late polls and downtime"],
+          ["source_timestamp", "When the source says the reading was taken", "Stale-but-successful responses"],
+          ["vehicle_id", "Links observations of one vehicle", "Duplicate or unstable identities"],
+          ["route_id", "Associates an observation with service", "Route changes and missing assignments"],
+          ["latitude/longitude", "Places the vehicle in WGS-84 coordinates", "Impossible jumps or invalid locations"]
+        ]
+      }
+    },
+    {
+      "heading": "Identity, Time, and Freshness",
+      "body": [
+        "A successful HTTP response is not proof of fresh data. Compare the collector timestamp with the source timestamp, retain both, and compute age = fetched_at - source_timestamp. GTFS Realtime distinguishes a vehicle-position timestamp from the feed-header timestamp for exactly this reason.",
+        "Use stable vehicle and route identifiers when the provider supplies them. Do not treat a list position, display label, or latitude-longitude pair as identity. If identifiers or schemas change, preserve the raw payload and record a schema/parser version so historical rows remain interpretable."
+      ]
+    },
+    {
+      "heading": "Reliability and Observability",
+      "body": [
+        "Retries should be bounded and use backoff with jitter; otherwise many collectors can synchronize and amplify an outage. Log each attempt's status, latency, row count, and parse result. A heartbeat or gap report should make missing intervals visible instead of silently converting downtime into apparent zero service.",
+        "Write records idempotently with a key such as source snapshot time plus vehicle ID, or retain a payload hash. This prevents a retry from double-counting the same snapshot. Monitor disk space, rotate files, and checkpoint writes so a process crash cannot corrupt the entire week of collection."
+      ]
+    },
+    {
+      "heading": "Worked Example",
+      "body": [
+        "Illustrative numbers: a collector scheduled at 12:00:00 receives three vehicle records at 12:00:02. Their source timestamps are 11:59:58, 11:59:41, and 11:59:58, so their observed ages are 4, 21, and 4 seconds. At 12:00:30 the request times out, and at 12:01:00 a retry succeeds with the same payload hash as 12:00:02.",
+        "The correct history contains three rows from the first snapshot, an explicit failed-poll event at 12:00:30, and either no duplicate vehicle rows or duplicate rows clearly marked as the same source snapshot at 12:01:00. It does not contain a fabricated zero-vehicle snapshot. Over a full day, coverage is successful scheduled polls divided by scheduled polls, while freshness is analyzed separately from success."
+      ],
+      "table": {
+        "columns": ["Scheduled time", "Outcome", "Stored interpretation"],
+        "rows": [
+          ["12:00:00", "3 valid vehicles", "3 observations plus snapshot metadata"],
+          ["12:00:30", "Timeout", "Gap/failure event, not zero vehicles"],
+          ["12:01:00", "Same payload hash", "Retry/stale snapshot; do not double-count"]
+        ]
+      }
+    },
+    {
+      "heading": "From Snapshots to Transit Measures",
+      "body": [
+        "Route load curves, loop times, operating-vehicle counts, and speeds are derived measures, not raw facts. Define bucketing, interpolation, route assignment, outlier rejection, and missingness before comparing days. A position jump may be a GPS error or identifier reuse rather than impossible vehicle speed.",
+        "The Rutgers project reports analyses of route load, LX load, loop completion times, capacity, weekly operations, and speed. Reproducing those analyses requires the collected fields and assumptions; the feed alone does not guarantee that every metric is directly observed."
+      ]
+    },
+    {
+      "heading": "Limits and Common Misconceptions",
+      "body": [
+        "Polling samples the source; it does not reconstruct every movement between samples. A 30-second cadence is a project choice and may still miss short events. Faster polling cannot repair stale upstream data, unstable identifiers, missing occupancy values, or systematic GPS error.",
+        "Do not infer passenger counts from the mere presence of a vehicle, interpret a failed request as no service, or assume all vehicles report at a uniform cadence. The PassioGo library is explicitly an unofficial interface, so collectors should pin versions, archive raw responses, and expect compatibility changes."
+      ]
+    }
   ],
-  "pitfalls": ["Ignoring failed polls.", "Changing schemas mid-collection without versioning.", "Assuming every vehicle reports at the same cadence."],
-  "quiz": [{ "question": "Why timestamp each API response?", "options": ["To make file names cute", "To reconstruct route behavior over time", "To avoid storing route IDs", "To remove missing data"], "answer": 1, "explanation": "Transit analysis depends on ordering observations in time." }],
-  "related": ["campus-bus-load-curves", "turning-gps-bus-pings-route-timelines"]
+  "pitfalls": [
+    "Treating a failed poll as a zero-vehicle observation.",
+    "Keeping only fetch time and discarding source time or freshness.",
+    "Retrying without idempotency and double-counting snapshots.",
+    "Changing schemas mid-collection without a parser version or raw archive.",
+    "Assuming every vehicle reports at the same cadence or that every field is present."
+  ],
+  "related": ["campus-bus-load-curves", "async-api-rate-limits-backoff"]
 }

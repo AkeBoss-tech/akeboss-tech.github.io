@@ -1,19 +1,25 @@
 {
+  "schemaVersion": 2,
   "slug": "swerve-drive-basics-frc",
   "title": "Swerve Drive Basics for FRC Robots",
-  "subtitle": "A swerve drivetrain lets a robot translate and rotate by independently steering each wheel module.",
+  "subtitle": "A swerve drivetrain independently steers and drives each wheel module so the chassis can translate and rotate at the same time.",
   "domain": "Robotics",
   "difficulty": "Intermediate",
-  "summary": "The 2024 robotics writing describes the team's move to swerve, PathPlanner, vision, odometry, and simulation.",
+  "summary": "Team 1257's 2024 writing describes its first season with swerve, including simulation, module zeroing, template mismatches, field-relative controls, autonomous paths, and log-based troubleshooting. This page builds the drivetrain mental model from chassis motion through module states and back to pose estimation.",
   "tags": ["FRC", "Swerve", "Kinematics", "Robotics"],
-  "sourceFiles": ["_posts/2024-4-3-robotics-chief.md", "_portfolio/robot-code.md"],
+  "sourceFiles": [
+    "_posts/2024-4-3-robotics-chief.md",
+    "_portfolio/robot-code.md"
+  ],
   "sourceLinks": [
-    { "label": "Robotics development post", "href": "/writing/robotics-development" },
-    { "label": "Robot code project", "href": "/projects/robot-code" }
+    {"label": "Robotics development post", "href": "/writing/robotics-development"},
+    {"label": "Robot code project", "href": "/projects/robot-code"}
   ],
   "externalSources": [
-    { "label": "WPILib: Swerve Drive Kinematics", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html" },
-    { "label": "WPILib: Kinematics and odometry", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/index.html" }
+    {"label": "WPILib: Swerve Drive Kinematics", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html"},
+    {"label": "WPILib: Kinematics and Odometry", "href": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/index.html"},
+    {"label": "WPILib: Coordinate System", "href": "https://docs.wpilib.org/en/stable/docs/software/basic-programming/coordinate-system.html"},
+    {"label": "REV Robotics: MAXSwerve Java Template", "href": "https://github.com/REVrobotics/MAXSwerve-Java-Template"}
   ],
   "artifact": {
     "type": "swerve-vectors",
@@ -24,39 +30,84 @@
     {
       "heading": "What Makes Swerve Different",
       "body": [
-        "A tank drive changes direction mostly by varying left and right wheel speeds. A swerve drive can point each wheel module independently.",
-        "That means the robot can move sideways, diagonally, rotate in place, or combine translation and rotation."
+        "Each swerve module has a drive axis that rolls the wheel and a steering axis that aims it. Because the modules can point independently, the chassis has three planar degrees of freedom: forward velocity vx, leftward velocity vy, and counterclockwise angular velocity omega under WPILib's standard robot coordinate convention.",
+        "Those degrees of freedom let the robot move sideways, diagonally, rotate in place, or translate while rotating. This maneuverability costs mechanical, electrical, calibration, and software complexity: every module needs reliable steering position, drive distance or velocity, correct geometry, and coordinated control."
+      ],
+      "callout": "Mental model: every point on a rigid chassis shares translation, but rotation adds a different tangential velocity at each module location."
+    },
+    {
+      "heading": "Forward Kinematics: Chassis Command to Module States",
+      "body": [
+        "A ChassisSpeeds command describes desired vx, vy, and omega. SwerveDriveKinematics uses each module's Translation2d from the robot center to calculate a velocity vector at that wheel. Each vector becomes a SwerveModuleState containing wheel speed and steering angle.",
+        "Pure translation gives all modules parallel, equal velocity vectors. Pure rotation gives tangential vectors whose directions depend on wheel location. Combining translation and rotation adds those vectors, so module speeds and angles differ. The module-order used to construct kinematics must match the order used everywhere states and positions are passed."
+      ],
+      "table": {
+        "columns": ["Chassis request", "Ideal module pattern"],
+        "rows": [
+          ["Forward only", "All modules point forward at equal speed"],
+          ["Left strafe only", "All modules point left at equal speed"],
+          ["Counterclockwise rotation only", "Modules point tangentially around the chosen center"],
+          ["Translation plus rotation", "Vector sum produces different angles and often different speeds"]
+        ]
+      }
+    },
+    {
+      "heading": "Worked Example: Forward While Rotating",
+      "body": [
+        "Consider a square robot whose modules are 0.50 m forward or backward and 0.50 m left or right of center. Command vx = 2.0 m/s, vy = 0, and omega = 1.0 rad/s counterclockwise.",
+        "Rotational velocity at module position (x, y) is (-omega·y, omega·x). At the front-left module (0.50, 0.50), rotation contributes (-0.50, 0.50) m/s. Adding translation produces (1.50, 0.50), with speed sqrt(1.50² + 0.50²) ≈ 1.58 m/s and angle atan2(0.50, 1.50) ≈ 18.4° left of robot-forward.",
+        "At the front-right module (0.50, -0.50), rotation contributes (0.50, 0.50). Its total is (2.50, 0.50), about 2.55 m/s at 11.3°. If the maximum allowed wheel speed is 2.0 m/s, all module speeds must be scaled together so the fastest reaches 2.0 m/s while preserving the requested motion direction as closely as possible."
+      ],
+      "table": {
+        "columns": ["Module", "Combined vector (m/s)", "Approximate speed", "Approximate angle"],
+        "rows": [
+          ["Front-left", "(1.50, 0.50)", "1.58 m/s", "18.4°"],
+          ["Front-right", "(2.50, 0.50)", "2.55 m/s", "11.3°"]
+        ]
+      }
+    },
+    {
+      "heading": "Module Control, Optimization, and Limits",
+      "body": [
+        "Each module controller tracks the requested steering angle and drive speed. A common optimization may reverse wheel speed and rotate the steering target by 180° when that reaches the same ground velocity with less steering travel. Continuous-input steering control helps angles wrap smoothly across the -π to π boundary.",
+        "Desaturation scales wheel speeds together when any requested state exceeds the physical maximum. It is a feasibility step, not extra acceleration. Teams must also handle low-speed angle behavior deliberately; constantly re-aiming a nearly stopped wheel can create jitter."
+      ],
+      "table": {
+        "columns": ["Technique", "Purpose", "What it does not fix"],
+        "rows": [
+          ["State optimization", "Reduce steering rotation by allowing reversed drive", "Wrong encoder zero or module order"],
+          ["Continuous angle input", "Choose the short path across angle wrap", "Mechanical backlash"],
+          ["Wheel-speed desaturation", "Keep all speeds within a shared limit", "Poor velocity control or low battery"],
+          ["Hold last angle near zero speed", "Avoid unnecessary steering chatter", "Incorrect absolute calibration"]
+        ]
+      }
+    },
+    {
+      "heading": "Inverse Kinematics, Odometry, and Field-Relative Control",
+      "body": [
+        "Kinematics can also infer chassis motion from measured module states. Odometry combines gyro heading with module position changes to estimate Pose2d. This estimate is useful for autonomous paths and aiming, but it drifts when wheels slip or sensors and geometry are wrong; vision can provide occasional absolute corrections.",
+        "Field-relative control first rotates a driver or path command from field axes into robot axes using heading. The resulting robot-relative ChassisSpeeds then goes through the same swerve kinematics. Keeping these stages explicit prevents frame-conversion bugs from being misdiagnosed as module-control bugs."
       ]
     },
     {
-      "heading": "Kinematics",
+      "heading": "Bring-Up and Source-Grounded Failure Modes",
       "body": [
-        "The driver asks for chassis motion: x velocity, y velocity, and angular velocity. Swerve kinematics converts that chassis command into each module's speed and angle.",
-        "Odometry runs the other direction: it estimates the robot pose from gyro angle and module movement."
+        "Before full driving, verify CAN IDs, motor inversion, absolute encoder readings, zero offsets, gear ratios, wheel radius, module translations, and module ordering. With the robot safely lifted, command one module at a time and confirm positive drive and steering directions. Then test pure forward, pure strafe, and pure rotation at low speed before field-relative control.",
+        "Team 1257's source reports that an initially copied AdvantageKit example targeted a different module and expected encoders that were not present; the team used the REV MAXSwerve template as a fallback and adapted code for its hardware. The same source also records steering jitter, slow-module symptoms, worn tread, bumper fabric contacting a wheel, and the need to zero absolute encoders. These incidents show why matching software assumptions to physical hardware and validating in layers matter."
       ],
-      "table": {
-        "columns": ["Input", "Output"],
-        "rows": [
-          ["Chassis speeds", "Wheel speeds and angles"],
-          ["Gyro plus module positions", "Estimated robot pose"],
-          ["Field-relative joystick command", "Robot-relative chassis command"]
-        ]
-      }
+      "callout": "A template is a reference architecture, not a hardware specification. Confirm every sensor, ratio, inversion, and coordinate assumption."
     }
   ],
   "pitfalls": [
     "Mixing field-relative and robot-relative coordinates.",
     "Trusting odometry after a gyro disconnect.",
     "Forgetting to desaturate wheel speeds when commands exceed physical limits.",
-    "Testing only in simulation and skipping module zeroing on hardware."
+    "Testing only in simulation and skipping module zeroing on hardware.",
+    "Using module geometry or encoder types from a template built for different hardware.",
+    "Passing module states or positions in an order different from the kinematics constructor."
   ],
-  "quiz": [
-    {
-      "question": "What does swerve kinematics convert?",
-      "options": ["Battery voltage into code", "Chassis motion into module states", "Camera images into AprilTags", "LED colors into robot modes"],
-      "answer": 1,
-      "explanation": "Swerve kinematics maps desired chassis velocity to wheel speeds and angles."
-    }
-  ],
-  "related": ["field-relative-vs-robot-relative-driving", "pid-control-robot-mechanisms"]
+  "related": [
+    "field-relative-vs-robot-relative-driving",
+    "pid-control-robot-mechanisms"
+  ]
 }
