@@ -7,6 +7,7 @@
     "@types/three": "^0.184.1",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.4",
+    "jsdom": "^26.1.0",
     "playwright": "^1.59.1",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.4",
@@ -19,6 +20,7 @@
     "build": "next build",
     "redirects:build": "node scripts/build-legacy-redirects.mjs",
     "images:build": "node scripts/build-responsive-images.mjs",
+    "jobfill:test": "node --test tools/jobfill/test/security.test.mjs && node tools/jobfill/test/run-sample.mjs",
     "wiki:validate": "node scripts/validate-wiki.mjs",
     "start": "next start",
     "lint": "eslint ."

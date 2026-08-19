@@ -43,10 +43,15 @@ const checks = [
   ["work auth -> verify Yes", byKey.work_auth?.value === "Yes"],
   ["sponsorship -> No", byKey.sponsorship?.value === "No"],
   ["essays -> drafted (LLM)", plan.filter(p => p.tag === "drafted").length === 2],
-  ["EEO gender -> you (not filled)", byKey.eeo_gender?.tag === "you" && byKey.eeo_gender.value == null],
-  ["EEO veteran -> you", byKey.eeo_veteran?.tag === "you"],
+  ["EEO gender -> you (not filled)", plan.some(p => p.key === "demographic" && /gender/.test(p.label) && p.tag === "you" && p.value == null)],
+  ["EEO veteran -> you", plan.some(p => p.key === "demographic" && /veteran/.test(p.label) && p.tag === "you")],
   ["unknown referral -> you", plan.some(p => p.key === "unknown" && /referral/.test(p.label))],
   ["resume upload -> you/manual", plan.some(p => p.key === "resume" && p.tag === "you")],
+  ["password -> blocker and agent-ineligible", byKey.authentication?.tag === "blocker" && byKey.authentication.agentEligible === false],
+  ["MFA -> blocker", byKey.mfa?.tag === "blocker" && byKey.mfa.agentEligible === false],
+  ["prompt-injected SSN field -> government ID blocker", byKey.government_id?.tag === "blocker" && byKey.government_id.agentEligible === false],
+  ["legal attestation -> blocker", byKey.legal_attestation?.tag === "blocker" && byKey.legal_attestation.agentEligible === false],
+  ["demographic textarea cannot become an LLM draft", byKey.demographic?.tag === "you" && byKey.demographic.agentEligible === false],
 ];
 // Serialization (what the "Generate all" agent receives) — dropdowns must carry options.
 const ser = window.JobFill.serializeFields(plan);
@@ -58,6 +63,9 @@ console.log(`  work_auth options: ${JSON.stringify(auth?.options)}`);
 checks.push(["serialize: degree dropdown exposes options", Array.isArray(degree?.options) && degree.options.includes("Bachelor of Science")]);
 checks.push(["serialize: work_auth dropdown exposes Yes/No", Array.isArray(auth?.options) && auth.options.includes("Yes") && auth.options.includes("No")]);
 checks.push(["serialize: select type tagged", degree?.type === "select"]);
+checks.push(["serialize: protected fields are agent-ineligible", ser.filter(f => ["authentication", "mfa", "government_id", "legal_attestation", "demographic"].includes(f.key)).every(f => f.agentEligible === false)]);
+checks.push(["eligibility values come from profile (not hard-coded)", window.JobFill.R.workAuth({ eligibility: { work_authorized_us: false } }) === "No" && window.JobFill.R.sponsorship({ eligibility: { needs_sponsorship: true } }) === "Yes"]);
+checks.push(["missing eligibility stays unanswered", window.JobFill.R.workAuth({ eligibility: {} }) === null && window.JobFill.R.sponsorship({ eligibility: {} }) === null]);
 
 // Value coercion for typed inputs (the SpaceX date-field bug).
 const cv = window.JobFill.coerceValue;

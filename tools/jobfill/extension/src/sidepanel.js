@@ -106,13 +106,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 $("#profileFile").addEventListener("change", async (e) => {
   const file = e.target.files[0]; if (!file) return;
   const profile = JSON.parse(await file.text());
-  await chrome.storage.local.set({ profile });
+  await chrome.storage.session.set({ profile });
   $("#profileName").textContent = "✓ " + profile.identity.full_name;
   $("#status").textContent = `Profile loaded for ${profile.identity.full_name}.`;
 });
 // Show whether a profile is already loaded.
 document.addEventListener("DOMContentLoaded", async () => {
-  const { profile } = await chrome.storage.local.get("profile");
+  const { profile } = await chrome.storage.session.get("profile");
   if (profile) $("#profileName").textContent = "✓ " + profile.identity.full_name;
 });
 
@@ -234,7 +234,7 @@ $("#genall").addEventListener("click", async () => {
     // Only send the agent fields that still need it (empty, or a dropdown) —
     // the auto/verify fields are already filled deterministically. Keeps the
     // native message small enough for Chrome's sendNativeMessage.
-    const need = ser.fields.filter(f => !f.current || f.options || f.tag === "drafted" || f.tag === "you");
+    const need = ser.fields.filter(f => f.agentEligible === true && (!f.current || f.options || f.tag === "drafted"));
     const payloadBytes = JSON.stringify(need).length;
     log("agent payload", { of: ser.fields.length, sending: need.length, bytes: payloadBytes });
 
@@ -325,7 +325,7 @@ async function context() {
     func: () => ({ title: document.title, h1: document.querySelector("h1,h2")?.textContent?.trim() || "", url: location.href,
                    jd: document.querySelector("[class*='content'],[class*='description'],main")?.innerText?.slice(0, 4000) || "" }),
   });
-  const { profile } = await chrome.storage.local.get("profile");
+  const { profile } = await chrome.storage.session.get("profile");
   return { company: result.title, role: result.h1, jd: result.jd, url: result.url,
            profileSummary: profile ? summarize(profile) : "" };
 }

@@ -149,7 +149,7 @@ function run(profile) {
       else status = setNativeValue(p.el, p.value) ? "filled" : "needs-you";
       if (status === "filled") p.el.style.outline = p.tag === "auto" ? "2px solid #16a34a" : "2px solid #d97706";
     }
-    results.push({ el: p.el, label: p.label, key: p.key, tag: p.tag, value: p.value, status });
+    results.push({ el: p.el, label: p.label, key: p.key, tag: p.tag, value: p.value, status, agentEligible: p.agentEligible === true });
   }
   window.__jobfill = results;
   const fp = flagPass();
@@ -159,12 +159,12 @@ function run(profile) {
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.type === "JOBFILL_PING") { sendResponse({ ok: true }); return; }
   if (msg.type === "JOBFILL_RUN") {
-    chrome.storage.local.get("profile").then(({ profile }) => {
+    chrome.storage.session.get("profile").then(({ profile }) => {
       if (!profile) { sendResponse({ error: "No profile loaded. Import profile.json in the side panel." }); return; }
       const out = run(profile);
       sendResponse({
         platform: out.platform,
-        results: out.results.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status })),
+        results: out.results.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status, agentEligible: r.agentEligible })),
       });
     });
     return true; // async
@@ -200,7 +200,9 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       let filled = 0;
       for (const m of (msg.map || [])) {
         const r = items[m.i];
-        if (!r || !r.el || m.skip || m.value == null || m.value === "") continue;
+        // Defense in depth: model output is untrusted. It cannot target manual
+        // or hard-stop fields even if it returns their numeric indices.
+        if (!r || !r.el || r.agentEligible !== true || ["you", "blocker"].includes(r.tag) || m.skip || m.value == null || m.value === "") continue;
         if (r.el.tagName === "SELECT") { if (!fillSelect(r.el, m.value)) continue; }
         else if (isCustomCombobox(r.el)) { if (!await fillCustomSelect(r.el, m.value)) continue; }
         else if (!setNativeValue(r.el, m.value)) continue;
@@ -209,7 +211,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         filled++;
       }
       const fp = flagPass();
-      sendResponse({ filled, unfilled: fp.unfilled, results: items.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status })) });
+      sendResponse({ filled, unfilled: fp.unfilled, results: items.map((r, i) => ({ i, label: r.label, key: r.key, tag: r.tag, value: r.value, status: r.status, agentEligible: r.agentEligible })) });
     })();
     return true; // async
   }
@@ -239,7 +241,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
   if (msg.type === "JOBFILL_INSERT_DRAFT") {
     const r = (window.__jobfill || [])[msg.i];
-    if (r && r.el) { setNativeValue(r.el, msg.text); r.el.style.outline = "2px solid #2563eb"; r.status = "drafted-inserted"; sendResponse({ ok: true }); }
+    if (r && r.el && r.agentEligible === true && r.tag === "drafted") { setNativeValue(r.el, msg.text); r.el.style.outline = "2px solid #2563eb"; r.status = "drafted-inserted"; sendResponse({ ok: true }); }
     else sendResponse({ ok: false });
   }
   if (msg.type === "JOBFILL_SCROLL_TO") {

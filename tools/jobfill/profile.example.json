@@ -129,7 +129,7 @@
   },
   "eeo": {
     "_note": "YOUR self-identification. The agent matches each to the form's actual option wording; it never invents these. Edit to your real choices, or keep 'prefer not to answer'. Set fill_eeo=false to skip the whole section.",
-    "fill_eeo": true,
+    "fill_eeo": false,
     "gender": "Decline to self-identify",
     "race_ethnicity": "Decline to self-identify",
     "hispanic_latino": "Decline to self-identify",

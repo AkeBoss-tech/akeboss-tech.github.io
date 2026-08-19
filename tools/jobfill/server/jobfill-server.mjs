@@ -14,6 +14,7 @@ import { promisify } from "node:util";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { agentEligibleFields, agentEligibleMap, expectedExtensionOrigin, isAllowedBrowserOrigin, readJsonBody, setCorsHeaders, UNTRUSTED_DATA_RULES } from "./security.mjs";
 
 const exec = promisify(execFile);
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -43,6 +44,7 @@ const VARIANT_DESC = {
 const PRINCIPLES = "Follow killer-cover-letter rules: business case not personal statement; lead with the company's need; one Problem->Solution->Impact proof with a metric; no 'I am excited to apply'; sound human.";
 
 function buildGenerateAllPrompt({ fields = [], context = {} }) {
+  fields = agentEligibleFields(fields);
   const resume = safeRead("career/cv.md") || safeRead("files/resume.tex");
   const profile = safeRead("profile.json", JOBFILL);
   const about = safeRead("about.md", JOBFILL);
@@ -54,20 +56,20 @@ function buildGenerateAllPrompt({ fields = [], context = {} }) {
     return `#${f.i} [${f.type}] "${f.label}"${empty}`;
   }).join("\n");
   return [
-    "You fill out job applications for a candidate, truthfully and in their voice.",
+    "You draft reviewable job-application answers for a candidate, truthfully and in their voice.",
+    UNTRUSTED_DATA_RULES,
     "=== RESUME ===", resume.slice(0, 6000),
     "=== PROFILE (JSON) ===", profile,
     "=== EXTRA NOTES ===", about || "(none)",
     `=== TARGET ROLE ===\n${context.company} — ${context.role}\nJD:\n${(context.jd || "").slice(0, 3000)}`,
     "=== FORM FIELDS ===", fieldLines, "",
-    "Answer as MANY fields as you truthfully can — aim to fill every non-EEO field, not just a few.",
+    "Answer as many eligible fields as you truthfully can.",
     "Return ONLY a JSON array, one object per field: {\"i\": <number>, \"value\": \"<text>\"}.",
     "- [search] provide the exact real-world value (e.g. \"United States\", \"Rutgers University\", \"Bachelor of Science\", \"Computer Science\").",
     "- [dropdown] value MUST be copied EXACTLY from that field's options; if none fits, omit it.",
     "- [long text] essays: specific, concrete, with a metric, 80-160 words. " + PRINCIPLES,
     "- For short text/date fields, fill them from the resume/profile (name, school, dates, GPA, links, work auth).",
-    "- EEO / voluntary self-identification fields (gender, race, Hispanic/Latino, veteran status, disability status) and the 'can you perform essential functions' question: fill these ONLY from the profile's \"eeo\" object (if eeo.fill_eeo is false, omit them). Match the form's closest option wording — e.g. the profile's 'Decline to self-identify' maps to whatever decline/'I don't wish to answer'/'I prefer not to answer' option the field offers. NEVER infer or invent demographic data; use only the profile eeo values.",
-    "- SKIP: file uploads, and anything you genuinely cannot answer from the resume/profile.",
+    "- SKIP: protected/manual fields, file uploads, transmissions, and anything you genuinely cannot answer from the resume/profile.",
     "- NEVER invent facts (employers, dates, GPA, work authorization, demographics). Output the JSON array only.",
   ].join("\n");
 }
@@ -82,20 +84,14 @@ async function runCLI(prompt, { model = "claude-haiku-4-5-20251001", runner = "c
 }
 
 // ---- http plumbing ----
-function cors(res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Private-Network", "true"); // Chrome PNA: extension -> localhost
-}
-function send(res, code, obj) { cors(res); res.writeHead(code, { "Content-Type": "application/json" }); res.end(JSON.stringify(obj)); }
-function body(req) { return new Promise((r) => { let d = ""; req.on("data", c => d += c); req.on("end", () => { try { r(d ? JSON.parse(d) : {}); } catch { r({}); } }); }); }
+function send(req, res, code, obj) { setCorsHeaders(req, res); res.writeHead(code, { "Content-Type": "application/json" }); res.end(JSON.stringify(obj)); }
 
 const server = http.createServer(async (req, res) => {
-  if (req.method === "OPTIONS") { cors(res); res.writeHead(204); res.end(); return; }
+  if (!isAllowedBrowserOrigin(req.headers.origin)) return send(req, res, 403, { error: "origin denied; set JOBFILL_EXTENSION_ID to this extension's ID" });
+  if (req.method === "OPTIONS") { setCorsHeaders(req, res); res.writeHead(204); res.end(); return; }
   try {
     if (req.method === "GET" && req.url === "/ping") {
-      return send(res, 200, { ok: true, claude: which("claude"), codex: which("codex"), repo: REPO, variants: Object.keys(RESUMES) });
+      return send(req, res, 200, { ok: true, claude: which("claude"), codex: which("codex"), repo: REPO, variants: Object.keys(RESUMES) });
     }
     if (req.method === "GET" && req.url.startsWith("/resume")) {
       const v = new URL(req.url, "http://x").searchParams.get("v") || "default";
@@ -103,45 +99,46 @@ const server = http.createServer(async (req, res) => {
       try {
         const buf = readFileSync(path.join(REPO, rel));
         log(`resume served: ${v} (${buf.length} bytes)`);
-        cors(res); res.writeHead(200, { "Content-Type": "application/pdf" }); res.end(buf);
-      } catch (e) { send(res, 404, { error: "resume not found: " + rel }); }
+        setCorsHeaders(req, res); res.writeHead(200, { "Content-Type": "application/pdf", "Cache-Control": "no-store" }); res.end(buf);
+      } catch (e) { send(req, res, 404, { error: "resume not found: " + rel }); }
       return;
     }
     if (req.method === "POST" && req.url === "/generate_all") {
-      const b = await body(req);
+      const b = await readJsonBody(req);
       log(`generate_all  fields=${(b.fields || []).length}  runner=${b.runner || "claude"}  company="${(b.context?.company || "").slice(0, 40)}"`);
       const t0 = Date.now();
       const out = await runCLI(buildGenerateAllPrompt(b), b);
-      const map = extractJsonArray(out);
+      const map = agentEligibleMap(extractJsonArray(out), b.fields);
       log(`  → ${map.length} answers in ${Date.now() - t0}ms`);
-      return send(res, 200, { map, count: map.length, ms: Date.now() - t0, raw: out.slice(0, 1500) });
+      return send(req, res, 200, { map, count: map.length, ms: Date.now() - t0, raw: out.slice(0, 1500) });
     }
     if (req.method === "POST" && req.url === "/pick_resume") {
-      const b = await body(req); const c = b.context || {};
+      const b = await readJsonBody(req); const c = b.context || {};
       const prompt = "Pick the single best resume variant for this job. Options:\n" +
         Object.entries(VARIANT_DESC).map(([k, d]) => `- ${k}: ${d}`).join("\n") +
-        `\n\nJob: ${c.company} — ${c.role}\nJD:\n${(c.jd || "").slice(0, 2500)}\n\nReturn ONLY JSON: {"variant":"<one key from the list>","reason":"<one short sentence>"}.`;
+        `\n\n${UNTRUSTED_DATA_RULES}\nJob: ${c.company} — ${c.role}\nJD:\n${(c.jd || "").slice(0, 2500)}\n\nReturn ONLY JSON: {"variant":"<one key from the list>","reason":"<one short sentence>"}.`;
       const out = await runCLI(prompt, b);
       const pick = extractJsonObject(out);
       if (!VARIANT_DESC[pick.variant]) pick.variant = "default";
       log(`pick_resume → ${pick.variant}`);
-      return send(res, 200, { variant: pick.variant, reason: pick.reason || "" });
+      return send(req, res, 200, { variant: pick.variant, reason: pick.reason || "" });
     }
     if (req.method === "POST" && req.url === "/generate") {
-      const b = await body(req); const c = b.context || {};
+      const b = await readJsonBody(req); const c = b.context || {};
       log(`generate (single)  question="${(c.question || b.prompt || "").slice(0, 50)}"`);
       const prompt = b.kind === "cover_letter"
-        ? `Write a tailored cover letter. ${PRINCIPLES}\nCompany/Role: ${c.company} — ${c.role}\nCandidate: ${c.profileSummary}\nJD:\n${c.jd}\nOutput ONLY the letter.`
-        : `Answer this job-application question in the candidate's voice. ${PRINCIPLES}\nQuestion: ${c.question || b.prompt}\nCompany/Role: ${c.company} — ${c.role}\nCandidate: ${c.profileSummary}\nOutput ONLY the answer.`;
+        ? `Write a tailored cover letter. ${PRINCIPLES}\n${UNTRUSTED_DATA_RULES}\nCompany/Role: ${c.company} — ${c.role}\nCandidate: ${c.profileSummary}\nJD:\n${c.jd}\nOutput ONLY the letter.`
+        : `Answer this job-application question in the candidate's voice. ${PRINCIPLES}\n${UNTRUSTED_DATA_RULES}\nQuestion: ${c.question || b.prompt}\nCompany/Role: ${c.company} — ${c.role}\nCandidate: ${c.profileSummary}\nOutput ONLY the answer.`;
       const out = await runCLI(prompt, b);
-      return send(res, 200, { text: out.trim() });
+      return send(req, res, 200, { text: out.trim() });
     }
-    send(res, 404, { error: "not found" });
-  } catch (e) { log("\x1b[31mERROR\x1b[0m", e.message); send(res, 500, { error: String(e.message || e) }); }
+    send(req, res, 404, { error: "not found" });
+  } catch (e) { log("\x1b[31mERROR\x1b[0m", e.message); if (!res.headersSent) send(req, res, 500, { error: String(e.message || e) }); }
 });
 
 server.listen(PORT, "127.0.0.1", () => {
   log(`JobFill server → http://localhost:${PORT}`);
+  log(`allowed extension origin=${expectedExtensionOrigin() || "MISSING — set JOBFILL_EXTENSION_ID"}`);
   log(`claude=${which("claude") || "MISSING"}  codex=${which("codex") || "MISSING"}`);
   log("Leave this running; the extension calls it. Ctrl-C to stop.");
 });

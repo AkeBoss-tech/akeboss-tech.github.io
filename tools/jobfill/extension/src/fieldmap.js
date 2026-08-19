@@ -10,6 +10,16 @@
  *   drafted= LLM-written, approve   you    = human must handle    blocker = can't touch
  */
 
+const yesNo = (value) => typeof value === "boolean" ? (value ? "Yes" : "No") : null;
+const graduationDate = (p) => {
+  const raw = p.education?.[0]?.graduation_date || p.education?.[0]?.end_date;
+  if (!raw) return null;
+  const match = String(raw).match(/^(\d{4})-(\d{2})$/);
+  if (!match) return String(raw);
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][Number(match[2]) - 1];
+  return month ? `${month} ${match[1]}` : String(raw);
+};
+
 // ---- value resolvers against the profile object ----
 const R = {
   firstName: p => p.identity.first_name,
@@ -27,9 +37,9 @@ const R = {
   degree:    p => p.education[0].degree,
   discipline:p => p.education[0].field,
   gpa:       p => p.education[0].gpa,
-  gradDate:  p => "May 2027",
-  workAuth:  p => "Yes",
-  sponsorship: p => "No",
+  gradDate:  graduationDate,
+  workAuth:  p => yesNo(p.eligibility?.work_authorized_us),
+  sponsorship: p => yesNo(p.eligibility?.needs_sponsorship),
   relocate:  p => (p.eligibility.willing_to_relocate ? "Yes" : "No"),
   howHeard:  p => p.defaults.how_did_you_hear,
   startDate: p => p.defaults.earliest_start_date,
@@ -66,6 +76,19 @@ const RULES = [
   { key: "eeo_race",       res: () => null, tag: "you", re: /race|ethnicit/ },
   { key: "eeo_disability", res: () => null, tag: "you", re: /disabilit/ },
   { key: "eeo_veteran",    res: () => null, tag: "you", re: /veteran/ },
+];
+
+// These fields are never sent to an LLM or filled by JobFill. Page labels and
+// job descriptions are untrusted input; a prompt on the page cannot override
+// this deterministic boundary.
+const PROTECTED_RULES = [
+  { key: "authentication", tag: "blocker", re: /\b(password|sign[ -]?in|log[ -]?in|account credentials?)\b/ },
+  { key: "mfa", tag: "blocker", re: /\b(mfa|2fa|multi[ -]?factor|two[ -]?factor|one[ -]?time (?:password|passcode|code)|verification code|authenticator code)\b/ },
+  { key: "captcha", tag: "blocker", re: /\b(captcha|recaptcha|hcaptcha|prove you(?:'re| are) human|human verification)\b/ },
+  { key: "government_id", tag: "blocker", re: /\b(social security|ssn|passport(?: number)?|driver'?s license|national id|government(?:-issued)? id|taxpayer id)\b/ },
+  { key: "legal_attestation", tag: "blocker", re: /\b(i certify|i attest|legal attestation|electronic signature|type your (?:full |legal )?name as (?:your )?signature|background check consent|arbitration agreement|agree to (?:the )?(?:terms|privacy policy))\b/ },
+  { key: "judgment", tag: "you", re: /\b(conflict of interest|non-?compete|misconduct|criminal (?:record|history)|essential functions|reasonable accommodation|binding agreement)\b/ },
+  { key: "demographic", tag: "you", re: /\b(gender|sex assigned|pronouns?|race|ethnic\w*|hispanic|latino|veteran|disabilit\w*|self-identification|sexual orientation)\b/ },
 ];
 
 // ---- ATS adapters: explicit selectors for known platforms ----
@@ -115,4 +138,4 @@ const ATS = {
 };
 
 // Expose to content.js (classic content scripts share window scope).
-window.JobFill = { RULES, ATS, R };
+window.JobFill = { RULES, PROTECTED_RULES, ATS, R };

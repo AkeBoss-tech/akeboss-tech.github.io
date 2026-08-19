@@ -36,15 +36,15 @@
   // Returns { platform, plan: [{key, tag, value, label, status, selectorHint}] }
   // plan items DO NOT include DOM nodes; content.js re-resolves nodes to fill.
   function planFill(profile, doc, win) {
-    const { RULES, ATS } = win.JobFill;
+    const { RULES, PROTECTED_RULES = [], ATS } = win.JobFill;
     const platform = ATS.detect();
     const plan = [];
     const handled = new Set();
-    const push = (el, key, value, tag) => {
+    const push = (el, key, value, tag, agentEligible = !["you", "blocker"].includes(tag)) => {
       const label = signature(el, doc).slice(0, 80);
       const status = value == null ? "needs-you" : "planned";
-      const tagFinal = value == null && tag !== "you" ? "you" : tag;
-      plan.push({ el, key, tag: tagFinal, value, label, status });
+      const tagFinal = value == null && !["you", "blocker", "drafted"].includes(tag) ? "you" : tag;
+      plan.push({ el, key, tag: tagFinal, value, label, status, agentEligible });
       handled.add(el);
     };
 
@@ -62,23 +62,28 @@
       "input:not([type=hidden]):not([type=file]):not([type=submit]), select, textarea, " +
       "button[aria-haspopup='listbox'], [role='button'][aria-haspopup='listbox'], [role='combobox']");
     for (const el of fields) {
-      if (handled.has(el) || el.disabled || el.type === "password") continue;
+      if (handled.has(el) || el.disabled) continue;
       const sig = signature(el, doc);
       if (!sig) continue;
+      const protectedRule = PROTECTED_RULES.find(r => r.re.test(sig) || (el.type === "password" && r.key === "authentication"));
+      if (protectedRule) {
+        push(el, protectedRule.key, null, protectedRule.tag, false);
+        continue;
+      }
       const maxLen = Number(el.maxLength) || 0;
       if (el.tagName === "TEXTAREA" || maxLen > 180 || /cover letter|why |describe|tell us|anything else|essay/.test(sig)) {
-        plan.push({ el, key: "freeform", tag: "drafted", value: null, label: sig.slice(0, 80), status: "pending-llm" });
+        plan.push({ el, key: "freeform", tag: "drafted", value: null, label: sig.slice(0, 80), status: "pending-llm", agentEligible: true });
         handled.add(el); continue;
       }
       const rule = RULES.find(r => r.re.test(sig));
       if (rule) push(el, rule.key, rule.res(profile), rule.tag);
-      else { plan.push({ el, key: "unknown", tag: "you", value: null, label: sig.slice(0, 80), status: "unmapped" }); handled.add(el); }
+      else { plan.push({ el, key: "unknown", tag: "you", value: null, label: sig.slice(0, 80), status: "unmapped", agentEligible: false }); handled.add(el); }
     }
 
     // 3) Blockers
-    if (platform === "workday") plan.push({ el: null, key: "flow", tag: "blocker", value: null, label: "Workday is multi-step — fill this step, click Next, then run again per step", status: "manual" });
+    if (platform === "workday") plan.push({ el: null, key: "flow", tag: "blocker", value: null, label: "Workday is multi-step — fill this step, click Next, then run again per step", status: "manual", agentEligible: false });
     for (const f of doc.querySelectorAll("input[type=file]"))
-      plan.push({ el: f, key: "resume", tag: "you", value: null, label: "Resume / file upload — attach the right variant", status: "manual" });
+      plan.push({ el: f, key: "resume", tag: "you", value: null, label: "Resume / file upload — attach the right variant", status: "manual", agentEligible: false });
 
     return { platform, plan };
   }
@@ -97,7 +102,7 @@
         } else { current = el.value || ""; }
         const ml = Number(el.maxLength); if (ml > 0) maxLength = ml;
       }
-      return { i, label: humanLabel(el) || p.label, key: p.key, tag: p.tag, type, options, maxLength, current, suggested: p.value ?? null };
+      return { i, label: humanLabel(el) || p.label, key: p.key, tag: p.tag, agentEligible: p.agentEligible === true, type, options, maxLength, current, suggested: p.value ?? null };
     });
   }
 

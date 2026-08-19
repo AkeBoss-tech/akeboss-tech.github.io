@@ -4,7 +4,17 @@
   "version": "0.1.0",
   "description": "Deterministic job-application autofill with an LLM (claude/codex) fallback and a human-review checklist. Never auto-submits.",
   "permissions": ["storage", "activeTab", "scripting", "sidePanel", "nativeMessaging", "tabs"],
-  "host_permissions": ["https://*/*", "http://*/*"],
+  "host_permissions": [
+    "http://127.0.0.1:9291/*",
+    "http://localhost:9291/*",
+    "https://boards.greenhouse.io/*",
+    "https://job-boards.greenhouse.io/*",
+    "https://*.greenhouse.io/*",
+    "https://jobs.lever.co/*",
+    "https://jobs.ashbyhq.com/*",
+    "https://*.myworkdayjobs.com/*",
+    "https://*.icims.com/*"
+  ],
   "background": { "service_worker": "src/background.js", "type": "module" },
   "side_panel": { "default_path": "sidepanel.html" },
   "action": { "default_title": "JobFill" },

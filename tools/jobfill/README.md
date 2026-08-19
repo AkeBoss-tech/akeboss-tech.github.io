@@ -57,10 +57,11 @@ robust than Chrome Native Messaging (no macOS TCC / hardened-runtime exec
 blocks, full PATH, and you watch the agent live in your terminal).
 
 1. **Load the extension:** `chrome://extensions` → Developer mode → Load unpacked
-   → `tools/jobfill/extension`.
-2. **Start the connector** (leave it running in a terminal):
+   → `tools/jobfill/extension`. Importing `profile.json` keeps it only in
+   extension session storage; re-import it after restarting Chrome.
+2. Copy the extension ID from `chrome://extensions`, then **start the connector** (leave it running in a terminal):
    ```bash
-   node tools/jobfill/server/jobfill-server.mjs       # http://localhost:9291
+   JOBFILL_EXTENSION_ID=<EXTENSION_ID> node tools/jobfill/server/jobfill-server.mjs
    ```
    Needs `claude` (and/or `codex`) on your PATH. Watch this terminal to see each
    request and how long the agent took.
@@ -68,8 +69,9 @@ blocks, full PATH, and you watch the agent live in your terminal).
    "Detect & fill" or "✨ Generate all". The panel hits `localhost:9291`.
 
 The extension's debug log shows `connector: online` on open; if the server isn't
-running it says exactly how to start it. The host_permissions already include
-`http://*/*`, so no extra permission is needed.
+running it says exactly how to start it. Host permissions cover only the local
+connector and supported ATS domains; a user-triggered `activeTab` grant covers
+one-off company application sites.
 
 > Legacy: a Chrome Native Messaging host also exists (`native-host/`), but the
 > server is preferred. It avoids the macOS TCC issue where Chrome can't exec a
@@ -107,11 +109,11 @@ running it says exactly how to start it. The host_permissions already include
 The deterministic engine is unit-tested against a sample Greenhouse form using
 the real `fieldmap.js` + `mapper.js` (no browser needed):
 ```bash
-npm i jsdom --no-save        # one-time, from repo root
-cd tools/jobfill && node test/run-sample.mjs
+npm run jobfill:test
 ```
-Prints the fill plan + tags and asserts 10 behaviors (auto-fills identity, maps
-work-auth/GPA, routes essays to the LLM, refuses EEO/unknown/file fields).
+Prints the fill plan + tags and asserts 26 behaviors, including identity and
+eligibility mapping, typed values, protected-field blocking, and agent-output
+eligibility.
 
 ## Troubleshooting "Generate all"
 
@@ -155,7 +157,18 @@ also bakes the absolute paths into the launcher.
 ## Safety
 
 - **Never auto-submits** — by design there is no submit-click code path.
-- **Never guesses eligibility/EEO** — those are always routed to you.
+- **Never guesses eligibility/EEO** — those are always routed to you. MFA, CAPTCHA, legal attestations, government IDs, demographics, and judgment-only fields are code-enforced hard stops and are never sent to the model.
+- Job descriptions, company/role text, form labels, and options are treated as untrusted data. Model output is filtered again by field eligibility before it can touch the page.
+- The localhost connector denies browser origins other than the configured Chrome extension ID; it does not expose résumé PDFs with wildcard CORS.
+- Extension host permissions are limited to the local connector and supported ATS domains. One-off company sites still work through Chrome's user-triggered `activeTab` grant.
 - `profile.json` is gitignored (PII); only `profile.example.json` is committed.
+- The browser copy of the profile uses session storage and is cleared when Chrome exits.
 - The native host runs trusted, fixed prompts; it does **not** pass
   `--dangerously-skip-permissions`.
+
+## Reuse from job-application-agent 3.1.1
+
+The useful safety ideas from `job-application-agent@3.1.1` were adapted locally:
+untrusted-page handling, explicit human hard stops, exact dropdown options, and
+defense-in-depth filtering. Its telemetry, scheduler/updater, persistent autonomy
+grant, and autonomous submission behavior were deliberately not adopted.

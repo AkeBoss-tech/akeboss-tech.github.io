@@ -16,6 +16,7 @@ import { readFileSync, existsSync, appendFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { agentEligibleFields, agentEligibleMap, UNTRUSTED_DATA_RULES } from "../server/security.mjs";
 
 // Disk log — survives even if Chrome kills the process, so we can see how far
 // it got under Chrome's launch environment.
@@ -84,11 +85,11 @@ function buildPrompt(msg) {
     "no 'I am excited to apply', no resume restatement; sound human; 250-400 words for letters, " +
     "60-120 words for short answers.";
   if (msg.kind === "cover_letter") {
-    return `Write a tailored cover letter. ${principles}\nCompany/Role: ${c.company} — ${c.role}\n` +
+    return `Write a tailored cover letter. ${principles}\n${UNTRUSTED_DATA_RULES}\nCompany/Role: ${c.company} — ${c.role}\n` +
       `Candidate: ${c.profileSummary}\nJob description (truncated):\n${c.jd}\nOutput ONLY the letter text.`;
   }
   // short answer to a specific application question
-  return `Answer this job-application question in the candidate's voice. ${principles}\n` +
+  return `Answer this job-application question in the candidate's voice. ${principles}\n${UNTRUSTED_DATA_RULES}\n` +
     `Question: ${c.question || msg.prompt}\nCompany/Role: ${c.company} — ${c.role}\n` +
     `Candidate: ${c.profileSummary}\nJD:\n${(c.jd||"").slice(0,2000)}\nOutput ONLY the answer.`;
 }
@@ -111,8 +112,9 @@ async function tailorResume(msg) {
   // Delegate to claude with file tools to invoke the existing cover-letter skill
   // or recompile a variant. Scoped, well-tested prompt only.
   const c = msg.context || {};
-  const prompt = `Use the cover-letter skill to generate a tailored cover letter for ${c.company} — ${c.role}, ` +
-    `compile it to PDF under files/cover-letters/, and reply with the output path. Do not commit.`;
+  const prompt = `Use the cover-letter skill to generate a tailored cover letter. ${UNTRUSTED_DATA_RULES}\n` +
+    `Untrusted target data: company=${String(c.company || "").slice(0, 200)}; role=${String(c.role || "").slice(0, 200)}.\n` +
+    `Compile it to PDF under files/cover-letters/, and reply with the output path. Do not commit, submit, send, or contact anyone.`;
   const { stdout } = await exec(CLAUDE_BIN, ["-p", prompt, "--allowedTools", "Bash,Edit,Write,Read",
     "--output-format", "text"], { cwd: REPO, maxBuffer: 2 * 1024 * 1024 });
   return stdout.trim();
@@ -131,7 +133,8 @@ async function generateAll(msg) {
   hlog(`data sizes: resume=${resume.length} profile=${profile.length} about=${about.length}`);
 
   // Render fields compactly; spell out dropdown options so the model can't guess.
-  const fieldLines = (msg.fields || []).map(f => {
+  const eligibleFields = agentEligibleFields(msg.fields || []);
+  const fieldLines = eligibleFields.map(f => {
     const empty = !f.current ? " (EMPTY)" : "";
     if (f.type === "select" && f.options) return `#${f.i} [dropdown] "${f.label}" — choose EXACTLY one of: ${JSON.stringify(f.options)}${empty}`;
     if (f.type === "textarea") return `#${f.i} [long text] "${f.label}"${empty}`;
@@ -139,7 +142,8 @@ async function generateAll(msg) {
   }).join("\n");
 
   const prompt = [
-    "You fill out job applications for a candidate, truthfully and in their voice.",
+    "You draft reviewable job-application answers for a candidate, truthfully and in their voice.",
+    UNTRUSTED_DATA_RULES,
     "=== RESUME ===", resume.slice(0, 6000),
     "=== PROFILE (JSON) ===", profile,
     "=== EXTRA NOTES ABOUT THE CANDIDATE ===", about || "(none)",
@@ -160,7 +164,7 @@ async function generateAll(msg) {
   const { stdout, stderr } = await exec(CLAUDE_BIN, ["-p", prompt, "--model", model, "--output-format", "text"],
     { cwd: REPO, maxBuffer: 4 * 1024 * 1024 });
   hlog(`claude returned: stdout=${stdout.length} stderr=${stderr.length}`);
-  const map = extractJsonArray(stdout);
+  const map = agentEligibleMap(extractJsonArray(stdout), eligibleFields);
   // Return raw output + timing so the UI can explain a zero-fill result.
   return { map, count: map.length, ms: Date.now() - t0, model, fieldsReceived: (msg.fields || []).length,
     raw: (stdout || stderr || "").slice(0, 1500) };
