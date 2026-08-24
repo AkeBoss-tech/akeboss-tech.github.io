@@ -1,8 +1,23 @@
 {
   "name": "career-ops",
   "version": "1.0.0",
-  "description": "AI-powered job search pipeline built on Claude Code",
+  "type": "module",
+  "description": "AI-assisted career pipeline with deterministic job monitoring",
   "scripts": {
+    "scan": "node scan-jobs.mjs --write-pipeline",
+    "scan:preview": "node scan-jobs.mjs --dry-run",
+    "monitor": "node monitor-jobs.mjs",
+    "monitor:all": "node monitor-jobs.mjs --all",
+    "monitor:preview": "node monitor-jobs.mjs --dry-run",
+    "monitor:status": "node monitor-jobs.mjs --status",
+    "monitor:plist": "node scripts/install-monitor-launchd.mjs",
+    "monitor:install": "node scripts/install-monitor-launchd.mjs --install",
+    "monitor:uninstall": "node scripts/install-monitor-launchd.mjs --uninstall",
+    "extension:native:preview": "node scripts/install-career-monitor-native-host.mjs",
+    "extension:native:install": "node scripts/install-career-monitor-native-host.mjs --install",
+    "extension:native:uninstall": "node scripts/install-career-monitor-native-host.mjs --uninstall",
+    "dashboard:web": "node dashboard-web/server.mjs",
+    "test": "node --test test/*.test.mjs",
     "verify": "node verify-pipeline.mjs",
     "normalize": "node normalize-statuses.mjs",
     "dedup": "node dedup-tracker.mjs",
@@ -18,7 +33,11 @@
     "url": "https://github.com/santifer/career-ops"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=22.16.0"
+  },
   "dependencies": {
-    "playwright": "^1.58.1"
+    "playwright": "^1.58.1",
+    "yaml": "^2.9.0"
   }
 }

@@ -1,12 +1,16 @@
 # Portal Scanner Configuration
-# Used by /career-ops scan to discover new offers automatically.
+# Used by `npm run scan` and /career-ops scan to discover new offers.
 #
-# Strategy (3 levels):
-#   1. Playwright → careers_url of each company (real-time, reliable)
-#   2. Greenhouse API → structured JSON (fast, Greenhouse-only)
-#   3. WebSearch with site: filters (broad discovery, may be stale)
+# Strategy:
+#   1. Structured feeds and deterministic adapters (Greenhouse, Ashby, Lever,
+#      SmartRecruiters, Workable, Teamtailor, Pinpoint, Personio, Recruitee,
+#      Hacker News jobs, JobPosting JSON-LD, and Workday) from config/sources.yml
+#   2. Local tracked_companies overrides/additions below
+#   3. Agent discovery/repair queue for unsupported custom sites
 #
-# IMPORTANT: Each company in tracked_companies MUST have careers_url.
+# Structured catalog entries need `name`, `ats`, and `ats_slug`. Local custom
+# entries without a supported ATS should include `careers_url` for the agent
+# browser/search fallback.
 #
 # HOW TO CUSTOMIZE:
 #   1. Copy this file to portals.yml in the project root
@@ -14,6 +18,24 @@
 #   3. Add/remove companies in tracked_companies
 #   4. Adjust search_queries for your preferred job boards
 #   5. Set enabled: false on companies you don't care about
+
+source_catalog: config/sources.yml
+
+# Lifecycle transitions only use complete, plausible source traversals. A role
+# must be absent from two authoritative scans separated by this interval before
+# it is closed. Large drops are quarantined for review rather than overwriting
+# healthy prior data.
+lifecycle:
+  close_confirmation_hours: 6
+  suspicious_drop_ratio: 0.5
+  minimum_previous_jobs_for_drop_guard: 10
+
+# Successful HTTP payloads are retained locally as compressed,
+# content-addressed evidence. This directory is ignored by Git.
+snapshots:
+  enabled: true
+  retention_days: 14
+  max_bytes: 104857600
 
 # -- Title filter --
 # The scanner uses these keywords to decide if a title is relevant.

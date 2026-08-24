@@ -1,0 +1,215 @@
+# Versioned structured source catalog.
+#
+# Every entry below was probed against its public job-board endpoint in August
+# 2026. Personal title filters and company overrides belong in ../portals.yml;
+# scan-jobs.mjs merges that ignored local file over this reusable catalog.
+
+tracked_companies:
+  # AI labs, AI products, and infrastructure
+  - { name: OpenAI, ats: ashby, ats_slug: openai, list: [ai-ml, ai-infra, research], enabled: true }
+  - { name: Anthropic, ats: greenhouse, ats_slug: anthropic, list: [ai-ml, ai-infra, research], enabled: true }
+  - { name: Scale AI, ats: greenhouse, ats_slug: scaleai, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Databricks, ats: greenhouse, ats_slug: databricks, list: [ai-ml, ai-infra, data], enabled: true }
+  - { name: Snowflake, ats: ashby, ats_slug: snowflake, careers_url: https://careers.snowflake.com/us/en, list: [ai-infra, data], enabled: true }
+  - { name: Perplexity, ats: ashby, ats_slug: perplexity, list: [ai-ml, research], enabled: true }
+  - { name: Cohere, ats: ashby, ats_slug: cohere, list: [ai-ml, research], enabled: true }
+  - { name: Glean, ats: greenhouse, ats_slug: gleanwork, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Harvey, ats: ashby, ats_slug: harvey, list: [ai-ml, enterprise-ai, founding], enabled: true }
+  - { name: Sierra, ats: ashby, ats_slug: Sierra, list: [ai-ml, enterprise-ai, founding], enabled: true }
+  - { name: Decagon, ats: ashby, ats_slug: decagon, list: [ai-ml, enterprise-ai, founding], enabled: true }
+  - { name: Notion, ats: ashby, ats_slug: notion, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Ramp, ats: ashby, ats_slug: ramp, list: [ai-ml, ai-infra, finance-ai], enabled: true }
+  - { name: Vercel, ats: greenhouse, ats_slug: vercel, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Together AI, ats: greenhouse, ats_slug: togetherai, list: [ai-ml, ai-infra], enabled: true }
+  - { name: CoreWeave, ats: greenhouse, ats_slug: coreweave, list: [ai-infra], enabled: true }
+  - { name: xAI, ats: greenhouse, ats_slug: xai, list: [ai-ml, ai-infra, research], enabled: true }
+  - { name: Cursor, ats: ashby, ats_slug: cursor, list: [ai-ml, founding], enabled: true }
+  - { name: Baseten, ats: ashby, ats_slug: baseten, list: [ai-infra, founding], enabled: true }
+  - { name: Lambda, ats: ashby, ats_slug: lambda, list: [ai-infra], enabled: true }
+  - { name: Fireworks AI, ats: ashby, ats_slug: fireworks, list: [ai-infra], enabled: true }
+  - { name: Modal, ats: ashby, ats_slug: modal, list: [ai-infra], enabled: true }
+  - { name: Anyscale, ats: ashby, ats_slug: anyscale, list: [ai-infra], enabled: true }
+  - { name: Cerebras, ats: ashby, ats_slug: cerebras, list: [ai-infra, research], enabled: true }
+  - { name: Reflection AI, ats: ashby, ats_slug: reflectionai, list: [ai-ml, research], enabled: true }
+  - { name: Thinking Machines, ats: ashby, ats_slug: thinkingmachines, list: [ai-ml, research], enabled: true }
+  - { name: Mistral AI, ats: ashby, ats_slug: mistral.ai, list: [ai-ml, research], enabled: true }
+  - { name: RunPod, ats: ashby, ats_slug: runpod, list: [ai-infra], enabled: true }
+  - { name: LangChain, ats: ashby, ats_slug: langchain, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Pinecone, ats: ashby, ats_slug: pinecone, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Weaviate, ats: ashby, ats_slug: weaviate, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Zilliz, ats: lever, ats_slug: zilliz, list: [ai-infra, data], enabled: true }
+  - { name: Chroma, ats: ashby, ats_slug: trychroma, list: [ai-ml, ai-infra], enabled: true }
+  - { name: LlamaIndex, ats: ashby, ats_slug: llamaindex, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Weights & Biases, ats: greenhouse, ats_slug: weights_and_biases, list: [ai-ml, ai-infra], enabled: true }
+  - { name: ElevenLabs, ats: ashby, ats_slug: elevenlabs, list: [ai-ml], enabled: true }
+  - { name: Deepgram, ats: ashby, ats_slug: deepgram, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Vapi, ats: ashby, ats_slug: vapi, list: [ai-ml, ai-infra, founding], enabled: true }
+  - { name: Bland AI, ats: ashby, ats_slug: bland, list: [ai-ml, enterprise-ai, founding], enabled: true }
+  - { name: Hume AI, ats: greenhouse, ats_slug: humeai, list: [ai-ml, research], enabled: true }
+  - { name: PolyAI, ats: greenhouse, ats_slug: polyai, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Parloa, ats: greenhouse, ats_slug: parloa, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: n8n, ats: ashby, ats_slug: n8n, list: [enterprise-ai, automation], enabled: true }
+  - { name: Zapier, ats: ashby, ats_slug: zapier, list: [enterprise-ai, automation], enabled: true }
+  - { name: Perk, ats: ashby, ats_slug: Perk, list: [enterprise-ai, automation], enabled: true }
+  - { name: Attio, ats: ashby, ats_slug: attio, list: [ai-ml, founding], enabled: true }
+  - { name: Langfuse, ats: ashby, ats_slug: langfuse, list: [ai-infra], enabled: true }
+  - { name: Temporal, ats: ashby, ats_slug: temporal, list: [ai-infra, software], enabled: true }
+  - { name: Confluent, ats: ashby, ats_slug: confluent, list: [ai-infra, data], enabled: true }
+  - { name: Tinybird, ats: lever, ats_slug: tinybird, list: [ai-infra, data], enabled: true }
+  - { name: Figma, ats: greenhouse, ats_slug: figma, list: [ai-ml, software], enabled: true }
+  - { name: Airtable, ats: greenhouse, ats_slug: airtable, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Arize AI, ats: greenhouse, ats_slug: arizeai, list: [ai-ml, ai-infra], enabled: true }
+  - { name: Cloudflare, ats: greenhouse, ats_slug: cloudflare, list: [ai-infra, software], enabled: true }
+  - { name: Datadog, ats: greenhouse, ats_slug: datadog, list: [ai-infra, software], enabled: true }
+  - { name: MongoDB, ats: greenhouse, ats_slug: mongodb, list: [ai-infra, data], enabled: true }
+  - { name: Dropbox, ats: greenhouse, ats_slug: dropbox, list: [ai-ml, software], enabled: true }
+  - { name: Roblox, ats: greenhouse, ats_slug: roblox, list: [ai-ml, software], enabled: true }
+  - { name: Samsara, ats: greenhouse, ats_slug: samsara, list: [ai-ml, software], enabled: true }
+  - { name: Intercom, ats: greenhouse, ats_slug: intercom, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Dialpad, ats: greenhouse, ats_slug: dialpad, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Ada, ats: greenhouse, ats_slug: ada18, list: [ai-ml, enterprise-ai], enabled: true }
+
+  # Founding, vertical AI, and enterprise automation
+  - { name: Clay, ats: ashby, ats_slug: claylabs, list: [founding, enterprise-ai], enabled: true }
+  - { name: Mercor, ats: ashby, ats_slug: mercor, list: [founding, ai-ml], enabled: true }
+  - { name: Rogo, ats: ashby, ats_slug: rogo, list: [finance-ai, founding], enabled: true }
+  - { name: OpenEvidence, ats: ashby, ats_slug: openevidence, list: [enterprise-ai, founding], enabled: true }
+  - { name: Abridge, ats: ashby, ats_slug: abridge, list: [enterprise-ai, founding], enabled: true }
+  - { name: Hippocratic AI, ats: ashby, ats_slug: "Hippocratic AI", list: [enterprise-ai, founding], enabled: true }
+  - { name: Hebbia, ats: ashby, ats_slug: hebbia-ai, list: [finance-ai, enterprise-ai, founding], enabled: true }
+  - { name: Anterior, ats: ashby, ats_slug: anterior, list: [enterprise-ai, founding], enabled: true }
+  - { name: Cohere Health, ats: greenhouse, ats_slug: coherehealth, list: [enterprise-ai], enabled: true }
+  - { name: Ironclad, ats: ashby, ats_slug: ironcladhq, list: [enterprise-ai], enabled: true }
+  - { name: Tractable, ats: ashby, ats_slug: tractable, list: [enterprise-ai], enabled: true }
+  - { name: Sixfold, ats: greenhouse, ats_slug: sixfold, list: [enterprise-ai, founding], enabled: true }
+  - { name: Tavily, ats: ashby, ats_slug: tavily, list: [founding, ai-infra], enabled: true }
+  - { name: Exa, ats: ashby, ats_slug: exa, list: [founding, ai-infra], enabled: true }
+  - { name: Lovable, ats: ashby, ats_slug: lovable, list: [founding], enabled: true }
+  - { name: Reka AI, ats: ashby, ats_slug: reka, list: [ai-ml, research, founding], enabled: true }
+  - { name: Suno, ats: ashby, ats_slug: suno, list: [ai-ml, founding], enabled: true }
+  - { name: Cognition, ats: ashby, ats_slug: cognition, list: [ai-ml, founding], enabled: true }
+  - { name: AlphaSense, ats: greenhouse, ats_slug: alphasense, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: Stripe, ats: greenhouse, ats_slug: stripe, list: [finance-ai, ai-ml], enabled: true }
+  - { name: Brex, ats: greenhouse, ats_slug: brex, list: [finance-ai, ai-ml], enabled: true }
+  - { name: Palantir, ats: lever, ats_slug: palantir, list: [consulting-ai, software], enabled: true }
+  - { name: ServiceNow, ats: smartrecruiters, ats_slug: ServiceNow, list: [enterprise-ai, software], enabled: true }
+  - { name: UiPath, ats: ashby, ats_slug: uipath, list: [enterprise-ai, automation], enabled: true }
+  - { name: Thoughtworks, ats: greenhouse, ats_slug: thoughtworks, list: [consulting-ai, software], enabled: true }
+  - { name: Clarity AI, ats: greenhouse, ats_slug: clarityai, list: [ai-ml, enterprise-ai], enabled: true }
+
+  # Robotics and physical AI
+  - { name: Anduril, ats: greenhouse, ats_slug: andurilindustries, list: [robotics, ai-ml], enabled: true }
+  - { name: SpaceX, ats: greenhouse, ats_slug: spacex, list: [robotics, software], enabled: true }
+  - { name: Figure AI, ats: greenhouse, ats_slug: figureai, list: [robotics, ai-ml], enabled: true }
+  - { name: Physical Intelligence, ats: ashby, ats_slug: physicalintelligence, list: [robotics, research], enabled: true }
+  - { name: 1X, ats: ashby, ats_slug: 1x, list: [robotics, ai-ml], enabled: true }
+  - { name: Apptronik, ats: greenhouse, ats_slug: apptronik, list: [robotics, software], enabled: true }
+  - { name: Agility Robotics, ats: greenhouse, ats_slug: agilityrobotics, list: [robotics, software], enabled: true }
+  - { name: Waabi, ats: lever, ats_slug: waabi, list: [robotics, research], enabled: true }
+  - { name: Toyota Research Institute, ats: lever, ats_slug: tri, list: [robotics, research], enabled: true }
+  - { name: Robotics & AI Institute, ats: lever, ats_slug: rai, list: [robotics, research], enabled: true }
+
+  # Quantitative development and trading
+  - { name: IMC Trading, ats: greenhouse, ats_slug: imc, list: [quant], enabled: true }
+  - { name: Point72, ats: greenhouse, ats_slug: point72, list: [quant, finance-ai], enabled: true }
+  - { name: Jump Trading, ats: greenhouse, ats_slug: jumptrading, list: [quant], enabled: true }
+  - { name: Five Rings, ats: greenhouse, ats_slug: fiveringsllc, list: [quant], enabled: true }
+  - { name: PDT Partners, ats: greenhouse, ats_slug: pdtpartners, list: [quant], enabled: true }
+  - { name: Tower Research, ats: greenhouse, ats_slug: towerresearchcapital, list: [quant], enabled: true }
+  - { name: Virtu Financial, ats: greenhouse, ats_slug: virtu, list: [quant], enabled: true }
+  - { name: Akuna Capital, ats: greenhouse, ats_slug: akunacapital, list: [quant], enabled: true }
+  - { name: Aquatic Capital, ats: greenhouse, ats_slug: aquaticcapitalmanagement, list: [quant], enabled: true }
+  - { name: Old Mission, ats: greenhouse, ats_slug: oldmissioncapital, list: [quant], enabled: true }
+  - { name: AQR, ats: greenhouse, ats_slug: aqr, list: [quant], enabled: true }
+  - { name: DV Trading, ats: greenhouse, ats_slug: dvtrading, list: [quant], enabled: true }
+  - { name: Walleye Capital, ats: greenhouse, ats_slug: walleyecapital-external-students, list: [quant], enabled: true }
+  - { name: TransMarket Group, ats: greenhouse, ats_slug: transmarketgroup, list: [quant], enabled: true }
+  - { name: Flow Traders, ats: greenhouse, ats_slug: flowtraders, list: [quant], enabled: true }
+  - { name: Radix Trading, ats: greenhouse, ats_slug: radixuniversity, list: [quant], enabled: true }
+  - { name: Headlands Technologies, ats: greenhouse, ats_slug: headlandstechnologiesllc, list: [quant], enabled: true }
+  - { name: Schonfeld, ats: greenhouse, ats_slug: schonfeld, list: [quant], enabled: true }
+  - { name: Vatic Labs, ats: greenhouse, ats_slug: vaticlabs, list: [quant, research], enabled: true }
+  - { name: Hudson River Trading, ats: greenhouse, ats_slug: wehrtyou, list: [quant, research], enabled: true }
+  - { name: Squarepoint Capital, ats: greenhouse, ats_slug: squarepointcapital, list: [quant], enabled: true }
+
+  # Computational biology and research
+  - { name: Allen Institute for AI, ats: greenhouse, ats_slug: thealleninstitute, list: [research, ai-ml], enabled: true }
+  - { name: Isomorphic Labs, ats: greenhouse, ats_slug: isomorphiclabs, list: [computational-biology, research], enabled: true }
+  - { name: Recursion, ats: greenhouse, ats_slug: recursionpharmaceuticals, list: [computational-biology, ai-ml], enabled: true }
+  - { name: Generate Biomedicines, ats: greenhouse, ats_slug: generatebiomedicines, list: [computational-biology, ai-ml], enabled: true }
+  - { name: Ginkgo Bioworks, ats: greenhouse, ats_slug: ginkgobioworks, list: [computational-biology, software], enabled: true }
+  - { name: Flatiron Health, ats: greenhouse, ats_slug: flatironhealth, list: [computational-biology, data], enabled: true }
+  - { name: Insitro, ats: ashby, ats_slug: insitro, list: [computational-biology, ai-ml], enabled: true }
+  - { name: Arc Institute, ats: greenhouse, ats_slug: arcinstitute, list: [computational-biology, research], enabled: true }
+  - { name: Dyno Therapeutics, ats: greenhouse, ats_slug: dynotherapeutics, list: [computational-biology, ai-ml], enabled: true }
+  - { name: Chan Zuckerberg Initiative, ats: greenhouse, ats_slug: chanzuckerberginitiative, list: [computational-biology, research], enabled: true }
+  - { name: Bosch, ats: smartrecruiters, ats_slug: BoschGroup, list: [research, robotics], enabled: true }
+  - { name: CERN, ats: smartrecruiters, ats_slug: CERN, list: [research, software], enabled: true }
+  - { name: Western Digital, ats: smartrecruiters, ats_slug: WesternDigital, list: [ai-infra, software], enabled: true }
+
+  # Workday public candidate sites. Workday CXS is used by the employer's
+  # public career UI but is not a supported Workday customer API, so these
+  # sources run with stricter completeness and count-drop health checks.
+  - { name: NVIDIA, ats: workday, ats_slug: nvidia-NVIDIAExternalCareerSite, workday_tenant: nvidia, workday_site: NVIDIAExternalCareerSite, careers_url: https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite, list: [ai-infra, research], enabled: true }
+  - { name: Mastercard, ats: workday, ats_slug: mastercard-CorporateCareers, workday_tenant: mastercard, workday_site: CorporateCareers, careers_url: https://mastercard.wd1.myworkdayjobs.com/CorporateCareers, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: BlackRock, ats: workday, ats_slug: blackrock-BlackRock_Professional, workday_tenant: blackrock, workday_site: BlackRock_Professional, careers_url: https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional, list: [finance-ai], enabled: true }
+  - { name: Capital One, ats: workday, ats_slug: capitalone-Capital_One, workday_tenant: capitalone, workday_site: Capital_One, careers_url: https://capitalone.wd12.myworkdayjobs.com/Capital_One, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: Morgan Stanley, ats: workday, ats_slug: ms-External, workday_tenant: ms, workday_site: External, careers_url: https://ms.wd5.myworkdayjobs.com/External, list: [quant, finance-ai], enabled: true }
+  - { name: Illumina, ats: workday, ats_slug: illumina-illumina-careers, workday_tenant: illumina, workday_site: illumina-careers, careers_url: https://illumina.wd1.myworkdayjobs.com/illumina-careers, list: [computational-biology, data], enabled: true }
+  - { name: Moderna, ats: workday, ats_slug: modernatx-M_tx, workday_tenant: modernatx, workday_site: M_tx, careers_url: https://modernatx.wd1.myworkdayjobs.com/M_tx, list: [computational-biology, research], enabled: true }
+  - { name: Guidewire, ats: workday, ats_slug: guidewire-External, workday_tenant: guidewire, workday_site: External, careers_url: https://guidewire.wd5.myworkdayjobs.com/External, list: [enterprise-ai, software], enabled: true }
+  - { name: Visa, ats: workday, ats_slug: visa-Visa, workday_tenant: visa, workday_site: Visa, careers_url: https://visa.wd5.myworkdayjobs.com/Visa, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: Thomson Reuters, ats: workday, ats_slug: thomsonreuters-External_Career_Site, workday_tenant: thomsonreuters, workday_site: External_Career_Site, careers_url: https://thomsonreuters.wd5.myworkdayjobs.com/External_Career_Site, list: [enterprise-ai, finance-ai], enabled: true }
+  - { name: Wells Fargo, ats: workday, ats_slug: wf-WellsFargoJobs, workday_tenant: wf, workday_site: WellsFargoJobs, careers_url: https://wf.wd1.myworkdayjobs.com/WellsFargoJobs, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: Fidelity, ats: workday, ats_slug: fmr-FidelityCareers, workday_tenant: fmr, workday_site: FidelityCareers, careers_url: https://fmr.wd1.myworkdayjobs.com/FidelityCareers, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: Prudential Financial, ats: workday, ats_slug: pru-Careers, workday_tenant: pru, workday_site: Careers, careers_url: https://pru.wd5.myworkdayjobs.com/Careers, list: [finance-ai, enterprise-ai], enabled: true }
+  - { name: Nasdaq, ats: workday, ats_slug: nasdaq-Global_External_Site, workday_tenant: nasdaq, workday_site: Global_External_Site, careers_url: https://nasdaq.wd1.myworkdayjobs.com/Global_External_Site, list: [finance-ai, data], enabled: true }
+  - { name: Regeneron, ats: workday, ats_slug: regeneron-Careers, workday_tenant: regeneron, workday_site: Careers, careers_url: https://regeneron.wd1.myworkdayjobs.com/Careers, list: [computational-biology, research], enabled: true }
+  - { name: Memorial Sloan Kettering, ats: workday, ats_slug: msk-MSKCC_Careers_Primary, workday_tenant: msk, workday_site: MSKCC_Careers_Primary, careers_url: https://msk.wd108.myworkdayjobs.com/MSKCC_Careers_Primary, list: [computational-biology, research], enabled: true }
+  - { name: Tempus, ats: workday, ats_slug: tempus-Tempus_Careers, workday_tenant: tempus, workday_site: Tempus_Careers, careers_url: https://tempus.wd5.myworkdayjobs.com/Tempus_Careers, list: [computational-biology, ai-ml], enabled: true }
+  - { name: Gartner, ats: workday, ats_slug: gartner-EXT, workday_tenant: gartner, workday_site: EXT, careers_url: https://gartner.wd5.myworkdayjobs.com/EXT, list: [consulting-ai, enterprise-ai], enabled: true }
+  - { name: Forrester, ats: workday, ats_slug: forrester-careers, workday_tenant: forrester, workday_site: careers, careers_url: https://forrester.wd501.myworkdayjobs.com/careers, list: [consulting-ai, enterprise-ai], enabled: true }
+  - { name: Booz Allen, ats: workday, ats_slug: bah-BAH_Jobs, workday_tenant: bah, workday_site: BAH_Jobs, careers_url: https://bah.wd1.myworkdayjobs.com/BAH_Jobs, list: [consulting-ai, enterprise-ai], enabled: true }
+
+  # Teamtailor public RSS feeds.
+  - { name: Polestar, ats: teamtailor, ats_slug: polestar, careers_url: https://polestar.teamtailor.com, page_size: 20, list: [robotics, ai-ml], enabled: true }
+  - { name: Paddington Robotics, ats: teamtailor, ats_slug: paddington-robotics, careers_url: https://paddington-robotics.teamtailor.com, page_size: 20, list: [robotics, ai-ml], enabled: true }
+  - { name: Robot.com, ats: teamtailor, ats_slug: robot-na, careers_url: https://robot.na.teamtailor.com, page_size: 20, list: [robotics, software], enabled: true }
+  - { name: Bridge, ats: teamtailor, ats_slug: bridge, careers_url: https://bridge.teamtailor.com, page_size: 20, list: [finance-ai, software], enabled: true }
+
+  # Official Hacker News API. jobstories is a rolling latest-items window, so
+  # omissions become unknown rather than being treated as employer closures.
+  - { name: YC / Hacker News Jobs, ats: hackernews, ats_slug: yc-jobs, api: https://hacker-news.firebaseio.com/v0/jobstories.json, careers_url: https://news.ycombinator.com/jobs, lifecycle_mode: windowed, monitor_cadence_seconds: 3600, list: [yc, startups], enabled: true }
+
+  # Recruitee's official unauthenticated offers feeds.
+  - { name: Nucs AI, ats: recruitee, ats_slug: nucsai, api: https://nucsai.recruitee.com/api/feeds/offers.xml, careers_url: https://nucsai.recruitee.com, list: [computational-biology, ai-ml, research], enabled: true }
+  - { name: Machine Learning Reply, ats: recruitee, ats_slug: machinelearningreply, api: https://machinelearningreply.recruitee.com/api/feeds/offers.xml, careers_url: https://machinelearningreply.recruitee.com, list: [consulting-ai, ai-ml], enabled: true }
+  - { name: Optics11, ats: recruitee, ats_slug: optics11, api: https://optics11.recruitee.com/api/feeds/offers.xml, careers_url: https://optics11.recruitee.com, list: [research, ai-infra, robotics], enabled: true }
+  - { name: DeepHealth, ats: recruitee, ats_slug: deephealth, api: https://deephealth.recruitee.com/api/feeds/offers.xml, careers_url: https://deephealth.recruitee.com, list: [computational-biology, ai-ml], enabled: true }
+  - { name: Clockworks, ats: recruitee, ats_slug: clockworks, api: https://clockworks.recruitee.com/api/feeds/offers.xml, careers_url: https://clockworks.recruitee.com, list: [ai-ml, enterprise-ai], enabled: true }
+  - { name: Kaizo, ats: recruitee, ats_slug: kaizo, api: https://kaizo.recruitee.com/api/feeds/offers.xml, careers_url: https://kaizo.recruitee.com, list: [enterprise-ai, ai-ml], enabled: true }
+  - { name: RebelsAI, ats: recruitee, ats_slug: rebelsai, api: https://rebelsai.recruitee.com/api/feeds/offers.xml, careers_url: https://rebelsai.recruitee.com, list: [consulting-ai, ai-ml], enabled: true }
+  - { name: Syntho, ats: recruitee, ats_slug: syntho, api: https://syntho.recruitee.com/api/feeds/offers.xml, careers_url: https://syntho.recruitee.com, list: [ai-ml, data], enabled: true }
+
+  # Pinpoint public job-board JSON feeds.
+  - { name: BigHat Biosciences, ats: pinpoint, ats_slug: bighatbiosciences, list: [computational-biology, ai-ml, research], enabled: true }
+  - { name: Wolverine Trading, ats: pinpoint, ats_slug: wolve, careers_url: https://careers.wolve.com, list: [quant, software], enabled: true }
+  - { name: inDrive, ats: pinpoint, ats_slug: indrive, list: [ai-ml, software], enabled: true }
+
+  # Personio public XML feeds.
+  - { name: super.AI, ats: personio, ats_slug: super-ai, api: https://super-ai.jobs.personio.de/xml?language=en, list: [ai-ml, enterprise-ai, automation], enabled: true }
+  - { name: Merantix Momentum, ats: personio, ats_slug: merantix-momentum, api: https://merantix-momentum.jobs.personio.de/xml?language=en, list: [consulting-ai, ai-ml], enabled: true }
+  - { name: MIGx, ats: personio, ats_slug: migx, api: https://migx.jobs.personio.com/xml?language=en, list: [consulting-ai, computational-biology], enabled: true }
+  - { name: Flatpay, ats: personio, ats_slug: flatpay, api: https://flatpay.jobs.personio.de/xml?language=en, list: [finance-ai, software], enabled: true }
+
+  # Workable exposes a public careers-page JSON feed distinct from its private API.
+  - { name: Hugging Face, ats: workable, ats_slug: huggingface, list: [ai-ml, research], enabled: true }
+
+  # Explicit agent discovery/repair queue. These canonical sites were validated
+  # live, but their current public interfaces cannot yet be traversed completely
+  # and politely by a registered deterministic connector.
+  - { name: DocuSign, careers_url: https://careers.docusign.com/careers-home, scan_method: agent_discovery, candidate_connector: icims, agent_hint: "JSON-LD sitemap is complete but robots.txt requires a 5-second crawl delay; prefer an iCIMS adapter or incremental sitemap cache.", list: [enterprise-ai, automation], enabled: true }
+  - { name: Accenture, careers_url: https://www.accenture.com/us-en/careers/jobsearch, scan_method: agent_discovery, candidate_connector: workday, agent_hint: "Workday exposes 48,340 roles; no single safe facet partitions every bucket below the 2,000 cap.", list: [consulting-ai, enterprise-ai], enabled: true }
+  - { name: CVS Health, careers_url: https://jobs.cvshealth.com/us/en, scan_method: agent_discovery, candidate_connector: phenom, agent_hint: "Phenom site publishes 18,732 job URLs; generic page crawling is not operationally reasonable.", list: [enterprise-ai, computational-biology], enabled: true }
+  - { name: UnitedHealth Group, careers_url: https://careers.unitedhealthgroup.com/search-jobs, scan_method: agent_discovery, candidate_connector: phenom, agent_hint: "Public site exposes 5,564 job URLs and needs a deterministic Phenom feed adapter.", list: [enterprise-ai, computational-biology], enabled: true }
+  - { name: American Express, careers_url: https://careers.americanexpress.com/en/sites/CX_1/jobs, scan_method: agent_discovery, candidate_connector: oracle-recruiting-cloud, agent_hint: "Migrated to Oracle Recruiting Cloud; tenant/site identifiers need a validated deterministic recipe.", list: [finance-ai, enterprise-ai], enabled: true }

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Career Monitor</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">Local deterministic scanner</p>
+          <h1>Career Monitor</h1>
+        </div>
+        <button id="refresh" class="icon-button" type="button" aria-label="Refresh monitor status">Refresh</button>
+      </header>
+
+      <p id="notice" class="notice" role="status" aria-live="polite">Connecting to the local monitor…</p>
+
+      <section class="hero" aria-labelledby="new-heading">
+        <p id="new-heading">New relevant jobs</p>
+        <strong id="new-relevant">—</strong>
+        <span id="scan-time">Waiting for the latest scan</span>
+      </section>
+
+      <section class="metrics" aria-label="Monitor status">
+        <div><strong id="supported">—</strong><span>deterministic</span></div>
+        <div><strong id="agent-required">—</strong><span>agent queue</span></div>
+        <div><strong id="due">—</strong><span id="due-state">due now</span></div>
+        <div><strong id="escalations">—</strong><span>escalations</span></div>
+      </section>
+
+      <div id="health" class="health" aria-label="Source health"></div>
+
+      <section aria-labelledby="recent-heading">
+        <div class="section-heading">
+          <h2 id="recent-heading">Recent relevant roles</h2>
+          <span id="relevant-open"></span>
+        </div>
+        <ol id="recent" class="jobs"></ol>
+      </section>
+
+      <section class="actions" aria-label="Monitor actions">
+        <button id="run-due" class="primary" type="button">Run due sources</button>
+        <button id="capture" type="button">Capture this visible job</button>
+        <p>Capture is manual: it saves only this tab's URL, job metadata, and selected text. It never reads cookies or crawls LinkedIn or Handshake.</p>
+      </section>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

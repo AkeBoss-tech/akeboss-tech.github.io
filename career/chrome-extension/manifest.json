@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Career Monitor",
+  "description": "Runs the local deterministic career monitor and shows its latest results.",
+  "version": "1.0.0",
+  "minimum_chrome_version": "120",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtiLq+GO+umHUBF3nGksUeUitYaEIUomemzXqKVDm3/5nPIUF6LDGamfEHONFB6MtJIz8k7nypwahgCk0BUe/oD/LYGZJXqWBPPWiwNYCxzAx+MrRyB6Ib4LDtM5nwTsndSq/2ey4BhCNFdyD9dOG/cBa17n/alCVjI1VrJaXk/bPqrbONF+z8/jkyjmD84GvDNwR0RdvT0fpLfOf0aEJsh8GCVLopA3d7r/aeTBV4ZbQRHkl0la1EAa2R2v7OpGUusD7AM21scuAvjHMQYSe7LpjhT+66dtf8Oshz/XiihMN6O5UeN3RWaRJEnqM6VjGfyAc/OTF1ktSpnfc6SvaQwIDAQAB",
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "nativeMessaging",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Career Monitor"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  }
+}

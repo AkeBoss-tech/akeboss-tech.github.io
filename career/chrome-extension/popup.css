@@ -1,0 +1,117 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f4f7fb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  width: 390px;
+  min-height: 520px;
+}
+
+main { padding: 18px; }
+
+header,
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h1, h2, p { margin: 0; }
+h1 { font-size: 21px; letter-spacing: -0.02em; }
+h2 { font-size: 14px; }
+
+.eyebrow {
+  color: #55708c;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+button {
+  border: 1px solid #c9d4e2;
+  border-radius: 9px;
+  background: #fff;
+  color: #213147;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  min-height: 36px;
+  padding: 8px 12px;
+}
+
+button:hover { border-color: #7590ad; }
+button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+button:disabled { cursor: wait; opacity: 0.58; }
+.icon-button { min-height: 32px; }
+.primary { border-color: #0f766e; background: #0f766e; color: #fff; }
+
+.notice {
+  min-height: 18px;
+  margin: 11px 0;
+  color: #52677f;
+  font-size: 11px;
+}
+
+.notice.error { color: #b42318; }
+.notice.success { color: #08745c; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  border-radius: 14px;
+  padding: 15px;
+  color: #ecfeff;
+  background: linear-gradient(135deg, #143d59, #0f766e);
+}
+
+.hero p { font-size: 12px; font-weight: 700; }
+.hero strong { grid-row: span 2; font-size: 42px; line-height: 1; }
+.hero span { margin-top: 4px; color: #b8e6e1; font-size: 10px; }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin: 10px 0;
+}
+
+.metrics div {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dde5ef;
+  border-radius: 10px;
+  padding: 9px 7px;
+  background: #fff;
+}
+
+.metrics strong { font-size: 18px; }
+.metrics span { color: #65778c; font-size: 9px; }
+
+.health { display: flex; flex-wrap: wrap; gap: 5px; min-height: 24px; margin-bottom: 12px; }
+.health span { border-radius: 999px; padding: 4px 8px; background: #e5edf5; font-size: 10px; }
+.health .healthy { background: #d9f7e9; color: #08634c; }
+.health .degraded, .health .suspicious, .health .failing { background: #fff1d6; color: #8a4b08; }
+
+.section-heading { margin: 12px 0 7px; }
+.section-heading span { color: #65778c; font-size: 10px; }
+
+.jobs { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.jobs li { border: 1px solid #dde5ef; border-radius: 10px; background: #fff; }
+.jobs a { display: block; padding: 9px 11px; color: inherit; text-decoration: none; }
+.jobs a:hover { background: #f8fbff; }
+.job-title { display: block; overflow: hidden; font-size: 12px; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
+.job-meta { display: block; overflow: hidden; margin-top: 3px; color: #65778c; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.empty { padding: 14px; color: #65778c; font-size: 11px; text-align: center; }
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 13px; }
+.actions p { grid-column: 1 / -1; color: #65778c; font-size: 9px; line-height: 1.45; }

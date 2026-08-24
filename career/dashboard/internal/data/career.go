@@ -282,6 +282,10 @@ func loadJobURLs(careerOpsPath string) map[string]string {
 func enrichFromScanHistory(careerOpsPath string, apps []model.CareerApplication) {
 	scanPath := filepath.Join(careerOpsPath, "scan-history.tsv")
 	scanData, err := os.ReadFile(scanPath)
+	if os.IsNotExist(err) {
+		scanPath = filepath.Join(careerOpsPath, "data", "scan-history.tsv")
+		scanData, err = os.ReadFile(scanPath)
+	}
 	if err != nil {
 		return
 	}
@@ -539,6 +543,10 @@ func LoadReportSummary(careerOpsPath, reportPath string) (archetype, tldr, remot
 func UpdateApplicationStatus(careerOpsPath string, app model.CareerApplication, newStatus string) error {
 	filePath := filepath.Join(careerOpsPath, "applications.md")
 	content, err := os.ReadFile(filePath)
+	if os.IsNotExist(err) {
+		filePath = filepath.Join(careerOpsPath, "data", "applications.md")
+		content, err = os.ReadFile(filePath)
+	}
 	if err != nil {
 		return err
 	}

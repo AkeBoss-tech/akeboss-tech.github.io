@@ -2,6 +2,21 @@
 data/applications.md
 data/pipeline.md
 data/scan-history.tsv
+data/jobs.ndjson
+data/relevant-jobs.ndjson
+data/scan-summary.json
+data/raw/
+data/monitor.sqlite
+data/monitor.sqlite-*
+data/monitor.*.log
+data/manual-captures.ndjson
+data/agent-escalations.ndjson
+data/.pipeline-projection-transaction.json
+data/.pipeline-projection-transaction.json.tmp-*
+data/.*.projection-*.tmp
+data/.scan-writer.lock
+data/.scan-writer.lock.recovery
+data/.monitor-runs/
 reports/*.md
 !reports/.gitkeep
 output/*
@@ -32,3 +47,4 @@ node_modules/
 .claude/settings.local.json
 .claude/memory/
 career-dashboard
+out/screenshots/

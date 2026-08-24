@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Live, source-backed view of the Career Radar job monitor.">
+    <meta name="color-scheme" content="light">
+    <title>Career Radar</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to dashboard</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand-block">
+          <p class="eyebrow">Deterministic job monitor</p>
+          <h1>Career Radar</h1>
+          <p class="header-copy">Fresh roles, source health, and data confidence in one live view.</p>
+        </div>
+
+        <div class="header-actions">
+          <div class="freshness-block" aria-label="Dashboard freshness">
+            <span class="status-pill status-pill--loading" id="health-pill">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span id="health-label">Connecting</span>
+            </span>
+            <p id="freshness-copy">Waiting for the first update</p>
+          </div>
+          <button class="refresh-button" id="refresh-button" type="button">
+            <span aria-hidden="true">↻</span>
+            <span id="refresh-label">Refresh data</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="dashboard-shell" tabindex="-1">
+      <p class="sr-only" id="live-status" role="status" aria-live="polite"></p>
+
+      <section class="notice notice--loading" id="loading-state" aria-labelledby="loading-title">
+        <span class="loading-mark" aria-hidden="true"></span>
+        <div>
+          <h2 id="loading-title">Loading the live job monitor</h2>
+          <p>No sample data is shown. This view will populate from the underlying scanner.</p>
+        </div>
+      </section>
+
+      <section class="notice notice--error" id="error-state" aria-labelledby="error-title" hidden>
+        <div>
+          <p class="notice-kicker">Connection issue</p>
+          <h2 id="error-title">The dashboard data is unavailable</h2>
+          <p id="error-message">The monitor may still be starting. Try again in a moment.</p>
+        </div>
+        <button class="secondary-button" id="retry-button" type="button">Try again</button>
+      </section>
+
+      <div id="dashboard-content" hidden>
+        <section class="overview-section" aria-labelledby="overview-title">
+          <div class="section-heading section-heading--inline">
+            <div>
+              <p class="section-kicker">Live inventory</p>
+              <h2 id="overview-title">What changed and what needs attention</h2>
+            </div>
+            <p class="section-note" id="scan-note">Last scan —</p>
+          </div>
+
+          <div class="kpi-grid">
+            <article class="kpi-card kpi-card--featured">
+              <p class="kpi-label">Relevant roles open</p>
+              <p class="kpi-value" id="kpi-relevant">—</p>
+              <p class="kpi-detail">Matched to configured tracks</p>
+            </article>
+            <article class="kpi-card">
+              <p class="kpi-label">All open roles</p>
+              <p class="kpi-value" id="kpi-open">—</p>
+              <p class="kpi-detail">Across monitored companies</p>
+            </article>
+            <article class="kpi-card kpi-card--new">
+              <p class="kpi-label" id="kpi-new-label">New this scan</p>
+              <p class="kpi-value" id="kpi-new">—</p>
+              <p class="kpi-detail" id="kpi-new-detail">New relevant opportunities</p>
+            </article>
+            <article class="kpi-card">
+              <p class="kpi-label">Deterministic sources</p>
+              <p class="kpi-value" id="kpi-deterministic">—</p>
+              <p class="kpi-detail" id="kpi-deterministic-detail">Programmatic company feeds</p>
+            </article>
+            <article class="kpi-card kpi-card--attention">
+              <p class="kpi-label">Agent required</p>
+              <p class="kpi-value" id="kpi-agent">—</p>
+              <p class="kpi-detail">Complex sources awaiting review</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="jobs-section" aria-labelledby="jobs-title">
+          <div class="section-heading section-heading--inline">
+            <div>
+              <p class="section-kicker">Opportunity queue</p>
+              <h2 id="jobs-title">Relevant open jobs</h2>
+            </div>
+            <p class="results-count" id="results-count" aria-live="polite">— roles</p>
+          </div>
+
+          <form class="filter-panel" id="filter-form" aria-label="Filter relevant jobs">
+            <div class="search-field">
+              <label for="search-input">Search roles or companies</label>
+              <div class="input-wrap">
+                <span aria-hidden="true">⌕</span>
+                <input id="search-input" name="query" type="search" autocomplete="off" placeholder="Try robotics, Snowflake, researcher…">
+              </div>
+            </div>
+
+            <div class="filter-field">
+              <label for="track-filter">Track</label>
+              <select id="track-filter" name="track">
+                <option value="">All tracks</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="level-filter">Level</label>
+              <select id="level-filter" name="level">
+                <option value="">All levels</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="workplace-filter">Workplace</label>
+              <select id="workplace-filter" name="workplace">
+                <option value="">Any workplace</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="source-filter">Source</label>
+              <select id="source-filter" name="source">
+                <option value="">All sources</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="tier-filter">Fit tier</label>
+              <select id="tier-filter" name="tier">
+                <option value="">Any tier</option>
+              </select>
+            </div>
+            <label class="checkbox-field" for="new-filter">
+              <input id="new-filter" name="new" type="checkbox">
+              <span id="new-filter-label">New this scan</span>
+            </label>
+            <button class="clear-button" id="clear-filters" type="button">Clear filters</button>
+          </form>
+
+          <div class="table-shell">
+            <table>
+              <caption class="sr-only">Relevant open jobs matching the selected filters</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Role</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Track</th>
+                  <th scope="col">Level</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">First seen</th>
+                  <th scope="col"><span class="sr-only">Open job</span></th>
+                </tr>
+              </thead>
+              <tbody id="jobs-body"></tbody>
+            </table>
+            <div class="empty-state" id="jobs-empty" hidden>
+              <p class="empty-title">No roles match these filters</p>
+              <p>Try a broader search or clear the selected filters.</p>
+            </div>
+          </div>
+          <div class="load-more-wrap" id="load-more-wrap" hidden>
+            <button class="secondary-button" id="load-more-button" type="button">Load more roles</button>
+            <p id="load-more-copy">Showing —</p>
+          </div>
+        </section>
+
+        <section class="insights-section" aria-labelledby="insights-title">
+          <div class="section-heading">
+            <p class="section-kicker">Shape of the market</p>
+            <h2 id="insights-title">Where the relevant roles are</h2>
+          </div>
+          <div class="insights-grid">
+            <article class="panel chart-panel">
+              <div class="panel-heading">
+                <h3>Track mix</h3>
+                <p>Open relevant roles</p>
+              </div>
+              <div class="bar-chart" id="track-chart"></div>
+            </article>
+            <article class="panel chart-panel chart-panel--wide">
+              <div class="panel-heading">
+                <h3>First-seen trend</h3>
+                <p>New relevant roles by day</p>
+              </div>
+              <div class="trend-chart" id="trend-chart"></div>
+            </article>
+            <article class="panel chart-panel">
+              <div class="panel-heading">
+                <h3>Workplace mix</h3>
+                <p>Remote, hybrid, and on-site</p>
+              </div>
+              <div class="bar-chart bar-chart--compact" id="workplace-chart"></div>
+            </article>
+            <article class="panel chart-panel chart-panel--wide">
+              <div class="panel-heading">
+                <h3>Top companies</h3>
+                <p>Most relevant roles currently open</p>
+              </div>
+              <div class="company-chart" id="company-chart"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="operations-grid" aria-label="Data operations">
+          <article class="panel quality-panel" aria-labelledby="quality-title">
+            <div class="panel-heading">
+              <p class="section-kicker">Field coverage</p>
+              <h2 id="quality-title">Data quality</h2>
+              <p>Share of relevant open jobs with usable detail.</p>
+            </div>
+            <div class="quality-list" id="quality-list"></div>
+          </article>
+
+          <article class="panel source-panel" aria-labelledby="sources-title">
+            <div class="panel-heading panel-heading--inline">
+              <div>
+                <p class="section-kicker">Monitor operations</p>
+                <h2 id="sources-title">Source health</h2>
+              </div>
+              <p class="source-total" id="source-total">— sources</p>
+            </div>
+            <div class="health-breakdown" id="health-breakdown"></div>
+            <div class="queue-heading">
+              <h3>Agent queue</h3>
+              <p id="queue-summary">Complex sources that need a human-guided pass.</p>
+            </div>
+            <ul class="agent-list" id="agent-list"></ul>
+            <div class="empty-state empty-state--compact" id="agent-empty" hidden>
+              <p class="empty-title">The agent queue is clear</p>
+              <p>No complex sources currently need attention.</p>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Career Radar · live local data · automatic refresh every 30 seconds</p>
+    </footer>
+  </body>
+</html>
