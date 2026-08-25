@@ -1,0 +1,144 @@
+%-------------------------
+% Resume in Latex
+% Author : Akash Dubey
+% Tailored for Palantir Forward Deployed Software Engineer Internship - Commercial
+%------------------------
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\ifdefined\pdfgentounicode\input{glyphtounicode}\fi
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+% Ensure that generate pdf is machine readable/ATS parsable
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Akash Dubey} \\ \vspace{1pt}
+    \small (212)-814-3681 $|$ \href{mailto:akashdub06@gmail.com}{\underline{akashdub06@gmail.com}} $|$
+    \href{https://akashdubey.me/}{\underline{akashdubey.me}} $|$
+    \href{https://github.com/AkeBoss-tech}{\underline{github.com/AkeBoss-tech}} $|$
+    \small U.S. Citizen
+\end{center}
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Rutgers University Honors College, School of Arts and Sciences}{New Brunswick, NJ}
+      {Bachelor of Science in Computer Science and Mathematics}{Anticipated May 2027}
+      \resumeItemListStart
+        \resumeItem{\textbf{GPA}: 3.95/4.0 $|$ SAT: 1580 $|$ Dean's List. \textbf{Coursework}: Algorithms, Data Structures, Systems Programming, Computer Architecture, Stochastic Processes, Math Theory of Probability.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------SOFTWARE ENGINEERING AND CLIENT DELIVERY-----------
+\section{Software Engineering \& Client Delivery}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://newyorklife.com/}{New York Life Insurance}}{New York, NY}
+      {Software Engineer Intern, TDAV Team}{May -- Aug 2026}
+      \resumeItemListStart
+        \resumeItem{Delivered an AI text and voice agent for insurance claims, serving clients and 12,000 Customer Service Representatives on AWS with access to enterprise services, knowledge, and forms.}
+        \resumeItem{Unified business logic from 13,000 documents across SharePoint, Confluence, Jira, the public site, and intranet into an enterprise knowledge base for AI and human users.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://rutgerseconomics.org}{Rutgers Economics Labs}}{New Brunswick, NJ}
+      {President (formerly Research Director, Team Lead)}{Oct 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{Lead quantitative engagements for NJDOL, NJDEP, NJBPU, Federal HUD, and the U.S. Census Bureau, translating stakeholder questions into Python/R analyses of large public datasets and decision-ready findings.}
+        \resumeItem{Led five researchers end-to-end through an evaluation of New Jersey's Urban Enterprise Zone program, from scoping with NJDCA through econometric analysis and client delivery.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://scarletsync.app/}{Scarlet Sync}}{New Brunswick, NJ}
+      {Founder}{Jan 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Built and shipped a Rutgers academic planning platform from 0 to 1 to thousands of users, iterating across degree, schedule, and course-planning workflows.}
+        \resumeItem{Architected a Python/LLM data pipeline that reverse-engineers legacy university services and indexes 2,500+ classes and 500+ degree programs for real-time querying.}
+        \resumeItem{Developed a production AI assistant with streaming tool-calling and grounded retrieval over schedules, degree plans, and user context across Web, ChatGPT, Claude, and iOS.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://www.samaritanscout.org/}{Samaritan Scout}}{Cranford, NJ}
+      {Full Stack Engineer Intern}{May 2023 -- Aug 2025}
+      \resumeItemListStart
+        \resumeItem{Built an agentic extraction system over 100,000+ nonprofit websites using OpenAI and Gemini structured outputs, reducing manual data entry by over 90\%.}
+        \resumeItem{Developed a React, TypeScript, and PostgreSQL search product indexing 35,000+ volunteer opportunities, with semantic matching and hallucination filters.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://getlykke.com/}{Lykke}}{San Francisco, CA}
+      {Founding Software Engineer}{Sep 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Engineered production RAG and data workflows across MongoDB, Milvus, S3, Gemini Files API, and SSE, including citation events, token budgeting, and fallback paths.}
+        \resumeItem{Built a distributed course-wiki engine with tenant-isolated background jobs using SQS, MongoDB leases, Redis rate limiting, and AWS ECS.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------TECHNICAL DEPTH-----------
+\section{Technical Depth \& Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, TypeScript/JavaScript, C++, Java, SQL, R, Bash} $|$
+     \textbf{Systems}{: React, PostgreSQL, AWS, MongoDB, Redis, S3, ECS/SQS, Git} \\
+     \textbf{AI \& Data}{: LLM workflows, RAG, agents, data pipelines, ontologies, PyTorch, Pandas, scikit-learn} $|$
+     \textbf{Awards}{: 8090 AI Top Coder (5th), Rutgers Shark Tank (2nd and 3rd), ASA Fall Data Challenge (Top 3), NSF I-Corps}
+    }}
+ \end{itemize}
+\end{document}

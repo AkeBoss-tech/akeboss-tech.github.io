@@ -16,7 +16,7 @@ This roadmap turns concepts already present across the site into source-grounded
 2. For each topic, generate a source-grounded page outline using the `generate-wiki` skill.
 3. Convert artifact markers into real React components: generated figures, SVG diagrams, small simulations, timelines, maps, or charts.
 4. Add each topic as schema-versioned JSON with source files, source-status caveats, sections, pitfalls, related pages, and artifact metadata.
-5. Run `npm run wiki:validate`, `npm run build`, and visually check desktop/mobile layouts.
+5. Run `bun run wiki:validate`, `bun run build`, and visually check desktop/mobile layouts.
 6. Ship in batches so each cluster has consistent quality.
 
 ## Parallel Thread Plan

@@ -1,58 +1,41 @@
-.PHONY: help install build serve dev clean resume
+.PHONY: help install dev lint test check audit validate build resume
 
-# Default target
 help:
 	@echo "Available targets:"
-	@echo "  make install  - Install Ruby and npm dependencies"
-	@echo "  make build    - Build the site (Jekyll + JS minification)"
-	@echo "  make serve    - Serve the site locally at http://localhost:4000"
-	@echo "  make dev      - Run in development mode (with watch)"
-	@echo "  make clean    - Clean build artifacts and caches"
-	@echo "  make resume   - Build the resume PDF from LaTeX"
+	@echo "  make install   - Install the pinned root dependencies with Bun"
+	@echo "  make dev       - Start the Next.js development server"
+	@echo "  make lint      - Run ESLint"
+	@echo "  make test      - Run Bun website tests"
+	@echo "  make check     - Run lint, wiki validation, and tests in parallel"
+	@echo "  make audit     - Check dependencies for high-severity advisories"
+	@echo "  make validate  - Validate wiki content and links"
+	@echo "  make build     - Build the GitHub Pages static export"
+	@echo "  make resume    - Build the resume PDF with Tectonic"
 
-# Install dependencies
 install:
-	@echo "Installing Ruby dependencies..."
-	bundle install
-	@echo "Installing npm dependencies..."
-	npm install
+	bun ci
 
-# Build the site
-build: build-js
-	@echo "Building Jekyll site..."
-	bundle exec jekyll build
+dev:
+	bun run dev
 
-# Check if npm dependencies are installed
-node_modules/.bin/uglifyjs:
-	@echo "npm dependencies not found, installing..."
-	npm install
+lint:
+	bun run lint
 
-# Build JavaScript assets
-build-js: node_modules/.bin/uglifyjs
-	@echo "Building JavaScript assets..."
-	npm run build:js
+test:
+	bun run test
 
-# Serve the site locally
-serve: build-js
-	@echo "Starting Jekyll server at http://localhost:4000..."
-	bundle exec jekyll serve --config _config.yml,_config.dev.yml
+check:
+	bun run check
 
-# Development mode with watch
-dev: build-js
-	@echo "Starting Jekyll in development mode with watch..."
-	bundle exec jekyll serve --config _config.yml,_config.dev.yml --watch --livereload
+audit:
+	bun run audit
 
-# Clean build artifacts
-clean:
-	@echo "Cleaning build artifacts..."
-	rm -rf _site
-	rm -rf .sass-cache
-	rm -rf .jekyll-cache
-	rm -rf .jekyll-assets-cache
-	rm -rf .asset-cache
-	@echo "Clean complete!"
+validate:
+	bun run wiki:validate
 
-# Build resume PDF
+build:
+	GITHUB_PAGES=true bun run build
+	bun run redirects:build
+
 resume:
-	@echo "Building resume PDF from LaTeX..."
-	cd files && pdflatex resume.tex
+	tectonic files/resume.tex -o files/

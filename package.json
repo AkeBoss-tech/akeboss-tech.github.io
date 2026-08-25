@@ -1,5 +1,6 @@
 {
   "name": "akash-portfolio",
+  "packageManager": "bun@1.4.0",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.4",
     "@types/node": "^25.6.0",
@@ -14,16 +15,19 @@
     "typescript": "^6.0.3"
   },
   "scripts": {
-    "predev": "npm run images:build",
-    "prebuild": "npm run images:build && npm run wiki:validate",
-    "dev": "next dev --port 3001",
-    "build": "next build",
-    "redirects:build": "node scripts/build-legacy-redirects.mjs",
-    "images:build": "node scripts/build-responsive-images.mjs",
+    "predev": "bun run images:build",
+    "prebuild": "bun run images:build && bun run wiki:validate",
+    "dev": "bun --bun next dev --port 3001",
+    "build": "bun --bun next build",
+    "redirects:build": "bun scripts/build-legacy-redirects.mjs",
+    "images:build": "bun scripts/build-responsive-images.mjs",
     "jobfill:test": "node --test tools/jobfill/test/security.test.mjs && node tools/jobfill/test/run-sample.mjs",
-    "wiki:validate": "node scripts/validate-wiki.mjs",
-    "start": "next start",
-    "lint": "eslint ."
+    "wiki:validate": "bun scripts/validate-wiki.mjs",
+    "start": "bun --bun next start",
+    "lint": "bun --bun eslint .",
+    "test": "bun test ./test/",
+    "check": "bun run --parallel lint wiki:validate test",
+    "audit": "bun audit --audit-level=high"
   },
   "main": "index.js",
   "type": "module",

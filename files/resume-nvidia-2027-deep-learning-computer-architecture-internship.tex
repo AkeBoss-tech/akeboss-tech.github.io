@@ -1,0 +1,181 @@
+%-------------------------
+% Resume in Latex
+% Author : Akash Dubey
+% Tailored for NVIDIA 2027 Deep Learning Computer Architecture Internships (JR2023491): CUDA parallelism, GPU computing, deep learning, performance optimization, and HPC
+%------------------------
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\ifdefined\pdfgentounicode\input{glyphtounicode}\fi
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+% Ensure that generate pdf is machine readable/ATS parsable
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Akash Dubey} \\ \vspace{1pt}
+    \small (212)-814-3681 $|$ \href{mailto:akashdub06@gmail.com}{\underline{akashdub06@gmail.com}} $|$
+    \href{https://akashdubey.me/}{\underline{akashdubey.me}} $|$
+    \href{https://github.com/AkeBoss-tech}{\underline{github.com/AkeBoss-tech}} $|$
+    \small U.S. Citizen
+\end{center}
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Rutgers University Honors College, School of Arts and Sciences}{New Brunswick, NJ}
+      {Bachelor of Science in Computer Science and Mathematics}{Anticipated May 2028}
+      \resumeItemListStart
+        \resumeItem{\textbf{GPA}: 3.95/4.0 $|$ SAT: 1580 $|$ Dean's List. \textbf{Coursework}: Computer Architecture, Systems Programming, Algorithms, Data Structures, Tensor Networks, Stochastic Processes, Math Theory of Probability.}
+        \resumeItem{\textbf{Programs \& Activities}: Physics Learning Theory Seminar, Directed Research Reading Program, Road to Silicon Valley Program (Cohort 6), Quantitative Finance Club, ESL Instructor.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------GPU, PARALLEL COMPUTING, AND DEEP LEARNING-----------
+\section{GPU, Parallel Computing \& Deep Learning}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Algorithmic Robotics and Control Lab, Rutgers Computer Science}{New Brunswick, NJ}
+      {Research Assistant (Advisor: Prof. Jingjin Yu)}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Implemented and benchmarked CUDA versions of pRRTC and FCIT*, parallelizing tree/graph search and collision checking for high-dimensional robot motion planning across 500 problems.}
+        \resumeItem{Developing a graph-based search policy for dual-arm task-and-motion planning in Isaac Sim, learning from successful and failed planner traces to rank symbolic action sequences and predict geometric feasibility.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Kwan Lab, Rutgers Cancer Institute of New Jersey}{New Brunswick, NJ}
+      {Computational Biology Research Assistant (Advisor: Prof. Kelvin Kwan)}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Debugged legacy TensorFlow/Keras dependencies to build a reproducible DeepSTARR inference environment on HPC for sequence-based prediction of enhancer activity.}
+        \resumeItem{Developed an AlphaGenome in silico deletion screen spanning 12 sites, 3 deletion sizes, and 2 cell types (72 perturbation conditions) to quantify TAD-boundary sensitivity.}
+        \resumeItem{Built a 3D chromatin polymer simulator using overdamped Langevin dynamics and multi-scale TAD detection; validated the pipeline with 70+ automated tests.}
+      \resumeItemListEnd
+    \resumeProjectHeading
+      {\href{https://github.com/AkeBoss-tech/llm-research}{\textbf{Deep Learning Performance Optimization}} $|$ \emph{PyTorch, HPC, Quantization, Pruning}}{}
+      \resumeItemListStart
+        \resumeItem{Fine-tuned small language models on GSM8k to compare model sizes and neural network architectures for mathematical reasoning.}
+        \resumeItem{Deployed models on Rutgers's Amarel HPC cluster and applied quantization and structural pruning to maximize inference throughput on constrained compute.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------SOFTWARE ENGINEERING EXPERIENCE-----------
+\section{Software Engineering Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://newyorklife.com/}{New York Life Insurance}}{New York, NY}
+      {Software Engineer Intern, TDAV Team}{May -- Aug 2026}
+      \resumeItemListStart
+        \resumeItem{Built an AI text and voice agent on AWS for insurance claims workflows serving clients and 12,000 Customer Service Representatives, integrating enterprise services, knowledge, and forms.}
+        \resumeItem{Consolidated business logic from 13,000 documents across SharePoint, Confluence, Jira, public sites, and the intranet into a knowledge platform for AI and human users.}
+        \resumeItem{Developed cloud-hosted multi-agent workflows supporting AEM development, Pega code, document processing, and mainframe modernization.}
+      \resumeItemListEnd
+    \newpage
+    \resumeSubheading
+      {\href{https://getlykke.com/}{Lykke}}{San Francisco, CA}
+      {Founding Software Engineer}{Sep 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Built a distributed course-wiki engine with tenant-isolated background jobs using AWS SQS/ECS, MongoDB leases, Redis rate limiting, and S3; implemented retrieval, streaming, and failure-handling paths.}
+        \resumeItem{Engineered production data and RAG pipelines across MongoDB, Milvus, S3, and SSE, including source inference, citation events, token budgeting, and fallback paths for large course materials.}
+        \resumeItem{Built ingestion workflows for Canvas LMS courses, assignments, announcements, notes, and uploaded documents, creating class-scoped knowledge bases for contextual chat and study generation.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://scarletsync.app/}{Scarlet Sync}}{New Brunswick, NJ}
+      {Founder}{Jan 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Architected a Python data pipeline that reverse-engineers legacy university systems and indexes 2,500+ classes and 500+ degree programs for real-time querying by thousands of users.}
+        \resumeItem{Built and shipped a production academic-planning platform with a streaming, tool-calling AI assistant across Web, ChatGPT, Claude, and iOS.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {\href{https://www.samaritanscout.org/}{Samaritan Scout}}{Cranford, NJ}
+      {Full Stack Engineer Intern}{May 2023 -- Aug 2025}
+      \resumeItemListStart
+        \resumeItem{Developed a Python extraction system over 100,000+ nonprofit websites using structured model outputs, reducing manual data entry by over 90\%.}
+        \resumeItem{Built a React, TypeScript, and PostgreSQL search product indexing 35,000+ volunteer opportunities with semantic matching and hallucination filters.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------SELECTED SYSTEMS PROJECTS-----------
+\section{Selected Systems Projects}
+  \resumeSubHeadingListStart
+    \resumeProjectHeading
+      {\href{https://github.com/AkeBoss-tech/knowledge}{\textbf{Knowledge Base \& Agent Workflow Manager}} $|$ \emph{Python, MCP/CLI, Hybrid Retrieval}}{}
+      \resumeItemListStart
+        \resumeItem{Built KRAIL, a local-first knowledge runtime for ontology-aware pages, source ledgers, claim records, verification runs, artifact lineage, and hybrid keyword-graph-vector retrieval.}
+        \resumeItem{Implemented auditable agent infrastructure with local runner dispatch, dry-run work orders, session logs, and workflow validation.}
+      \resumeItemListEnd
+    \resumeProjectHeading
+      {\textbf{Native macOS Computer-Use Agent} $|$ \emph{Swift, MCP, Gemini Vision} (private code)}{}
+      \resumeItemListStart
+        \resumeItem{Built a native desktop agent integrating vision models with macOS Accessibility APIs, AppleScript, and JXA; orchestrated specialized UI, shell, and application-research agents through MCP.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: C++, CUDA, Python, Java, JavaScript/TypeScript, SQL, Bash, R, Git} $|$
+     \textbf{GPU \& HPC}{: GPU Computing, Parallel Programming, CUDA, Performance Optimization, HPC Clusters} $|$
+     \textbf{Systems}{: Distributed Systems, AWS (SQS, ECS, S3), Redis, MongoDB, PostgreSQL} \\
+     \textbf{Deep Learning}{: PyTorch, TensorFlow/Keras, Neural Network Inference, Transformers, Quantization, NumPy, Pandas, Automated Testing} \\
+     \textbf{Awards}{: 8090 AI Top Coder (5th), Rutgers Shark Tank (2nd and 3rd), ASA Fall Data Challenge (Top 3), NSF I-Corps}
+    }}
+ \end{itemize}
+\end{document}

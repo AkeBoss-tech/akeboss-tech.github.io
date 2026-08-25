@@ -5,6 +5,7 @@ type ResponsiveImageAsset = {
   widths: number[]
   width: number
   height: number
+  placeholder: string
 }
 
 const assets = responsiveImages.assets as ResponsiveImageAsset[]

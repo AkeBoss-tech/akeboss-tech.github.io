@@ -1,0 +1,14 @@
+{
+  "company": "Palantir Technologies",
+  "role": "Forward Deployed Software Engineer, New Grad - Commercial",
+  "team": "Delta",
+  "location": "New York, NY",
+  "date": "July 31, 2026",
+  "salutation": "Palantir Hiring Team",
+  "opening": "What has fascinated me about Palantir for years is its conviction that consequential software cannot be separated from the operational reality it is meant to change. Forward Deployed Engineers do not stop at delivering technically correct systems; they learn how an organization actually operates, work alongside the people making decisions, and own the path from an ambiguous problem to a production outcome. That is the kind of engineer I have been becoming, and it is why I am applying specifically to Delta.",
+  "proof": "At New York Life, I saw why that model matters. Building an AI agent for insurance-claims workflows required more than prompting a capable model. The system had to serve customers and 12,000 service representatives while working with existing services, forms, permissions, and business rules. I consolidated operational knowledge from 13,000 documents across SharePoint, Confluence, Jira, the intranet, and public sources into a shared knowledge layer for both people and AI. The most valuable engineering work happened where technical architecture met the reality of how representatives handled claims and how stakeholders evaluated risk. I learned to begin with the workflow, identify the decisions that matter, and build technology around them.",
+  "fit": "I practice the same kind of ownership through Scarlet Sync, the academic-planning platform I built from zero to thousands of users. Turning fragmented university systems into reliable planning tools required direct user feedback, a Python and LLM ingestion pipeline spanning 2,500 classes and more than 500 degree programs, and continuous iteration across web and AI interfaces. Palantir's architecture resonates with me because its Ontology similarly connects data, logic, actions, and security so that humans and AI can operate on a shared representation of the institution. The emergence of AI FDE, with its ability to build data pipelines, modify Ontologies, and create applications through governed tools, makes this an especially compelling time to join.",
+  "closing_focus": "turn customers' fragmented operational knowledge into trusted applications and AI workflows that materially improve how they make decisions",
+  "output_dir": "/Users/akashdubey/Documents/CodingProjects/akeboss-tech.github.io/files/cover-letters",
+  "slug": "palantir-fde-new-grad-commercial"
+}

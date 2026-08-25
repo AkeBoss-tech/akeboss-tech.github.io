@@ -21,6 +21,14 @@ export function ResponsiveImage({
 }: ResponsiveImageProps) {
   const responsiveSources = getResponsiveImageSources(src)
   const asset = getResponsiveImageAsset(src)
+  const placeholderStyle = asset?.placeholder
+    ? {
+        backgroundImage: `url(${asset.placeholder})`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+      }
+    : undefined
 
   if (!responsiveSources) {
     return (
@@ -33,6 +41,7 @@ export function ResponsiveImage({
         fetchPriority={fetchPriority}
         width={asset?.width}
         height={asset?.height}
+        style={placeholderStyle}
       />
     )
   }
@@ -50,6 +59,7 @@ export function ResponsiveImage({
         fetchPriority={fetchPriority}
         width={asset?.width}
         height={asset?.height}
+        style={placeholderStyle}
       />
     </picture>
   )

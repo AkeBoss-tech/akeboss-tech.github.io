@@ -1,0 +1,6 @@
+[install]
+# Avoid newly published dependency versions during their highest-risk window.
+minimumReleaseAge = 259200
+
+# Require an explicit install instead of resolving missing packages at runtime.
+auto = "disable"

@@ -137,6 +137,18 @@ async function ensureFreshVariant(sourcePath, outputPath, width, format, options
   return true
 }
 
+async function buildPlaceholder(outputBase, width) {
+  // Generate the placeholder from the smallest portable derivative rather than
+  // decoding multi-megabyte originals. WebP is supported by Bun.Image on CI's
+  // Linux runners, including when the original source is AVIF.
+  const smallestWebpPath = path.join(outputBase, `w${width}.webp`)
+  return Bun.file(smallestWebpPath)
+    .image()
+    .resize(16, 16, { fit: 'inside' })
+    .webp({ quality: 20 })
+    .dataurl()
+}
+
 let builtCount = 0
 const assets = []
 const discoveredImages = await discoverReferencedImages()
@@ -146,7 +158,6 @@ for (const src of discoveredImages) {
   const widths = await getVariantWidths(sourcePath)
   const dimensions = await getSourceDimensions(sourcePath)
   const outputBase = toGeneratedBasePath(src)
-  assets.push({ src, widths, ...dimensions })
 
   for (const width of widths) {
     for (const format of formats) {
@@ -157,6 +168,9 @@ for (const src of discoveredImages) {
       }
     }
   }
+
+  const placeholder = await buildPlaceholder(outputBase, widths[0])
+  assets.push({ src, widths, ...dimensions, placeholder })
 }
 
 await fs.writeFile(manifestPath, `${JSON.stringify({ assets }, null, 2)}\n`)

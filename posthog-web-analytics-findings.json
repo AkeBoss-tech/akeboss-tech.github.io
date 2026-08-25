@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-07-28T03:36:41Z",
+  "windowDays": 30,
+  "expandedFromDefault": true,
+  "findings": [
+    {
+      "checkId": "pageleave_coverage",
+      "severity": "warning",
+      "title": "Pageleave coverage is low on akashdubey.me",
+      "affected": [
+        "akashdubey.me"
+      ],
+      "evidence": [
+        "186 pageviews, 76 pageleaves, ratio 0.409"
+      ],
+      "remediationUrl": "https://posthog.com/docs/libraries/js#config",
+      "fix": {
+        "type": "code",
+        "applied": false,
+        "summary": "No analytics-specific fixes applied without an explicit selection."
+      }
+    },
+    {
+      "checkId": "web_vitals_coverage",
+      "severity": "info",
+      "title": "Web Vitals are not reaching PostHog",
+      "affected": [
+        "akashdubey.me"
+      ],
+      "evidence": [
+        "186 pageviews, 0 Web Vitals events"
+      ],
+      "remediationUrl": "https://posthog.com/docs/web-analytics/web-vitals",
+      "fix": {
+        "type": "code",
+        "applied": false,
+        "summary": "No analytics-specific fixes applied without an explicit selection."
+      }
+    }
+  ],
+  "passed": [
+    "partial_reverse_proxy",
+    "duplicate_canonical_urls"
+  ],
+  "skipped": [
+    {
+      "checkId": "dark_authorized_urls",
+      "reason": "no app_urls configured"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+name: Dependency audit
+
+on:
+  pull_request:
+    paths:
+      - package.json
+      - bun.lock
+      - bunfig.toml
+      - .github/workflows/dependency-audit.yml
+  schedule:
+    - cron: '23 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.0
+
+      - name: Audit high-severity vulnerabilities
+        run: bun run audit

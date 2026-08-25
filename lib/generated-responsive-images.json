@@ -6,7 +6,8 @@
         150
       ],
       "width": 150,
-      "height": 150
+      "height": 150,
+      "placeholder": "data:image/webp;base64,UklGRnwBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSAEBAAAAAAACAAYtV2NkVSoFAAIAAAACACd8j31vbnmMgSkAAgACADeXZnCz19ayb2ugPgACACKcV6f/+ebn9/+rVJsnAAF+ZqX/taS8ptHE/6tffQMyjGz/val9bXOMr8n/a38vXnav+rCFgdLieZ2j97RwV3Zf1uqtZNjW3dFyw+XbVmuHatftxG/X49Lia7jp22V9X2y3+qmRgu/3hpaw7b1vYTB9cf+ywZ17fI7Vy/9zgDYFgWSz/8HPtNHFzP+2X4MHADaaTrn/8t7c9v+9TpA0AAEASphVdMLj4sJ5WpxOAAEAAQA4h3xlXV9ugYk4AAEAAAACAAY6YnJuYTkGAAIAAABWUDggVAAAADACAJ0BKhAAEAAFQHwlAAGSAFonQteNcl3wAPYV5PLAkmfv67QWFlhLxLCTPW55JCHyKpe8BKGY4DFAaL2nSGN4FDAUZASNNRcUmasvXJwCO8XAAA=="
     },
     {
       "src": "/activity-logos/rutgers-qfc.png",
@@ -15,7 +16,8 @@
         170
       ],
       "width": 170,
-      "height": 170
+      "height": 170,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQABAABUB8JaQAIEAYE9HUAAD+7dpECz/SokoXs3jD16dVl4dSmNzw5LAFK0pCxRn8TM6QHnTXUp+TcAHfzyrX1IxhMwm6XLoAAA=="
     },
     {
       "src": "/activity-logos/team-1257.png",
@@ -27,7 +29,8 @@
         1280
       ],
       "width": 1500,
-      "height": 1500
+      "height": 1500,
+      "placeholder": "data:image/webp;base64,UklGRngBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSMIAAAABkGJr27JV9/N8P05jkajubs0dEtHdPbu7RxaN5jYIhyFAs+b6/t+NnTOGiJgA/G05HIr/tQBA5V+CrOmeBKjKL4HV90Ynl/FbxULc4Hz3yjPbvX0BuLtCMXhvnDd3pgOITG/0RBGd5AfHIYibXq/GCD9Ivg9FwYEhbvus0dDmdX8oBJ6rfCNtYzjX5AEI9ILG2DbnSlKhEHge3l7y6qTUvx4CAN5BXk0HOSHVSVD8baUUlxf6QfG3CgSA4D/VUhX8BlZQOCCQAAAAsAIAnQEqEAAQAAVAfCWwAnQwTklTfi8eRstTRhzAAMxUC/0c+X2X2c9lxr33Sw9h57qFRnfcM7pQ91gx3V/ea223OFWLSYSyuEwohagZNT/i5bDTeabjcSwSE3afN+Kk21NpVtvekVD9eEcAb//Qrara3nMBQsCvpkdBGjvhwyQf9msJm0xd4xOBir4YAAAA"
     },
     {
       "src": "/activity-logos/ucvts.png",
@@ -39,7 +42,8 @@
         1000
       ],
       "width": 1000,
-      "height": 1007
+      "height": 1007,
+      "placeholder": "data:image/webp;base64,UklGRlIBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSAEBAAAAAAABABBCN6FcR1kAAQEAAAACARSLpGRoXWKRYDwCAwADAF++QktSWF9JKlu0MAACAB6RQldMqVjCZip2Nn0+AAPFTWx4h9d2kpfSXmNWpwATdT4gwqYTKREinnlJbm8reXRFcKgvQF8+XTbTmk1uopRsV622OykgRiQ/o1NaXVFeZVlSoEErEVclJ7mxLkx2nX1Old8fPiM6HTigW15oiSR/STltviMDAgmvuDpcbxcAqFZmY6akvInscldxTcQAAESnO29MUZdHd1JkP54pAAIALNBdViMXHSJFRclkAAMAAwBBjrNtVlZht4YTAQIAAAABAABYRoqhNksMAAEAAABWUDggKgAAAHABAJ0BKhAAEAAFQHwlsAJ0AUAAAP7vLT3LN/28P8AHhW0wdVi2xVqYAA=="
     },
     {
       "src": "/company-logos/rutgers-economics-labs.jpg",
@@ -49,7 +53,8 @@
         500
       ],
       "width": 500,
-      "height": 500
+      "height": 500,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQABAABUB8JbAAD5AwbNn2ThQAAP7nC2v9M8/yHaZMQlAMuUOzems2BI/Lql8aWgCnfd1YS+VthEv3sDJiNn3bgTuNynbxpk9AAA=="
     },
     {
       "src": "/company-logos/samaritan-scout.png",
@@ -59,7 +64,8 @@
         500
       ],
       "width": 500,
-      "height": 500
+      "height": 500,
+      "placeholder": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSIwAAAABgJpt27LsegWNNDIkm0E3cGcGkkfPMABTeLQFLEP6/6ZRcRkhIiaAp4oHhELcB0qKOwS24ksBk9ZaXkjc+8ObBwlCCUCgV4fXfq9bc3CBgf7h+3D4P+yydjOgCB3+D1+7wyCaNwJIZqOwUy63CC419SQa29SFvFB0gmgDFd81hNcI4LbydHlFilt3A1ZQOCAmAAAAsAEAnQEqEAAQAAVAfCWkAALng+sqQAD+7pcCtaaLQomoNkAAAAA="
     },
     {
       "src": "/company-logos/scarlet-sync.png",
@@ -68,7 +74,8 @@
         180
       ],
       "width": 180,
-      "height": 180
+      "height": 180,
+      "placeholder": "data:image/webp;base64,UklGRmQBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSOkAAAABgGPb2rHnPt///7HxrUzCtlHZVmejs21bVVKZdVY6u3Im4Px6wjlExAQQCQhddgMMRusBIpgWBk9wY0RZCN955VvA4IAXh7hpn/P4uoSvxXjmvdTdxCvOnWxoZM7OZDkfzl4zPy9tKJVcnslDrWNzwzWV7bPTnb1ckfMEEGAXZAoiXNbkPEGqhfZq5zpoauCiNucJkKLnyFgboH8IshmOheQ/COlIugEEXNRmP4GkmMrKGIBEwEVN7j1A0HSyJIBwVhvKXgaiaKqlI5qLRnaqdCzwh1wuVyrlcvkHL0tBlr6eXn96+tgIAABWUDggVAAAAJABAJ0BKhAAEAAFQHwlsV59GACiAAD+7McdV6XU3X54rNEGUG3rOx3WQljkYg+9DN8lTuvH2EdkvaV+N783houtke/ht7hW16DtMxUBUbbxv6AAAA=="
     },
     {
       "src": "/hero-nyc.png",
@@ -80,7 +87,8 @@
         1280
       ],
       "width": 1920,
-      "height": 1080
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkABUB8JYwCdAEN3mFgAAD+8MtDTmrTFsZ0mriEgtUfzRIjAAAA"
     },
     {
       "src": "/icons/apple-icon-180x180.png",
@@ -89,7 +97,8 @@
         180
       ],
       "width": 180,
-      "height": 180
+      "height": 180,
+      "placeholder": "data:image/webp;base64,UklGRqgBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSPwAAAABgGPb2rHnPt/7G7FtO6lY2bZtJ0NIqgzAto3KttVqHL/nEBFq27ZhXNaSnAGGlu+dxRSkHX22gIEg30WSYrLk2l6yLQcRHKch9Lt9AmHaUQOLJQanuVlXsCULEEeYiQq5H5+4DY6eURsOvf8HL5tFRZsvB389Dkh8qsgfnbQrLbGbHM2vfE04tQK+GssVivLGL8Dy9MQM+KyrUigq679gGb2f+lSYNT5hU1NtOzGZsq6ogEvf38Hzck72yvPBT/+wkVZQ2OPk1GNowgyIGLoVcfCdmvICb8kcHEOtIhJ4egSn8ye9Db71RWXluZVoWw8Ehs634ywg6/ilAwxWUDgghgAAAPACAJ0BKhAAEAAFQHwlsAJ0fwTBXvJJENEHQV985PkAAP6tfTlhmo6nufuX5nUdcapMzknJV5vRvnmMBjKKJmhtKPq91vVR68U+tmXzKhLWHzVeYET/be4tsOwfMdI78iL303WWgKuTidi9Y0uu7XwDJqkkVUdpKGbbR6bIKbjcSjPrgAAA"
     },
     {
       "src": "/icons/apple-icon.png",
@@ -98,7 +107,8 @@
         192
       ],
       "width": 192,
-      "height": 192
+      "height": 192,
+      "placeholder": "data:image/webp;base64,UklGRqIBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSPYAAAABgGTbtmlnn3u/f2zbVokl27btpAu/lAbYtm3brqodTh8iYiDAUfWyMBqFmO3HKnAQlBcR8dmbdWIqnVcGEcwHIHY5vQZhwOyX3hiHxdCgNfiYLogRBgK8Lrq7zzwDB8AYzBQfm7ezGemzt5sfClOEX+eldvSaZGWZ9Ham5t+F7RoAz2W5n5+55c+A/t6uDvBUUvD5mV/yDP2A5ejr9ITuHqOiQuOensjpz1xYNb1v3ownJU3cbLw2t2swQn+Az1Vv75V32ACIOBo/Q+Dc3+cAwZgOGEfRpz9wdQX270llRmh4mJ9/aCiZVwGBo/5uJwFI2LmtAwdWUDgghgAAANACAJ0BKhAAEAAFQHwlsAJ0fwTBXvHpXge1pjIXnAAA/omhrdR31OsJWfmRMC/OZBQEJwRvug1UbLNZaLwmr+jP05dRb9bqIB9SG9zcE+qQ3G66/te3WrjH5r/DieIkITOllRCoBJ+2jR1lQsiKskmCCvYtQqO0lC9CCANNqn127t2BuDAA"
     },
     {
       "src": "/icons/favicon-16x16.png",
@@ -106,7 +116,8 @@
         16
       ],
       "width": 16,
-      "height": 16
+      "height": 16,
+      "placeholder": "data:image/webp;base64,UklGRlIBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSNgAAAABgGNt2zHnGRuVbXsDVlDadlI5m7DtlEk1RjldZg/ZQMpUY6whIhS5bdvolt3qGQBht5DJjBFHk8VdAgAIbmUD/9+rN3bFraCF5pRKDxfSQtBONS0klxy4Pz894FxKWjCv49Hk42MyGr9mAgTzQTlb+lhY+ChlywdmwvD79NjLo3dzw/v4MjbzPpwwg5vfWq9W17fzXBgTCVMnW3mOcjjRGWw2g/Gvyk73lp/TQyXAf+7tugjY+OuHt+WB2+5h9tcHYSbTxZPwQWm/XVrq8NjmOTlKIo21eQZWUDggVAAAAJABAJ0BKhAAEAAFQHwlsAJ0fwAC6ADg/m+kW/e5CTHyJ07oZ+Lbueu8Q6g2dRJxHUTHkMYK0pPVUQ/h9q0G/vknS7D892ftt5R+iwOjTX5iRgAAAA=="
     },
     {
       "src": "/icons/favicon-32x32.png",
@@ -114,7 +125,8 @@
         32
       ],
       "width": 32,
-      "height": 32
+      "height": 32,
+      "placeholder": "data:image/webp;base64,UklGRooBAABXRUJQVlA4WAoAAAAQAAAADwAADwAAQUxQSPcAAAABgGTbtmln3/O+Fdt2iqrZtm07aQB7YNsq2bZRTn4vYvYhIgYChPK7pcU4RG/d1oDAoDYjCficyV6xVEyogzFYjRHP5fRWDLTa/NIfEMN6cMgBwk59MALrinA7Hu4/dY8Y4kCwbHjauVuIi5u931U2WSFkJzt1bNAkM8e4fywjay/iwAS4rEj//MwsugEMdg4MgYuyzM/PrIIb6PquhO+mJ40PmOTkGfeOJS18lsCmRbn2MBcbO/O4+dzRpU2g/givs8HeC5+oYQ6MQ9WnP5wHhpz+PBCHghcPiC5vhf+fFBMyk8WcrGVT+bgGGAhVZzuJQNz2aT0IAFZQOCBsAAAAkAIAnQEqEAAQAAVAfCWwAnR/BMGYJkZTzz78mKgA9zJweW6EKjBnnKNqa9eyLxXtAz/pvZ6AlNs9WieY2XjQj4d4MxEsJH934CP0NftuTdarZNQjgnvHz0zB+7qSOPPPgtwF6KW7NjKN0AAA"
     },
     {
       "src": "/images/face.jpg",
@@ -126,7 +138,8 @@
         1280
       ],
       "width": 3725,
-      "height": 3023
+      "height": 3023,
+      "placeholder": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwAgCdASoQAA0ABUB8JQBYdsX6rROloLxLAAD+TD/LrPFPh4f1LRgeg4GSKRDjjexhCbyjmqy9Rthkih9p1UI3O0at5XHOtcf8FgMBa1Rt4ro22YFfTh7b0bNeFeQNo46gAA=="
     },
     {
       "src": "/images/homepage/2026-05-10/img_1596.png",
@@ -138,7 +151,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoMABAABUB8JZQC7ADyhUP3ukgA/tzfU/7gnz1opORJh8O2ZCW7iD9VcaF6oGFF32THM3cNkgs6cotxc8kWuZBZJiFFSM3AAAA="
     },
     {
       "src": "/images/homepage/2026-05-10/img_2465.png",
@@ -150,7 +164,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwABUB8JZgCdAEQMsccKAAA/dhzwWA26NVJX5WxpbS2AGmnJULbCBDwIF+YQTL/5bSB4wAAAA=="
     },
     {
       "src": "/images/homepage/2026-05-10/img_4350.png",
@@ -162,7 +177,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoMABAABUB8JYwAAlFj/B8wAAD+JkbmV13gacnQqhq0grRdcxbcTpEiklgUoOrX8V5ZucR5++al7LSXQj5puJ5XF7TePMrtAgA="
     },
     {
       "src": "/images/homepage/2026-05-10/img_6293.png",
@@ -174,7 +190,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAwABUB8JYwCdAB4LpyAAPeuAPUJRxFsBtgaGQYrmHud6AR6jCrAAAA="
     },
     {
       "src": "/images/homepage/2026-05-10/img_7075.png",
@@ -186,7 +203,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAwABUB8JZgCdAEOzEGLzQAA3jhi8mP2/qAoP64j3ZxoOMLRfQUlOGKcTltHkAAAAA=="
     },
     {
       "src": "/images/homepage/2026-05-10/img_7197.png",
@@ -198,7 +216,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoMABAABUB8JbACdADb2jRBgAD8f7vxO9xUuQkuLBfNKLc+jRAmgDlqNR93sbx/7L6YAAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/1073.png",
@@ -210,7 +229,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAgCdASoMABAABUB8JZACdAELhFmnKYFqAAD8Zw49dc1F28l20bPz1n5v9xNXXCac9iuRHPi2xmxovp1g7jJGe4mGAAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/allin1.png",
@@ -222,7 +242,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoMABAABUB8JZACdAC8zvMc0tAAzf3ukvBFW6/Vod/N+JahUslX/z56y2MbIZZRRIYJ37aL4YfAy7AtNbdDJQuRmq7iEAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/beach1.png",
@@ -234,7 +255,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAwABUB8JYwCdAB4LpyAAPeuAPUJRxFsBtgaGQYrmHud6AR6jCrAAAA="
     },
     {
       "src": "/images/homepage/2026-05-24/beach_bloom.png",
@@ -246,7 +268,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAQAgCdASoMABAABUB8JYgCdADcfom8Z6AAAP7kIf6XX6gNN/nBH4VTUU6EnU61sxT+Rh1BXAAAAA=="
     },
     {
       "src": "/images/homepage/2026-05-24/chicago.png",
@@ -258,7 +281,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoMABAABUB8JZwAAuYy4kD4AAD+8NCKbNBR6qPwnilvZGGYGh9dpM3pzAEaIyfQqOB3T0X4KROeBYAA"
     },
     {
       "src": "/images/homepage/2026-05-24/cool-building.png",
@@ -270,7 +294,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAgCdASoMABAABUB8JbACdAD0RXWHgOgYAAD93dXzgf2fNRP0amx1FuvIpUkAULAZjVs5PpegzATNTyP5p/ihE2SigAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/dc.png",
@@ -282,7 +307,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoMABAABUB8JYgCw7Ee38s+9quAAPqQYqRGsEwzNcS5BlrQk0HFOXz6TAuZ9yjMKZNpqbyWCssFeqqHTQ3C70FmVvcn53DmEBg+EAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/glum.png",
@@ -294,7 +320,8 @@
         1280
       ],
       "width": 5712,
-      "height": 4284
+      "height": 4284,
+      "placeholder": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAQCdASoMABAABUB8JZwAAp3NO9XT0vAA/unWwAcqAMUvjv2LRawgA8nq1BwA"
     },
     {
       "src": "/images/homepage/2026-05-24/kali.png",
@@ -306,7 +333,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAwABUB8JZACdAEO4/XIYSAAAP5ZFtgeqJO+mJ24LD1YzCVkeZgwtKYMRekoAAA="
     },
     {
       "src": "/images/homepage/2026-05-24/lakeb.png",
@@ -318,7 +346,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoMABAABUB8JQBOgCHPJ6ltgAD+wxYooIYYFgVFWMDU5Mx6WqRVYRP6Mi7TAAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/nvidia.png",
@@ -330,7 +359,8 @@
         1280
       ],
       "width": 4283,
-      "height": 5711
+      "height": 5711,
+      "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoMABAABUB8JbACdACqquXsskwAAPKZ0kg8jjjDAk1svDvu5WM8iQSfn8YRnd1wkVJRtXwwAfOtR2L5xBol6m7a6zIL8ZNEJAA="
     },
     {
       "src": "/images/homepage/2026-05-24/plane.png",
@@ -342,7 +372,8 @@
         1280
       ],
       "width": 4148,
-      "height": 5712
+      "height": 5712,
+      "placeholder": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAQCdASoMABAABUB8JYgC7ADbBfgAAPfWyuZfj/Y+OdVApJkhnfQssAR7kbizR8yvg1VR/D1MJx4AMKqjXmTSIQskAA=="
     },
     {
       "src": "/images/homepage/2026-05-24/postru.png",
@@ -354,7 +385,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoMABAABUB8JagCw7EfA0N4aeoAAN5KW13G/lIyf2QzqxXMTGV7F5LUR+3z6sKbdrHWn8u4ueJZ81BRBRIURpKwArX8AAAA"
     },
     {
       "src": "/images/homepage/2026-05-24/rando.png",
@@ -366,7 +398,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoMABAABUB8JYgCdAD0Y3R94LgA/u7fzi11xBde61LWL2fEG1l/Pk4Xg07c8M4afHeVENrt/JGOxzHgYmKoNYAA"
     },
     {
       "src": "/images/homepage/2026-05-24/ruroad.png",
@@ -378,7 +411,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoMABAABUB8JZAAAtDJ9S6gAAD+8NS2JhhiyLJyy0HysDWVyh3Ht1+NLa//JOoQC7ScIK9yCV1tPwaBKzAAAA=="
     },
     {
       "src": "/images/homepage/2026-05-24/vecsky.png",
@@ -390,7 +424,8 @@
         1280
       ],
       "width": 4032,
-      "height": 3024
+      "height": 3024,
+      "placeholder": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoMABAABUB8JbACdAEOeRUQAAD+cNgl48LAa4iVo5ZCs9reLH4uyie7WZny7+VL9yXuetBsKSAAAA=="
     },
     {
       "src": "/images/homepage/2026-05-29/better-akash-enhanced.png",
@@ -402,7 +437,8 @@
         1280
       ],
       "width": 1392,
-      "height": 1130
+      "height": 1130,
+      "placeholder": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAQCdASoQAA0ABUB8JQBYdsY7iNqlygAA/q0D8obUxvUcSxO2egx/QcDnBU+bjz1g8VV1YaIQKHIwIvJP4Md6Fo2W4+asegT2ACattfzEg6Uz2B+DOADPopjOGfRCXFVwAA=="
     },
     {
       "src": "/images/homepage/2026-05-29/nyl.avif",
@@ -414,7 +450,8 @@
         1280
       ],
       "width": 2000,
-      "height": 857
+      "height": 857,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoQAAcABUB8JZAAAtonKsYAAP7sHFEbVVp3tZQIQhUirAeM+S5/ZdgUa4AAAA=="
     },
     {
       "src": "/images/homepage/arc-lab/dipn-manipulation.png",
@@ -426,7 +463,8 @@
         1200
       ],
       "width": 1200,
-      "height": 262
+      "height": 262,
+      "placeholder": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4WAoAAAAQAAAADwAAAwAAQUxQSEEAAAAA4/Kt2u3o8SqtxCM0DBU0I/j/vu7//f8uq68X+bMPLh75/7/u//7/QTI4KvrZDSIbw9CVvMzIzTM4PhxSVBs1KABWUDggMAAAALABAJ0BKhAABAAFQHwllAACW8M66wAAzjpgCS95MDAk3Ta3oQZ8c6B4P2VMQAgAAA=="
     },
     {
       "src": "/images/homepage/arc-lab/setup.png",
@@ -438,7 +476,8 @@
         1280
       ],
       "width": 1856,
-      "height": 1515
+      "height": 1515,
+      "placeholder": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4WAoAAAAQAAAADwAADAAAQUxQSFIAAAABYBzbVpr+a0iWVgkNxJBdrAFgZQ+Jp4KImID5dFvny/DYnwL+MvweRw8AHsfwmFLKOsLpxEnHKKVaKyPKIGUouFVah4Cwt8G70GwBIZzUh+olVlA4IEgAAADwAQCdASoQAA0ABUB8JaACdADRqPZV7QAA/fnTyatTCWF1U0b8EiwZq+ppamWUE62vf020K5HT+hsck5hdpZxe8H0ZFgtEAAA="
     },
     {
       "src": "/images/homepage/arc-lab/system-overview.png",
@@ -450,7 +489,8 @@
         1280
       ],
       "width": 8000,
-      "height": 4000
+      "height": 4000,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAAAwAQCdASoQAAgABUB8JYwAA3AA/u322KeCwfmTcjnLYg5A+UMT9Yh6437HczInADgAAA=="
     },
     {
       "src": "/images/portfolio/android/title.png",
@@ -462,7 +502,8 @@
         1103
       ],
       "width": 1103,
-      "height": 621
+      "height": 621,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABUB8JYgAAuBYaF4AAP7hD0u9Hyxb89N6U5eWYTdY2UFAAA=="
     },
     {
       "src": "/images/portfolio/asa-data/languages-vs-salary.png",
@@ -474,7 +515,8 @@
         1280
       ],
       "width": 2000,
-      "height": 1125
+      "height": 1125,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADwAQCdASoQAAkABUB8JYwC7AEOQGUO8gAA/rHzgojvPF9l9E7UypUK3sHu9Qlt2AA="
     },
     {
       "src": "/images/portfolio/bus/image-1.png",
@@ -486,7 +528,8 @@
         1280
       ],
       "width": 1489,
-      "height": 989
+      "height": 989,
+      "placeholder": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAsABUB8JaQAA3AA/u/zcAA="
     },
     {
       "src": "/images/portfolio/bus/image-3.png",
@@ -496,7 +539,8 @@
         578
       ],
       "width": 578,
-      "height": 509
+      "height": 509,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAQCdASoQAA4ABUB8JZQAApzeLcqsKAAA/u3gAc6xwQlCTu/PKzqkbDc4F56VVuwLlT1LUZFyEX9DRb0nmoWzZN7IqlXhdjdaG0ZwBBSEAA=="
     },
     {
       "src": "/images/portfolio/bus/image-4.png",
@@ -506,7 +550,8 @@
         579
       ],
       "width": 579,
-      "height": 507
+      "height": 507,
+      "placeholder": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAADQAQCdASoQAA4ABUB8JZwAAvhPaedBAAD+79nwgqcWG7MuX97vhAAA"
     },
     {
       "src": "/images/portfolio/bus/image-5.png",
@@ -516,7 +561,8 @@
         574
       ],
       "width": 574,
-      "height": 495
+      "height": 495,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAABwAQCdASoQAA4ABUB8JZ1efAGIAAD+7/M+DGlkWVZsXQagfTz/eimBAAA="
     },
     {
       "src": "/images/portfolio/bus/image-7.png",
@@ -528,7 +574,8 @@
         996
       ],
       "width": 996,
-      "height": 547
+      "height": 547,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAABwAQCdASoQAAkABUB8JZQC7AFAAAD+7/W1TMQtceQl8/mTqpzCXYC2QuAAAA=="
     },
     {
       "src": "/images/portfolio/bus/image-8.png",
@@ -539,7 +586,8 @@
         841
       ],
       "width": 841,
-      "height": 678
+      "height": 678,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADQAQCdASoQAA0ABUB8JZwAAudqGRZiAAD+776lBF7Uhq4BRH0CN6+DWgAAAA=="
     },
     {
       "src": "/images/portfolio/clean-your-data/analysis.png",
@@ -551,7 +599,8 @@
         1280
       ],
       "width": 3024,
-      "height": 1720
+      "height": 1720,
+      "placeholder": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAABwAQCdASoQAAkABUB8JZQCdAFAAAD+76ZykGMz/WV96Wt+YAAAAA=="
     },
     {
       "src": "/images/portfolio/clean-your-data/graph.png",
@@ -563,7 +612,8 @@
         1280
       ],
       "width": 3024,
-      "height": 1722
+      "height": 1722,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoQAAkABUB8JZQCdADwqKIAAP7o0q/MPp4qj842V7QbevWedRNp1z9BdZK0yAAA"
     },
     {
       "src": "/images/portfolio/clean-your-data/hero.png",
@@ -575,7 +625,8 @@
         1280
       ],
       "width": 3018,
-      "height": 1718
+      "height": 1718,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAADwAQCdASoQAAkABUB8JZQCdAEQ/eiWzcAA/uvkbzjYT69T8AA="
     },
     {
       "src": "/images/portfolio/derivative.png",
@@ -584,7 +635,8 @@
         300
       ],
       "width": 300,
-      "height": 582
+      "height": 582,
+      "placeholder": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAADQAQCdASoIABAABUB8JZQCsAEfbfUGAAD+44tN9jIAAA=="
     },
     {
       "src": "/images/portfolio/drawn_environment.png",
@@ -596,7 +648,8 @@
         1126
       ],
       "width": 1126,
-      "height": 781
+      "height": 781,
+      "placeholder": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAsABUB8JYgAAueL7owAAP2dGTc2dx6fdbiUfx314B752/4FF9Va4qjxMj+jHqmZZ7YGwAA="
     },
     {
       "src": "/images/portfolio/drp.png",
@@ -608,7 +661,8 @@
         1280
       ],
       "width": 2444,
-      "height": 1370
+      "height": 1370,
+      "placeholder": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAkABUB8JaQAAu0/mM1zIAD+78Wf9euSjr3w+nnj4g0Cd8jj8MxtJP6Ki24TIaAAAA=="
     },
     {
       "src": "/images/portfolio/environment_settings.png",
@@ -619,7 +673,8 @@
         850
       ],
       "width": 850,
-      "height": 383
+      "height": 383,
+      "placeholder": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABQAQCdASoQAAcACoB8JZwABAAAAP7v6engH7DlYQAAAA=="
     },
     {
       "src": "/images/portfolio/esl/home.png",
@@ -631,7 +686,8 @@
         1216
       ],
       "width": 1216,
-      "height": 810
+      "height": 810,
+      "placeholder": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAACwAQCdASoQAAsABUB8JaQAAvenkukAAP7tW9CMOMoAAA=="
     },
     {
       "src": "/images/portfolio/fbla/908.png",
@@ -641,7 +697,8 @@
         615
       ],
       "width": 615,
-      "height": 511
+      "height": 511,
+      "placeholder": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAA0ABUB8JZQAAsf2xNlKAAD+79eZ80Y4QdU0m7RNx9Po1zy6m+yK4HNCkBOEVwAAAA=="
     },
     {
       "src": "/images/portfolio/fbla/comments.png",
@@ -651,7 +708,8 @@
         597
       ],
       "width": 597,
-      "height": 363
+      "height": 363,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAoABUB8JaQAA3AA/vBnE0N8oWZgAAA="
     },
     {
       "src": "/images/portfolio/fbla/form.png",
@@ -661,7 +719,8 @@
         405
       ],
       "width": 405,
-      "height": 540
+      "height": 540,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAACQAQCdASoMABAABUB8JZwAAudP1wAA/u2WgpAD1vDIAAAA"
     },
     {
       "src": "/images/portfolio/fbla/main.png",
@@ -671,7 +730,8 @@
         636
       ],
       "width": 636,
-      "height": 587
+      "height": 587,
+      "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoQAA8ABUB8JZwAD46tYp7y94AAAP6Rv2bUazl1spF8MJgre0wilYvxfN7n6q+VqxHr5P8kyzZo9PpfkAA="
     },
     {
       "src": "/images/portfolio/fbla/prez.png",
@@ -682,7 +742,8 @@
         868
       ],
       "width": 868,
-      "height": 496
+      "height": 496,
+      "placeholder": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAkABUB8JYgCw7C3ym2RsAD+4RU4zT2+qRhtLItjDfBf+VD7sDLhdhRmp4bOXOkCrG5Qj7AAAA=="
     },
     {
       "src": "/images/portfolio/fbla/search.png",
@@ -693,7 +754,8 @@
         798
       ],
       "width": 798,
-      "height": 559
+      "height": 559,
+      "placeholder": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAsABUB8JYgAAueJUCbZv4AA/sYGxZsTY2T6bkPu1yJc8gBnSY8jOS9m0e9/Jk9LMolAAAA="
     },
     {
       "src": "/images/portfolio/flamingo/image.png",
@@ -705,7 +767,8 @@
         1280
       ],
       "width": 2546,
-      "height": 1434
+      "height": 1434,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAkABUB8JQBdg7QAPTRAAAD+66CeE+T6Td7uCtzQHJA85wTJzfbIgsDn6WAA"
     },
     {
       "src": "/images/portfolio/grokipedia-api/hero.png",
@@ -717,7 +780,8 @@
         1280
       ],
       "width": 1794,
-      "height": 1012
+      "height": 1012,
+      "placeholder": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAkABUB8JaQAA3AA/u/54AA="
     },
     {
       "src": "/images/portfolio/hic-tad/deletion-celltype.png",
@@ -729,7 +793,8 @@
         1280
       ],
       "width": 3567,
-      "height": 2362
+      "height": 2362,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAAsABUB8JZACdAEfnRoaV9w5AAD+590U3G4wxcOcsyY67enGG/54iD2YWhb38ceA+R29uEmuN6A21dELvaJgyegDY1MQGgAAAA=="
     },
     {
       "src": "/images/portfolio/hic-tad/deletion-scan.png",
@@ -741,7 +806,8 @@
         1280
       ],
       "width": 2334,
-      "height": 2214
+      "height": 2214,
+      "placeholder": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAA8ABUB8JZgCdADp4i1VrIAAAP7Xmpr1dJ9alOVFlOwoshsvl3MGKfz1FqsEG/7+nmJqLJ3HA0PRMs9sD9CyfZ8DwAAA"
     },
     {
       "src": "/images/portfolio/hic-tad/hero.png",
@@ -753,7 +819,8 @@
         1280
       ],
       "width": 1612,
-      "height": 1768
+      "height": 1768,
+      "placeholder": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAAAQAgCdASoPABAABUB8JQBdgCBbB+u2GcXMAP7x3z6XltOXZOIcFTv/GiZH0DirYI2ZQyqPWBENuIQ/AAA="
     },
     {
       "src": "/images/portfolio/hic-tad/multiscale-insulation.png",
@@ -765,7 +832,8 @@
         1280
       ],
       "width": 1446,
-      "height": 730
+      "height": 730,
+      "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAQCdASoQAAgABUB8JZQC7ACuyUuAAP7KmmXNf2HoLOLit8HsYwbQTPEB1qHHwleQZIqhjcWOM/HXBWnx6YBIAAA="
     },
     {
       "src": "/images/portfolio/hic-tad/polymer-3d.png",
@@ -777,7 +845,8 @@
         1280
       ],
       "width": 1981,
-      "height": 1011
+      "height": 1011,
+      "placeholder": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAgABUB8JYgAAt0OMFqRRhAA/u/s8zpNSf5VoR2PgS8eor+OWMZaEQIBWXdu2xZfbeEAAAA="
     },
     {
       "src": "/images/portfolio/hic-tad/tad-triangles.png",
@@ -789,7 +858,8 @@
         1280
       ],
       "width": 2634,
-      "height": 2312
+      "height": 2312,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoQAA4ABUB8JZQABDOAAP7wK+/3pmh3xFallbYA"
     },
     {
       "src": "/images/portfolio/home.png",
@@ -800,7 +870,8 @@
         725
       ],
       "width": 725,
-      "height": 695
+      "height": 695,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAABwAQCdASoQAA8ABUB8JZQCsAFAAAD+7ha6EmdjiT+Y/ZQAAAA="
     },
     {
       "src": "/images/portfolio/integral.png",
@@ -809,7 +880,8 @@
         255
       ],
       "width": 255,
-      "height": 750
+      "height": 750,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAABwAQCdASoFABAABUB8JZQCsAFAAAD+7tVNih0IAAA="
     },
     {
       "src": "/images/portfolio/llm-research/image.png",
@@ -821,7 +893,8 @@
         1280
       ],
       "width": 2318,
-      "height": 1632
+      "height": 1632,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAsABUB8JYwAAqHrXxA8AAD+7aj57+WfOOc8XlbnEZ82OEYpBFsb60cvAAAA"
     },
     {
       "src": "/images/portfolio/lykke/artifact-library.jpg",
@@ -832,7 +905,8 @@
         736
       ],
       "width": 736,
-      "height": 933
+      "height": 933,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoNABAABUB8JaQAAven8EKTgAD+6C0sPl8/otKLKeL9IVBdHjE/qKvgGcAAAA=="
     },
     {
       "src": "/images/portfolio/lykke/video-studio-assistant.jpg",
@@ -844,7 +918,8 @@
         1280
       ],
       "width": 2370,
-      "height": 1333
+      "height": 1333,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAkABUB8JZwAAtzQ0aPQAP7XO0ILACoHO6cP+4cSsk5JzqihL3NmgAA="
     },
     {
       "src": "/images/portfolio/lykke/visual-lab-surface.jpg",
@@ -856,7 +931,8 @@
         1280
       ],
       "width": 1422,
-      "height": 800
+      "height": 800,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAkABUB8JZwAAveDdBEAAP7ujAsrmfLFoboapqsg/eFxHPCEAA=="
     },
     {
       "src": "/images/portfolio/lykke/wiki-reading-surface.jpg",
@@ -868,7 +944,8 @@
         1280
       ],
       "width": 1422,
-      "height": 800
+      "height": 800,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADQAQCdASoQAAkABUB8JZwAAud7jg3cAAD+6vDZNulGycDauwVwGL8vNUAAAA=="
     },
     {
       "src": "/images/portfolio/newspaper/article_page.png",
@@ -880,7 +957,8 @@
         1067
       ],
       "width": 1067,
-      "height": 884
+      "height": 884,
+      "placeholder": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACQAQCdASoQAA0ABUB8JYwAAuUt8gAA/uq28TWu0cgMFV8WlrMrjP0y4U1cmOETRAtdme2WoAA="
     },
     {
       "src": "/images/portfolio/newspaper/author_page.png",
@@ -892,7 +970,8 @@
         1280
       ],
       "width": 1330,
-      "height": 878
+      "height": 878,
+      "placeholder": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoQAAsABUB8JbACdAEOnNTIYAD+4AZffmLCegGToWfK/vUwTfcfneIOaYFncjyPCubqIblG29+9q8+tWaV9UC8NAKiSAAAA"
     },
     {
       "src": "/images/portfolio/newspaper/front_page.png",
@@ -904,7 +983,8 @@
         1280
       ],
       "width": 1319,
-      "height": 897
+      "height": 897,
+      "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAQCdASoQAAsABUB8JZQAAvwcQrcAAP6ztt1/gTdyz5D0dem5pD8vi0NTXYnl13wSmempAehm1b7G7m7Qi8ogAAA="
     },
     {
       "src": "/images/portfolio/newspaper/science_page.png",
@@ -916,7 +996,8 @@
         1280
       ],
       "width": 1397,
-      "height": 832
+      "height": 832,
+      "placeholder": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABUB8JYgC7AELzdJD4AD8tNroj5+U6DPAh6Ec0aHDiuXTHeT/+wwtYVKlvjubV2Rglb0KUbrJtcDkAA=="
     },
     {
       "src": "/images/portfolio/nostradamus/data-layers.png",
@@ -928,7 +1009,8 @@
         1280
       ],
       "width": 1512,
-      "height": 982
+      "height": 982,
+      "placeholder": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAoABUB8JYwCw7C8F+wYAAD+6PXp69KlxZUouo+r7EynxS+MxjnPUl8cj4+UA6XwOCCAAAA="
     },
     {
       "src": "/images/portfolio/nostradamus/flood-zones.png",
@@ -940,7 +1022,8 @@
         1280
       ],
       "width": 1512,
-      "height": 982
+      "height": 982,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAoABUB8JQAAVD8Qd0UMwAD+5aaMQsZTfQUkAoPxahJq1AGlOkF/bo8AAA=="
     },
     {
       "src": "/images/portfolio/nostradamus/hero.png",
@@ -952,7 +1035,8 @@
         1280
       ],
       "width": 1512,
-      "height": 982
+      "height": 982,
+      "placeholder": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAoABUB8JYgC7ADy/W38AAD335IrTf5DVJeSvOpWSPNPItldsLHuUs60dWaaBTjaPGz0/qDOonaRsAAAAA=="
     },
     {
       "src": "/images/portfolio/nostradamus/nightvision.png",
@@ -964,7 +1048,8 @@
         1280
       ],
       "width": 1512,
-      "height": 982
+      "height": 982,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAABwAQCdASoQAAoABUB8JaACdAFAAAD+7q3P2YYXWcHNGxja94Z0jZ8aAAA="
     },
     {
       "src": "/images/portfolio/personal-assistant/finance.png",
@@ -976,7 +1061,8 @@
         1280
       ],
       "width": 3024,
-      "height": 1964
+      "height": 1964,
+      "placeholder": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAoABUB8JZQAAudMkqRWAAD+4NSJ29Lm2tsM1uXbh/9yoYQBAgAA"
     },
     {
       "src": "/images/portfolio/personal-assistant/hero.png",
@@ -988,7 +1074,8 @@
         1280
       ],
       "width": 3024,
-      "height": 1964
+      "height": 1964,
+      "placeholder": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoQAAoABUB8JaQAAudFwYgAAP7nrseSxjDjtx/IELKwAAAA"
     },
     {
       "src": "/images/portfolio/puerto-rico/image.png",
@@ -1000,7 +1087,8 @@
         1280
       ],
       "width": 1882,
-      "height": 926
+      "height": 926,
+      "placeholder": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAAAwAQCdASoQAAgABUB8JaQAA3AA/u/TOxUz6ZK9IIeh6Xx0X2wAAA=="
     },
     {
       "src": "/images/portfolio/puerto-rico/median-income-comparison.png",
@@ -1012,7 +1100,8 @@
         1280
       ],
       "width": 3687,
-      "height": 1996
+      "height": 1996,
+      "placeholder": "data:image/webp;base64,UklGRiYAAABXRUJQVlA4IBoAAAAwAQCdASoQAAkABUB8JaQAA3AA/vBG70AAAA=="
     },
     {
       "src": "/images/portfolio/racing/grand.png",
@@ -1024,7 +1113,8 @@
         1207
       ],
       "width": 1207,
-      "height": 880
+      "height": 880,
+      "placeholder": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAQAgCdASoQAAwABUB8JZACdAEO55j2AxQAAP6uVqDRy+j6gyYD+0pnPldKVD4hHqtEoHKQXyix/mMpb5QigAAA"
     },
     {
       "src": "/images/portfolio/racing/title.png",
@@ -1035,7 +1125,8 @@
         932
       ],
       "width": 932,
-      "height": 881
+      "height": 881,
+      "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAA8ABUB8JbACdAED9rYy9gAA/uhPEqcf1PE8sLr7di3WHM/H9UfxWJdA6dKkDS80eu9wF622YvDo3wNXEigA"
     },
     {
       "src": "/images/portfolio/racing/two.png",
@@ -1046,7 +1137,8 @@
         934
       ],
       "width": 934,
-      "height": 878
+      "height": 878,
+      "placeholder": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAA8ABUB8JYgCsAEUELe7AAAA/t/+YIQwOlXBHHGXX7iog/eGqUhYXCm425vtdbR3vt9Gt4sYCDFvwL14JsaZVXKHolw2tgyDqvDAAAA="
     },
     {
       "src": "/images/portfolio/random_environment.png",
@@ -1058,7 +1150,8 @@
         1127
       ],
       "width": 1127,
-      "height": 789
+      "height": 789,
+      "placeholder": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACQAQCdASoQAAsABUB8JYwAAucQNgAA/ZsaF+YSTvWAU6Kr0HxW8EDowiRz2xC+2gSDY+ak/iBoWFEkAAA="
     },
     {
       "src": "/images/portfolio/revolve.png",
@@ -1069,7 +1162,8 @@
         820
       ],
       "width": 820,
-      "height": 687
+      "height": 687,
+      "placeholder": "data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAABQAQCdASoQAA0ABUB8JZQABAAAAP7u09FB/wgA"
     },
     {
       "src": "/images/portfolio/scarlet-sync/course-sniper.png",
@@ -1081,7 +1175,8 @@
         1280
       ],
       "width": 1440,
-      "height": 900
+      "height": 900,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoQAAoABUB8JZQAAud7at6AAP7tTNCOXSn5AA0JvNUkuUBoAAA="
     },
     {
       "src": "/images/portfolio/scarlet-sync/degree-planner.png",
@@ -1093,7 +1188,8 @@
         1280
       ],
       "width": 1440,
-      "height": 900
+      "height": 900,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAABQAQCdASoQAAoABUB8JZwABAAAAP7wLZ1A9fDgAAA="
     },
     {
       "src": "/images/portfolio/scarlet-sync/explore.png",
@@ -1105,7 +1201,8 @@
         1280
       ],
       "width": 1440,
-      "height": 900
+      "height": 900,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAoABUB8JaQAA3AA/vBHHogBxLuoAAA="
     },
     {
       "src": "/images/portfolio/scarlet-sync/generated-schedule.jpg",
@@ -1117,7 +1214,8 @@
         1280
       ],
       "width": 1658,
-      "height": 788
+      "height": 788,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAgABUB8JQAAXOyYfp6AAP7qd27SH0TxjMZNW+b1R1lTmZg8gMUAAAA="
     },
     {
       "src": "/images/portfolio/scarlet-sync/professor-reviews.png",
@@ -1129,7 +1227,8 @@
         1280
       ],
       "width": 1440,
-      "height": 900
+      "height": 900,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAAAwAQCdASoQAAoABUB8JaQAA3AA/vBHdGNl7kcun3N/xQAA"
     },
     {
       "src": "/images/portfolio/scarlet-sync/ranked-schedules.jpg",
@@ -1141,7 +1240,8 @@
         1280
       ],
       "width": 1658,
-      "height": 788
+      "height": 788,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAABwAQCdASoQAAgABUB8JZQAAocY8AD+53DFv1UUdRfAvjKmuErobW1DgAA="
     },
     {
       "src": "/images/portfolio/stereo/boxplot.png",
@@ -1151,7 +1251,8 @@
         558
       ],
       "width": 558,
-      "height": 451
+      "height": 451,
+      "placeholder": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAA0ABUB8JYwAAven7DsvbUAA/u/IkRIoUZP8NSzQ5XoQdgF0jSWTQApcVTE4o1z5ukE23pMrpCAA"
     },
     {
       "src": "/images/portfolio/stereo/poster.png",
@@ -1163,7 +1264,8 @@
         1280
       ],
       "width": 2500,
-      "height": 1666
+      "height": 1666,
+      "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAsABUB8JYgCdAEPCrcWetAA/lLp4WSJELQxLfFo18i7Sf2FRrJzdeO8P4fxcrcvxiEh3CyBGkATL9xjAAAA"
     },
     {
       "src": "/images/portfolio/stereo/results.png",
@@ -1175,7 +1277,8 @@
         999
       ],
       "width": 999,
-      "height": 543
+      "height": 543,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAkABUB8JaQAAxZUHJk4AAD+7+JlBeQ1PvXvprn6gec2xWrSFdqidQAAAA=="
     },
     {
       "src": "/images/portfolio/stereo/right_image.jpg",
@@ -1187,7 +1290,8 @@
         1280
       ],
       "width": 1920,
-      "height": 1080
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAQCdASoQAAkABUB8JQBOgBNxB6AA/rfw8sivvxHUd9jpT3h2UWV05Uwdr8lLM0TwQ9WAmkVvpoNbJmHwAA=="
     },
     {
       "src": "/images/portfolio/stereo/stereo_disparity_map.png",
@@ -1199,7 +1303,8 @@
         1280
       ],
       "width": 1920,
-      "height": 1080
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAQCdASoQAAkABUB8JbACdADDz0wlwAD+6RggsHMRND7+cSN/1QeL1iGUivZQlTcoWhkSEuCMHWdPq5Kuyz+GbqgJwetwMz/u3YMFqn/ndQxUFxkCT4AA"
     },
     {
       "src": "/images/portfolio/top-coder/hero.png",
@@ -1211,7 +1316,8 @@
         1200
       ],
       "width": 1200,
-      "height": 600
+      "height": 600,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoQAAgABUB8JYwAAuo2XwYAAP7rJnxxzx0IaIAfn9/AiX8ZG9STeFNYO5yobAAA"
     },
     {
       "src": "/images/portfolio/vis/economic-plotter.png",
@@ -1223,7 +1329,8 @@
         1168
       ],
       "width": 1168,
-      "height": 837
+      "height": 837,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAwABUB8JZwAAud9uhRRAAD+44PYOMtxnPoF3JevP1gNfSHkdVujIAA="
     },
     {
       "src": "/images/posts/december-journal-hero.png",
@@ -1235,7 +1342,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQABAABUB8JbACdADblR3SVgAAzh2YokoD695mDSsU4sUDw7rz7KOf0/efYmGsOlAOJO48kFtg3S437NEAAA=="
     },
     {
       "src": "/images/posts/doing-things-hero.png",
@@ -1247,7 +1355,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQABAABUB8JbACdAEPDqel1drIAAD+3JIOruOoAUsOaw3p0ucHPc92Tdja8qj+hd7xC1d8p+v2K15PTxpQiqkA32TcxMsRLPBdAAAA"
     },
     {
       "src": "/images/posts/first-post-hero.png",
@@ -1259,7 +1368,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQABAABUB8JbACdAEU0Z/kHQyAAP6YWv04EyR0UFSuzri43xc5g0SqvTqELHXVmfSqhmf2jrHLi0/smqVjH2KAUoAFNKz8SHPdIwqxpdnBYAAA"
     },
     {
       "src": "/images/posts/frc24/black.png",
@@ -1271,7 +1381,8 @@
         1058
       ],
       "width": 1058,
-      "height": 711
+      "height": 711,
+      "placeholder": "data:image/webp;base64,UklGRiYAAABXRUJQVlA4IBoAAAAwAQCdASoQAAsABUB8JaQAA3AA/vDY4AAAAA=="
     },
     {
       "src": "/images/posts/frc24/bot_prog.png",
@@ -1282,7 +1393,8 @@
         756
       ],
       "width": 756,
-      "height": 1008
+      "height": 1008,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAQCdASoMABAABUB8JYgCw7DcUPxgAPkIiyjvAnrJehCsb0EbbvLt8vdWBshCgPPz+nF9n1p1Ap4wWdYTM4ThqhDIddNCi+dnsx7/PoSAAA=="
     },
     {
       "src": "/images/posts/frc24/comms.png",
@@ -1294,7 +1406,8 @@
         999
       ],
       "width": 999,
-      "height": 117
+      "height": 117,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAABQAQCdASoQAAIACoB8JZwABAAAAP7vg8CMhIYAAAA="
     },
     {
       "src": "/images/posts/frc24/comp/image1.png",
@@ -1306,7 +1419,8 @@
         1280
       ],
       "width": 1599,
-      "height": 874
+      "height": 874,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAkABUB8JaQAA3AA/u6vVhcmfEYAAAA="
     },
     {
       "src": "/images/posts/frc24/comp/image3.jpg",
@@ -1318,7 +1432,8 @@
         1080
       ],
       "width": 1080,
-      "height": 1080
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAQCdASoQABAABUB8JbACdAB711fIwAD7gqTm4xpgJiU5TPmiNQJad0r7lw9OOVFgTrEhMv+O78Z5WlkMLqJff/9y1TEcosngbWRYRZtmggq2o2qFT8gDcWUabkV+ex/mAAAA"
     },
     {
       "src": "/images/posts/frc24/comp/image5.jpg",
@@ -1329,7 +1444,8 @@
         799
       ],
       "width": 799,
-      "height": 533
+      "height": 533,
+      "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAsABUB8JZgAAsS7gbgAxAAA+WbCktxKlOXh7nD2QUFYar8EhKnxt2myd3m8VcmUNdiFHYmDjlkO6Xa+ToHkiTTImHE/z3OwIAAA"
     },
     {
       "src": "/images/posts/frc24/comp/image8.jpg",
@@ -1341,7 +1457,8 @@
         1280
       ],
       "width": 1999,
-      "height": 1333
+      "height": 1333,
+      "placeholder": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoQAAsABUB8JZAC7ADym+gAAP6D2A9VzGyHUaYzt6PRmW5cttveVSrpc0FG76LJmLITXilvA5qd7csbbBU9bPIHfsWAAAAA"
     },
     {
       "src": "/images/posts/frc24/configure.png",
@@ -1351,7 +1468,8 @@
         428
       ],
       "width": 428,
-      "height": 561
+      "height": 561,
+      "placeholder": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAABwAQCdASoMABAABUB8JZ1nyAHJgAD+78gSUyGTN0q//XhEXIAAAA=="
     },
     {
       "src": "/images/posts/frc24/controller_commands.png",
@@ -1362,7 +1480,8 @@
         648
       ],
       "width": 648,
-      "height": 297
+      "height": 297,
+      "placeholder": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABQAQCdASoQAAcABUB8JZwABAAAAP7vyVRvU/STbigAAA=="
     },
     {
       "src": "/images/posts/frc24/dcmp/image2.png",
@@ -1374,7 +1493,8 @@
         981
       ],
       "width": 981,
-      "height": 87
+      "height": 87,
+      "placeholder": "data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAABQAQCdASoQAAEABUB8JZwABAAAAP7veRUu3FAA"
     },
     {
       "src": "/images/posts/frc24/gittmerged.png",
@@ -1385,7 +1505,8 @@
         794
       ],
       "width": 794,
-      "height": 258
+      "height": 258,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoQAAUABUB8JZwABAAAAP7wAZu0NkGEPAreo4AA"
     },
     {
       "src": "/images/posts/frc24/gittt.png",
@@ -1397,7 +1518,8 @@
         982
       ],
       "width": 982,
-      "height": 532
+      "height": 532,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABQAQCdASoQAAkABUB8JZwABAAAAP7vopFimNt3LB3xgAAA"
     },
     {
       "src": "/images/posts/frc24/images/image2.png",
@@ -1409,7 +1531,8 @@
         1280
       ],
       "width": 1562,
-      "height": 868
+      "height": 868,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAkABUB8JaQAAuddO5wAAP7tR2WWjHIq9CS3LTvGZDuEU9tjbZjAAAA="
     },
     {
       "src": "/images/posts/frc24/images/image3.jpg",
@@ -1421,7 +1544,8 @@
         1280
       ],
       "width": 1500,
-      "height": 1999
+      "height": 1999,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoMABAABUB8JbACdAEVY+mOodkWQADiKiLGZkzaMrHH1lcOM/aanBzwhKww1kQx1evBjBaWrumU85mClP3z6OBU0/uubQmRwAAAAA=="
     },
     {
       "src": "/images/posts/frc24/images/image4.png",
@@ -1433,7 +1557,8 @@
         1280
       ],
       "width": 1920,
-      "height": 1080
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoQAAkABUB8JaQAAuaOStAAAPKnfYnmQZzZIC5ydiwzjpPUk4xZsXVc6AAAAA=="
     },
     {
       "src": "/images/posts/frc24/images/image5.png",
@@ -1445,7 +1570,8 @@
         1280
       ],
       "width": 1919,
-      "height": 1022
+      "height": 1022,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAkABUB8JYwCdAEf3Sc8AAD+JmsNHWPgDqq1Rx0MGEQjh1sliZTAAAA="
     },
     {
       "src": "/images/posts/frc24/images/image6.png",
@@ -1456,7 +1582,8 @@
         853
       ],
       "width": 853,
-      "height": 552
+      "height": 552,
+      "placeholder": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABQAQCdASoQAAoABUB8JZwABAAAAP7v5hDVOETmtxQAAA=="
     },
     {
       "src": "/images/posts/frc24/shooter.png",
@@ -1467,7 +1594,8 @@
         681
       ],
       "width": 681,
-      "height": 526
+      "height": 526,
+      "placeholder": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAQCdASoQAAwABUB8JZwAAXiC4JkAAP6MD8OdTNeuWYyI61KyL/JAEkvRBHxt8NAtls0V0/gQE/IxBZkNTT1NilAAAA=="
     },
     {
       "src": "/images/posts/frc24/sim.png",
@@ -1477,7 +1605,8 @@
         380
       ],
       "width": 380,
-      "height": 286
+      "height": 286,
+      "placeholder": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAwABUB8JagAAuieY5iLMAD9GsED6ghE7yDraRxHcIBqGdR0S8AA"
     },
     {
       "src": "/images/posts/frc24/speaker_aim.png",
@@ -1487,7 +1616,8 @@
         639
       ],
       "width": 639,
-      "height": 262
+      "height": 262,
+      "placeholder": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABQAQCdASoQAAcABUB8JZwABAAAAP7vV3leMfAY19CgAA=="
     },
     {
       "src": "/images/posts/freshmen-reflection-hero.png",
@@ -1499,7 +1629,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQABAABUB8JbAC7AEWP8UpRSyAAP6BealqoOIPsq4kbgiLG09ipSO7kqgV34qSQN5cJzuP7xDgptEoxgSm52JAAAA="
     },
     {
       "src": "/images/posts/junior-reflection-hero.png",
@@ -1511,7 +1642,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQABAABUB8JZgCdAEOaKoEAAD+693Mm4EV2wJIEkgNZ9Q3YgppLcwas0WnCZx1Kfw1u1Boj3DbZYHgsMJf/7AA"
     },
     {
       "src": "/images/posts/mountain-man.png",
@@ -1523,7 +1655,8 @@
         1280
       ],
       "width": 1280,
-      "height": 960
+      "height": 960,
+      "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoQAAwABUB8JZgCdAClX/hmtkAA+9GViilMg7d1LcdyVf7VgUCSyLs3fzXD91+pKYKox4yqleFJnuDCSW+eld92giP0jm7zaAA="
     },
     {
       "src": "/images/posts/october-journal-hero.png",
@@ -1535,7 +1668,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAQCdASoQABAABUB8JbACdAEFoO7AAP3idA8rkw95env0D4yzqMvFAh8l1570cSFPsLk+RNX1ZJ1RLMDyqMyUmxoIkhvXugasC5Lias+X6kgH7VZlGQkEZm3ZqJa+ZKPH6RQAAAA="
     },
     {
       "src": "/images/posts/robotics/image1.png",
@@ -1547,7 +1681,8 @@
         1280
       ],
       "width": 1915,
-      "height": 940
+      "height": 940,
+      "placeholder": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAgABUB8JYwAAudjS4KWAAD+vGup6+Z7D8nnbrVyfgCqLlWIwrAA"
     },
     {
       "src": "/images/posts/robotics/image11.png",
@@ -1559,7 +1694,8 @@
         1280
       ],
       "width": 1280,
-      "height": 784
+      "height": 784,
+      "placeholder": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAoABUB8JYwC7AEIl/ieAAD+6f6ScgypnzfxRwjvpxhPRe8fzyFpO0NTRLM6q/KnAAAA"
     },
     {
       "src": "/images/posts/robotics/image12.png",
@@ -1570,7 +1706,8 @@
         716
       ],
       "width": 716,
-      "height": 441
+      "height": 441,
+      "placeholder": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAoABUB8JZgCdAC9jttWgAAAyyAwTGRPj0dNTFwhJAwgoUD+/NJiJ/5/VlBTecrWT2Jh/QTsAAAA"
     },
     {
       "src": "/images/posts/robotics/image13.png",
@@ -1582,7 +1719,8 @@
         1010
       ],
       "width": 1010,
-      "height": 732
+      "height": 732,
+      "placeholder": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwABUB8JZQAAxPFyAoudIAA/rOvhV0khMyj2Soi8H+JUvjDjNacK0aK+++BIMi/cL+EAwQfHQIA"
     },
     {
       "src": "/images/posts/robotics/image2.png",
@@ -1591,7 +1729,8 @@
         299
       ],
       "width": 299,
-      "height": 481
+      "height": 481,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAACwAQCdASoKABAABUB8JZwAAudFzmAAAP7pK/V0SYIwpKVYEAA="
     },
     {
       "src": "/images/posts/robotics/image3.png",
@@ -1603,7 +1742,8 @@
         1280
       ],
       "width": 1589,
-      "height": 936
+      "height": 936,
+      "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAAkABUB8JbACdIExDU0+sADKC4WoUZS7VVOOXdQKs9VvKvBbILjrvVce9N6Rvpi/OB+xneysED5fwAA="
     },
     {
       "src": "/images/posts/robotics/image6.png",
@@ -1615,7 +1755,8 @@
         1140
       ],
       "width": 1140,
-      "height": 1092
+      "height": 1092,
+      "placeholder": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAA8ABUB8JZwCdAEO/d2+AAD+iJhnQN2BsAt3b0rVL4ekKIy4ZCq4fVPGnUzYi4b6EAAA"
     },
     {
       "src": "/images/posts/robotics/image8.png",
@@ -1627,7 +1768,8 @@
         1280
       ],
       "width": 1999,
-      "height": 1500
+      "height": 1500,
+      "placeholder": "data:image/webp;base64,UklGRowAAABXRUJQVlA4WAoAAAAQAAAADwAACwAAQUxQSBMAAAABD/D+/4iIIBZM8pfeG0JE/7MJAFZQOCBSAAAAMAIAnQEqEAAMAAVAfCWwAnR/BuoAM2ag4GAA+F2zzTwZVmV1rOMUe0X5Y9GSParBDHH+cIDqQcvhNBY0zeiC+u27DF9X8uCKgexOL4zf1MAAAA=="
     },
     {
       "src": "/images/posts/robotics/image9.png",
@@ -1638,7 +1780,8 @@
         827
       ],
       "width": 827,
-      "height": 681
+      "height": 681,
+      "placeholder": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAA0ABUB8JbACdAEQEF1M9AAA/Mu/8Dz34SSSyMb+RbGJHJ5qRrJq3aPEYtstCIAAAA=="
     },
     {
       "src": "/images/posts/sophomore-reflection-hero.png",
@@ -1650,7 +1793,8 @@
         1024
       ],
       "width": 1024,
-      "height": 1024
+      "height": 1024,
+      "placeholder": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAACwAgCdASoQABAABUB8JbACdG1/DyLMY33zB6+LvAAA/rewPwfWeiQP07//7Z8VMI/x5mCpXOmhs/RjumuieJI8qG6Stdj01F4yzJDrjBjGOwLPE2X/KO+nH7Fqg5+uIrybVO4qc+cpLePNas8MAh7B8UQA9k+hjWfCwAAA"
     },
     {
       "src": "/images/wiki/ai-knowledge-systems.png",
@@ -1662,7 +1806,8 @@
         1280
       ],
       "width": 1672,
-      "height": 941
+      "height": 941,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAwAQCdASoQAAkABUB8JZwAA3AA/u/H5zhQARKQfcXxanldEmcg0SR//bgAAA=="
     },
     {
       "src": "/images/wiki/genomics-computer-vision.png",
@@ -1674,7 +1819,8 @@
         1280
       ],
       "width": 1672,
-      "height": 941
+      "height": 941,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoQAAkABUB8JZwAAloeUgvAAP7y2815xg/HHZ+3Z0oS72j/mDbTFpsWjAAAAA=="
     },
     {
       "src": "/images/wiki/math-data-transit.png",
@@ -1686,7 +1832,8 @@
         1280
       ],
       "width": 1672,
-      "height": 941
+      "height": 941,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAACwAQCdASoQAAkABUB8JZwAAudIFCgAAP7ssw+AUisetX9wUAA="
     },
     {
       "src": "/images/wiki/robotics-control-planning.png",
@@ -1698,7 +1845,8 @@
         1280
       ],
       "width": 1672,
-      "height": 941
+      "height": 941,
+      "placeholder": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADwAQCdASoQAAkABUB8JZwAApzmBdfLiAAA/uj/SH+9eR9O+1KV681sSrAgAA=="
     },
     {
       "src": "/school-logos/ait-logo.png",
@@ -1708,7 +1856,8 @@
         512
       ],
       "width": 512,
-      "height": 419
+      "height": 419,
+      "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAA0ABUB8JaACdIExGCb2Oc54QAD+8dlsERHlEiSfyzGL7b3cS52ex1L2Fw94S3KZdzyg+TuW6BOd42uqkad0nIFZe45KNAAAAA=="
     }
   ]
 }
