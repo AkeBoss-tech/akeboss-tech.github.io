@@ -440,6 +440,40 @@ body.visual-journal-expanded header {
   line-height: 1.55;
 }
 
+.home-mobile-contact-actions {
+  display: none;
+}
+
+.home-mobile-contact-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--hero-button-border);
+  border-radius: 9999px;
+  color: var(--hero-button-text);
+  background: var(--bg-elevated);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.home-mobile-contact-actions a:hover {
+  background: var(--hero-button-bg-hover);
+}
+
+.home-mobile-contact-actions a:focus-visible {
+  outline: 2px solid var(--hero-button-text);
+  outline-offset: 4px;
+}
+
+.home-mobile-contact-actions svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 .home-intro-down {
   display: inline-flex;
   align-items: center;
@@ -3995,6 +4029,14 @@ h4 {
 
   .home-intro-copy p {
     font-size: 1.15rem;
+  }
+
+  .home-mobile-contact-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.5rem;
   }
 
   .home-intro-down {

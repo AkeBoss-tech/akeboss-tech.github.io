@@ -355,6 +355,21 @@ function IntroHero() {
       <div className="home-intro-copy">
         <h1 className="home-intro-title">{introTitle}</h1>
         <p>Building product, AI systems, and research tools from Rutgers.</p>
+        <nav className="home-mobile-contact-actions" aria-label="Connect with Akash">
+          <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 9h4v12H3V9Zm6 0h4v1.6c.8-1.2 2-1.9 3.5-1.9 3.2 0 4.5 2 4.5 5.4V21h-4v-6.2c0-1.7-.6-2.7-1.9-2.7-1.4 0-2.1 1-2.1 2.7V21H9V9Z" />
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="/akash-dubey.vcf" download="Akash-Dubey.vcf" type="text/vcard">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="9" cy="8" r="3" />
+              <path d="M3 20v-2a6 6 0 0 1 12 0v2M19 8v6m-3-3h6" />
+            </svg>
+            <span>Save contact</span>
+          </a>
+        </nav>
         <a href="#visual-notes" className="home-intro-down" aria-label="Scroll to visual notes">
           <span aria-hidden="true">↓</span>
         </a>
