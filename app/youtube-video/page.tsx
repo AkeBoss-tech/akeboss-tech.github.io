@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 // Change this URL and redeploy to update where /youtube-video sends visitors.
-const destination = 'https://www.youtube.com/watch?v=BIjPviSJ0Yc'
+const destination = 'https://www.youtube.com/watch?v=NkIGPTo27Ow'
 
 export const metadata: Metadata = {
   title: 'Redirecting to video',

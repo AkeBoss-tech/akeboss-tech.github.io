@@ -15,7 +15,7 @@ The development server runs at <http://localhost:3001>.
 
 ## Video redirect
 
-`https://akashdubey.me/youtube-video` redirects to the Akash intro YouTube video.
+`https://akashdubey.me/youtube-video` redirects to the configured YouTube video.
 To point this same website URL at another video or website, edit `destination` in
 `app/youtube-video/page.tsx`, then rebuild and deploy. The static page uses an
 immediate HTML refresh and includes a fallback link, so it works without JavaScript
