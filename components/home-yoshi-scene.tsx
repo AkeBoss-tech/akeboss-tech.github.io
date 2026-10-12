@@ -1007,7 +1007,6 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
   const projectBySlug = useMemo(() => new Map(projects.map((project) => [project.slug, project])), [projects])
   const scarletSync = projectBySlug.get('scarlet-sync')
   const lykke = projectBySlug.get('lykke')
-  const healthcare = projectBySlug.get('healthcare-simulation')
   const compBio = projectBySlug.get('hic-tad-analysis')
   const llmResearch = projectBySlug.get('llm-research')
   const drp = projectBySlug.get('drp-spring-2025')
@@ -1015,18 +1014,6 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
   const pathFinder = projectBySlug.get('path-finder')
 
   const points = useMemo<HomePoint[]>(() => [
-    {
-      eyebrow: 'October 2026 · Rutgers Health Hack',
-      title: 'Healthcare Simulation',
-      body: 'Exploring AI patient practice, faculty authoring, evidence-linked feedback, and a playable hospital world.',
-      href: healthcare ? `/projects/${healthcare.slug}` : undefined,
-      galleryLayout: 'feature-left-stack-right',
-      gallery: [
-        { src: healthcare?.image || '/images/portfolio/healthcare-simulation/patient-encounter.jpg', alt: 'Poscere synthetic patient encounter beside a simulated chart' },
-        { src: '/images/portfolio/healthcare-simulation/faculty-disclosure.jpg', alt: 'Faculty editor for authored patient facts and disclosure conditions' },
-        { src: '/images/portfolio/healthcare-simulation/hospital-atlas.jpg', alt: 'Playable hospital prototype atlas with an illustrative department floor plan' },
-      ],
-    },
     {
       eyebrow: 'May–August 2026',
       title: 'New York Life Insurance',
@@ -1123,7 +1110,7 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
         { src: drp?.image || '/images/portfolio/drp.png', alt: 'DRP presentation' },
       ],
     },
-  ], [compBio, drp, economicGrapher, healthcare, llmResearch, lykke, pathFinder, scarletSync])
+  ], [compBio, drp, economicGrapher, llmResearch, lykke, pathFinder, scarletSync])
 
   return (
     <div className="home-clean-page">
