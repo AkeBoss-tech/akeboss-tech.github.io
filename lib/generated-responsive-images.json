@@ -784,6 +784,110 @@
       "placeholder": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAkABUB8JaQAA3AA/u/54AA="
     },
     {
+      "src": "/images/portfolio/healthcare-simulation/care-journeys.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1778,
+      "height": 1111,
+      "placeholder": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoQAAoABUB8JZwAAusoFwAA/u1IL3O9WH98PH7EbkRn2AAA"
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/caseclimb-templates.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1422,
+      "height": 800,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoQAAkABUB8JZQAApIGCRWAANti1tkoWA8FcR7/EK4FfAOPwAA="
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/early-hospital-concept.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1672,
+      "height": 941,
+      "placeholder": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADwAQCdASoQAAkABUB8JZwAAujeZKvqE1gA/mAqgM8f25R6ghYG+O5WFI89gSVoWU20kP/hwAA="
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/faculty-disclosure.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1778,
+      "height": 1111,
+      "placeholder": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAoABUB8JaQAA3AA/vBMKAA="
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/feedback.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1512,
+      "height": 861,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAkABUB8JaQAA3AA/u/3adshJuYAAAA="
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/hospital-atlas.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1600,
+      "height": 1259,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoQAA0ABUB8JaQAAudIxboAAP7oKxlnHQ1+QN4DtNmb1IiEAAA="
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/hospital-world.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1600,
+      "height": 1259,
+      "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAA0ABUB8JZwAAui+UO57AAD+xvdZO3HOCPrghmwLrBnX9QqOWAnRMpcrhXrKZ0xjqb4LipNl/BWAAAA="
+    },
+    {
+      "src": "/images/portfolio/healthcare-simulation/patient-encounter.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1778,
+      "height": 1111,
+      "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoQAAoABUB8JaQAAxQHgEMAAPKV9V8sSY4FfKeILAghweKnqfVrRyh99MAAAA=="
+    },
+    {
       "src": "/images/portfolio/hic-tad/deletion-celltype.png",
       "widths": [
         160,

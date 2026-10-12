@@ -38,7 +38,7 @@ export const hostedSites = [
   },
 ] as const
 
-export const featuredProjectSlugs = ['scarlet-sync', 'lykke', 'hic-tad-analysis', 'nostradamus']
+export const featuredProjectSlugs = ['scarlet-sync', 'lykke', 'healthcare-simulation', 'hic-tad-analysis', 'nostradamus']
 
 export const projectCategories = [
   {
@@ -53,7 +53,7 @@ export const projectCategories = [
     accent: 'text-[#84a9ff]',
     glow: 'shadow-[0_0_32px_rgba(132,169,255,0.14)]',
     description: 'Tools and systems shaped by research questions, language models, and technical depth.',
-    slugs: ['hic-tad-analysis', 'rutgers-agentic-intelligence-labs', 'tamp-research', 'knowledge', 'llm-research', 'asa-fall-data'],
+    slugs: ['healthcare-simulation', 'hic-tad-analysis', 'rutgers-agentic-intelligence-labs', 'tamp-research', 'knowledge', 'llm-research', 'asa-fall-data'],
   },
   {
     title: 'Data Science & Math',

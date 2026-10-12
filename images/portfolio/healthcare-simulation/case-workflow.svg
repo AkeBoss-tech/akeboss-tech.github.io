@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+  <title id="title">A reusable patient case workflow</title>
+  <desc id="desc">Author facts, artifacts and objectives, review and publish, interview and reveal information, then log the encounter and inspect formative feedback with faculty review.</desc>
+  <rect width="1200" height="920" rx="32" fill="#102324"/>
+  <g font-family="Arial, sans-serif" fill="#edf6f3">
+    <text x="70" y="84" font-size="22" letter-spacing="3" fill="#99c9b9">PATIENT PRACTICE</text>
+    <text x="70" y="138" font-size="42" font-weight="700">One case. An inspectable information trail.</text>
+    <g fill="#1b3839" stroke="#527b70" stroke-width="2">
+      <rect x="70" y="184" width="1060" height="126" rx="18"/>
+      <rect x="70" y="348" width="1060" height="126" rx="18"/>
+      <rect x="70" y="512" width="1060" height="126" rx="18"/>
+      <rect x="70" y="676" width="1060" height="126" rx="18"/>
+    </g>
+    <g font-size="24" fill="#99c9b9">
+      <text x="102" y="238">01</text><text x="102" y="402">02</text>
+      <text x="102" y="566">03</text><text x="102" y="730">04</text>
+    </g>
+    <g font-size="32" font-weight="700">
+      <text x="170" y="237">Author the case</text>
+      <text x="170" y="401">Review and publish</text>
+      <text x="170" y="565">Interview and reveal</text>
+      <text x="170" y="729">Log, reflect, and review</text>
+    </g>
+    <g font-size="24" fill="#c7dcd4">
+      <text x="170" y="280">Facts · artifacts · objectives · disclosure conditions</text>
+      <text x="170" y="444">Consistency checks · faculty review · case version</text>
+      <text x="170" y="608">Patient dialogue · progressive chart · learner actions</text>
+      <text x="170" y="772">Encounter evidence · formative feedback · faculty correction</text>
+    </g>
+    <g stroke="#99c9b9" stroke-width="3" fill="none">
+      <path d="M600 310v32m-8-8 8 8 8-8"/>
+      <path d="M600 474v32m-8-8 8 8 8-8"/>
+      <path d="M600 638v32m-8-8 8 8 8-8"/>
+    </g>
+    <text x="70" y="860" font-size="22" fill="#99c9b9">Conceptual workflow · implementation controls vary · feedback requires evaluation</text>
+  </g>
+</svg>
