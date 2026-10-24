@@ -326,3 +326,552 @@ html {
     animation: none;
   }
 }
+
+/* Hero gradient mesh behind Writing / About / Contact --------------- */
+
+.page-hero-field {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+  height: min(100vh, 58rem);
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  animation: hero-field-in 1200ms var(--ease-out-expo) both;
+}
+
+@keyframes hero-field-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Light-mode fixes for dark-only utility classes.                     */
+/* Several pages use white-alpha Tailwind classes that vanish on a     */
+/* light background; remap them to the theme tokens here.              */
+/* ------------------------------------------------------------------ */
+
+[data-theme="light"] :is(
+  .border-white\/6,
+  .border-white\/8,
+  .border-white\/10,
+  .border-white\/12,
+  .border-white\/16
+) {
+  border-color: var(--border);
+}
+
+[data-theme="light"] :is(
+  .bg-white\/\[0\.02\],
+  .bg-white\/\[0\.03\],
+  .bg-white\/\[0\.04\],
+  .bg-white\/\[0\.08\]
+) {
+  background-color: rgba(255, 255, 255, 0.72);
+}
+
+[data-theme="light"] .bg-white\/10 {
+  background-color: rgba(17, 32, 48, 0.07);
+}
+
+[data-theme="light"] .bg-white\/50 {
+  background-color: rgba(17, 32, 48, 0.4);
+}
+
+[data-theme="light"] :is(.hover\:bg-white\/6, .hover\:bg-white\/8, .hover\:bg-white\/10):hover {
+  background-color: rgba(17, 32, 48, 0.06);
+}
+
+[data-theme="light"] .hover\:border-white\/25:hover {
+  border-color: rgba(17, 32, 48, 0.28);
+}
+
+[data-theme="light"] :is(.text-white\/5, .text-white\/10) {
+  color: rgba(17, 32, 48, 0.18);
+}
+
+/* Fixed pastel accents (CV, New York Life) are tuned for dark mode. */
+[data-theme="light"] .text-\[\#84a9ff\] {
+  color: #1d4ed8;
+}
+
+[data-theme="light"] .text-\[\#d8b4fe\] {
+  color: #7e22ce;
+}
+
+[data-theme="light"] .text-\[\#f6c177\] {
+  color: #b45309;
+}
+
+[data-theme="light"] .text-\[\#8be9fd\] {
+  color: #0e7490;
+}
+
+/* Home manifesto, light mode: one deep ink tone instead of a pastel  */
+/* gradient that fought the green/peach mesh.                         */
+[data-theme="light"] .gd-manifesto em {
+  background-image: linear-gradient(100deg, #1e3a8a 0%, #1d4ed8 100%);
+}
+
+[data-theme="light"] .gd-manifesto em::after {
+  background: #1d4ed8;
+  opacity: 0.55;
+}
+
+[data-theme="light"] .gd-manifesto-mark {
+  color: #1d4ed8;
+}
+
+.gd-manifesto-line:first-child .gd-manifesto-mark {
+  margin-right: 0.06em;
+}
+
+.gd-manifesto-line .gd-manifesto-mark:last-child {
+  margin-left: 0.04em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Life timeline (/experience)                                         */
+/* ------------------------------------------------------------------ */
+
+.lt-header {
+  max-width: 60rem;
+}
+
+.lt-title {
+  margin-top: 0.9rem;
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.lt-filters {
+  position: sticky;
+  top: 6.25rem;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 2.25rem;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.lt-filters button {
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.lt-filters button:hover {
+  color: var(--text);
+}
+
+.lt-filters button.active {
+  background: hsl(var(--lt-hue, 220) var(--hue-sat) var(--hue-light));
+  color: var(--signal-ink);
+  font-weight: 600;
+}
+
+.lt-filters button:not([style]).active {
+  background: var(--signal);
+}
+
+.lt-stage {
+  position: relative;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+/* Huge outlined year that tracks the scroll position. */
+.lt-year-ghost {
+  position: sticky;
+  top: 40vh;
+  z-index: 0;
+  height: 0;
+  margin: 0;
+  overflow: visible;
+  pointer-events: none;
+  font-family: var(--font-inconsolata), monospace;
+  font-size: clamp(6rem, 16vw, 15rem);
+  line-height: 0;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--text) 16%, transparent);
+  animation: lt-year-swap 600ms var(--ease-out-expo) both;
+}
+
+@keyframes lt-year-swap {
+  from {
+    opacity: 0;
+    transform: translateY(0.12em);
+  }
+}
+
+.lt {
+  position: relative;
+  z-index: 1;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+  list-style: none;
+  view-timeline-name: --lt;
+}
+
+.lt ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lt-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.lt-spine-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, hsl(200 90% 60%), var(--signal) 45%, hsl(268 85% 70%) 100%);
+  transform-origin: 50% 0;
+}
+
+@supports (animation-timeline: view()) {
+  .lt-spine-fill {
+    animation: lt-fill linear both;
+    animation-timeline: --lt;
+    animation-range: entry 40% exit 60%;
+  }
+}
+
+@keyframes lt-fill {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.lt-year-group {
+  position: relative;
+  padding-top: 2.5rem;
+}
+
+.lt-year {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 0 auto 1.5rem;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  font-family: var(--font-inconsolata), monospace;
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.lt-item {
+  --lt-accent: hsl(var(--lt-hue) var(--hue-sat) var(--hue-light));
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.lt-left .lt-card {
+  grid-column: 1;
+}
+
+.lt-right .lt-card {
+  grid-column: 2;
+}
+
+.lt-dot {
+  position: absolute;
+  top: 1.6rem;
+  left: 50%;
+  z-index: 2;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: -0.45rem;
+  border-radius: 50%;
+  background: var(--lt-accent);
+  box-shadow:
+    0 0 0 4px var(--bg),
+    0 0 18px 2px hsl(var(--lt-hue) 90% 60% / 0.55);
+}
+
+.lt-upcoming .lt-dot {
+  background: var(--bg);
+  border: 2px dashed var(--lt-accent);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+
+/* Connector from dot to card. */
+.lt-item::before {
+  content: "";
+  position: absolute;
+  top: calc(1.6rem + 0.45rem);
+  height: 1px;
+  width: 2.25rem;
+  background: linear-gradient(90deg, var(--lt-accent), transparent);
+}
+
+.lt-left::before {
+  right: 50%;
+  background: linear-gradient(270deg, var(--lt-accent), transparent);
+}
+
+.lt-right::before {
+  left: 50%;
+}
+
+.lt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.1rem;
+  background:
+    radial-gradient(circle at 0% 0%, hsl(var(--lt-hue) 90% 60% / 0.1), transparent 55%),
+    var(--panel-soft-bg);
+  transition: transform 350ms var(--ease-out-expo), border-color 200ms ease;
+}
+
+a.lt-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--lt-accent) 55%, transparent);
+}
+
+.lt-upcoming .lt-card {
+  border-style: dashed;
+  background: transparent;
+}
+
+.lt-card-media {
+  display: block;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background: #05080d;
+}
+
+.lt-card-media picture,
+.lt-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 700ms var(--ease-out-expo);
+}
+
+a.lt-card:hover .lt-card-media img {
+  transform: scale(1.04);
+}
+
+.lt-card-body {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.05rem 1.2rem 1.2rem;
+}
+
+.lt-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-inconsolata), monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lt-kind {
+  color: var(--lt-accent);
+}
+
+.lt-when {
+  color: var(--text-soft);
+}
+
+.lt-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.15rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.lt-logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  overflow: hidden;
+  border-radius: 0.45rem;
+  background: #fff;
+  padding: 0.15rem;
+}
+
+.lt-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lt-role {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.lt-text {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.lt-more {
+  margin-top: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--signal-text);
+}
+
+@supports (animation-timeline: view()) {
+  .lt-card {
+    animation: lt-in-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+
+  .lt-left .lt-card {
+    animation-name: lt-in-left;
+  }
+
+  .lt-dot {
+    animation: lt-pop linear both;
+    animation-timeline: view();
+    animation-range: entry 30% entry 90%;
+  }
+
+  .lt-year {
+    animation: lt-pop-soft linear both;
+    animation-timeline: view();
+    animation-range: entry 20% entry 80%;
+  }
+}
+
+@keyframes lt-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-2.5rem) rotate(-1.5deg);
+  }
+}
+
+@keyframes lt-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem) rotate(1.5deg);
+  }
+}
+
+@keyframes lt-pop {
+  from {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.35);
+  }
+}
+
+@keyframes lt-pop-soft {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 860px) {
+  .lt-spine {
+    left: 0.75rem;
+  }
+
+  .lt-year {
+    margin-left: 0;
+  }
+
+  .lt-item {
+    grid-template-columns: 1fr;
+    padding-left: 2.5rem;
+  }
+
+  .lt-left .lt-card,
+  .lt-right .lt-card {
+    grid-column: 1;
+  }
+
+  .lt-dot {
+    left: 0.75rem;
+  }
+
+  .lt-item::before {
+    left: 0.75rem;
+    right: auto;
+    width: 1.5rem;
+    transform: none;
+  }
+
+  .lt-left .lt-card {
+    animation-name: lt-in-right;
+  }
+
+  .lt-year-ghost {
+    display: none;
+  }
+
+  .lt-filters {
+    top: 5.5rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .lt-filters button {
+    flex-shrink: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-card,
+  .lt-dot,
+  .lt-year,
+  .lt-spine-fill,
+  .lt-year-ghost {
+    animation: none !important;
+  }
+}

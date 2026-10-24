@@ -7,16 +7,19 @@ import { usePathname } from 'next/navigation'
 import posthog from 'posthog-js'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
+import { GradientDescentBackground } from '@/components/gradient-descent-background'
 import { Spotlight } from '@/components/spotlight'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 const nav = [
   { href: '/projects', label: 'Projects' },
-  { href: '/experience/new-york-life', label: 'Experience' },
   { href: '/writing', label: 'Writing' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]
+
+// Pages that get the home hero's gradient mesh behind their header.
+const heroFieldPaths = new Set(['/writing', '/about', '/contact'])
 
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
@@ -50,6 +53,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={`relative min-h-screen text-text ${pathname === '/' ? 'home-clean-shell bg-bg' : 'bg-bg'}`}>
       <a href="#main" className="skip-link">Skip to content</a>
+      {heroFieldPaths.has(pathname) ? (
+        <div className="page-hero-field" aria-hidden="true">
+          <GradientDescentBackground key={pathname} className="home-top-gradient" />
+        </div>
+      ) : null}
       <header className={`pointer-events-none fixed inset-x-0 z-50 px-3 sm:px-5 ${scrolled ? 'top-2' : 'top-4 sm:top-5'}`}>
         <div
           className={`liquid-glass mx-auto w-[min(94vw,72rem)] pointer-events-auto transition-all duration-500 ${mobileNavOpen ? 'liquid-glass-mobile-open' : ''} ${scrolled ? 'liquid-glass-scrolled' : 'liquid-glass-top'}`}
@@ -205,6 +213,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       </Link>
                       <Link href="/cv" onClick={() => captureNavigation('cv', 'footer')} className="story-link text-text-muted hover:text-text">
                         CV
+                      </Link>
+                      <Link href="/experience" onClick={() => captureNavigation('experience', 'footer')} className="story-link text-text-muted hover:text-text">
+                        Timeline
                       </Link>
                       <Link href="/resume" onClick={() => captureNavigation('resume', 'footer')} className="story-link text-text-muted hover:text-text">
                         Resume

@@ -354,7 +354,7 @@ function IntroHero() {
     <section className="home-intro-hero">
       <div className="home-intro-copy">
         <h1 className="home-intro-title">{introTitle}</h1>
-        <p>Software &amp; AI engineer at Rutgers. I build Scarlet Sync and Lykke, and did applied AI at New York Life.</p>
+        <p>I love life.</p>
         <nav className="home-mobile-contact-actions" aria-label="Connect with Akash">
           <a href="#gradient-work" className="home-action-primary">
             <span>See my work</span>

@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact',
     '/resume',
     '/cv',
+    '/experience',
     '/experience/new-york-life',
   ]
 

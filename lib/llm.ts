@@ -44,6 +44,7 @@ export function buildLlmsIndex() {
       `[Projects](${absoluteUrl('/projects')}): Portfolio projects across startups, AI, data, robotics, and software.`,
       `[Hosted sites](${absoluteUrl('/sites')}): Standalone research interfaces, data stories, playable demos, and learning tools.`,
       `[Writing](${absoluteUrl('/writing')}): Writing on programming, robotics, school, and reflection.`,
+      `[Timeline](${absoluteUrl('/experience')}): Dated record of school, work, research, leadership, and projects from 2016 to now.`,
       `[Story](${absoluteUrl('/story')}): Timeline showing how projects and interests connect over time.`,
       `[New York Life internship](${absoluteUrl('/experience/new-york-life')}): Applied AI engineering work built, demonstrated, and pilot-tested during a 2026 software engineering internship.`,
       `[Resume](${absoluteUrl('/resume')}): Recruiter-facing summary and PDF resume.`,

@@ -87,8 +87,8 @@ export default function NewYorkLifeExperiencePage() {
 
       <section className="grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-center">
         <div className="max-w-4xl">
-          <Link href="/" className="eyebrow inline-flex items-center gap-2 text-text-soft hover:text-text">
-            ← Back home
+          <Link href="/experience" className="eyebrow inline-flex items-center gap-2 text-text-soft hover:text-text">
+            ← Timeline
           </Link>
           <p className="eyebrow mt-8">Software Engineering Intern · May 26-August 6, 2026</p>
           <h1 className="mt-5 text-5xl text-text sm:text-7xl lg:text-8xl">Applied AI, built for real workflows.</h1>
