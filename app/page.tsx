@@ -5,9 +5,9 @@ import { buildHomeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata, siteName, siteUrl } from '@/lib/seo'
 
 export const metadata = buildPageMetadata({
-  title: 'Akash Dubey',
+  title: 'Akash Dubey · Software & AI Engineer',
   description:
-    'Akash Dubey builds software, AI systems, robotics projects, and research-driven products across startups, labs, and student work.',
+    'Akash Dubey is a software and AI engineer studying Computer Science and Mathematics at Rutgers. He builds Scarlet Sync and Lykke, interned in applied AI at New York Life, and researches robot planning.',
   path: '/',
   image: '/opengraph-image',
 })
@@ -23,6 +23,8 @@ export default function HomePage() {
         name: siteName,
         url: siteUrl,
         image: `${siteUrl}/images/face.jpg`,
+        jobTitle: 'Software and AI Engineer',
+        email: 'mailto:akash.dubey@rutgers.edu',
         sameAs: ['https://github.com/AkeBoss-tech', 'https://www.linkedin.com/in/akash---dubey/'],
         alumniOf: [
           {

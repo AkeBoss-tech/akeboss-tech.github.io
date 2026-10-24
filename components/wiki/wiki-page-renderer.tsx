@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { Markdown } from '@/components/markdown'
+import { RevealTitle } from '@/components/reveal-title'
 import { WikiGeneratedFigure } from '@/components/wiki/wiki-generated-figure'
 import { WikiInteractive } from '@/components/wiki/wiki-interactive'
 import { WikiVisualExperience } from '@/components/wiki/wiki-visual-experience'
@@ -46,7 +47,7 @@ function WikiContentBlockView({ block, page }: { block: WikiContentBlock; page: 
   return <WikiInteractive type={page.artifact.type} />
 }
 
-export function WikiPageRenderer({ page, related }: { page: WikiPage; related: WikiPage[] }) {
+export function WikiPageRenderer({ page, related, next }: { page: WikiPage; related: WikiPage[]; next?: WikiPage }) {
   const sectionLinks = [
     { id: 'visual-model', label: 'Interactive model' },
     ...page.sections.map((section, index) => ({ id: `section-${index + 1}`, label: section.heading })),
@@ -55,112 +56,122 @@ export function WikiPageRenderer({ page, related }: { page: WikiPage; related: W
 
   return (
     <article className="wiki-article">
+      <div className="wiki-progress" aria-hidden="true" />
       <header className="wiki-header">
+        <Link href="/wiki" className="wiki-back">← Wiki</Link>
         <div className="wiki-kicker">
           <span>{page.domain}</span>
           <span>{page.difficulty}</span>
         </div>
-        <h1>{page.title}</h1>
-        <p>{page.subtitle}</p>
-        <div className="wiki-tags">
-          {page.tags.map((tag) => <span key={tag}>{tag}</span>)}
-        </div>
+        <RevealTitle text={page.title} />
+        <p className="wiki-lede">{page.subtitle}</p>
       </header>
 
       {page.visualExperience ? <WikiVisualExperience experience={page.visualExperience} /> : <WikiGeneratedFigure page={page} />}
 
-      <nav className="wiki-toc" aria-label="On this page">
-        <strong>On this page</strong>
-        <ol>
-          {sectionLinks.map((item) => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}
-        </ol>
-      </nav>
+      <div className="wiki-layout">
+        <nav className="wiki-toc" aria-label="On this page">
+          <strong>On this page</strong>
+          <ol>
+            {sectionLinks.map((item) => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}
+          </ol>
+        </nav>
 
-      <section className="wiki-artifact" id="visual-model">
-        <div>
-          <p className="eyebrow">Interactive model</p>
-          <h2>{page.artifact.title}</h2>
-          <p>{page.artifact.description}</p>
-          <p className="wiki-model-note">Live HTML simulation · adjust the controls and watch the computed output respond.</p>
-        </div>
-        <WikiInteractive type={page.artifact.type} />
-      </section>
+        <div className="wiki-body">
+          <section className="wiki-artifact reveal" id="visual-model">
+            <div>
+              <p className="eyebrow">Try it</p>
+              <h2>{page.artifact.title}</h2>
+              <p>{page.artifact.description}</p>
+            </div>
+            <WikiInteractive type={page.artifact.type} />
+          </section>
 
-      <section className="wiki-source-box">
-        <div>
-          <p className="eyebrow">Site connection</p>
-          <p>{page.summary}</p>
-          {page.sourceStatus ? (
-            <p className="wiki-source-status"><strong>{page.sourceStatus.label}:</strong> {page.sourceStatus.note}</p>
+          <section className="wiki-source-box">
+            <div>
+              <p className="eyebrow">Where this shows up</p>
+              <p>{page.summary}</p>
+              {page.sourceStatus ? (
+                <p className="wiki-source-status"><strong>{page.sourceStatus.label}:</strong> {page.sourceStatus.note}</p>
+              ) : null}
+            </div>
+            <div className="wiki-source-links">
+              {page.sourceLinks.map((source) => (
+                <Link key={source.href} href={source.href}>{source.label} →</Link>
+              ))}
+            </div>
+          </section>
+
+          {page.contentBlocks?.length ? (
+            <section className="wiki-section wiki-freeform">
+              {page.contentBlocks.map((block, index) => (
+                <WikiContentBlockView key={`${block.type}-${index}`} block={block} page={page} />
+              ))}
+            </section>
+          ) : null}
+
+          {page.sections.map((section, index) => (
+            <section key={section.heading} className="wiki-section reveal" id={`section-${index + 1}`}>
+              <h2>{section.heading}</h2>
+              {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {section.callout ? <blockquote>{section.callout}</blockquote> : null}
+              {section.table ? <WikiTableView table={section.table} /> : null}
+            </section>
+          ))}
+
+          <section className="wiki-section wiki-pitfalls" id="common-pitfalls">
+            <h2>Common pitfalls</h2>
+            <ul className="wiki-list">
+              {page.pitfalls.map((pitfall) => <li key={pitfall}>{pitfall}</li>)}
+            </ul>
+          </section>
+
+          <section className="wiki-section">
+            <h2>Further reading</h2>
+            <div className="wiki-source-grid">
+              {page.externalSources.map((source) => (
+                <a key={source.href} href={source.href} target="_blank" rel="noreferrer">{source.label} ↗</a>
+              ))}
+            </div>
+            {page.sourceFiles.length ? (
+              <details className="wiki-provenance">
+                <summary>Repository sources ({page.sourceFiles.length})</summary>
+                <ul>
+                  {page.sourceFiles.map((sourceFile) => (
+                    <li key={sourceFile}>
+                      <a href={`https://github.com/AkeBoss-tech/akeboss-tech.github.io/blob/master/${sourceFile}`} target="_blank" rel="noreferrer">
+                        <code>{sourceFile}</code>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : null}
+          </section>
+
+          {next ? (
+            <Link href={`/wiki/${next.slug}`} className="wiki-next reveal" data-spotlight>
+              <span className="wiki-next-label">Next explainer →</span>
+              <strong>{next.title}</strong>
+              <em>{next.subtitle}</em>
+            </Link>
+          ) : null}
+
+          {related.length > 0 ? (
+            <section className="wiki-section">
+              <h2>Related</h2>
+              <div className="wiki-related-grid">
+                {related.map((item) => (
+                  <Link key={item.slug} href={`/wiki/${item.slug}`} data-spotlight>
+                    <span>{item.domain}</span>
+                    <strong>{item.title}</strong>
+                  </Link>
+                ))}
+              </div>
+            </section>
           ) : null}
         </div>
-        <div className="wiki-source-links">
-          {page.sourceLinks.map((source) => (
-            <Link key={source.href} href={source.href}>{source.label}</Link>
-          ))}
-        </div>
-      </section>
-
-      <aside className="wiki-provenance" aria-label="Source provenance">
-        <strong>Grounded in repository sources</strong>
-        <p>These local files supplied the project-specific context. Further-reading links support the broader concepts.</p>
-        <ul>
-          {page.sourceFiles.map((sourceFile) => (
-            <li key={sourceFile}>
-              <a href={`https://github.com/AkeBoss-tech/akeboss-tech.github.io/blob/master/${sourceFile}`} target="_blank" rel="noreferrer">
-                <code>{sourceFile}</code>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </aside>
-
-      {page.contentBlocks?.length ? (
-        <section className="wiki-section wiki-freeform">
-          {page.contentBlocks.map((block, index) => (
-            <WikiContentBlockView key={`${block.type}-${index}`} block={block} page={page} />
-          ))}
-        </section>
-      ) : null}
-
-      {page.sections.map((section, index) => (
-        <section key={section.heading} className="wiki-section" id={`section-${index + 1}`}>
-          <h2>{section.heading}</h2>
-          {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-          {section.callout ? <blockquote>{section.callout}</blockquote> : null}
-          {section.table ? <WikiTableView table={section.table} /> : null}
-        </section>
-      ))}
-
-      <section className="wiki-section" id="common-pitfalls">
-        <h2>Common Pitfalls</h2>
-        <ul className="wiki-list">
-          {page.pitfalls.map((pitfall) => <li key={pitfall}>{pitfall}</li>)}
-        </ul>
-      </section>
-
-      <section className="wiki-section">
-        <h2>Sources and Further Reading</h2>
-        <div className="wiki-source-grid">
-          {page.externalSources.map((source) => (
-            <a key={source.href} href={source.href} target="_blank" rel="noreferrer">{source.label}</a>
-          ))}
-        </div>
-      </section>
-
-      {related.length > 0 ? (
-        <section className="wiki-section">
-          <h2>Related Explainers</h2>
-          <div className="wiki-related-grid">
-            {related.map((item) => (
-              <Link key={item.slug} href={`/wiki/${item.slug}`}>
-                <span>{item.domain}</span>
-                <strong>{item.title}</strong>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
+      </div>
     </article>
   )
 }

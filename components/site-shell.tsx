@@ -1,25 +1,24 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, ViewTransition } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import posthog from 'posthog-js'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
-import { GradientDescentBackground } from '@/components/gradient-descent-background'
-import { ResumeLink } from '@/components/resume-link'
+import { Spotlight } from '@/components/spotlight'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 const nav = [
   { href: '/projects', label: 'Projects' },
-  { href: '/sites', label: 'Sites' },
-  { href: '/wiki', label: 'Wiki' },
+  { href: '/experience/new-york-life', label: 'Experience' },
   { href: '/writing', label: 'Writing' },
-  { href: '/files/resume.pdf', label: 'Resume', external: true },
-  { href: '/cv', label: 'CV' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]
+
+const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -50,10 +49,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={`relative min-h-screen text-text ${pathname === '/' ? 'home-clean-shell bg-bg' : 'bg-bg'}`}>
-      {pathname !== '/' ? <GradientDescentBackground /> : null}
-      {pathname !== '/' ? (
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-80 bg-[radial-gradient(circle_at_top,rgba(132,169,255,0.12),transparent_54%)]" />
-      ) : null}
+      <a href="#main" className="skip-link">Skip to content</a>
       <header className={`pointer-events-none fixed inset-x-0 z-50 px-3 sm:px-5 ${scrolled ? 'top-2' : 'top-4 sm:top-5'}`}>
         <div
           className={`liquid-glass mx-auto w-[min(94vw,72rem)] pointer-events-auto transition-all duration-500 ${mobileNavOpen ? 'liquid-glass-mobile-open' : ''} ${scrolled ? 'liquid-glass-scrolled' : 'liquid-glass-top'}`}
@@ -78,63 +74,65 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 <path d={mobileNavOpen ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16'} />
               </svg>
             </button>
-            <nav className="hidden items-center gap-2 text-sm text-text-muted md:flex">
+            <nav aria-label="Main" className="hidden items-center gap-1 text-sm text-text-muted md:flex">
               {nav.map((item) => (
-                item.external ? (
-                  <ResumeLink
-                    key={item.href}
-                    source="site_navigation"
-                    className="story-link rounded-full px-4 py-2 transition-all duration-300 hover:bg-white/6"
-                  >
-                    {item.label}
-                  </ResumeLink>
-                ) : (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => captureNavigation(item.label.toLowerCase(), 'desktop_nav')}
-                    className={`rounded-full px-4 py-2 transition-all duration-300 ${pathname === item.href ? 'bg-white/10 text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]' : 'story-link hover:bg-white/6'}`}
-                  >
-                    {item.label}
-                  </Link>
-                )
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                  onClick={() => captureNavigation(item.label.toLowerCase(), 'desktop_nav')}
+                  className={`rounded-full px-3.5 py-2 transition-colors duration-200 ${isActive(pathname, item.href) ? 'bg-white/10 text-text' : 'story-link hover:bg-white/6 hover:text-text'}`}
+                >
+                  {item.label}
+                </Link>
               ))}
+              <Link
+                href="/resume"
+                aria-current={isActive(pathname, '/resume') ? 'page' : undefined}
+                onClick={() => captureNavigation('resume', 'desktop_nav')}
+                className="nav-resume-button ml-2"
+              >
+                Resume
+              </Link>
             </nav>
           </div>
           {mobileNavOpen ? (
             <nav id="mobile-site-nav" className="px-3 text-sm text-text-muted md:hidden sm:px-5">
               <div className="grid gap-1 border-t border-white/10 pb-3 pt-2">
                 {nav.map((item) => (
-                  item.external ? (
-                    <ResumeLink
-                      key={item.href}
-                      source="site_navigation"
-                      onClick={() => setMobileNavOpen(false)}
-                      className="rounded-2xl px-3 py-3 transition-all duration-300 hover:bg-white/8"
-                    >
-                      {item.label}
-                    </ResumeLink>
-                  ) : (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => {
-                        captureNavigation(item.label.toLowerCase(), 'mobile_nav')
-                        setMobileNavOpen(false)
-                      }}
-                      className={`rounded-2xl px-3 py-3 transition-all duration-300 ${pathname === item.href ? 'bg-white/10 text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' : 'hover:bg-white/8'}`}
-                    >
-                      {item.label}
-                    </Link>
-                  )
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                    onClick={() => {
+                      captureNavigation(item.label.toLowerCase(), 'mobile_nav')
+                      setMobileNavOpen(false)
+                    }}
+                    className={`rounded-2xl px-3 py-3 transition-colors duration-200 ${isActive(pathname, item.href) ? 'bg-white/10 text-text' : 'hover:bg-white/8'}`}
+                  >
+                    {item.label}
+                  </Link>
                 ))}
+                <Link
+                  href="/resume"
+                  onClick={() => {
+                    captureNavigation('resume', 'mobile_nav')
+                    setMobileNavOpen(false)
+                  }}
+                  className="nav-resume-button mt-1 justify-center"
+                >
+                  Resume
+                </Link>
               </div>
             </nav>
           ) : null}
         </div>
       </header>
 
-      <main className={`relative z-10 ${pathname === '/' ? 'pt-0' : 'pt-28 md:pt-24'}`}>{children}</main>
+      <main id="main" className={`relative z-10 ${pathname === '/' ? 'pt-0' : 'pt-28 md:pt-24'}`}>
+        <ViewTransition default="page-swap">{children}</ViewTransition>
+      </main>
+      <Spotlight />
 
       {pathname !== '/' ? (
         <footer className="relative z-10 mt-20 border-t border-white/6">
@@ -201,6 +199,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       </Link>
                       <Link href="/sites" onClick={() => captureNavigation('sites', 'footer')} className="story-link text-text-muted hover:text-text">
                         Sites
+                      </Link>
+                      <Link href="/wiki" onClick={() => captureNavigation('wiki', 'footer')} className="story-link text-text-muted hover:text-text">
+                        Wiki
+                      </Link>
+                      <Link href="/cv" onClick={() => captureNavigation('cv', 'footer')} className="story-link text-text-muted hover:text-text">
+                        CV
                       </Link>
                       <Link href="/resume" onClick={() => captureNavigation('resume', 'footer')} className="story-link text-text-muted hover:text-text">
                         Resume

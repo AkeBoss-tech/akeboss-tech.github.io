@@ -5,7 +5,7 @@ image: "/images/portfolio/healthcare-simulation/patient-encounter.jpg"
 collection: portfolio
 date: "2026-10-11"
 tags: [AI, Healthcare, Simulation, Web]
-featured: true
+featured: false
 rank: 3
 ---
 

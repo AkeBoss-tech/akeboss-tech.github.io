@@ -7,6 +7,10 @@ const projectRoot = path.resolve('.')
 const nextConfig: NextConfig = {
   output: isGithubPages ? 'export' : undefined,
   outputFileTracingRoot: projectRoot,
+  experimental: {
+    // Lets <ViewTransition> morph project images between the list and detail pages.
+    viewTransition: true,
+  },
   turbopack: {
     root: projectRoot,
   },

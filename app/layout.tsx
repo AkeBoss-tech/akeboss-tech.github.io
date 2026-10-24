@@ -1,13 +1,16 @@
 import './globals.css'
+import './redesign.css'
 import type { Metadata } from 'next'
 import type { Viewport } from 'next'
-import { Inconsolata } from 'next/font/google'
+import { IBM_Plex_Sans, Inconsolata, Instrument_Serif } from 'next/font/google'
 import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { SiteShell } from '@/components/site-shell'
 import { defaultDescription, defaultOgImage, siteName, siteUrl } from '@/lib/seo'
 
 const inconsolata = Inconsolata({ subsets: ['latin'], variable: '--font-inconsolata' })
+const plexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-plex-sans' })
+const instrumentSerif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: ['normal', 'italic'], variable: '--font-display-serif' })
 
 const GA_MEASUREMENT_ID = 'G-JJ2HKRJL6Z'
 
@@ -83,7 +86,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         {/* Google Analytics */}
         <Script
@@ -101,7 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
       </head>
-      <body className={`${inconsolata.variable} font-sans`}>
+      <body className={`${inconsolata.variable} ${plexSans.variable} ${instrumentSerif.variable} font-sans`}>
         <ThemeProvider>
           <SiteShell>{children}</SiteShell>
         </ThemeProvider>

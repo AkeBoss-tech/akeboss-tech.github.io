@@ -15,9 +15,9 @@ export default function SitesPage() {
     <div className="container-wide py-10 sm:py-14">
       <section className="max-w-4xl">
         <p className="eyebrow">Hosted sites</p>
-        <h1 className="mt-4 text-5xl text-text sm:text-7xl">Things you can open and use.</h1>
+        <h1 className="mt-4 text-5xl text-text sm:text-7xl">Live sites</h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-text-muted">
-          Standalone research interfaces, visual stories, games, and tools that live alongside the main portfolio.
+          Demos, data stories, and tools you can open right now.
         </p>
       </section>
 

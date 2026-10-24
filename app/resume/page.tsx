@@ -1,4 +1,8 @@
+import fs from 'node:fs'
+import path from 'node:path'
+
 import { LlmMarkdown } from '@/components/llm-markdown'
+import { RevealTitle } from '@/components/reveal-title'
 import { ResumeLink } from '@/components/resume-link'
 import { buildResumeLlmMarkdown } from '@/lib/llm'
 import { buildPageMetadata } from '@/lib/seo'
@@ -11,55 +15,70 @@ export const metadata = buildPageMetadata({
   image: '/resume/opengraph-image',
 })
 
+// Page previews are rendered from files/resume.pdf by scripts/build-resume-preview.swift.
+const previewDir = path.join(process.cwd(), 'images/resume')
+
+function getPreviewPages() {
+  try {
+    return fs
+      .readdirSync(previewDir)
+      .filter((file) => /^resume-page-\d+\.jpg$/.test(file))
+      .sort((a, b) => Number(a.match(/\d+/)?.[0]) - Number(b.match(/\d+/)?.[0]))
+      .map((file) => `/images/resume/${file}`)
+  } catch {
+    return []
+  }
+}
+
 export default function ResumePage() {
   const llmMarkdown = buildResumeLlmMarkdown()
+  const pages = getPreviewPages()
+
   return (
-    <div className="container-wide py-10 sm:py-14">
+    <div className="resume-page container-wide py-10 sm:py-14">
       <LlmMarkdown content={llmMarkdown} />
-      <section className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:items-start">
-        <div className="max-w-3xl">
-          <p className="eyebrow">Resume</p>
-          <h1 className="mt-4 text-5xl text-text sm:text-7xl">The recruiter-facing version.</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-text-muted">
-            A concise summary for software engineering, AI systems, research, and product roles.
-            This version is automatically compiled from LaTeX.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <ResumeLink source="resume_page" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
-              Open PDF
-            </ResumeLink>
-            <ResumeLink source="resume_page" download className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
-              Download PDF
-            </ResumeLink>
-            <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
-              LinkedIn
-            </a>
-          </div>
-        </div>
 
-        <div className="panel max-w-xl rounded-[30px] p-5 lg:justify-self-end">
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div>
-              <p className="eyebrow">Focus</p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">Software engineering, AI systems, research, and product work.</p>
-            </div>
-            <div>
-              <p className="eyebrow">Education</p>
-              <p className="mt-3 text-sm leading-7 text-text-muted">Computer Science and Mathematics at Rutgers, alongside research and startup work.</p>
-            </div>
-          </div>
+      <header className="resume-header">
+        <p className="pj-meta">
+          <span>Resume</span>
+          {pages.length ? <span>{pages.length} pages</span> : null}
+        </p>
+        <RevealTitle text="Software, AI, and research, on paper." className="resume-title" />
+        <p className="pj-lede">Rutgers CS + Math, May 2027. Recent: applied AI at New York Life, Scarlet Sync, Lykke.</p>
+        <div className="pj-actions">
+          <ResumeLink source="resume_page" download className="pj-btn pj-btn-primary">
+            Download PDF ↓
+          </ResumeLink>
+          <ResumeLink source="resume_page" className="pj-btn">
+            Open in new tab ↗
+          </ResumeLink>
+          <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer" className="pj-btn">
+            LinkedIn ↗
+          </a>
         </div>
-      </section>
+      </header>
 
-      <section className="mt-10">
-        <div className="panel overflow-hidden rounded-[32px] p-3 sm:p-4">
-          <iframe
-            src="/files/resume.pdf#view=FitH"
-            title="Akash Dubey Resume"
-            className="h-[78vh] min-h-[620px] w-full rounded-[24px] bg-white"
-          />
-        </div>
-      </section>
+      {pages.length ? (
+        <section className="resume-sheets" aria-label="Resume preview">
+          {pages.map((src, index) => (
+            <ResumeLink key={src} source="resume_page" className="resume-sheet reveal">
+              <img
+                src={src}
+                alt={`Resume page ${index + 1} of ${pages.length}`}
+                width={1400}
+                height={1811}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+              <span className="resume-sheet-label">Page {index + 1}</span>
+            </ResumeLink>
+          ))}
+        </section>
+      ) : (
+        <section className="resume-sheets">
+          <iframe src="/files/resume.pdf#view=FitH" title="Akash Dubey Resume" className="resume-frame" />
+        </section>
+      )}
     </div>
   )
 }

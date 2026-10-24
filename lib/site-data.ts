@@ -38,7 +38,7 @@ export const hostedSites = [
   },
 ] as const
 
-export const featuredProjectSlugs = ['scarlet-sync', 'lykke', 'healthcare-simulation', 'hic-tad-analysis', 'nostradamus']
+export const featuredProjectSlugs = ['scarlet-sync', 'lykke', 'hic-tad-analysis', 'nostradamus']
 
 export const projectCategories = [
   {

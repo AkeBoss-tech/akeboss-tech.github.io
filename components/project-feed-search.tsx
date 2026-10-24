@@ -1,11 +1,12 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { useCallback, useMemo, useState } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
+import { useCallback, useMemo, useState, ViewTransition } from 'react'
 import Link from 'next/link'
 import posthog from 'posthog-js'
 
 import { ResponsiveImage } from '@/components/responsive-image'
+import { projectHue } from '@/lib/project-hue'
 import type { Project } from '@/lib/content'
 import { formatDate } from '@/lib/format'
 
@@ -266,15 +267,17 @@ function getFeaturedDateLabel(project: Project) {
 }
 
 function FeaturedCaseStudy({ project, index }: { project: Project; index: number }) {
-  const highlights = getFeatureHighlights(project)
-  const mediaImages = project.mediaImages.length > 0 ? project.mediaImages : [project.image || '/images/portfolio/home.png']
-  const [coverImage, ...collageImages] = mediaImages
+  const highlights = getFeatureHighlights(project).slice(0, 2)
+  const coverImage = project.image || project.mediaImages[0] || '/images/portfolio/home.png'
+  const collageImages = project.mediaImages.filter((image) => image !== coverImage)
 
   return (
-    <article className="featured-case-study">
+    <article className="featured-case-study reveal" data-spotlight style={{ '--pj-hue': projectHue(project.slug) } as CSSProperties}>
       <Link href={`/projects/${project.slug}`} className="featured-case-study-media" aria-label={`Read ${project.title} case study`}>
         <div className="featured-case-study-media-top">
-          <ResponsiveImage src={coverImage} alt={project.title} sizes="(max-width: 1024px) 92vw, 38rem" loading="eager" />
+          <ViewTransition name={`project-cover-${project.slug}`}>
+            <ResponsiveImage src={coverImage} alt={project.title} sizes="(max-width: 1024px) 92vw, 38rem" loading={index < 2 ? 'eager' : 'lazy'} />
+          </ViewTransition>
         </div>
         {collageImages.length > 0 ? (
           <div className="featured-case-study-collage">
@@ -315,65 +318,38 @@ function FeaturedCaseStudy({ project, index }: { project: Project; index: number
         </ul>
 
         <Link href={`/projects/${project.slug}`} className="project-feed-link">
-          Read Case Study →
+          Read the case study →
         </Link>
       </div>
     </article>
   )
 }
 
-function SelectedWorkCard({
-  project,
-}: {
-  project: Project
-}) {
-  return (
-    <article className="selected-work-card">
-      <Link href={`/projects/${project.slug}`} className="selected-work-media" aria-label={`View ${project.title}`}>
-        <ResponsiveImage src={project.image || '/images/portfolio/home.png'} alt={project.title} sizes="(max-width: 1024px) 92vw, 32rem" />
-      </Link>
-
-      <div className="selected-work-body">
-        <div className="project-feed-meta">
-          <div className="flex flex-wrap items-center gap-2">
-            {project.tags.map((tag) => (
-              <span key={tag} className="project-feed-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <time dateTime={project.date}>{formatDate(project.date)}</time>
-        </div>
-
-        <h3>{project.title}</h3>
-        <p>{project.excerpt}</p>
-
-        <div className="selected-work-actions">
-          <Link href={`/projects/${project.slug}`} className="project-feed-link">
-            View Project →
-          </Link>
-        </div>
-      </div>
-    </article>
-  )
-}
-
-function ArchiveTile({ project }: { project: Project }) {
+function ProjectTileCard({ project, compact = false }: { project: Project; compact?: boolean }) {
   const year = getProjectYear(project)
 
   return (
-    <Link href={`/projects/${project.slug}`} className="archive-project-tile">
-      <div className="archive-project-tile-media">
-        <ResponsiveImage src={project.image || '/images/portfolio/home.png'} alt={project.title} sizes="(max-width: 768px) 92vw, 18rem" />
-      </div>
-      <div className="archive-project-tile-body">
-        <div className="archive-project-tile-meta">
-          <span>{year ?? 'Archive'}</span>
-          <span>{project.tags.slice(0, 2).join(' · ')}</span>
-        </div>
-        <h3>{project.title}</h3>
-        <p>{shortenText(project.excerpt, 110)}</p>
-      </div>
+    <Link
+      href={`/projects/${project.slug}`}
+      className={`pj-tile reveal ${compact ? 'pj-tile-compact' : ''}`}
+      data-spotlight
+      style={{ '--pj-hue': projectHue(project.slug) } as CSSProperties}
+    >
+      <span className="pj-tile-media">
+        {project.links.some((link) => !/github\.com/i.test(link.url)) ? <span className="pj-live">Live</span> : null}
+        <ViewTransition name={`project-cover-${project.slug}`}>
+          <ResponsiveImage
+            src={project.image || '/images/portfolio/home.png'}
+            alt=""
+            sizes={compact ? '(max-width: 768px) 92vw, 18rem' : '(max-width: 1024px) 92vw, 26rem'}
+          />
+        </ViewTransition>
+      </span>
+      <span className="pj-tile-body">
+        <span className="pj-tile-tags">{[year, ...project.tags.slice(0, 2)].filter(Boolean).join(' · ')}</span>
+        <span className="pj-tile-title">{project.title}</span>
+        <span className="pj-tile-excerpt">{compact ? shortenText(project.excerpt, 110) : project.excerpt}</span>
+      </span>
     </Link>
   )
 }
@@ -404,7 +380,8 @@ export function ProjectFeedSearch({
   recentProjects: Project[]
 }) {
   const [query, setQuery] = useState('')
-  const [activeTag, setActiveTag] = useState('')
+  // Label chips were removed; search already matches tags.
+  const activeTag = ''
   const [activeView, setActiveView] = useState<CuratedViewKey>('all')
 
   const normalizedQuery = query.trim().toLowerCase()
@@ -412,17 +389,13 @@ export function ProjectFeedSearch({
     () => [...favoriteProjects, ...recentProjects],
     [favoriteProjects, recentProjects],
   )
-  const allTags = useMemo(
-    () => [...new Set(allProjects.flatMap((project) => project.tags))].sort(),
-    [allProjects],
-  )
 
   const featuredProjects = useMemo(
     () => allProjects.filter((project) => project.featured),
     [allProjects],
   )
   const selectedProjects = useMemo(
-    () => allProjects.filter((project) => selectedWorkSlugSet.has(project.slug)),
+    () => allProjects.filter((project) => !project.featured && selectedWorkSlugSet.has(project.slug)),
     [allProjects],
   )
   const archiveProjects = useMemo(
@@ -485,7 +458,7 @@ export function ProjectFeedSearch({
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search projects, tools, research areas, or labels"
+            placeholder="Search projects"
             className="project-search-input"
           />
         </label>
@@ -505,42 +478,12 @@ export function ProjectFeedSearch({
             </button>
           ))}
         </div>
-        <div className="project-search-tags" aria-label="Project labels">
-          <button
-            type="button"
-            className={`project-search-tag ${activeTag === '' ? 'project-search-tag-active' : ''}`}
-            onClick={() => {
-              setActiveTag('')
-              posthog.capture('project_label_filtered', { label: 'all' })
-            }}
-          >
-            All labels
-          </button>
-          {allTags.map((tag) => {
-            const normalizedTag = tag.toLowerCase()
-            return (
-              <button
-                key={tag}
-                type="button"
-                className={`project-search-tag ${activeTag === normalizedTag ? 'project-search-tag-active' : ''}`}
-                onClick={() => {
-                  const nextTag = activeTag === normalizedTag ? '' : normalizedTag
-                  setActiveTag(nextTag)
-                  posthog.capture('project_label_filtered', { label: nextTag || 'all' })
-                }}
-              >
-                {tag}
-              </button>
-            )
-          })}
-        </div>
       </section>
 
       <div className="project-feed mt-12">
         {visibleFeatured.length > 0 ? (
           <ProjectSection
-            title="Featured Case Studies"
-            description="The projects carrying the strongest product story, technical depth, and overall impact."
+            title="Featured"
           >
             <div className="featured-case-study-list">
               {visibleFeatured.map((project, index) => (
@@ -554,12 +497,9 @@ export function ProjectFeedSearch({
           <ProjectSection
             title="Selected Work"
           >
-            <div className="selected-work-grid">
+            <div className="pj-index-grid">
               {visibleSelected.map((project) => (
-                <SelectedWorkCard
-                  key={project.slug}
-                  project={project}
-                />
+                <ProjectTileCard key={project.slug} project={project} />
               ))}
             </div>
           </ProjectSection>
@@ -569,9 +509,9 @@ export function ProjectFeedSearch({
           <ProjectSection
             title="Project Archive"
           >
-            <div className="archive-project-grid">
+            <div className="pj-index-grid pj-index-grid-compact">
               {visibleArchive.map((project) => (
-                <ArchiveTile key={project.slug} project={project} />
+                <ProjectTileCard key={project.slug} project={project} compact />
               ))}
             </div>
           </ProjectSection>
@@ -579,8 +519,7 @@ export function ProjectFeedSearch({
 
         {timelineByYear.length > 0 ? (
           <ProjectSection
-            title="Timeline"
-            description="A chronological scan of how the work has evolved from early experiments into larger systems."
+            title="By year"
           >
             <div className="project-timeline">
               {timelineByYear.map(([year, projects], index) => (

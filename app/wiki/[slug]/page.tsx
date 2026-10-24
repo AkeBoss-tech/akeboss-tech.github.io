@@ -36,6 +36,9 @@ export default async function WikiTopicPage({ params }: { params: Promise<{ slug
   if (!page) notFound()
 
   const related = getRelatedWikiPages(page.related)
+  const allPages = getWikiPages()
+  const index = allPages.findIndex((item) => item.slug === page.slug)
+  const next = allPages.length > 1 ? allPages[(index + 1) % allPages.length] : undefined
   const structuredData = [
     buildBreadcrumbList([
       { name: 'Home', path: '/' },
@@ -56,7 +59,7 @@ export default async function WikiTopicPage({ params }: { params: Promise<{ slug
   return (
     <div className="container-wide py-10 sm:py-14">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <WikiPageRenderer page={page} related={related} />
+      <WikiPageRenderer page={page} related={related} next={next} />
     </div>
   )
 }

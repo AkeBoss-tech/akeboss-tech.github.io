@@ -354,23 +354,22 @@ function IntroHero() {
     <section className="home-intro-hero">
       <div className="home-intro-copy">
         <h1 className="home-intro-title">{introTitle}</h1>
-        <p>Building product, AI systems, and research tools from Rutgers.</p>
+        <p>Software &amp; AI engineer at Rutgers. I build Scarlet Sync and Lykke, and did applied AI at New York Life.</p>
         <nav className="home-mobile-contact-actions" aria-label="Connect with Akash">
+          <a href="#gradient-work" className="home-action-primary">
+            <span>See my work</span>
+          </a>
+          <Link href="/resume">
+            <span>Resume</span>
+          </Link>
           <a href="https://www.linkedin.com/in/akash---dubey/" target="_blank" rel="noreferrer">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
               <path d="M5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 9h4v12H3V9Zm6 0h4v1.6c.8-1.2 2-1.9 3.5-1.9 3.2 0 4.5 2 4.5 5.4V21h-4v-6.2c0-1.7-.6-2.7-1.9-2.7-1.4 0-2.1 1-2.1 2.7V21H9V9Z" />
             </svg>
             <span>LinkedIn</span>
           </a>
-          <a href="/akash-dubey.vcf" download="Akash-Dubey.vcf" type="text/vcard">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="8" r="3" />
-              <path d="M3 20v-2a6 6 0 0 1 12 0v2M19 8v6m-3-3h6" />
-            </svg>
-            <span>Save contact</span>
-          </a>
         </nav>
-        <a href="#visual-notes" className="home-intro-down" aria-label="Scroll to visual notes">
+        <a href="#gradient-work" className="home-intro-down" aria-label="Scroll to current work">
           <span aria-hidden="true">↓</span>
         </a>
       </div>
@@ -447,6 +446,10 @@ function PlacesSection() {
             <span aria-hidden="true">↑</span>
           </button>
         ) : null}
+        <header className="visual-journal-heading">
+          <p className="gd-eyebrow">Off the keyboard</p>
+          <h2>Places I&apos;ve been lately.</h2>
+        </header>
         <div className="visual-journal-grid" aria-label="Photo grid">
           {visiblePlaces.map((place, index) => (
             <button
@@ -557,7 +560,9 @@ function ClosingSection() {
   return (
     <section ref={sectionRef} className="home-closing-section" aria-label="Closing navigation">
       <div className="home-closing-content">
-        <p className="home-closing-name">Akash Dubey</p>
+        <p className="home-closing-name">
+          <span className="closing-sig">Akash Dubey</span>
+        </p>
         <div className="gd-end-top-actions">
           <a href="/akash-dubey.vcf" download className="gd-end-contact-shortcut" title="Add to Contacts">
             <span>Add to Contacts</span>
@@ -587,7 +592,6 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
   const gradientRef = useRef<HTMLDivElement | null>(null)
   const scrollLabelRef = useRef<HTMLDivElement | null>(null)
   const [sceneReady, setSceneReady] = useState(false)
-  const [typedHeadlineLength, setTypedHeadlineLength] = useState(0)
   const headlineText = '“Make machines that make things. Take actions that enable action.”'
   const { resolvedTheme } = useTheme()
   const currentTheme = resolvedTheme === 'light' ? 'light' : 'dark'
@@ -936,36 +940,6 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
     }
   }, [currentTheme, sceneReady, topBackgroundRef])
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    if (!sceneReady) return
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTypedHeadlineLength(headlineText.length)
-      return
-    }
-
-    const updateHeadline = () => {
-      const hero = heroRef.current
-      if (!hero) return
-      const rect = hero.getBoundingClientRect()
-      const start = window.innerHeight * 0.82
-      const end = window.innerHeight * 0.18
-      const progress = Math.max(0, Math.min(1, (start - rect.top) / Math.max(1, start - end)))
-      setTypedHeadlineLength(Math.round(progress * headlineText.length))
-    }
-
-    updateHeadline()
-    window.addEventListener('scroll', updateHeadline, { passive: true })
-    window.addEventListener('resize', updateHeadline)
-
-    return () => {
-      window.removeEventListener('scroll', updateHeadline)
-      window.removeEventListener('resize', updateHeadline)
-    }
-  }, [sceneReady])
-
-  const visibleHeadline = typedHeadlineLength > 0 ? headlineText.slice(0, typedHeadlineLength) : ''
 
   return (
     <section ref={sectionRef} id="gradient-work" className="gd-stage">
@@ -976,14 +950,15 @@ function HomeGradientDescentStage({ points, topBackgroundRef }: HomeGradientDesc
         <section ref={heroRef} className="gd-hero" id="top">
           <div className="gd-hero-inner">
             <p className="gd-eyebrow">Current work</p>
-            <h2 className="gd-hero-title" aria-label={headlineText}>
-              <span className="gd-hero-title-ghost" aria-hidden="true">{headlineText}</span>
-              <span className="gd-hero-title-live">
-                {visibleHeadline}
-                <span className="gd-hero-caret" aria-hidden="true" />
+            <h2 className="gd-hero-title gd-manifesto" aria-label={headlineText}>
+              <span className="gd-manifesto-line" aria-hidden="true">
+                <span className="gd-manifesto-mark">“</span>Make machines that <em>make things.</em>
+              </span>
+              <span className="gd-manifesto-line" aria-hidden="true">
+                Take actions that <em>enable action.</em><span className="gd-manifesto-mark">”</span>
               </span>
             </h2>
-            <p>Product, research, AI systems, and what&apos;s next.</p>
+            <p>What I&apos;m building and researching now.</p>
           </div>
         </section>
 
@@ -1009,19 +984,16 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
   const lykke = projectBySlug.get('lykke')
   const compBio = projectBySlug.get('hic-tad-analysis')
   const llmResearch = projectBySlug.get('llm-research')
-  const drp = projectBySlug.get('drp-spring-2025')
-  const economicGrapher = projectBySlug.get('economic-grapher')
   const pathFinder = projectBySlug.get('path-finder')
 
   const points = useMemo<HomePoint[]>(() => [
     {
       eyebrow: 'May–August 2026',
       title: 'New York Life Insurance',
-      body: 'Completed a software engineering internship focused primarily on applied AI engineering.',
+      body: 'Software engineering intern, applied AI.',
       bullets: [
-        'Designed and demonstrated a multi-channel claims-assistance prototype across web, phone, and SMS.',
-        'Built trust-focused evaluation, citation, escalation, and failure-recovery workflows.',
-        'Piloted AI-assisted knowledge and developer tools with enterprise teams.',
+        'Built a claims-assistance prototype across web, phone, and SMS.',
+        'Added citations, evaluation, failure recovery, and human escalation.',
       ],
       href: '/experience/new-york-life',
       logo: '/company-logos/new-york-life.svg',
@@ -1030,9 +1002,9 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       imageAlt: 'New York Life building at night in Midtown Manhattan',
     },
     {
-      eyebrow: 'Right now',
+      eyebrow: 'Founder · 2025–now',
       title: 'Scarlet Sync',
-      body: 'Building a smarter Rutgers course planner for generating workable schedules around real student constraints.',
+      body: 'One app for Rutgers: schedules, degree planning, course alerts, and campus info. Used by hundreds of students.',
       href: scarletSync ? `/projects/${scarletSync.slug}` : undefined,
       logo: '/company-logos/scarlet-sync.png',
       logoAlt: 'Scarlet Sync logo',
@@ -1045,9 +1017,9 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       ],
     },
     {
-      eyebrow: 'Right now',
+      eyebrow: 'Engineer · 2025–now',
       title: 'Lykke',
-      body: 'Shipping an AI study platform that turns course material into flashcards, notes, quizzes, and shared workflows.',
+      body: 'AI study platform that turns course material into wikis, quizzes, and flashcards. Used by 285+ students.',
       href: lykke ? `/projects/${lykke.slug}` : undefined,
       logos: [
         { src: '/company-logos/lykke.svg', alt: 'Lykke logo' },
@@ -1062,7 +1034,7 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
     {
       eyebrow: 'Research',
       title: 'Algorithmic Robotics & Control Lab',
-      body: 'Working on motion-planning optimization and vision-language-action directions for robotics at Rutgers.',
+      body: 'Motion planning and vision-language-action research for robot arms.',
       href: pathFinder ? `/projects/${pathFinder.slug}` : 'https://arc-lab-robotics.github.io/',
       gallerySide: 'right',
       gallery: [
@@ -1074,7 +1046,7 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
     {
       eyebrow: 'Research',
       title: 'Kwan Lab',
-      body: 'Building computational biology tooling for TAD-boundary deletion analysis, chromatin simulation, and Hi-C driven experiments.',
+      body: 'Python tools for 3D genome (Hi-C) analysis and chromatin simulation.',
       href: compBio ? `/projects/${compBio.slug}` : undefined,
       gallerySide: 'right',
       gallery: [
@@ -1086,31 +1058,13 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
     {
       eyebrow: 'Research',
       title: 'LLM Research',
-      body: 'Studying small-model optimization, post-training, and agentic systems for non-sequential code generation.',
+      body: 'Post-training small language models for math reasoning.',
       href: llmResearch ? `/projects/${llmResearch.slug}` : undefined,
       gallery: [
         { src: llmResearch?.image || '/images/portfolio/llm-research/image.png', alt: 'LLM research results' },
       ],
     },
-    {
-      eyebrow: 'Analysis',
-      title: 'Economics',
-      body: 'Building quantitative tools and visualizations for economic series, migration analysis, and data-heavy questions.',
-      href: economicGrapher ? `/projects/${economicGrapher.slug}` : undefined,
-      gallery: [
-        { src: economicGrapher?.image || '/images/portfolio/vis/economic-plotter.png', alt: 'Economic series plotter' },
-      ],
-    },
-    {
-      eyebrow: 'Math',
-      title: 'Directed Reading Program',
-      body: 'Using DRP to push deeper into proof-writing, q-binomial identities, and the kind of math that sharpens everything else.',
-      href: drp ? `/projects/${drp.slug}` : undefined,
-      gallery: [
-        { src: drp?.image || '/images/portfolio/drp.png', alt: 'DRP presentation' },
-      ],
-    },
-  ], [compBio, drp, economicGrapher, llmResearch, lykke, pathFinder, scarletSync])
+  ], [compBio, llmResearch, lykke, pathFinder, scarletSync])
 
   return (
     <div className="home-clean-page">

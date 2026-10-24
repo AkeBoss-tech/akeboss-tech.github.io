@@ -41,12 +41,9 @@ export default function AboutPage() {
 
         <div>
           <p className="eyebrow">About</p>
-          <h1 className="mt-4 text-5xl text-text sm:text-7xl">Builder, researcher, operator.</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-text-muted">
-            I like turning messy systems into tools people can actually use.
-          </p>
-          <p className="mt-5 max-w-3xl text-base leading-8 text-text-muted">
-            I study Computer Science and Mathematics at Rutgers, and most of my work sits between engineering, research, and product.
+          <h1 className="mt-4 text-5xl text-text sm:text-7xl">Hi, I&apos;m Akash.</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-text-muted">
+            I study CS and Math at Rutgers. I like turning messy systems into tools people actually use.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/story" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">

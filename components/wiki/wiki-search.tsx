@@ -7,6 +7,13 @@ import type { WikiPage } from '@/lib/wiki'
 
 type WikiSearchItem = Pick<WikiPage, 'slug' | 'title' | 'subtitle' | 'domain' | 'difficulty' | 'tags'>
 
+// Stable per-domain hue so each domain gets its own accent color.
+function domainHue(domain: string) {
+  let hash = 0
+  for (const char of domain) hash = (hash * 31 + char.charCodeAt(0)) % 360
+  return hash
+}
+
 export function WikiSearch({ pages }: { pages: WikiSearchItem[] }) {
   const [query, setQuery] = useState('')
   const [domain, setDomain] = useState('All')
@@ -25,32 +32,42 @@ export function WikiSearch({ pages }: { pages: WikiSearchItem[] }) {
 
   return (
     <section className="wiki-search-panel" aria-label="Search wiki explainers">
-      <div className="wiki-search-row">
-        <label className="wiki-search-box">
-          <span>Search explainers</span>
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Try RAG, swerve, q-binomial, transit..."
-          />
-        </label>
-        <label className="wiki-search-box">
-          <span>Domain</span>
-          <select value={domain} onChange={(event) => setDomain(event.target.value)}>
-            {domains.map((item) => <option key={item}>{item}</option>)}
-          </select>
-        </label>
+      <label className="wiki-search-box">
+        <span className="sr-only">Search explainers</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search: RAG, swerve, q-binomial, transit…"
+        />
+      </label>
+      <div className="wiki-domain-chips" role="group" aria-label="Filter by domain">
+        {domains.map((item) => (
+          <button
+            key={item}
+            type="button"
+            aria-pressed={domain === item}
+            className={domain === item ? 'active' : undefined}
+            onClick={() => setDomain(item)}
+          >
+            {item}
+          </button>
+        ))}
       </div>
-      <p className="wiki-search-count">{filteredPages.length} of {pages.length} explainers</p>
+      <p className="wiki-search-count">{filteredPages.length} of {pages.length}</p>
       <div className="wiki-card-grid">
         {filteredPages.map((page) => (
-          <Link key={page.slug} href={`/wiki/${page.slug}`} className="wiki-card">
+          <Link
+            key={page.slug}
+            href={`/wiki/${page.slug}`}
+            className="wiki-card reveal"
+            data-spotlight
+            style={{ '--wiki-hue': domainHue(page.domain) } as React.CSSProperties}
+          >
             <span>{page.domain}</span>
             <h2>{page.title}</h2>
             <p>{page.subtitle}</p>
-            <div>
-              {page.tags.slice(0, 3).map((tag) => <small key={tag}>{tag}</small>)}
-            </div>
+            <em>{page.difficulty}</em>
           </Link>
         ))}
       </div>

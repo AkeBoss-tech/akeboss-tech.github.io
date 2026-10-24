@@ -19,7 +19,7 @@ export default function ContactPage() {
       <section className="max-w-4xl">
         <h1 className="mt-4 text-5xl text-text sm:text-7xl">Contact</h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-text-muted">
-          If you ever need to reach me
+          Email is the fastest way to reach me.
         </p>
         <ContactIconLinks className="mt-7" />
         <a href="/akash-dubey.vcf" download className="contact-add-button contact-glow-button mt-8">

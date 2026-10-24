@@ -19,9 +19,9 @@ export default function StoryPage() {
       <LlmMarkdown content={llmMarkdown} />
       <section className="max-w-4xl">
         <p className="eyebrow">Story</p>
-        <h1 className="mt-4 text-5xl text-text sm:text-7xl">A timeline of projects, ideas, and experiments.</h1>
+        <h1 className="mt-4 text-5xl text-text sm:text-7xl">Timeline</h1>
         <p className="mt-6 max-w-3xl text-lg leading-8 text-text-muted">
-          The portfolio makes more sense as a progression: code, math, research, robotics, and product work feeding each other over time.
+          How the code, math, robotics, and product work built on each other.
         </p>
       </section>
 

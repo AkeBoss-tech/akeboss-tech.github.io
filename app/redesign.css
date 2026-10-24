@@ -1,0 +1,328 @@
+/* ------------------------------------------------------------------ */
+/* Redesign layer (2026-10). Loaded after globals.css.                 */
+/* ------------------------------------------------------------------ */
+
+/* Résumé page ------------------------------------------------------- */
+
+.resume-header {
+  max-width: 60rem;
+}
+
+.resume-title {
+  margin-top: 0.9rem;
+  max-width: 16ch;
+  font-family: var(--font-inconsolata), monospace;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6.5vw, 5.4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--text);
+}
+
+.resume-sheets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: 76rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  perspective: 1600px;
+}
+
+.resume-sheet {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 0.6rem;
+  background: #fff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 30px 80px -30px rgba(0, 0, 0, 0.55),
+    0 10px 24px -12px rgba(0, 0, 0, 0.35);
+  transition: transform 500ms var(--ease-out-expo), box-shadow 500ms var(--ease-out-expo);
+}
+
+.resume-sheet:nth-child(odd) {
+  transform: rotate(-0.6deg);
+}
+
+.resume-sheet:nth-child(even) {
+  transform: rotate(0.6deg) translateY(1.5rem);
+}
+
+.resume-sheet:hover {
+  transform: translateY(-6px) rotate(0deg) scale(1.01);
+  box-shadow:
+    0 40px 100px -30px rgba(0, 0, 0, 0.6),
+    0 0 0 2px var(--signal);
+}
+
+.resume-sheet img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.resume-sheet-label {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  border-radius: 999px;
+  background: rgba(10, 14, 22, 0.78);
+  padding: 0.3rem 0.7rem;
+  color: #fff;
+  font-family: var(--font-inconsolata), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.resume-sheet:hover .resume-sheet-label {
+  opacity: 1;
+}
+
+.resume-frame {
+  width: 100%;
+  min-height: 80vh;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+[data-theme="light"] .resume-sheet {
+  box-shadow:
+    0 30px 70px -30px rgba(30, 50, 80, 0.4),
+    0 8px 20px -10px rgba(30, 50, 80, 0.25);
+}
+
+@media (max-width: 767px) {
+  .resume-sheet:nth-child(n) {
+    transform: none;
+  }
+}
+
+/* Home manifesto quote ---------------------------------------------- */
+
+.gd-hero h2.gd-manifesto {
+  display: grid;
+  gap: 0.12em;
+  font-size: clamp(2.3rem, 5.2vw, 5.4rem);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.gd-manifesto-line {
+  display: block;
+}
+
+.gd-manifesto em {
+  position: relative;
+  display: inline-block;
+  padding-right: 0.08em;
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.12em;
+  letter-spacing: -0.01em;
+  background: linear-gradient(100deg, #8fb4ff 0%, #b9a4ff 45%, #7ee0c8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="light"] .gd-manifesto em {
+  background-image: linear-gradient(100deg, #1d4ed8 0%, #6d28d9 50%, #0f766e 100%);
+}
+
+/* Underline that draws itself as the quote scrolls into view. */
+.gd-manifesto em::after {
+  content: "";
+  position: absolute;
+  left: 0.04em;
+  right: 0.1em;
+  bottom: 0.02em;
+  height: 0.06em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8fb4ff, #7ee0c8);
+  transform-origin: 0 50%;
+  transform: scaleX(1);
+}
+
+[data-theme="light"] .gd-manifesto em::after {
+  background: linear-gradient(90deg, #1d4ed8, #0f766e);
+}
+
+@supports (animation-timeline: view()) {
+  .gd-manifesto em::after {
+    animation: manifesto-underline linear both;
+    animation-timeline: view();
+    animation-range: entry 40% cover 45%;
+  }
+
+  .gd-manifesto-line {
+    animation: manifesto-line linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  .gd-manifesto-line + .gd-manifesto-line {
+    animation-range: entry 25% cover 45%;
+  }
+}
+
+@keyframes manifesto-underline {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes manifesto-line {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+    filter: blur(6px);
+  }
+}
+
+.gd-manifesto-mark {
+  color: var(--signal);
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* Closing signature ------------------------------------------------- */
+/* The full name "signs" itself left to right as --finale-progress    */
+/* (set on scroll) goes 0 → 1, with a slow light sweeping across it.  */
+
+.home-closing-name {
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.closing-sig {
+  display: inline-block;
+  padding: 0.05em 0.12em 0.12em;
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.1em;
+  letter-spacing: -0.015em;
+  background: linear-gradient(
+    100deg,
+    var(--gd-end-name-color) 0%,
+    var(--gd-end-name-color) 38%,
+    var(--signal) 50%,
+    var(--gd-end-name-color) 62%,
+    var(--gd-end-name-color) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  clip-path: inset(-0.2em calc((1 - var(--finale-progress, 1)) * 100%) -0.3em -0.2em);
+  animation: closing-sheen 8s ease-in-out infinite;
+}
+
+@keyframes closing-sheen {
+  0%,
+  25% {
+    background-position: 100% 0;
+  }
+  75%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .closing-sig {
+    animation: none;
+    clip-path: none;
+  }
+
+  .gd-manifesto em::after,
+  .gd-manifesto-line {
+    animation: none !important;
+  }
+
+  .resume-sheet,
+  .resume-sheet:hover {
+    transition: none;
+  }
+}
+
+/* Theme switch: circle reveal from the click point ------------------ */
+
+.theme-swap::view-transition-old(root),
+.theme-swap::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.theme-swap::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* "Live" badge on project tiles ------------------------------------- */
+
+.pj-tile-media {
+  position: relative;
+}
+
+.pj-live {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  background: rgba(6, 10, 18, 0.78);
+  backdrop-filter: blur(8px);
+  padding: 0.25rem 0.65rem 0.25rem 0.55rem;
+  color: #e9f0ff;
+  font-family: var(--font-inconsolata), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pj-live::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+  animation: live-pulse 2.4s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  70% {
+    box-shadow: 0 0 0 0.45rem rgba(74, 222, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+/* Small polish ------------------------------------------------------ */
+
+::selection {
+  background: color-mix(in srgb, var(--signal) 35%, transparent);
+  color: var(--text);
+}
+
+html {
+  scrollbar-color: color-mix(in srgb, var(--text) 22%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-live::before {
+    animation: none;
+  }
+}

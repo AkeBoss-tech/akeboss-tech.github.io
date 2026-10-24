@@ -32,14 +32,14 @@ export function buildLlmsIndex() {
   return [
     `# ${siteName}`,
     '',
-    '> Personal website and portfolio for Akash Dubey.',
+    '> Akash Dubey is a software and AI engineer studying Computer Science and Mathematics at Rutgers (expected May 2027). He builds Scarlet Sync (a Rutgers campus app) and Lykke (an AI study platform), interned in applied AI at New York Life in summer 2026, and does robotics planning and computational biology research.',
     '',
     `Canonical site: ${siteUrl}`,
     `Full machine-readable index: ${absoluteUrl('/llms-full.txt')}`,
     '',
     '## Main pages',
     bulletList([
-      `[Home](${absoluteUrl('/')}): Software engineering, AI systems, robotics, research, and product work.`,
+      `[Home](${absoluteUrl('/')}): Selected work (Scarlet Sync, New York Life applied AI, Lykke), research, quick facts, and contact.`,
       `[About](${absoluteUrl('/about')}): Background, interests, and current direction.`,
       `[Projects](${absoluteUrl('/projects')}): Portfolio projects across startups, AI, data, robotics, and software.`,
       `[Hosted sites](${absoluteUrl('/sites')}): Standalone research interfaces, data stories, playable demos, and learning tools.`,
