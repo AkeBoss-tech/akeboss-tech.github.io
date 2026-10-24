@@ -1,10 +1,10 @@
 // Renders each page of files/resume.pdf to images/resume/resume-page-N.jpg
 // for the /resume page preview. Run after updating the PDF (macOS only):
-//   swift scripts/build-resume-preview.swift
+//   swift scripts/build-resume-preview.swift [path/to/resume.pdf]
 import AppKit
 import PDFKit
 
-let source = URL(fileURLWithPath: "files/resume.pdf")
+let source = URL(fileURLWithPath: CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "files/resume.pdf")
 let outDir = URL(fileURLWithPath: "images/resume", isDirectory: true)
 try? FileManager.default.createDirectory(at: outDir, withIntermediateDirectories: true)
 
