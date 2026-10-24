@@ -75,7 +75,7 @@ const experience = [
     role: 'Founder',
     dates: 'Jan 2025 - Present',
     bullets: [
-      'Built a Rutgers scheduling and degree-planning product used by hundreds of students.',
+      'Built a Rutgers scheduling and degree-planning product used by thousands of students.',
       'Created AI-assisted ingestion pipelines for classes, sections, and degree requirements from legacy university systems.',
     ],
   },

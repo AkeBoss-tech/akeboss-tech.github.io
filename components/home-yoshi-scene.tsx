@@ -1004,7 +1004,7 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
     {
       eyebrow: 'Founder · 2025–now',
       title: 'Scarlet Sync',
-      body: 'One app for Rutgers: schedules, degree planning, course alerts, and campus info. Used by hundreds of students.',
+      body: 'One app for Rutgers: schedules, degree planning, course alerts, and campus info. Used by thousands of students.',
       href: scarletSync ? `/projects/${scarletSync.slug}` : undefined,
       logo: '/company-logos/scarlet-sync.png',
       logoAlt: 'Scarlet Sync logo',
