@@ -47,7 +47,7 @@ export default function Error({
           </button>
           <Link
             href="/"
-            className="rounded-full border border-white/6 px-8 py-4 text-sm font-medium text-text-muted transition-all hover:bg-white/6 hover:text-text"
+            className="rounded-full border border-text/6 px-8 py-4 text-sm font-medium text-text-muted transition-all hover:bg-text/6 hover:text-text"
           >
             Return to Core
           </Link>
@@ -55,7 +55,7 @@ export default function Error({
       </Reveal>
 
       {error.digest && (
-        <div className="pointer-events-none mt-20 font-mono text-[10px] uppercase tracking-[0.3em] text-white/5">
+        <div className="pointer-events-none mt-20 font-mono text-[10px] uppercase tracking-[0.3em] text-text/5">
           Hash: {error.digest}
         </div>
       )}

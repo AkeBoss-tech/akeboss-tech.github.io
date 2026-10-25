@@ -15,7 +15,7 @@ export function PostCard({ post }: { post: Post }) {
 
   return (
     <Link href={`/writing/${post.slug}`} className="group panel-soft block overflow-hidden rounded-[28px]">
-      <div className="relative overflow-hidden border-b border-white/8">
+      <div className="relative overflow-hidden border-b border-text/8">
         <ResponsiveImage
           src={post.image || '/images/posts/doing-things-hero.png'}
           alt={post.title}
@@ -27,7 +27,7 @@ export function PostCard({ post }: { post: Post }) {
         <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-soft">
           {formatDate(post.date)}
         </div>
-        <h3 className="mt-4 text-2xl text-text transition group-hover:text-white sm:text-3xl">{post.title}</h3>
+        <h3 className="mt-4 text-2xl text-text transition group-hover:text-signal sm:text-3xl">{post.title}</h3>
         <p className="mt-4 line-clamp-3 text-sm leading-7 text-text-muted">
           {preview}
         </p>

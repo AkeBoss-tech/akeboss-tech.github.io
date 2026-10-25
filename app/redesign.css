@@ -875,3 +875,21 @@ a.lt-card:hover .lt-card-media img {
     animation: none !important;
   }
 }
+
+/* Light-mode hover states for buttons that hardcode white borders. */
+[data-theme="light"] :is(
+  .visual-journal-collapse,
+  .visual-journal-more,
+  .visual-journal-less,
+  .gd-end-button
+):is(:hover, :focus-visible) {
+  border-color: rgba(29, 78, 216, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+}
+
+[data-theme="light"] .visual-journal-collapse {
+  border-color: rgba(17, 32, 48, 0.14);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text);
+}

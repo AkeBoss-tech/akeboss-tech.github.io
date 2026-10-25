@@ -361,7 +361,7 @@ export default function CVPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {topStats.map((item) => (
-              <div key={item.label} className="rounded-[18px] border border-white/10 bg-white/[0.02] px-4 py-3 backdrop-blur-md">
+              <div key={item.label} className="rounded-[18px] border border-text/10 bg-text/[0.02] px-4 py-3 backdrop-blur-md">
                 <p className="eyebrow">{item.label}</p>
                 <p className={`mt-2 text-lg ${item.accent}`}>{item.value}</p>
               </div>
@@ -379,16 +379,16 @@ export default function CVPage() {
         <Section title="Education" accentClass="text-[#84a9ff]">
           <div className="grid gap-5">
             {education.map((item) => (
-              <article key={item.title} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
+              <article key={item.title} className="border-b border-text/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
                   <div className="flex items-start gap-4">
                     <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-text/10 bg-text/[0.03] p-2"
                       style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
                     >
                       <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
-                    <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
+                    <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-signal">
                       {item.title}
                     </a>
                   </div>
@@ -413,17 +413,17 @@ export default function CVPage() {
         <Section title="Engineering and Work" accentClass="text-[#d8b4fe]">
           <div className="grid gap-6">
             {experience.map((item) => (
-              <article key={`${item.title}-${item.role}`} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
+              <article key={`${item.title}-${item.role}`} className="border-b border-text/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
                   <div className="flex items-start gap-4">
                     <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-text/10 bg-text/[0.03] p-2"
                       style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
                     >
                       <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <div>
-                      <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
+                      <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-signal">
                         {item.title}
                       </a>
                       <p className="mt-1 text-sm text-[#d8b4fe]">{item.role}</p>
@@ -446,17 +446,17 @@ export default function CVPage() {
         <Section title="Research" accentClass="text-[#8be9fd]">
           <div className="grid gap-6">
             {research.map((item) => (
-              <article key={`${item.title}-${item.role}`} className="border-b border-white/8 pb-5 last:border-b-0 last:pb-0">
+              <article key={`${item.title}-${item.role}`} className="border-b border-text/8 pb-5 last:border-b-0 last:pb-0">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
                   <div className="flex items-start gap-4">
                     <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-text/10 bg-text/[0.03] p-2"
                       style={item.logoTileStyle}
                     >
                       <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <div>
-                      <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-white">
+                      <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-2xl text-text hover:text-signal">
                         {item.title}
                       </a>
                       <p className="mt-1 text-sm text-[var(--cv-research-role)]">{item.role}</p>
@@ -512,17 +512,17 @@ export default function CVPage() {
           <Section title="College" accentClass="text-[#84a9ff]">
             <div className="grid gap-4">
               {collegeActivities.map((item) => (
-                <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
+                <article key={item.title} className="border-b border-text/8 pb-4 last:border-b-0 last:pb-0">
                   <div className="flex items-start gap-4">
                     <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-text/10 bg-text/[0.03] p-2"
                       style={item.logoTileStyle}
                     >
                       <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                        <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-lg text-text hover:text-white">
+                        <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-lg text-text hover:text-signal">
                           {item.title}
                         </a>
                         <p className="shrink-0 text-sm text-text-soft">{item.dates}</p>
@@ -539,17 +539,17 @@ export default function CVPage() {
           <Section title="High School" accentClass="text-[#f6c177]">
             <div className="grid gap-4">
               {leadership.map((item) => (
-                <article key={item.title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
+                <article key={item.title} className="border-b border-text/8 pb-4 last:border-b-0 last:pb-0">
                   <div className="flex items-start gap-4">
                     <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.03] p-2"
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-text/10 bg-text/[0.03] p-2"
                       style={'logoTileStyle' in item ? item.logoTileStyle : undefined}
                     >
                       <ResponsiveImage src={item.logo} alt={`${item.title} logo`} className="max-h-full max-w-full object-contain" sizes="48px" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                        <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-lg text-text hover:text-white">
+                        <a href={item.href} target="_blank" rel="noreferrer" className="story-link text-lg text-text hover:text-signal">
                           {item.title}
                         </a>
                         <p className="shrink-0 text-sm text-text-soft">{item.dates}</p>
@@ -575,7 +575,7 @@ export default function CVPage() {
                 </div>
               </div>
 
-              <div className="border-t border-white/8 pt-5">
+              <div className="border-t border-text/8 pt-5">
                 <p className="eyebrow text-[#f6c177]">High School</p>
                 <div className="mt-3 grid gap-2">
                   {highSchoolAwards.map((item) => (
@@ -611,7 +611,7 @@ export default function CVPage() {
               {cvCollageImages.map((image) => (
                 <figure
                   key={image.src}
-                  className={`group relative overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.03] ${image.className}`}
+                  className={`group relative overflow-hidden rounded-[22px] border border-text/10 bg-text/[0.03] ${image.className}`}
                 >
                   <ResponsiveImage
                     src={image.src}

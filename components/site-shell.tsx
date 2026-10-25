@@ -76,7 +76,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 setMobileNavOpen(nextOpen)
                 posthog.capture('mobile_navigation_toggled', { state: nextOpen ? 'opened' : 'closed' })
               }}
-              className="story-link flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:bg-white/10 md:hidden"
+              className="story-link flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-text/12 bg-text/[0.04] text-text shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:bg-text/10 md:hidden"
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.7">
                 <path d={mobileNavOpen ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16'} />
@@ -89,7 +89,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   aria-current={isActive(pathname, item.href) ? 'page' : undefined}
                   onClick={() => captureNavigation(item.label.toLowerCase(), 'desktop_nav')}
-                  className={`rounded-full px-3.5 py-2 transition-colors duration-200 ${isActive(pathname, item.href) ? 'bg-white/10 text-text' : 'story-link hover:bg-white/6 hover:text-text'}`}
+                  className={`rounded-full px-3.5 py-2 transition-colors duration-200 ${isActive(pathname, item.href) ? 'bg-text/10 text-text' : 'story-link hover:bg-text/6 hover:text-text'}`}
                 >
                   {item.label}
                 </Link>
@@ -106,7 +106,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
           {mobileNavOpen ? (
             <nav id="mobile-site-nav" className="px-3 text-sm text-text-muted md:hidden sm:px-5">
-              <div className="grid gap-1 border-t border-white/10 pb-3 pt-2">
+              <div className="grid gap-1 border-t border-text/10 pb-3 pt-2">
                 {nav.map((item) => (
                   <Link
                     key={item.href}
@@ -116,7 +116,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       captureNavigation(item.label.toLowerCase(), 'mobile_nav')
                       setMobileNavOpen(false)
                     }}
-                    className={`rounded-2xl px-3 py-3 transition-colors duration-200 ${isActive(pathname, item.href) ? 'bg-white/10 text-text' : 'hover:bg-white/8'}`}
+                    className={`rounded-2xl px-3 py-3 transition-colors duration-200 ${isActive(pathname, item.href) ? 'bg-text/10 text-text' : 'hover:bg-text/8'}`}
                   >
                     {item.label}
                   </Link>
@@ -143,13 +143,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <Spotlight />
 
       {pathname !== '/' ? (
-        <footer className="relative z-10 mt-20 border-t border-white/6">
+        <footer className="relative z-10 mt-20 border-t border-text/6">
           <div className="container-wide py-10">
             <div className="panel footer-panel rounded-[34px] px-5 py-6 sm:px-6 sm:py-7">
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
                 <div className="min-w-0 self-center">
                   <div className="flex items-center gap-4">
-                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-white/16 bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_10px_30px_rgba(0,0,0,0.18)]">
+                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-text/16 bg-text/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_10px_30px_rgba(0,0,0,0.18)]">
                       <Image
                         src="/icons/apple-icon.png"
                         alt="Akash Dubey icon"

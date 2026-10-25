@@ -46,10 +46,10 @@ export default function AboutPage() {
             I study CS and Math at Rutgers. I like turning messy systems into tools people actually use.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/story" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
+            <Link href="/story" className="rounded-full border border-text/12 bg-text/[0.04] px-5 py-3 text-sm text-text-muted hover:border-text/25 hover:text-text">
               Read the timeline
             </Link>
-            <Link href="/projects" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
+            <Link href="/projects" className="rounded-full border border-text/12 bg-text/[0.04] px-5 py-3 text-sm text-text-muted hover:border-text/25 hover:text-text">
               Browse projects
             </Link>
           </div>

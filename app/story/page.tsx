@@ -40,10 +40,10 @@ export default function StoryPage() {
       </section>
 
       <section className="mt-10 flex flex-wrap gap-3">
-        <Link href="/projects" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
+        <Link href="/projects" className="rounded-full border border-text/12 bg-text/[0.04] px-5 py-3 text-sm text-text-muted hover:border-text/25 hover:text-text">
           Browse projects
         </Link>
-        <Link href="/writing" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-text-muted hover:border-white/25 hover:text-text">
+        <Link href="/writing" className="rounded-full border border-text/12 bg-text/[0.04] px-5 py-3 text-sm text-text-muted hover:border-text/25 hover:text-text">
           Read the writing
         </Link>
       </section>

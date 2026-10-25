@@ -20,9 +20,9 @@ export function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className={`group panel-soft block overflow-hidden rounded-[30px] border border-white/10 shadow-none ${compact ? 'w-[20rem] shrink-0 snap-start' : ''}`}
+      className={`group panel-soft block overflow-hidden rounded-[30px] border border-text/10 shadow-none ${compact ? 'w-[20rem] shrink-0 snap-start' : ''}`}
     >
-      <div className="relative overflow-hidden border-b border-white/8">
+      <div className="relative overflow-hidden border-b border-text/8">
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-90" />
         <ResponsiveImage
           src={project.image || '/images/portfolio/home.png'}
@@ -33,7 +33,7 @@ export function ProjectCard({
       </div>
 
       <div className="flex flex-col p-5 sm:p-6">
-        <h3 className={`text-text transition group-hover:text-white ${compact ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}>
+        <h3 className={`text-text transition group-hover:text-signal ${compact ? 'text-2xl' : 'text-3xl sm:text-4xl'}`}>
           {project.title}
         </h3>
         <p className="mt-4 text-sm leading-7 text-text-muted">{project.excerpt}</p>

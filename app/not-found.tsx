@@ -30,20 +30,20 @@ export default function NotFound() {
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Link
             href="/"
-            className="rounded-full border border-white/12 bg-white/[0.04] px-8 py-4 text-sm font-medium text-text transition-all hover:bg-white/10"
+            className="rounded-full border border-text/12 bg-text/[0.04] px-8 py-4 text-sm font-medium text-text transition-all hover:bg-text/10"
           >
             Return Home
           </Link>
           <Link
             href="/projects"
-            className="rounded-full border border-white/6 px-8 py-4 text-sm font-medium text-text-muted transition-all hover:bg-white/6 hover:text-text"
+            className="rounded-full border border-text/6 px-8 py-4 text-sm font-medium text-text-muted transition-all hover:bg-text/6 hover:text-text"
           >
             Browse Projects
           </Link>
         </div>
       </Reveal>
 
-      <div className="pointer-events-none mt-20 font-mono text-[10px] uppercase tracking-[0.3em] text-white/10">
+      <div className="pointer-events-none mt-20 font-mono text-[10px] uppercase tracking-[0.3em] text-text/10">
         Coordinate Mismatch / System Integrity: Nominal
       </div>
     </div>
