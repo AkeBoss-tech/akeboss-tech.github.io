@@ -32,6 +32,11 @@ jobs:
         with:
           bun-version: 1.4.0
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -45,7 +50,9 @@ jobs:
 
       - name: Build static site
         run: |
-          bun run build
+          bun run prebuild
+          # Use Node/Webpack to avoid the Bun/Turbopack Google font resolver failure.
+          node node_modules/next/dist/bin/next build --webpack
           bun run redirects:build
 
       - name: Compile LaTeX resume
