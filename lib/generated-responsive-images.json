@@ -1270,6 +1270,19 @@
       "placeholder": "data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAABQAQCdASoQAA0ABUB8JZQABAAAAP7u09FB/wgA"
     },
     {
+      "src": "/images/portfolio/scarlet-sync/course-catalog.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 2160,
+      "height": 1440,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAAAwAQCdASoQAAsABUB8JaQAA3AA/vAOxKyBuJICljRqHpooAAA="
+    },
+    {
       "src": "/images/portfolio/scarlet-sync/course-sniper.png",
       "widths": [
         160,
@@ -1322,6 +1335,19 @@
       "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoQAAgABUB8JQAAXOyYfp6AAP7qd27SH0TxjMZNW+b1R1lTmZg8gMUAAAA="
     },
     {
+      "src": "/images/portfolio/scarlet-sync/product-overview.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1440,
+      "height": 960,
+      "placeholder": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAsABUB8JZwAAua0z+UVAAD+7T7UOg9ewk/CTjoB9nu5UfQ0ElwNkAA="
+    },
+    {
       "src": "/images/portfolio/scarlet-sync/professor-reviews.png",
       "widths": [
         160,
@@ -1346,6 +1372,19 @@
       "width": 1658,
       "height": 788,
       "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAABwAQCdASoQAAgABUB8JZQAAocY8AD+53DFv1UUdRfAvjKmuErobW1DgAA="
+    },
+    {
+      "src": "/images/portfolio/scarlet-sync/schedule-preview.png",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1092
+      ],
+      "width": 1092,
+      "height": 842,
+      "placeholder": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoQAAwABUB8JZACdADp9Pv1RF8AAP7tjfIqrbzv1eLgc5CCnKkMVUj+PgNiv0nVIHAfeXmcxsqlsFEqWzqVfzMAcjagwABwZP+vO5cF+LTAAA=="
     },
     {
       "src": "/images/portfolio/stereo/boxplot.png",

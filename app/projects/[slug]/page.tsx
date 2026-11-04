@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ViewTransition } from 'react'
 import { Markdown } from '@/components/markdown'
+import { ScarletSyncMedia } from '@/components/scarlet-sync-media'
 import { RevealTitle } from '@/components/reveal-title'
 import { getProject, getProjects } from '@/lib/content'
 import type { Project } from '@/lib/content'
@@ -101,6 +102,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const year = formatYear(project.date)
   const toc = project.sections.map((section) => ({ id: headingId(section.title), title: section.title.replace(/[*_`]/g, '') }))
 
+  if (slug === 'scarlet-sync') toc.push({ id: 'behind-the-build', title: 'Behind the build' })
+
   return (
     <div className="pj" style={{ '--pj-hue': projectHue(project.slug) } as React.CSSProperties}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
@@ -131,7 +134,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </header>
 
       <figure className="pj-cover container-wide">
-        <div className="pj-cover-frame">
+        <div className={`pj-cover-frame ${slug === 'scarlet-sync' ? 'pj-cover-interface' : ''}`}>
           <ViewTransition name={`project-cover-${project.slug}`}>
             <ResponsiveImage
               src={project.image || '/images/portfolio/home.png'}
@@ -155,6 +158,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         ) : null}
         <article className="pj-body">
           <Markdown content={project.content} className="project-prose pj-prose" />
+          {slug === 'scarlet-sync' ? <ScarletSyncMedia /> : null}
         </article>
       </div>
 

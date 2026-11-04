@@ -1,7 +1,7 @@
 ---
 title: "Scarlet Sync"
-excerpt: "A complete scheduling and degree planning solution for Rutgers"
-image: "/images/portfolio/scarlet-sync/generated-schedule.jpg"
+excerpt: "A Rutgers planning app that helps students find courses, compare schedules, and organize degree requirements."
+image: "/images/portfolio/scarlet-sync/product-overview.png"
 collection: portfolio
 date: 2026-04-05
 tags: [Web, AI]
@@ -9,51 +9,50 @@ featured: true
 rank: 1
 ---
 
-<img src='/images/portfolio/scarlet-sync/ranked-schedules.jpg' width='100%' align='center'>
+Choosing classes should not mean keeping five university websites open and hoping everything fits. **Scarlet Sync** brings Rutgers course search, schedule building, and degree planning into one place. I started it to make a problem I knew as a student easier to work through.
 
+For example, a student can choose courses, block off work hours, and compare schedules that fit those constraints. The goal is to make the choices understandable before registration day.
 
-Navigating the complexities of university course registration can be a frustrating and time-consuming ordeal. Juggling degree requirements, professor preferences, campus locations, and personal availability often feels like a high-stakes puzzle with too many pieces. **Scarlet Sync** was born from this exact challenge, transforming the tedious process of scheduling into a seamless, intelligent, and user-friendly experience for Rutgers University students. It's more than just a CS project; it's a practical solution to a common problem.
+[Open Scarlet Sync](https://scarletsync.app/)
 
----
+## My contribution
 
-## Why hasn't this been done before?
+I founded Scarlet Sync and built across the product: collecting and organizing university data, developing the planning interface, and connecting schedules and degree information to an AI assistant. My Python and language-model-assisted data pipeline turns information from legacy university services into records the app can search and use.
 
-Accessing the data for degrees at Rutgers is an immense challenge. It is hard for people to get access to the data that they need, often its hidden across multiple different sites. My first step towards solving this problem was using a variety of ethical scraping techniques (as well as LLM based structured output extraction) to get all the classes, sections, and degree plans at Rutgers. This was a difficult process and would be hard for someone with limited scraping expertise. Thanfully, I have a lot of experience trying to hack around with websites and extracting info from pages.
+The hardest part was getting useful information into one place. Courses, sections, and degree requirements are spread across university sites and arrive in different formats. A clear interface depends on doing that less visible work well.
 
----
+## A decision that shaped the schedule builder
 
-## A User-First Approach to a University-Wide Problem
+A schedule can fit on a calendar and still be a poor fit for someone's life. I built the schedule workflow around explicit choices: required courses, allowed sections, unavailable times, and campus preferences. Students can compare alternatives rather than accept a single unexplained recommendation.
 
-The core philosophy behind Scarlet Sync is simple: **put the student's experience first**. Instead of forcing users to manually sift through thousands of course sections, Scarlet Sync empowers them with smart, intuitive tools.
+That also makes a failed search easier to investigate. If no schedule fits, a student can relax one constraint at a time to find the conflict. Collecting preferences is only useful if people can understand their effect.
 
-The centerpiece is the **AI-powered schedule generator**. Students can simply input their desired courses, block off times they're unavailable (like for work or sports), and specify their preferred campus locations. The algorithm then gets to work, generating multiple optimized, conflict-free schedules in seconds. This allows students to visualize their semester and make informed decisions based not just on course availability, but on what works best for *their* life.
+## Built through conversations with students
 
-Key features designed around the user include:
+Scarlet Sync grew through conversations with many Rutgers students during development. Hearing how other students approached registration helped shape the product beyond my own experience of choosing classes. That feedback is part of the story behind the features: bringing scattered information together and making it easier to compare choices.
 
-* **Integrated Professor Ratings**: No more cross-referencing with other sites. Make confident decisions with RateMyProfessor data built directly into the course search.
-* **Advanced Filtering**: Quickly narrow down options by department, instructor, course credits, or keywords to find exactly what you need.
-* **Degree Planning**: Look beyond a single semester. With our degree planning tools, you can map out your entire academic career, track your progress, and ensure you're on the path to graduation.
-* **Social & Collaborative**: Share potential schedules with friends to coordinate classes and study groups, making registration a collaborative effort.
+## From course choices to a weekly plan
 
----
+The app connects several parts of planning a semester:
 
-## The Technology Powering the Solution 
+- **Course explorer:** find courses and inspect section information before choosing what to take.
+- **Schedule builder:** compare weekly schedules around course choices, unavailable times, and preferences.
+- **Degree planner:** organize courses alongside degree requirements and a longer-term academic plan.
+- **Course Sniper:** watch for section openings and receive alerts. Registration still happens in Rutgers WebReg.
+- **Professor information:** explore teaching information while comparing courses.
+- **Campus tools:** find bus information, dining menus, and available study rooms alongside academic planning.
+- **AI assistance:** ask questions about planning and campus information through the app and its ChatGPT and Claude connections.
 
-To deliver a fast, reliable, and modern user experience, Scarlet Sync is built on a carefully selected, cutting-edge tech stack. Each technology was chosen for its specific strengths in creating a scalable and efficient web application.
+The walkthrough and rotating gallery below show how these pieces relate. The screenshots are examples of the interface at the time they were captured; course availability and product details can change.
 
-* **Frontend (The User Experience)**
-    * **Next.js 15 & React 19**
-    * **TypeScript**
-    * **Tailwind CSS**
+## Limits and what I learned
 
-* **Backend**
-    * **Supabase**
-        * Edge Functions
-        * Authentication
-        * Postgres
+A saved schedule is a plan, and students still complete registration in Rutgers WebReg. Course availability can change, and degree information needs to be checked against official university requirements. Bringing the information together does not remove the need to keep it current.
 
-* **Deployment & Infrastructure**
-    * Hosted on **Vercel**
-    * **Porkbun**
+The lesson I take from this work is that the interface and the data pipeline are part of the same problem. Helping someone choose a schedule requires understandable choices, dependable data, and a clear explanation when something cannot be generated. Broader coverage and improvements remain ongoing work.
 
-[Check it out!](https://scarletsync.app/)
+## Under the hood
+
+The web app uses **Next.js, React, TypeScript, and Tailwind CSS**. **Supabase** provides database, authentication, and backend services, while Python supports data collection and processing. The app is hosted on **Vercel**.
+
+[Explore more projects](/projects) · [Get in touch](/contact)

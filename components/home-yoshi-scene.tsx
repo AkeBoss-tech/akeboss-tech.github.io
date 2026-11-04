@@ -21,12 +21,13 @@ type HomePoint = {
   body: string
   bullets?: string[]
   href?: string
+  hrefLabel?: string
   logo?: string
   logoAlt?: string
   logos?: Array<{ src: string; alt: string }>
   image?: string
   imageAlt?: string
-  gallery?: Array<{ src: string; alt: string }>
+  gallery?: Array<{ src: string; alt: string; caption?: string }>
   gallerySide?: 'left' | 'right'
   galleryLayout?: 'default' | 'feature-left-stack-right'
 }
@@ -209,6 +210,7 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
       aria-label={`Expand ${primaryImage.alt}`}
     >
       <ResponsiveImage src={primaryImage.src} alt={primaryImage.alt} sizes="(max-width: 1024px) 92vw, 38rem" />
+      <span className="gd-media-caption">{primaryImage.caption || primaryImage.alt}</span>
     </button>
   ) : point.image ? (
     <button
@@ -252,13 +254,13 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
           {point.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
         </ul>
       ) : null}
-      {point.href ? <a href={point.href}>Open details ↗</a> : null}
+      {point.href ? <a href={point.href}>{point.hrefLabel || 'Open details'} ↗</a> : null}
     </div>
   )
 
   return (
     <>
-    <article className={`gd-row ${align} gd-row-feature-full`}>
+    <article className={`gd-row ${align} gd-row-feature-full ${point.gallery ? 'gd-row-media-document' : 'gd-row-media-photo'}`}>
       <div className="gd-content gd-content-gallery-feature-left">
         <div className={`gd-feature-split ${cardFirst ? 'gd-feature-split-card-first' : 'gd-feature-split-visual-first'}`}>
             <div className="gd-feature-top">
@@ -275,48 +277,22 @@ function TimelinePoint({ point, align }: { point: HomePoint; align: 'left' | 'ri
               )}
             </div>
             {secondaryImages.length ? (
-              <div className="gd-feature-bottom">
-                {cardFirst ? (
-                  <>
-                    <div className="gd-image-gallery gd-image-gallery-secondary">
-                      {secondaryImages.map((image) => (
-                        <button
-                          key={image.src}
-                          type="button"
-                          className="gd-image-wrap"
-                          onClick={() => {
-                            setExpandedImage(image)
-                            posthog.capture('visual_note_expanded', { source: 'timeline_gallery', title: point.title })
-                          }}
-                          aria-label={`Expand ${image.alt}`}
-                        >
-                          <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 1024px) 44vw, 18rem" />
-                        </button>
-                      ))}
-                    </div>
-                    <div aria-hidden="true" />
-                  </>
-                ) : (
-                  <>
-                    <div aria-hidden="true" />
-                    <div className="gd-image-gallery gd-image-gallery-secondary">
-                      {secondaryImages.map((image) => (
-                        <button
-                          key={image.src}
-                          type="button"
-                          className="gd-image-wrap"
-                          onClick={() => {
-                            setExpandedImage(image)
-                            posthog.capture('visual_note_expanded', { source: 'timeline_gallery', title: point.title })
-                          }}
-                          aria-label={`Expand ${image.alt}`}
-                        >
-                          <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 1024px) 44vw, 18rem" />
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
+              <div className="gd-image-gallery gd-image-gallery-secondary">
+                {secondaryImages.map((image) => (
+                  <button
+                    key={image.src}
+                    type="button"
+                    className="gd-image-wrap"
+                    onClick={() => {
+                      setExpandedImage(image)
+                      posthog.capture('visual_note_expanded', { source: 'timeline_gallery', title: point.title })
+                    }}
+                    aria-label={`Expand ${image.alt}`}
+                  >
+                    <ResponsiveImage src={image.src} alt={image.alt} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 44vw, 28rem" />
+                    <span className="gd-media-caption">{image.caption || image.alt}</span>
+                  </button>
+                ))}
               </div>
             ) : null}
           </div>
@@ -1004,16 +980,16 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
     {
       eyebrow: 'Founder · 2025–now',
       title: 'Scarlet Sync',
-      body: 'One app for Rutgers: schedules, degree planning, course alerts, and campus info. Used by thousands of students.',
-      href: scarletSync ? `/projects/${scarletSync.slug}` : undefined,
+      body: 'Built with Rutgers students, for Rutgers students. Scarlet Sync brings course search, schedule building, degree planning, and course alerts into one place.',
+      bullets: ['Conversations with students helped shape its development.', 'Explore the product and the thinking behind it.'],
+      hrefLabel: 'Watch the demo & explore the features',
+      href: scarletSync ? `/projects/${scarletSync.slug}#behind-the-build` : undefined,
       logo: '/company-logos/scarlet-sync.png',
       logoAlt: 'Scarlet Sync logo',
       gallery: [
-        { src: scarletSync?.image || '/images/portfolio/scarlet-sync/generated-schedule.jpg', alt: 'Scarlet Sync generated weekly schedule' },
-        { src: '/images/portfolio/scarlet-sync/degree-planner.png', alt: 'Scarlet Sync populated degree plan with requirements and course content' },
-        { src: '/images/portfolio/scarlet-sync/course-sniper.png', alt: 'Scarlet Sync verified Course Sniper alert workflow' },
-        { src: '/images/portfolio/scarlet-sync/explore.png', alt: 'Scarlet Sync course explorer with availability and student ratings' },
-        { src: '/images/portfolio/scarlet-sync/professor-reviews.png', alt: 'Scarlet Sync professor reviews and teaching evidence directory' },
+        { src: '/images/portfolio/scarlet-sync/schedule-preview.png', alt: 'Example weekly schedule from the public Scarlet Sync product tour', caption: 'A preview of how the week fits together.' },
+        { src: '/images/portfolio/scarlet-sync/product-overview.png', alt: 'Scarlet Sync public homepage and example prerequisite path', caption: 'Individual courses. A bigger academic picture.' },
+        { src: '/images/portfolio/scarlet-sync/course-catalog.png', alt: 'Scarlet Sync public course catalog', caption: 'Explore courses before building a schedule.' },
       ],
     },
     {
