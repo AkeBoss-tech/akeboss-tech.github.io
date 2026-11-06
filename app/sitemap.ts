@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sites',
     '/wiki',
     '/writing',
+    '/multimedia',
     '/story',
     '/contact',
     '/resume',

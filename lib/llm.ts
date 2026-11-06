@@ -44,6 +44,7 @@ export function buildLlmsIndex() {
       `[Projects](${absoluteUrl('/projects')}): Portfolio projects across startups, AI, data, robotics, and software.`,
       `[Hosted sites](${absoluteUrl('/sites')}): Standalone research interfaces, data stories, playable demos, and learning tools.`,
       `[Writing](${absoluteUrl('/writing')}): Writing on programming, robotics, school, and reflection.`,
+      `[Multimedia](${absoluteUrl('/multimedia')}): Photo slideshow, Kenny's Racing Game video, and the November Journal recording.`,
       `[Timeline](${absoluteUrl('/experience')}): Dated record of school, work, research, leadership, and projects from 2016 to now.`,
       `[Story](${absoluteUrl('/story')}): Timeline showing how projects and interests connect over time.`,
       `[New York Life internship](${absoluteUrl('/experience/new-york-life')}): Applied AI engineering work built, demonstrated, and pilot-tested during a 2026 software engineering internship.`,
@@ -83,6 +84,7 @@ export function buildLlmsFull() {
       `[Projects](${absoluteUrl('/projects')}): Full project archive.`,
       `[Hosted sites](${absoluteUrl('/sites')}): Standalone research interfaces, data stories, playable demos, and learning tools.`,
       `[Writing](${absoluteUrl('/writing')}): Articles and reflections.`,
+      `[Multimedia](${absoluteUrl('/multimedia')}): Photo slideshow, embedded racing demo, and November Journal audio.`,
       `[Story](${absoluteUrl('/story')}): Narrative timeline.`,
       `[New York Life internship](${absoluteUrl('/experience/new-york-life')}): Public-safe account of applied AI prototypes, evaluation, knowledge workflows, and developer tooling.`,
       `[Resume](${absoluteUrl('/resume')}): Resume overview and PDF.`,
@@ -242,6 +244,21 @@ export function buildResumeLlmMarkdown() {
   ].join('\n')
 }
 
+export function buildMultimediaLlmMarkdown() {
+  return [
+    '# Multimedia',
+    '',
+    'Picture slideshow, embedded video, and embedded audio gathered on one page.',
+    '',
+    '## Pieces',
+    bulletList([
+      'Picture slideshow of homepage photos, with previous, next, and pause controls.',
+      "Embedded video: Kenny's Racing Game demo, the same YouTube embed as the project page.",
+      'Embedded audio: November Journal, a 2022 recording by Akash Dubey (US History Journals).',
+    ]),
+  ].join('\n')
+}
+
 export function buildContactLlmMarkdown() {
   return [
     '# Contact',
@@ -268,6 +285,7 @@ export function getMarkdownForPath(pathname: string) {
   if (normalized === '/about') return buildAboutLlmMarkdown()
   if (normalized === '/projects') return buildProjectsLlmMarkdown(getProjects())
   if (normalized === '/writing') return buildWritingLlmMarkdown(getPosts())
+  if (normalized === '/multimedia') return buildMultimediaLlmMarkdown()
   if (normalized === '/story') return buildStoryLlmMarkdown()
   if (normalized === '/resume') return buildResumeLlmMarkdown()
   if (normalized === '/contact') return buildContactLlmMarkdown()

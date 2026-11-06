@@ -1,6 +1,7 @@
 import { readdirSync, statSync } from 'fs'
 import path from 'path'
 import { getPosts, getProjects } from '@/lib/content'
+import { multimediaSlides } from '@/lib/multimedia'
 import { absoluteUrl } from '@/lib/seo'
 
 export const dynamic = 'force-static'
@@ -79,6 +80,7 @@ export function GET() {
     { url: absoluteUrl('/cv'), images: ['/images/portfolio/hic-tad/hero.png'] },
     { url: absoluteUrl('/projects'), images: ['/images/portfolio/home.png'] },
     { url: absoluteUrl('/writing'), images: ['/images/posts/doing-things-hero.png'] },
+    { url: absoluteUrl('/multimedia'), images: multimediaSlides.map((slide) => slide.src) },
   ]
 
   const projectEntries = getProjects().map((project) => ({
