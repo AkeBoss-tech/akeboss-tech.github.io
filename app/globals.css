@@ -7039,6 +7039,45 @@ h4.wiki-rich-heading {
   color: var(--text);
 }
 .product-media-block { margin-top: 2.75rem; }
+.product-media audio {
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+.product-audio-transcript {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.product-audio-transcript summary {
+  cursor: pointer;
+  font-weight: 500;
+}
+.product-audio-transcript p { margin-top: 1rem; }
+.product-tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+.product-tutorial-grid figure { margin: 0; min-width: 0; }
+.product-tutorial-grid iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #0b0b10;
+}
+.product-tutorial-grid figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+@media (max-width: 760px) {
+  .product-tutorial-grid { grid-template-columns: 1fr; }
+}
 .product-media video {
   display: block;
   width: 100%;

@@ -7,6 +7,7 @@ import posthog from 'posthog-js'
 
 import { ContactIconLinks } from '@/components/contact-icon-links'
 import { GradientDescentBackground } from '@/components/gradient-descent-background'
+import { HomeIntroLines } from '@/components/home-intro-lines'
 import { ResponsiveImage } from '@/components/responsive-image'
 import { ThemeToggle } from '@/components/theme-toggle'
 import type { Project } from '@/lib/content'
@@ -330,7 +331,7 @@ function IntroHero() {
     <section className="home-intro-hero">
       <div className="home-intro-copy">
         <h1 className="home-intro-title">{introTitle}</h1>
-        <p>I love life.</p>
+        <HomeIntroLines />
         <nav className="home-mobile-contact-actions" aria-label="Connect with Akash">
           <a href="#gradient-work" className="home-action-primary">
             <span>See my work</span>
