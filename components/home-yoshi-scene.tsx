@@ -1012,7 +1012,7 @@ export function HomeYoshiScene({ projects }: HomeYoshiSceneProps) {
       eyebrow: 'Research',
       title: 'Algorithmic Robotics & Control Lab',
       body: 'Motion planning and vision-language-action research for robot arms.',
-      href: pathFinder ? `/projects/${pathFinder.slug}` : 'https://arc-lab-robotics.github.io/',
+      href: pathFinder ? `/projects/${pathFinder.slug}` : 'https://arc-l.github.io/',
       gallerySide: 'right',
       gallery: [
         { src: '/images/homepage/arc-lab/setup.png', alt: 'Dual-arm robot laboratory setup from public ARC-L research' },

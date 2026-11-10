@@ -144,7 +144,7 @@ const research = [
   },
   {
     title: 'Algorithmic Robotics and Control Lab, Rutgers CS',
-    href: 'https://arc-lab-robotics.github.io/',
+    href: 'https://arc-l.github.io/',
     logo: '/school-logos/rutgers-block-r.svg',
     logoTileStyle: {
       backgroundColor: 'var(--cv-rutgers-logo-bg)',
