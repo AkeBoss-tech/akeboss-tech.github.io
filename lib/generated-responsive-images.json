@@ -2001,6 +2001,110 @@
       "width": 512,
       "height": 419,
       "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAA0ABUB8JaACdIExGCb2Oc54QAD+8dlsERHlEiSfyzGL7b3cS52ex1L2Fw94S3KZdzyg+TuW6BOd42uqkad0nIFZe45KNAAAAA=="
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/01-explore-channels.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoQAAkABUB8JYgAAsZMgBr5UAD+7xAH/L4CglPq2MmI+bZp3SxlVR2/tjY7AAAA"
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/02-volume-exploration.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAACwAQCdASoQAAkABUB8JZwAAvh2l8zAAP7u/zYV1PfhAAAA"
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/03-processing-recipe.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAADQAQCdASoQAAkABUB8JZwC7AEPCq9EAAD+6/MKStVLLp91FAA="
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/04-linked-volume-review.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAAAwAQCdASoQAAkABUB8JZwAA3AA/u/iZjjYFxWKqIsxRpCAAAA="
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/05-candidate-measurements.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAkABUB8JZwAA3AA/u+gX5yNOeEAAAA="
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/06-manual-annotation.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADQAQCdASoQAAkABUB8JYwAAvmFchKbwAD+8NOEVGGbEyhwkCIzY/SiVAA="
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/07-neurite-volume.webp",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAACwAQCdASoQAAkABUB8JZwAAveCqSoAAP7vHA/6jreTCAAA"
+    },
+    {
+      "src": "/images/portfolio/field-microscopy-studio/cover.jpg",
+      "widths": [
+        160,
+        320,
+        640,
+        960,
+        1280
+      ],
+      "width": 1920,
+      "height": 1080,
+      "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAwAQCdASoQAAkABUB8JYgAA3AA/u+CICflDmHrYrVKz6t5opJyMn8NMgKYNllRe8gdYwAA"
     }
   ]
 }
