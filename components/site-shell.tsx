@@ -14,12 +14,13 @@ import { ThemeToggle } from '@/components/theme-toggle'
 const nav = [
   { href: '/projects', label: 'Projects' },
   { href: '/writing', label: 'Writing' },
+  { href: '/multimedia', label: 'Multimedia' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]
 
 // Pages that get the home hero's gradient mesh behind their header.
-const heroFieldPaths = new Set(['/writing', '/about', '/contact'])
+const heroFieldPaths = new Set(['/writing', '/multimedia', '/about', '/contact'])
 
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
@@ -204,6 +205,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       </Link>
                       <Link href="/writing" onClick={() => captureNavigation('writing', 'footer')} className="story-link text-text-muted hover:text-text">
                         Writing
+                      </Link>
+                      <Link href="/multimedia" onClick={() => captureNavigation('multimedia', 'footer')} className="story-link text-text-muted hover:text-text">
+                        Multimedia
                       </Link>
                       <Link href="/sites" onClick={() => captureNavigation('sites', 'footer')} className="story-link text-text-muted hover:text-text">
                         Sites
